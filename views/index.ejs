@@ -1,18 +1,71 @@
-<div style="margin-bottom: 2em; text-align: center;">
-  <a href="/fiches/all/pdf" download style="display: inline-block; font-size: 1.2em; padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-    &#x1F4E6; Télécharger toutes les fiches (PDF unique)
-  </a>
-</div>
-
-<ul>
-  <% fiches.forEach(function(fiche) { %>
-    <li>
-      <a href="/fiches/<%= fiche.slug %>">
-        <%= fiche.title %>
-      </a>
-      - <a href="/fiches/<%= fiche.slug %>/pdf" download>
-          (Télécharger en PDF)
-        </a>
-    </li>
-  <% }); %>
-</ul>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Fiches de révision NSI</title>
+    <link rel="stylesheet" href="/css/fiche-nsi.css">
+    <style>
+        /* Styles spécifiques pour la page d'accueil */
+        .index-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .download-all-btn {
+            display: inline-block;
+            font-size: 1.1em;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+        .download-all-btn:hover {
+            background-color: #0056b3;
+        }
+        .fiche-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .fiche-list li {
+            padding: 12px 5px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .fiche-list .download-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="index-container">
+        <h1>Fiches de révision NSI</h1>
+        <div style="margin-bottom: 2em; text-align: center;">
+            <a href="/fiches/all/pdf" download class="download-all-btn">
+                <span style="margin-right: 8px;">📦</span> Télécharger toutes les fiches
+            </a>
+        </div>
+        <h2>Liste des fiches disponibles</h2>
+        <ul class="fiche-list">
+            <% fiches.forEach(function(fiche) { %>
+                <li>
+                    <a href="/fiches/<%= fiche.slug %>"><%= fiche.title %></a>
+                    <a href="/fiches/<%= fiche.slug %>/pdf" download class="download-link">
+                        <span title="Télécharger en PDF">📝 PDF</span>
+                    </a>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</body>
+</html>

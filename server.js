@@ -7,6 +7,7 @@ const puppeteer = require('puppeteer');
 
 const app = express();
 const port = 3000;
+let browser; // Instance de navigateur partagée
 
 // Notre "base de données" en mémoire qui contiendra les fiches
 const fiches = new Map();
@@ -47,13 +48,10 @@ app.get('/fiches/:slug/pdf', async (req, res, next) => {
     return next();
   }
 
-  let browser;
+  let page;
   try {
     console.log(`[PDF] Lancement de la génération pour : ${slug}`);
-    // On lance un navigateur headless. L'option --no-sandbox est souvent nécessaire
-    // dans des environnements conteneurisés (Docker) ou sur certains serveurs.
-    browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
-    const page = await browser.newPage();
+    page = await browser.newPage();
 
     // On navigue vers la page HTML de la fiche
     const url = `http://localhost:${port}/fiches/${slug}`;
@@ -66,8 +64,6 @@ app.get('/fiches/:slug/pdf', async (req, res, next) => {
       margin: { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' },
     });
 
-    await browser.close();
-
     // On envoie le PDF au client pour qu'il le télécharge
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="${slug}.pdf"`);
@@ -75,8 +71,9 @@ app.get('/fiches/:slug/pdf', async (req, res, next) => {
     console.log(`[PDF] Fichier envoyé pour : ${slug}`);
   } catch (error) {
     console.error(`[PDF] Erreur lors de la génération du PDF pour ${slug}:`, error);
-    if (browser) await browser.close(); // S'assurer que le navigateur est fermé en cas d'erreur
     res.status(500).send('Erreur lors de la génération du PDF.');
+  } finally {
+    if (page) await page.close(); // On ferme la page, pas le navigateur
   }
 });
 
@@ -92,11 +89,10 @@ app.get('/fiches/all-html', (req, res) => {
 });
 
 app.get('/fiches/all/pdf', async (req, res) => {
-  let browser;
+  let page;
   try {
     console.log('[PDF] Lancement de la génération de toutes les fiches');
-    browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
-    const page = await browser.newPage();
+    page = await browser.newPage();
 
     // On navigue vers notre nouvelle page qui combine tout
     const url = `http://localhost:${port}/fiches/all-html`;
@@ -109,8 +105,6 @@ app.get('/fiches/all/pdf', async (req, res) => {
       margin: { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' },
     });
 
-    await browser.close();
-
     // On envoie le PDF au client
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="toutes-les-fiches-nsi.pdf"');
@@ -118,10 +112,9 @@ app.get('/fiches/all/pdf', async (req, res) => {
     console.log('[PDF] Fichier combiné envoyé.');
   } catch (error) {
     console.error('[PDF] Erreur lors de la génération du PDF combiné:', error);
-    if (browser) {
-      await browser.close();
-    }
     res.status(500).send('Erreur lors de la génération du PDF combiné.');
+  } finally {
+    if (page) await page.close();
   }
 });
 
@@ -139,7 +132,7 @@ app.use((req, res) => {
  * Scanne le dossier 'content', parse les fichiers Markdown
  * et les charge en mémoire dans la Map 'fiches'.
  */
-async function loadFiches() {
+async function loadContent() {
   try {
     const contentDir = path.join(__dirname, 'content');
     const files = await fs.readdir(contentDir);
@@ -166,9 +159,30 @@ async function loadFiches() {
   }
 }
 
-// On charge les fiches PUIS on lance le serveur
-loadFiches().then(() => {
+/**
+ * Charge le contenu, lance le navigateur partagé puis démarre le serveur Express.
+ */
+async function startServer() {
+  await loadContent();
+
+  console.log('[Puppeteer] Lancement du navigateur partagé...');
+  browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+  console.log('[Puppeteer] Navigateur prêt.');
+
   app.listen(port, () => {
     console.log(`\nServeur démarré et prêt sur http://localhost:${port}`);
   });
+}
+
+startServer();
+
+// --- GESTION DE L'ARRÊT (GRACEFUL SHUTDOWN) ---
+process.on('SIGINT', async () => {
+  console.log('\n[Serveur] Arrêt en cours...');
+  if (browser) {
+    console.log('[Puppeteer] Fermeture du navigateur...');
+    await browser.close();
+  }
+  console.log('[Serveur] Arrêt terminé.');
+  process.exit(0);
 });
