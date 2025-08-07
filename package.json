@@ -12,6 +12,6 @@
     "front-matter": "^4.0.2",
     "marked": "^4.2.12"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "babash",
+  "license": "MIT"
 }
