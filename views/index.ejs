@@ -1,0 +1,17 @@
+<%- include('partials/header', { title: 'Accueil - Fiches NSI' }) %>
+
+<main class="index-container">
+  <h1>Fiches de révision NSI</h1>
+  <p>Choisissez une fiche à consulter :</p>
+  <ul>
+    <% fiches.forEach(fiche => { %>
+      <li>
+        <a href="/fiches/<%= fiche.slug %>">
+          <%= fiche.title.replace('Fiche NSI – ', '') %>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+</main>
+
+<%- include('partials/footer') %>

@@ -1,11 +1,14 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs').promises; // On utilise la version 'promises' pour async/await
 const marked = require('marked');
 const fm = require('front-matter');
 
 const app = express();
 const port = 3000;
+
+// Notre "base de données" en mémoire qui contiendra les fiches
+const fiches = new Map();
 
 // Définir EJS comme moteur de template
 app.set('view engine', 'ejs');
@@ -13,34 +16,70 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Servir les fichiers statiques (CSS, images) depuis le dossier 'public'
 app.use(express.static(path.join(__dirname, 'public')));
+ 
+// --- ROUTES ---
 
-// Route principale pour afficher une fiche
-app.get('/fiches/:slug', (req, res) => {
-  const slug = req.params.slug;
-  const filePath = path.join(__dirname, 'content', `${slug}.md`);
-
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      res.status(404).send("Désolé, cette fiche n'existe pas.");
-      return;
-    }
-
-    // 1. Extraire les métadonnées (front-matter) et le contenu markdown
-    const page = fm(data);
-
-    // 2. Convertir le contenu markdown en HTML
-    const contentHtml = marked.parse(page.body);
-
-    // 3. Rendre le template EJS avec les données
-    res.render('fiche', {
-      title: page.attributes.title || 'Fiche NSI',
-      footer: page.attributes.footer || '',
-      content: contentHtml
-    });
-  });
+// Route pour la page d'accueil : lister toutes les fiches
+app.get('/', (req, res) => {
+  // On passe la liste des fiches (convertie depuis la Map) au template
+  res.render('index', { fiches: Array.from(fiches.values()) });
 });
 
-app.listen(port, () => {
-  console.log(`Serveur démarré sur http://localhost:${port}`);
-  console.log('Exemple de fiche: http://localhost:3000/fiches/chaines-de-caracteres');
+// Route pour afficher une fiche spécifique
+app.get('/fiches/:slug', (req, res, next) => {
+  const fiche = fiches.get(req.params.slug);
+
+  if (!fiche) {
+    // Si la fiche n'est pas dans notre Map, on passe au middleware 404
+    return next(); 
+  }
+
+  res.render('fiche', { fiche });
+});
+
+// --- GESTION DES ERREURS ---
+
+// Middleware pour les erreurs 404 (doit être à la fin)
+app.use((req, res) => {
+  res.status(404).send("Désolé, la page que vous cherchez n'existe pas.");
+});
+
+// --- DÉMARRAGE DU SERVEUR ---
+
+/**
+ * Scanne le dossier 'content', parse les fichiers Markdown
+ * et les charge en mémoire dans la Map 'fiches'.
+ */
+async function loadFiches() {
+  try {
+    const contentDir = path.join(__dirname, 'content');
+    const files = await fs.readdir(contentDir);
+
+    for (const file of files) {
+      if (path.extname(file) === '.md') {
+        const filePath = path.join(contentDir, file);
+        const data = await fs.readFile(filePath, 'utf8');
+        const page = fm(data);
+        const slug = path.basename(file, '.md');
+
+        fiches.set(slug, {
+          slug: slug,
+          title: page.attributes.title || 'Titre manquant',
+          footer: page.attributes.footer || '',
+          content: marked.parse(page.body)
+        });
+        console.log(`[OK] Fiche chargée : ${slug}`);
+      }
+    }
+  } catch (error) {
+    console.error("Erreur lors du chargement des fiches :", error);
+    process.exit(1); // On arrête le serveur si on ne peut pas charger les fiches
+  }
+}
+
+// On charge les fiches PUIS on lance le serveur
+loadFiches().then(() => {
+  app.listen(port, () => {
+    console.log(`\nServeur démarré et prêt sur http://localhost:${port}`);
+  });
 });
