@@ -80,6 +80,52 @@ app.get('/fiches/:slug/pdf', async (req, res, next) => {
   }
 });
 
+// --- NOUVELLE ROUTE POUR LE PDF COMBINÉ ---
+
+// Route "cachée" pour afficher le HTML de toutes les fiches.
+// Utile pour le débogage et pour que Puppeteer ait une page à visiter.
+app.get('/fiches/all-html', (req, res) => {
+  const allFiches = Array.from(fiches.values());
+  // On trie les fiches par titre pour un ordre cohérent dans le PDF
+  allFiches.sort((a, b) => a.title.localeCompare(b.title));
+  res.render('all-fiches', { fiches: allFiches });
+});
+
+app.get('/fiches/all/pdf', async (req, res) => {
+  let browser;
+  try {
+    console.log('[PDF] Lancement de la génération de toutes les fiches');
+    browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+    const page = await browser.newPage();
+
+    // On navigue vers notre nouvelle page qui combine tout
+    const url = `http://localhost:${port}/fiches/all-html`;
+    await page.goto(url, { waitUntil: 'networkidle0' });
+
+    // On génère le PDF
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' },
+    });
+
+    await browser.close();
+
+    // On envoie le PDF au client
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="toutes-les-fiches-nsi.pdf"');
+    res.send(pdfBuffer);
+    console.log('[PDF] Fichier combiné envoyé.');
+  } catch (error) {
+    console.error('[PDF] Erreur lors de la génération du PDF combiné:', error);
+    if (browser) {
+      await browser.close();
+    }
+    res.status(500).send('Erreur lors de la génération du PDF combiné.');
+  }
+});
+
+
 // --- GESTION DES ERREURS ---
 
 // Middleware pour les erreurs 404 (doit être à la fin)

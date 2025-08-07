@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Toutes les fiches NSI</title>
+    <!-- On réutilise la même feuille de style que pour une fiche individuelle -->
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Styles spécifiques pour l'impression et la génération PDF */
+        @media print {
+            .fiche-page {
+                /* Force un saut de page après chaque fiche */
+                page-break-after: always;
+            }
+
+            .fiche-page:last-child {
+                /* Sauf pour la toute dernière */
+                page-break-after: auto;
+            }
+        }
+
+        /* Un peu de style pour la vue web de débogage */
+        body {
+            font-family: sans-serif;
+            width: 210mm; /* Simule une page A4 */
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <% fiches.forEach(function(fiche) { %>
+        <div class="fiche-page">
+            <!-- Cette structure doit être similaire à celle de votre fichier fiche.ejs -->
+            <h1><%= fiche.title %></h1>
+            <main><%- fiche.content %></main>
+            <footer><p><%= fiche.footer %></p></footer>
+        </div>
+    <% }); %>
+</body>
+</html>
