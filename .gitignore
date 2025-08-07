@@ -1,0 +1,15 @@
+# Fichier généré par Gemini Code Assist
+
+# Dépendances
+# Le dossier node_modules est généré par `npm install` et ne doit jamais être versionné.
+/node_modules
+
+# Fichiers de log
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Fichiers générés par le système d'exploitation
+.DS_Store
+Thumbs.db
