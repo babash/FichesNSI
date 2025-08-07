@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs').promises; // On utilise la version 'promises' pour async/await
 const marked = require('marked');
 const fm = require('front-matter');
+const puppeteer = require('puppeteer');
 
 const app = express();
 const port = 3000;
@@ -35,6 +36,48 @@ app.get('/fiches/:slug', (req, res, next) => {
   }
 
   res.render('fiche', { fiche });
+});
+
+// --- NOUVELLE ROUTE POUR LE PDF ---
+app.get('/fiches/:slug/pdf', async (req, res, next) => {
+  const { slug } = req.params;
+  const fiche = fiches.get(slug);
+
+  if (!fiche) {
+    return next();
+  }
+
+  let browser;
+  try {
+    console.log(`[PDF] Lancement de la génération pour : ${slug}`);
+    // On lance un navigateur headless. L'option --no-sandbox est souvent nécessaire
+    // dans des environnements conteneurisés (Docker) ou sur certains serveurs.
+    browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+    const page = await browser.newPage();
+
+    // On navigue vers la page HTML de la fiche
+    const url = `http://localhost:${port}/fiches/${slug}`;
+    await page.goto(url, { waitUntil: 'networkidle0' });
+
+    // On génère le PDF
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true, // Crucial pour que le CSS soit appliqué
+      margin: { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' },
+    });
+
+    await browser.close();
+
+    // On envoie le PDF au client pour qu'il le télécharge
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${slug}.pdf"`);
+    res.send(pdfBuffer);
+    console.log(`[PDF] Fichier envoyé pour : ${slug}`);
+  } catch (error) {
+    console.error(`[PDF] Erreur lors de la génération du PDF pour ${slug}:`, error);
+    if (browser) await browser.close(); // S'assurer que le navigateur est fermé en cas d'erreur
+    res.status(500).send('Erreur lors de la génération du PDF.');
+  }
 });
 
 // --- GESTION DES ERREURS ---
