@@ -172,3 +172,63 @@ body {
     width: 20px;
     height: 20px;
 }
+
+/* --- Footer Styles --- */
+.index-footer {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+    color: #6c757d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.footer-license {
+    text-align: center;
+    line-height: 1.5;
+}
+
+.footer-license a,
+.footer-project a {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.footer-license a:hover,
+.footer-project a:hover {
+    text-decoration: underline;
+}
+
+.license-icon {
+    max-width: 1em;
+    max-height: 1em;
+    margin-left: .2em;
+    vertical-align: text-bottom; /* Aligne mieux les icônes avec le texte */
+}
+
+.footer-project {
+    margin-top: 0.75rem;
+}
+
+.footer-link-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    color: #6c757d;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-link-item:hover {
+    color: #007bff;
+}
+
+.footer-link-item .icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
