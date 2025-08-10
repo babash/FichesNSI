@@ -5,111 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Fiches de révision NSI</title>
     <link rel="stylesheet" href="/css/fiche-nsi.css">
-    <style>
-        /* Styles spécifiques pour la page d'accueil */
-        body {
-            background-color: #f4f7f6;
-            color: #333;
-        }
-        .index-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1em;
-            padding-bottom: 0.5em;
-            border-bottom: 2px solid #eee;
-        }
-        .list-header h2 {
-            cursor: pointer;
-            user-select: none; /* Empêche la sélection du texte */
-            position: relative;
-            padding-left: 20px;
-            margin: 0;
-        }
-        /* Indicateur flèche pour l'accordéon */
-        .list-header h2::before {
-            content: '▼';
-            position: absolute;
-            left: 0;
-            font-size: 0.8em;
-            transition: transform 0.2s ease-in-out;
-        }
-        .list-header h2.collapsed::before {
-            transform: rotate(-90deg);
-        }
-        .download-all-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: background-color 0.2s ease;
-        }
-        .download-all-link:hover {
-            background-color: #e9ecef;
-        }
-        .fiche-list {
-            list-style-type: none;
-            padding-left: 0;
-            margin-top: 1em;
-            overflow: hidden;
-            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
-        }
-        .fiche-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-            transition: background-color 0.2s ease;
-        }
-        .fiche-list li:hover {
-            background-color: #f8f9fa; /* Le fond qui se poursuit */
-        }
-        .fiche-list li a.fiche-name {
-            flex-grow: 1; /* Le nom de la fiche prend toute la place disponible */
-            padding: 12px 10px;
-            text-decoration: none;
-            color: #333;
-        }
-        .fiche-list .download-link {
-            padding: 12px 10px;
-            color: #6c757d;
-            flex-shrink: 0; /* Empêche l'icône de rétrécir */
-        }
-        .fiche-list .download-link:hover .icon {
-            stroke: #007bff;
-        }
-        .icon {
-            width: 20px;
-            height: 20px;
-            vertical-align: middle;
-            transition: stroke 0.2s ease;
-        }
-        /* Classe pour masquer la liste */
-        .collapsed {
-            max-height: 0 !important;
-            margin-top: 0 !important;
-            opacity: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
     <div class="index-container">
         <h1>Fiches de révision NSI</h1>
 
-        <div class="list-header">
-            <h2 id="toggle-fiches" title="Cliquer pour afficher/masquer">Liste des fiches disponibles</h2>
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Rechercher une fiche par titre...">
+        </div>
+
+        <div class="list-header" id="toggle-fiches" title="Cliquer pour afficher/masquer la liste">
+            <h2>Liste des fiches disponibles</h2>
             <a href="/fiches/all/pdf" download class="download-all-link">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 <span>Tout télécharger</span>
@@ -127,28 +34,6 @@
             <% }); %>
         </ul>
     </div>
-
-    <script>
-        const toggleButton = document.getElementById('toggle-fiches');
-        const fichesList = document.getElementById('fiches-list');
-
-        // Initial state for the list (for smooth transition)
-        fichesList.style.maxHeight = fichesList.scrollHeight + 'px';
-
-        toggleButton.addEventListener('click', () => {
-            const isCollapsed = fichesList.classList.contains('collapsed');
-
-            if (isCollapsed) {
-                // To expand
-                fichesList.style.maxHeight = fichesList.scrollHeight + 'px';
-                fichesList.classList.remove('collapsed');
-            } else {
-                // To collapse
-                fichesList.style.maxHeight = '0px';
-                fichesList.classList.add('collapsed');
-            }
-            toggleButton.classList.toggle('collapsed');
-        });
-    </script>
+    <script src="/js/index.js"></script>
 </body>
 </html>

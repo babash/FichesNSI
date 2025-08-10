@@ -12,5 +12,8 @@ yarn-debug.log*
 .DS_Store
 Thumbs.db
 
-# IA files
-.iaexclude
+README.md
+LICENSE
+../locales
+public/img/fond1.png
+TODO.md

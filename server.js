@@ -39,6 +39,29 @@ app.get('/fiches/:slug', (req, res, next) => {
   res.render('fiche', { fiche });
 });
 
+// Route "cachée" pour générer un HTML propre pour le PDF d'une seule fiche.
+// Cela évite les boucles récursives si la page de la fiche contient un lien de téléchargement PDF.
+app.get('/fiches/:slug/html-for-pdf', (req, res, next) => {
+  const fiche = fiches.get(req.params.slug);
+
+  if (!fiche) {
+    return next();
+  }
+
+  const fullHtml = `
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+      <meta charset="UTF-8">
+      <title>${fiche.title}</title>
+      <link rel="stylesheet" href="/css/fiche-nsi.css">
+      <link rel="stylesheet" href="/css/prism.css">
+    </head>
+    <body><article class="fiche">${fiche.content}</article></body>
+    </html>`;
+  res.send(fullHtml);
+});
+
 // --- NOUVELLE ROUTE POUR LE PDF ---
 app.get('/fiches/:slug/pdf', async (req, res, next) => {
   const { slug } = req.params;
@@ -53,20 +76,25 @@ app.get('/fiches/:slug/pdf', async (req, res, next) => {
     console.log(`[PDF] Lancement de la génération pour : ${slug}`);
     page = await browser.newPage();
 
-    // On navigue vers la page HTML de la fiche
-    const url = `http://localhost:${port}/fiches/${slug}`;
-    await page.goto(url, { waitUntil: 'networkidle0' });
+    // On navigue vers la page HTML propre, sans éléments interactifs
+    const url = `http://localhost:${port}/fiches/${slug}/html-for-pdf`;
+    await page.goto(url, { waitUntil: 'networkidle2' });
+
+    // Attendre explicitement que toutes les polices de caractères soient chargées et prêtes
+    await page.evaluateHandle('document.fonts.ready');
 
     // On génère le PDF
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true, // Crucial pour que le CSS soit appliqué
-      margin: { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' },
+      tagged: false, // Désactive la génération de PDF balisé, source potentielle de crashs
+      timeout: 0, // Désactive la limite de temps pour la génération
     });
 
     // On envoie le PDF au client pour qu'il le télécharge
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="${slug}.pdf"`);
+    res.setHeader('Content-Length', pdfBuffer.length);
     res.send(pdfBuffer);
     console.log(`[PDF] Fichier envoyé pour : ${slug}`);
   } catch (error) {
@@ -79,13 +107,33 @@ app.get('/fiches/:slug/pdf', async (req, res, next) => {
 
 // --- NOUVELLE ROUTE POUR LE PDF COMBINÉ ---
 
-// Route "cachée" pour afficher le HTML de toutes les fiches.
-// Utile pour le débogage et pour que Puppeteer ait une page à visiter.
+// Route "cachée" pour générer un HTML propre pour le PDF de toutes les fiches.
+// On génère le HTML manuellement pour s'assurer qu'il ne contient aucun script
+// ou lien qui pourrait interférer avec la génération du PDF (ex: lien "Tout télécharger").
 app.get('/fiches/all-html', (req, res) => {
   const allFiches = Array.from(fiches.values());
   // On trie les fiches par titre pour un ordre cohérent dans le PDF
   allFiches.sort((a, b) => a.title.localeCompare(b.title));
-  res.render('all-fiches', { fiches: allFiches });
+
+  const fichesHtml = allFiches.map(fiche => `
+    <article class="fiche">
+      ${fiche.content}
+    </article>
+    <div style="page-break-after: always;"></div>
+  `).join('');
+
+  const fullHtml = `
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+      <meta charset="UTF-8">
+      <title>Toutes les fiches NSI</title>
+      <link rel="stylesheet" href="/css/fiche-nsi.css">
+      <link rel="stylesheet" href="/css/prism.css">
+    </head>
+    <body><main class="container">${fichesHtml}</main></body>
+    </html>`;
+  res.send(fullHtml);
 });
 
 app.get('/fiches/all/pdf', async (req, res) => {
@@ -96,18 +144,23 @@ app.get('/fiches/all/pdf', async (req, res) => {
 
     // On navigue vers notre nouvelle page qui combine tout
     const url = `http://localhost:${port}/fiches/all-html`;
-    await page.goto(url, { waitUntil: 'networkidle0' });
+    await page.goto(url, { waitUntil: 'networkidle2' });
+
+    // Attendre explicitement que toutes les polices de caractères soient chargées et prêtes
+    await page.evaluateHandle('document.fonts.ready');
 
     // On génère le PDF
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
-      margin: { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' },
+      tagged: false, // Désactive la génération de PDF balisé, source potentielle de crashs
+      timeout: 0, // Désactive la limite de temps pour la génération
     });
 
     // On envoie le PDF au client
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="toutes-les-fiches-nsi.pdf"');
+    res.setHeader('Content-Length', pdfBuffer.length);
     res.send(pdfBuffer);
     console.log('[PDF] Fichier combiné envoyé.');
   } catch (error) {
