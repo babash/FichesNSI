@@ -11,13 +11,12 @@
 }
 
 @media print {
-  body { margin: 0; }
+  html, body { margin: 0 !important; padding: 0 !important; }
+  .container { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 1rem !important; }
+  header h1 { display: block !important; visibility: visible !important; }
 }
 
-@page {
-  size: A4;
-  margin: 0; /* Suppression des marges blanches */
-}
+@page { size: A4; margin: 0 !important; }
 
 /* Réinitialisation globale et fond par défaut */
 html {
