@@ -55,7 +55,6 @@ app.get('/fiches/:slug/html-for-pdf', (req, res, next) => {
       <meta charset="UTF-8">
       <title>${fiche.title}</title>
       <link rel="stylesheet" href="/css/fiche-nsi.css">
-      <link rel="stylesheet" href="/css/prism.css">
     </head>
     <body><article class="fiche">${fiche.content}</article></body>
     </html>`;
@@ -81,7 +80,7 @@ app.get('/fiches/:slug/pdf', async (req, res, next) => {
     await page.goto(url, { waitUntil: 'networkidle2' });
 
     // Attendre explicitement que toutes les polices de caractères soient chargées et prêtes
-    await page.evaluateHandle('document.fonts.ready');
+    await page.evaluate(() => document.fonts.ready);
 
     // On génère le PDF
     const pdfBuffer = await page.pdf({
@@ -129,7 +128,6 @@ app.get('/fiches/all-html', (req, res) => {
       <meta charset="UTF-8">
       <title>Toutes les fiches NSI</title>
       <link rel="stylesheet" href="/css/fiche-nsi.css">
-      <link rel="stylesheet" href="/css/prism.css">
     </head>
     <body><main class="container">${fichesHtml}</main></body>
     </html>`;
@@ -147,7 +145,7 @@ app.get('/fiches/all/pdf', async (req, res) => {
     await page.goto(url, { waitUntil: 'networkidle2' });
 
     // Attendre explicitement que toutes les polices de caractères soient chargées et prêtes
-    await page.evaluateHandle('document.fonts.ready');
+    await page.evaluate(() => document.fonts.ready);
 
     // On génère le PDF
     const pdfBuffer = await page.pdf({
@@ -219,7 +217,7 @@ async function startServer() {
   await loadContent();
 
   console.log('[Puppeteer] Lancement du navigateur partagé...');
-  browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+  browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   console.log('[Puppeteer] Navigateur prêt.');
 
   app.listen(port, () => {

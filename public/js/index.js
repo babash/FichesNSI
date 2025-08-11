@@ -57,14 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Download links warning ---
+    // --- Download links: prevent toggling accordion on click ---
     const downloadLinks = document.querySelectorAll('.download-link, .download-all-link');
 
     downloadLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault(); // On empêche la navigation
-            alert('La génération de PDF est temporairement désactivée.');
-            console.warn('Tentative de téléchargement de PDF : fonctionnalité désactivée.');
+            e.stopPropagation();
         });
     });
 });

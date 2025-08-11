@@ -37,9 +37,17 @@ Pour faire fonctionner ce projet en local, vous aurez besoin de Node.js (version
 4.  **Consulter les fiches** :
     Ouvrez votre navigateur et rendez-vous sur http://localhost:3000.
 
+5.  **Exporter en PDF** :
+    - Depuis la page d’accueil:
+      - Télécharger une fiche: cliquer sur l’icône à droite d’un titre
+      - Télécharger toutes les fiches: « Tout télécharger » en haut de liste
+    - En backend, Puppeteer génère un PDF A4 avec les styles d’impression.
+
 ---
 
 ## ✍️ Comment créer une nouvelle fiche ?
+
+Voir aussi: `GUIDE_MARKDOWN.md` pour des recommandations de rédaction et contraintes d’affichage optimisées A4.
 
 C'est très simple !
 
