@@ -56,6 +56,12 @@ Un serveur web Node.js moderne qui transforme des fichiers Markdown en fiches de
 4. **Accéder à l'application** :
    Ouvrez http://localhost:3000 dans votre navigateur.
 
+5.  **Exporter en PDF** :
+    - Depuis la page d’accueil:
+      - Télécharger une fiche: cliquer sur l’icône à droite d’un titre
+      - Télécharger toutes les fiches: « Tout télécharger » en haut de liste
+    - En backend, Puppeteer génère un PDF A4 avec les styles d’impression.
+
 ---
 
 ## 📖 Utilisation
@@ -64,6 +70,8 @@ Un serveur web Node.js moderne qui transforme des fichiers Markdown en fiches de
 - **Page d'accueil** : Liste toutes les fiches avec recherche intégrée
 - **Téléchargement individuel** : Icône PDF sur chaque fiche
 - **Téléchargement global** : Bouton "Tout télécharger" pour un PDF combiné
+
+Voir aussi: `GUIDE_MARKDOWN.md` pour des recommandations de rédaction et contraintes d’affichage optimisées A4.
 
 ### Génération PDF
 Les PDFs sont générés automatiquement avec :
