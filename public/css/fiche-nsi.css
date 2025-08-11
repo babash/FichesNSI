@@ -16,7 +16,7 @@
 
 @page {
   size: A4;
-  margin: 20mm 15mm; /* On définit les marges ici */
+  margin: 0; /* Suppression des marges blanches */
 }
 
 /* Réinitialisation globale et fond par défaut */
