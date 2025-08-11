@@ -26,9 +26,10 @@ class PDFGenerator {
   }
 
   /**
-   * Génère le HTML pour une fiche individuelle
+   * Génère le HTML pour une fiche individuelle (structure alignée sur fiche.ejs)
    */
   generateSingleFicheHTML(fiche) {
+    const visibleTitle = (fiche.title || '').replace('Fiche NSI – ', '');
     return `
       <!DOCTYPE html>
       <html lang="fr">
@@ -38,24 +39,34 @@ class PDFGenerator {
         <link rel="stylesheet" href="/css/fiche-nsi.css">
       </head>
       <body>
-        <article class="fiche">${fiche.content}</article>
-        <footer style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: #666; text-align: center;">
-          « Fiches de révision NSI » par <a href="https://github.com/babash" style="color: #666;">babash</a> est placé sous la licence <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" style="color: #666;">CC0 1.0</a>
-        </footer>
+        <main>
+          <header><h1>${visibleTitle}</h1></header>
+          <article class="container">
+            ${fiche.content}
+          </article>
+          ${fiche.footer ? `<div class="footnote">${fiche.footer}</div>` : ''}
+        </main>
       </body>
       </html>`;
   }
 
   /**
-   * Génère le HTML pour toutes les fiches
+   * Génère le HTML pour toutes les fiches (structure homogène + saut de page)
    */
   generateAllFichesHTML(fiches) {
-    const fichesHtml = fiches.map(fiche => `
-      <article class="fiche">
-        ${fiche.content}
-      </article>
-      <div style="page-break-after: always;"></div>
-    `).join('');
+    const fichesHtml = fiches.map(fiche => {
+      const visibleTitle = (fiche.title || '').replace('Fiche NSI – ', '');
+      return `
+        <section class="fiche">
+          <header><h1>${visibleTitle}</h1></header>
+          <article class="container">
+            ${fiche.content}
+          </article>
+          ${fiche.footer ? `<div class="footnote">${fiche.footer}</div>` : ''}
+        </section>
+        <div style="page-break-after: always;"></div>
+      `;
+    }).join('');
 
     return `
       <!DOCTYPE html>
@@ -66,10 +77,7 @@ class PDFGenerator {
         <link rel="stylesheet" href="/css/fiche-nsi.css">
       </head>
       <body>
-        <main class="container">${fichesHtml}</main>
-        <footer style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: #666; text-align: center;">
-          « Fiches de révision NSI » par <a href="https://github.com/babash" style="color: #666;">babash</a> est placé sous la licence <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" style="color: #666;">CC0 1.0</a>
-        </footer>
+        <main class="wrapper">${fichesHtml}</main>
       </body>
       </html>`;
   }
@@ -86,7 +94,10 @@ class PDFGenerator {
     try {
       console.log(`[PDF] Génération de ${filename}...`);
       page = await this.browser.newPage();
-      
+
+      // S'assurer d'utiliser les styles d'impression et que les couleurs de fond sont imprimées
+      await page.emulateMediaType('print');
+
       await page.goto(url, { waitUntil: 'networkidle2' });
       await page.evaluateHandle('document.fonts.ready');
 
