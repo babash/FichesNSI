@@ -65,4 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
             e.stopPropagation();
         });
     });
+
+    // --- Last updated (UTC) ---
+    const lastUpdatedEl = document.querySelector('.last-updated');
+    if (lastUpdatedEl) {
+        const now = new Date();
+        const pad = (n) => String(n).padStart(2, '0');
+        const formatted = `${pad(now.getUTCDate())}/${pad(now.getUTCMonth()+1)}/${now.getUTCFullYear()} ${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())} UTC`;
+        lastUpdatedEl.textContent = `Dernière mise à jour: ${formatted}`;
+    }
 });
