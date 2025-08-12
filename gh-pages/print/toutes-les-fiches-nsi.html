@@ -1,0 +1,295 @@
+
+      <!DOCTYPE html>
+      <html lang="fr">
+      <head>
+        <meta charset="UTF-8">
+        <title>Toutes les fiches NSI - Version Impression</title>
+        <style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Orbitron:wght@600&family=Lato:wght@400;700&display=swap');
+
+:root {
+  --python-blue: #306998;
+  --python-yellow: #FFD43B;
+  --bg-light: #ffffff;
+  --accent-bg: rgba(48, 105, 152, 0.05);
+  --code-bg: #f0f0f0;
+  --yellow-bg: rgba(255, 212, 59, 0.15);
+}
+
+@media print {
+  body { margin: 0; }
+}
+
+@page {
+  size: A4;
+  margin: 20mm 15mm; /* On définit les marges ici */
+}
+
+/* Réinitialisation globale et fond par défaut */
+html {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/*
+ * Technique robuste pour afficher un fond sur chaque page d'un PDF.
+ * On utilise un pseudo-élément 'fixed' qui se répète sur chaque page.
+ */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/img/fond2.png') no-repeat top center;
+  background-size: cover;
+  z-index: -1;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+  color: #333;
+  /* Le body doit être transparent pour que le pseudo-élément ::before (avec l'image de fond)
+     qui est positionné en arrière-plan (z-index: -1) soit visible. */
+  background-color: transparent;
+}
+
+
+header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  color: var(--python-blue);
+  text-align: center;
+}
+
+.container, .index-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+section {
+  background: var(--accent-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+}
+
+h2 {
+  color: #000;
+  font-size: 1.1rem;
+  margin-top: 0;
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
+  position: relative;
+  padding: 0.5rem 0.75rem 0.5rem 2rem;
+  background: var(--yellow-bg);
+  border-left: 0.5rem solid var(--python-yellow);
+  border-radius: 6px;
+  box-shadow: inset 0 0 0.15em rgba(255, 212, 59, 0.8);
+}
+
+h2::before {
+  content: attr(data-icon);
+  position: absolute;
+  left: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 0.75rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  position: relative;
+}
+
+pre::before {
+  content: "root@python:~$ ";
+  color: #555;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+code {
+  font-family: 'Fira Code', monospace;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+.footnote {
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+  color: #555;
+  grid-column: span 2;
+}
+</style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
+        <style>
+          @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+          }
+          .print-instructions {
+            background: #f0f0f0;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid #306998;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="print-instructions no-print">
+          <h3>📄 Instructions d'impression</h3>
+          <p>Utilisez Ctrl+P (ou Cmd+P sur Mac) pour imprimer toutes les fiches en PDF.</p>
+          <p>Assurez-vous que "Arrière-plans" est activé dans les options d'impression.</p>
+          <p>Chaque fiche sera automatiquement séparée par un saut de page.</p>
+        </div>
+        <main class="wrapper">
+        <section class="fiche">
+          <header><h1>Les chaînes de caractères en Python</h1></header>
+          <article class="container">
+            <section>
+  <h2 data-icon="📘">Définitions & Propriétés</h2>
+  <ul>
+    <li>Une chaîne est une suite de caractères entre guillemets.</li>
+    <li>Type immuable : on ne peut pas modifier une chaîne après sa création.</li>
+  </ul>
+  <pre><code class="language-python">mot = "Python"
+print(mot[0])  # P
+mot[0] = "J"    # Erreur !</code></pre>
+</section>
+
+<section>
+  <h2 data-icon="➕">Opérations de base</h2>
+  <pre><code class="language-python">s = "NSI"
+print(s + " Python")
+print(s * 3)
+print(s[1])</code></pre>
+</section>
+          </article>
+        </section>
+        <div style="page-break-after: always;"></div>
+      
+        <section class="fiche">
+          <header><h1>Exemple d’affichage complet</h1></header>
+          <article class="container">
+            <section>
+  <h2 data-icon="📌">Objectifs</h2>
+  <ul>
+    <li>Synthétiser les éléments clés d’un chapitre.</li>
+    <li>Illustrer avec un extrait de code concis.</li>
+    <li>Donner 1 à 2 repères visuels (tableau, schéma).</li>
+  </ul>
+</section>
+
+<section>
+  <h2 data-icon="💡">Définitions</h2>
+  <p><strong>Algorithme</strong> : suite finie d’instructions permettant de résoudre un problème.</p>
+  <p><strong>Complexité</strong> : quantité de ressources (temps, mémoire) consommées par un algorithme.</p>
+</section>
+
+<section>
+  <h2 data-icon="🐍">Code Python (basique)</h2>
+  <pre><code class="language-python">def somme(liste):
+    total = 0
+    for x in liste:
+        total += x
+    return total
+
+print(somme([1, 2, 3]))  # 6
+</code></pre>
+</section>
+
+<section>
+  <h2 data-icon="⚙️">Idiomes Python</h2>
+  <pre><code class="language-python"># Compréhension de liste
+evens = [x for x in range(10) if x % 2 == 0]
+
+# Slicing
+s = "NSI"
+print(s[::-1])  # ISN
+</code></pre>
+</section>
+
+<section>
+  <h2 data-icon="🧭">Tableau compact</h2>
+  <table>
+    <thead>
+      <tr><th>Structure</th><th>Mutable</th><th>Clés/Index</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>list</td><td>Oui</td><td>Index entiers</td></tr>
+      <tr><td>tuple</td><td>Non</td><td>Index entiers</td></tr>
+      <tr><td>dict</td><td>Oui</td><td>Clés hachables</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2 data-icon="🖼️">Schéma (image)</h2>
+  <p>
+    <img src="/img/fond1.png" alt="Illustration générique" width="500" />
+  </p>
+</section>
+
+<section>
+  <h2 data-icon="🗒️">Note</h2>
+  <blockquote>Astuce : préférez plusieurs petites sections à une seule très dense.</blockquote>
+  <p>Voir aussi : <a href="https://docs.python.org/3/" target="_blank" rel="noopener noreferrer">Documentation Python</a>.</p>
+</section>
+          </article>
+        </section>
+        <div style="page-break-after: always;"></div>
+      
+        <section class="fiche">
+          <header><h1>Les Structures de Données</h1></header>
+          <article class="container">
+            <section>
+  <h2 data-icon="📦">Les Listes (list)</h2>
+  <ul>
+    <li>Collection ordonnée et modifiable d'éléments.</li>
+    <li>Permet les doublons.</li>
+  </ul>
+  <pre><code class="language-python">ma_liste = [1, "a", 3.14, 1]
+ma_liste.append(5)
+print(ma_liste[1]) # a</code></pre>
+</section>
+
+<section>
+  <h2 data-icon="📚">Les Dictionnaires (dict)</h2>
+  <p>Collection non-ordonnée de paires clé-valeur. Mutable.</p>
+  <pre><code class="language-python">personne = {"nom": "Alan", "age": 41}
+print(personne["nom"]) # Alan</code></pre>
+</section>
+          </article>
+        </section>
+        <div style="page-break-after: always;"></div>
+      </main>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            hljs.highlightAll();
+          });
+        </script>
+      </body>
+      </html>
