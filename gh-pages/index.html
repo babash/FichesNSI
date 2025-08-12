@@ -17,9 +17,9 @@
 
         <div class="list-header" id="toggle-fiches" title="Cliquer pour afficher/masquer la liste">
             <h2>Liste des fiches disponibles</h2>
-            <a href="fiches/all/pdf" download class="download-all-link">
+            <a href="print/toutes-les-fiches-nsi.html" class="download-all-link" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                <span>Tout télécharger</span>
+                <span>📚 Toutes les fiches (HTML pour impression)</span>
             </a>
         </div>
 
@@ -27,19 +27,42 @@
             
                 <li>
                     <a href="fiches/chaines-de-caracteres.html" class="fiche-name">Fiche NSI – Les chaînes de caractères en Python</a>
-                    <a href="fiches/chaines-de-caracteres/chaines-de-caracteres.pdf" download class="download-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" title="Télécharger en PDF"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <a href="print/chaines-de-caracteres.html" class="download-link" target="_blank" title="Version HTML pour impression">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="fiches/exemple-affichage.html" class="fiche-name">Fiche NSI – Exemple d’affichage complet</a>
+                    <a href="print/exemple-affichage.html" class="download-link" target="_blank" title="Version HTML pour impression">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     </a>
                 </li>
             
                 <li>
                     <a href="fiches/structures-de-donnees.html" class="fiche-name">Fiche NSI – Les Structures de Données</a>
-                    <a href="fiches/structures-de-donnees/structures-de-donnees.pdf" download class="download-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" title="Télécharger en PDF"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <a href="print/structures-de-donnees.html" class="download-link" target="_blank" title="Version HTML pour impression">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     </a>
                 </li>
             
         </ul>
+
+        <div class="print-section">
+          <h2>📄 Versions d'impression</h2>
+          <div class="print-links">
+            <a href="print/toutes-les-fiches-nsi.html" class="print-link" target="_blank">
+              📚 Toutes les fiches (HTML pour impression)
+            </a>
+            <div class="individual-prints">
+              <h3>Fiches individuelles :</h3>
+              <a href="print/chaines-de-caracteres.html" class="print-link" target="_blank">📄 chaines de caracteres</a><a href="print/exemple-affichage.html" class="print-link" target="_blank">📄 exemple affichage</a><a href="print/structures-de-donnees.html" class="print-link" target="_blank">📄 structures de donnees</a>
+            </div>
+          </div>
+          <div class="print-info">
+            <p><strong>💡 Astuce :</strong> Ouvrez ces pages dans votre navigateur et utilisez Ctrl+P (ou Cmd+P sur Mac) pour les imprimer en PDF avec une qualité optimale.</p>
+          </div>
+        </div>
 
         <footer class="index-footer">
             <div class="footer-license">
@@ -51,7 +74,7 @@
                     <span>Projet sur GitHub</span>
                 </a>
             </div>
-            <div class="last-updated" style="margin-top:6px;color:#777;font-size:0.85rem;text-align:center">Dernière mise à jour: {STAMP}</div>
+            <div class="last-updated" style="margin-top:6px;color:#777;font-size:0.85rem;text-align:center">Dernière mise à jour: 12 août 2025 à 09:31</div>
         </footer>
     </div>
     <script src="js/index.js"></script>

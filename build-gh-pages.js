@@ -28,7 +28,6 @@ class GitHubPagesBuilder {
     
     // Copier les fichiers principaux
     const staticFiles = [
-      'index.html',
       'css/',
       'js/',
       'img/',
@@ -51,6 +50,9 @@ class GitHubPagesBuilder {
         }
       }
     });
+    
+    // Générer un index.html personnalisé
+    this.generateCustomIndex();
   }
 
   /**
@@ -273,131 +275,93 @@ class GitHubPagesBuilder {
   }
 
   /**
-   * Met à jour l'index.html avec les liens vers les versions d'impression
+   * Génère un index.html personnalisé avec les liens d'impression
    */
-  updateIndexWithPrintLinks() {
-    console.log('🔗 Mise à jour des liens d\'impression...');
+  generateCustomIndex() {
+    console.log('📝 Génération de l\'index.html personnalisé...');
     
-    const indexPath = path.join(this.ghPagesDir, 'index.html');
-    if (!fs.existsSync(indexPath)) return;
+    const fiches = this.getFichesList();
+    const currentDate = new Date().toLocaleDateString('fr-FR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
     
-    let indexContent = fs.readFileSync(indexPath, 'utf8');
-    
-    // Ajouter les liens vers les versions d'impression
-    const printSection = `
+    const indexHtml = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Fiches de révision NSI</title>
+    <link rel="stylesheet" href="css/fiche-nsi.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="index-container">
+        <h1>Fiches de révision NSI</h1>
+
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Rechercher une fiche par titre...">
+        </div>
+
+        <div class="list-header" id="toggle-fiches" title="Cliquer pour afficher/masquer la liste">
+            <h2>Liste des fiches disponibles</h2>
+            <a href="print/toutes-les-fiches-nsi.html" class="download-all-link" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>📚 Toutes les fiches (HTML pour impression)</span>
+            </a>
+        </div>
+
+        <ul class="fiche-list" id="fiches-list">
+            ${fiches.map(fiche => `
+                <li>
+                    <a href="fiches/${fiche.slug}.html" class="fiche-name">${fiche.title}</a>
+                    <a href="print/${fiche.slug}.html" class="download-link" target="_blank" title="Version HTML pour impression">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </a>
+                </li>
+            `).join('')}
+        </ul>
+
         <div class="print-section">
           <h2>📄 Versions d'impression</h2>
           <div class="print-links">
-            <a href="/print/toutes-les-fiches-nsi.html" class="print-link" target="_blank">
+            <a href="print/toutes-les-fiches-nsi.html" class="print-link" target="_blank">
               📚 Toutes les fiches (HTML pour impression)
             </a>
             <div class="individual-prints">
               <h3>Fiches individuelles :</h3>
-              ${this.getFichesList().map(fiche => 
-                `<a href="/print/${fiche.slug}.html" class="print-link" target="_blank">📄 ${fiche.slug.replace(/-/g, ' ')}</a>`
+              ${fiches.map(fiche => 
+                `<a href="print/${fiche.slug}.html" class="print-link" target="_blank">📄 ${fiche.slug.replace(/-/g, ' ')}</a>`
               ).join('')}
             </div>
           </div>
           <div class="print-info">
-            <p><strong>💡 Astuce :</strong> Ouvrez ces pages dans votre navigateur et utilisez Ctrl+P (ou Cmd+P) pour les imprimer en PDF avec une qualité optimale.</p>
+            <p><strong>💡 Astuce :</strong> Ouvrez ces pages dans votre navigateur et utilisez Ctrl+P (ou Cmd+P sur Mac) pour les imprimer en PDF avec une qualité optimale.</p>
           </div>
-        </div>`;
+        </div>
+
+        <footer class="index-footer">
+            <div class="footer-license">
+                <span>« Fiches de révision NSI » par <a href="https://github.com/babash" target="_blank" rel="noopener noreferrer">babash</a> est placé sous la licence <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" target="_blank" rel="license">CC0 1.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" class="license-icon" alt="Creative Commons"><img src="https://mirrors.creativecommons.org/presskit/icons/zero.svg" class="license-icon" alt="Zero"></span>
+            </div>
+            <div class="footer-project">
+                <a href="https://github.com/babash/fiches-nsi" target="_blank" rel="noopener noreferrer" class="footer-link-item" title="Voir le projet sur GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    <span>Projet sur GitHub</span>
+                </a>
+            </div>
+            <div class="last-updated" style="margin-top:6px;color:#777;font-size:0.85rem;text-align:center">Dernière mise à jour: ${currentDate}</div>
+        </footer>
+    </div>
+    <script src="js/index.js"></script>
+</body>
+</html>`;
     
-    // Insérer avant la fermeture de la div index-container
-    indexContent = indexContent.replace(
-      '</div>\n    </div>',
-      `${printSection}\n    </div>\n    </div>`
-    );
-    
-    fs.writeFileSync(indexPath, indexContent);
-    console.log('✅ Index mis à jour avec les liens d\'impression');
-  }
-
-  /**
-   * Ajoute des styles CSS pour la section d'impression
-   */
-  addPrintStyles() {
-    console.log('🎨 Ajout des styles pour l\'impression...');
-    
-    const cssPath = path.join(this.ghPagesDir, 'css/index.css');
-    if (!fs.existsSync(cssPath)) return;
-    
-    let cssContent = fs.readFileSync(cssPath, 'utf8');
-    
-    const printStyles = `
-/* Styles pour la section d'impression */
-.print-section {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background: var(--accent-bg);
-  border-radius: 12px;
-  border-left: 4px solid var(--python-blue);
-}
-
-.print-section h2 {
-  color: var(--python-blue);
-  margin-bottom: 1rem;
-  font-family: 'Orbitron', sans-serif;
-}
-
-.print-links {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.print-link {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: var(--python-blue);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  text-align: center;
-  font-weight: 600;
-}
-
-.print-link:hover {
-  background: #1e4a7a;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(48, 105, 152, 0.3);
-}
-
-.individual-prints h3 {
-  margin: 1rem 0 0.5rem 0;
-  color: #333;
-  font-size: 1rem;
-}
-
-.individual-prints {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.5rem;
-}
-
-.individual-prints .print-link {
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
-}
-
-.print-info {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: rgba(255, 212, 59, 0.1);
-  border-radius: 8px;
-  border-left: 4px solid var(--python-yellow);
-}
-
-.print-info p {
-  margin: 0;
-  color: #555;
-  font-size: 0.9rem;
-}`;
-    
-    cssContent += printStyles;
-    fs.writeFileSync(cssPath, cssContent);
-    console.log('✅ Styles d\'impression ajoutés');
+    fs.writeFileSync(path.join(this.ghPagesDir, 'index.html'), indexHtml);
+    console.log('✅ Index.html personnalisé généré');
   }
 
   /**
@@ -410,8 +374,6 @@ class GitHubPagesBuilder {
       this.prepareBuildDirectory();
       this.copyStaticFiles();
       this.generatePrintVersions();
-      this.updateIndexWithPrintLinks();
-      this.addPrintStyles();
       
       console.log('\n✅ Construction terminée avec succès !');
       console.log(`📁 Site généré dans le répertoire : ${this.ghPagesDir}`);

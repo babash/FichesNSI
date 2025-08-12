@@ -233,7 +233,7 @@ body {
     fill: currentColor;
 }
 
-/* Styles pour la section d'impression */
+/* --- Print Section Styles --- */
 .print-section {
   margin-top: 2rem;
   padding: 1.5rem;
