@@ -1,200 +1,192 @@
-# 📚 Générateur de Fiches de Révision NSI
+# 🚀 Générateur de Fiches de Révision NSI
 
-Un serveur web Node.js moderne qui transforme des fichiers Markdown en fiches de révision NSI élégantes avec génération automatique de PDF. Optimisé pour l'impression et la distribution.
+Un générateur moderne de fiches de révision pour la spécialité NSI (Numérique et Sciences Informatiques) avec support pour la génération de PDFs et le déploiement automatique sur GitHub Pages.
 
 ## ✨ Fonctionnalités
 
-### 📄 Génération de Contenu
-* **Pages Web Dynamiques** : Conversion automatique des fichiers Markdown en pages web stylisées
-* **Génération PDF Automatique** : Export PDF haute qualité avec un clic
-* **PDF Sans Marges** : Optimisé pour l'impression avec marges supprimées
-* **PDF Combiné** : Téléchargement de toutes les fiches en un seul PDF
+- 📚 **Fiches de révision structurées** : Organisation claire par thèmes avec icônes et mise en forme
+- 🎨 **Design moderne** : Interface utilisateur élégante avec thème Python
+- 📄 **Génération de PDFs** : Export automatique des fiches en PDF avec mise en forme optimisée
+- 🌐 **Site web responsive** : Interface adaptée à tous les appareils
+- 🔍 **Recherche intégrée** : Trouvez rapidement les fiches dont vous avez besoin
+- 🚀 **Déploiement automatique** : GitHub Actions pour une mise à jour continue
+- 💻 **Coloration syntaxique** : Code Python mis en évidence avec highlight.js
 
-### 🎨 Présentation
-* **Interface Moderne** : Design épuré avec CSS Grid et typographie professionnelle
-* **Mise en Page A4** : Style optimisé pour l'impression directe
-* **Coloration Syntaxique** : Mise en forme automatique du code Python
-* **Responsive** : Compatible mobile et desktop
-
-### ⚡ Performance & Organisation
-* **Architecture Modulaire** : Code organisé en modules séparés pour la maintenabilité
-* **Navigateur Partagé** : Instance Puppeteer réutilisée pour des performances optimales
-* **Arrêt Propre** : Gestion gracieuse des signaux système
-
-### 📜 Licence Intégrée
-* **CC0 1.0** : Licence Creative Commons intégrée automatiquement dans tous les PDFs
-* **Attribution Automatique** : Crédits ajoutés automatiquement
-
----
-
-## 🚀 Installation et Lancement
+## 🛠️ Installation
 
 ### Prérequis
-- Node.js 16+ 
-- npm
-- Système avec support Chromium (pour Puppeteer)
 
-### Installation
+- Node.js 18+ 
+- npm ou yarn
 
-1. **Cloner le projet** :
-   ```bash
-   git clone <URL_DU_DEPOT>
-   cd fiches-nsi
-   ```
+### Installation locale
 
-2. **Installer les dépendances** :
-   ```bash
-   npm install
-   ```
-   *Cette commande installe automatiquement Puppeteer avec Chromium.*
-
-3. **Lancer le serveur** :
-   ```bash
-   npm start
-   ```
-
-4. **Accéder à l'application** :
-   Ouvrez http://localhost:3000 dans votre navigateur.
-
-5.  **Exporter en PDF** :
-    - Depuis la page d’accueil:
-      - Télécharger une fiche: cliquer sur l’icône à droite d’un titre
-      - Télécharger toutes les fiches: « Tout télécharger » en haut de liste
-    - En backend, Puppeteer génère un PDF A4 avec les styles d’impression.
-
----
-
-## 📖 Utilisation
-
-### Interface Web
-- **Page d'accueil** : Liste toutes les fiches avec recherche intégrée
-- **Téléchargement individuel** : Icône PDF sur chaque fiche
-- **Téléchargement global** : Bouton "Tout télécharger" pour un PDF combiné
-
-Voir aussi: `GUIDE_MARKDOWN.md` pour des recommandations de rédaction et contraintes d’affichage optimisées A4.
-
-### Génération PDF
-Les PDFs sont générés automatiquement avec :
-- ✅ Suppression des marges blanches
-- ✅ Licence CC0 en bas de page
-- ✅ Qualité d'impression optimisée
-- ✅ Préservation du style CSS
-
----
-
-## ✍️ Créer une Nouvelle Fiche
-
-### 1. Créer le fichier
-Créez un fichier `.md` dans `/content/` :
 ```bash
-touch content/ma-nouvelle-fiche.md
-```
+# Cloner le repository
+git clone https://github.com/votre-username/fiches-nsi-generator.git
+cd fiches-nsi-generator
 
-### 2. Structure du fichier
-```markdown
----
-title: "Fiche NSI – Mon Titre"
-footer: "Optionnel : pied de page personnalisé"
----
+# Installer les dépendances
+npm install
 
-<section>
-  <h2 data-icon="💡">Titre de Section</h2>
-  
-  Contenu de la section en Markdown.
-  
-  ```python
-  # Code Python avec coloration automatique
-  def exemple():
-      return "Hello NSI!"
-  ```
-</section>
-
-<section>
-  <h2 data-icon="🔧">Autre Section</h2>
-  
-  - Point important 1
-  - Point important 2
-  - Formule : `O(n log n)`
-</section>
-```
-
-### 3. Redémarrer le serveur
-```bash
-# Arrêter avec Ctrl+C puis relancer
+# Démarrer le serveur de développement
 npm start
 ```
 
-La nouvelle fiche apparaît automatiquement sur la page d'accueil.
+Le site sera accessible sur `http://localhost:3000`
 
----
+## 📖 Utilisation
 
-## 🏗️ Architecture du Projet
+### Navigation
+
+- **Page d'accueil** : Vue d'ensemble de toutes les fiches disponibles
+- **Fiches individuelles** : `/fiches/[nom-de-la-fiche]`
+- **Recherche** : Utilisez la barre de recherche pour filtrer les fiches
+
+### Génération de PDFs
+
+#### Option 1 : Génération automatique (si Puppeteer disponible)
+- **Fiche individuelle** : `/fiches/[nom]/pdf`
+- **Toutes les fiches** : `/fiches/all/pdf`
+
+#### Option 2 : Version HTML optimisée pour impression (recommandée)
+- **Fiche individuelle** : `/fiches/[nom]/print`
+- **Toutes les fiches** : `/fiches/all-print`
+
+**💡 Astuce** : Ouvrez les versions d'impression dans votre navigateur et utilisez `Ctrl+P` (ou `Cmd+P` sur Mac) pour générer un PDF de qualité optimale.
+
+## 🏗️ Structure du projet
 
 ```
-fiches-nsi/
-├── src/                    # Modules principaux
-│   ├── fiches.js          # Gestion des fiches Markdown
-│   ├── pdf.js             # Génération PDF avec Puppeteer
-│   └── routes.js          # Routes Express
-├── content/               # Fiches en Markdown
-├── views/                 # Templates EJS
-├── public/               # Assets statiques (CSS, JS, images)
-├── server.js             # Point d'entrée principal
-└── package.json          # Configuration npm
+fiches-nsi-generator/
+├── content/           # Fiches au format Markdown
+├── css/              # Styles CSS
+├── js/               # JavaScript client
+├── views/            # Templates EJS
+├── src/              # Code source Node.js
+├── public/           # Fichiers statiques
+├── gh-pages/         # Site généré pour GitHub Pages
+└── .github/          # Configuration GitHub Actions
 ```
 
-### Modules Principaux
+### Format des fiches
 
-#### `src/fiches.js` - FichesManager
-- Chargement automatique des fichiers Markdown
-- Parsing avec front-matter
-- Cache en mémoire pour les performances
+Les fiches utilisent le format Markdown avec front-matter YAML :
 
-#### `src/pdf.js` - PDFGenerator  
-- Instance Puppeteer partagée
-- Génération HTML optimisée pour PDF
-- Licence CC0 automatique
-
-#### `src/routes.js` - RoutesManager
-- Routes web et API
-- Gestion des erreurs 404
-- Endpoints de génération PDF
-
+```markdown
+---
+title: "Fiche NSI – Titre de la fiche"
+footer: "Fiche NSI – Titre – Niveau"
 ---
 
-## 🛠️ Technologies
+<section>
+  <h2 data-icon="📘">Titre de section</h2>
+  <p>Contenu de la section...</p>
+  <pre><code class="language-python">print("Hello World")</code></pre>
+</section>
+```
 
-### Backend
-- **Node.js** - Runtime JavaScript
-- **Express.js** - Framework web
-- **Puppeteer** - Génération PDF via Chromium
-- **EJS** - Moteur de templates
+## 🚀 Déploiement
 
-### Processing
-- **Marked** - Parser Markdown vers HTML
-- **Front-matter** - Extraction métadonnées
+### Déploiement automatique (recommandé)
 
-### Frontend
-- **CSS Grid** - Mise en page responsive
-- **Google Fonts** - Typographie (Lato, Orbitron, Fira Code)
-- **Vanilla JS** - Interactions (recherche, affichage/masquage)
+Le projet utilise GitHub Actions pour un déploiement automatique :
 
+1. **Push sur main/master** : Déclenche automatiquement le build et le déploiement
+2. **Déploiement manuel** : Utilisez l'onglet "Actions" dans GitHub
+
+### Déploiement manuel
+
+```bash
+# Construire le site
+npm run build
+
+# Déployer sur GitHub Pages
+./deploy.sh "Message de commit"
+```
+
+## 🔧 Configuration
+
+### Variables d'environnement
+
+- `PORT` : Port du serveur (défaut: 3000)
+- `NODE_ENV` : Environnement (development/production)
+
+### Personnalisation
+
+#### Styles CSS
+Modifiez `css/fiche-nsi.css` pour personnaliser l'apparence des fiches.
+
+#### Thème
+Les couleurs et polices sont définies dans les variables CSS :
+- `--python-blue` : Couleur principale Python
+- `--python-yellow` : Couleur d'accent Python
+- `--accent-bg` : Arrière-plan des sections
+
+## 📝 Ajouter une nouvelle fiche
+
+1. Créez un fichier `.md` dans le dossier `content/`
+2. Utilisez le format avec front-matter YAML
+3. Structurez le contenu avec des `<section>` et `<h2 data-icon="...">`
+4. Ajoutez du code Python avec `<pre><code class="language-python">`
+5. Committez et poussez - le déploiement sera automatique !
+
+### Exemple de nouvelle fiche
+
+```markdown
+---
+title: "Fiche NSI – Les listes en Python"
+footer: "Fiche NSI – Listes – Terminale"
 ---
 
-## 📝 Licence
+<section>
+  <h2 data-icon="📋">Définition</h2>
+  <p>Une liste est une structure de données mutable...</p>
+  <pre><code class="language-python">ma_liste = [1, 2, 3, 4, 5]
+print(ma_liste[0])  # Premier élément</code></pre>
+</section>
+```
 
-Ce projet est sous licence MIT. Le contenu généré (fiches) est automatiquement placé sous licence [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.fr) (domaine public).
+## 🐛 Dépannage
 
----
+### Problèmes courants
+
+#### PDFs non générés
+- Vérifiez que Puppeteer est installé : `npm install puppeteer`
+- Utilisez les versions HTML d'impression comme alternative
+- Vérifiez les logs du serveur pour plus de détails
+
+#### Styles non appliqués
+- Vérifiez que les fichiers CSS sont bien copiés
+- Vérifiez la console du navigateur pour les erreurs
+- Assurez-vous que les chemins d'images sont corrects
+
+#### Serveur ne démarre pas
+- Vérifiez que le port 3000 est libre
+- Vérifiez les logs d'erreur
+- Assurez-vous que toutes les dépendances sont installées
 
 ## 🤝 Contribution
 
-Les contributions sont les bienvenues ! N'hésitez pas à :
-- Signaler des bugs via les issues
-- Proposer des améliorations
-- Soumettre des pull requests
-- Partager vos fiches de révision
+Les contributions sont les bienvenues ! 
+
+1. Fork le projet
+2. Créez une branche pour votre fonctionnalité
+3. Committez vos changements
+4. Poussez vers la branche
+5. Ouvrez une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 🙏 Remerciements
+
+- **Highlight.js** pour la coloration syntaxique
+- **Google Fonts** pour les polices
+- **GitHub Pages** pour l'hébergement
+- **GitHub Actions** pour l'automatisation
 
 ---
 
-*Généré avec ❤️ pour la communauté NSI*
+**💡 Note** : Ce projet est optimisé pour l'enseignement de la NSI en Terminale. Les fiches couvrent les concepts fondamentaux de la programmation Python et de l'informatique.
