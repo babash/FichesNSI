@@ -30,8 +30,9 @@ html {
 /*
  * Technique robuste pour afficher un fond sur chaque page d'un PDF.
  * On utilise un pseudo-élément 'fixed' qui se répète sur chaque page.
+ * Cette règle ne s'applique que lorsque le body a la classe 'fiche-page'.
  */
-body::before {
+body.fiche-page::before {
   content: "";
   position: fixed;
   top: 0;
@@ -66,10 +67,15 @@ h1 {
   text-align: center;
 }
 
-.container, .index-container {
+.container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+/* La page d'accueil a sa propre mise en page */
+.index-container {
+  /* Les styles sont définis dans index.css */
 }
 
 section {
