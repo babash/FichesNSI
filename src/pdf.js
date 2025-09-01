@@ -36,7 +36,7 @@ class PDFGenerator {
       <head>
         <meta charset="UTF-8">
         <title>${fiche.title}</title>
-        <link rel="stylesheet" href="/css/fiche-nsi.css">
+        <link rel="stylesheet" href="css/fiche-nsi.css">
       </head>
       <body>
         <main>
@@ -74,7 +74,7 @@ class PDFGenerator {
       <head>
         <meta charset="UTF-8">
         <title>Toutes les fiches NSI</title>
-        <link rel="stylesheet" href="/css/fiche-nsi.css">
+        <link rel="stylesheet" href="/public/css/fiche-nsi.css">
       </head>
       <body>
         <main class="wrapper">${fichesHtml}</main>
