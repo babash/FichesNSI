@@ -61,11 +61,26 @@ jobs:
         ls -la dist/fiches/*.pdf
         
     - name: Deploy to production
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
-        publish_branch: gh-pages
+      run: |
+        # Créer le dossier docs s'il n'existe pas
+        mkdir -p docs
+        
+        # Copier le contenu de dist vers docs
+        cp -r dist/* docs/
+        
+        # Ajouter .nojekyll pour désactiver Jekyll
+        touch docs/.nojekyll
+        
+        # Commiter et pousser les changements
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add docs/
+        git commit -m "Deploy static site to docs/ folder
+        
+        - Generated from commit ${{ github.sha }}
+        - All CSS, JS, HTML, and PDF files included
+        - Site ready for GitHub Pages hosting"
+        git push
         
     - name: Notify deployment success
       if: success()
