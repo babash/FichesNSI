@@ -23,33 +23,36 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Test build
+    - name: Generate and test static site
       run: |
-        # Test que le serveur démarre correctement
-        npm start &
-        SERVER_PID=$!
-        sleep 10
+        # Générer le site statique
+        node scripts/generate-static.js
         
-        # Test des endpoints principaux
-        curl -f http://localhost:3000/ || exit 1
-        curl -f http://localhost:3000/fiches/liste || exit 1
-        curl -f http://localhost:3000/fiches/liste/pdf || exit 1
-        
-        # Test que le PDF est valide
-        curl -s http://localhost:3000/fiches/liste/pdf -o /tmp/test.pdf
-        if ! file /tmp/test.pdf | grep -q "PDF"; then
-          echo "PDF generation failed"
+        # Vérifier que les fichiers ont été générés
+        if [ ! -f "dist/index.html" ]; then
+          echo "❌ index.html non généré"
           exit 1
         fi
         
-        # Arrêter le serveur
-        kill $SERVER_PID
+        if [ ! -f "dist/css/fiche-nsi.css" ]; then
+          echo "❌ CSS non généré"
+          exit 1
+        fi
+        
+        if [ ! -f "dist/fiches/liste/index.html" ]; then
+          echo "❌ Fiches non générées"
+          exit 1
+        fi
+        
+        echo "✅ Site statique généré avec succès"
+        echo "📁 Fichiers générés:"
+        find dist -type f | head -10
         
     - name: Deploy test branch
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./
+        publish_dir: ./dist
         publish_branch: gh-pages-test
         destination_dir: ${{ github.ref_name }}
         
