@@ -55,9 +55,9 @@ jobs:
           exit 1
         fi
         
-        # Vérifier que les PDFs sont valides
-        if ! file dist/fiches/liste.pdf | grep -q "PDF"; then
-          echo "❌ PDF liste invalide"
+        # Vérifier que les PDFs sont valides (en-tête PDF)
+        if ! head -c 4 dist/fiches/liste.pdf | grep -q "%PDF"; then
+          echo "❌ PDF liste invalide (en-tête manquant)"
           exit 1
         fi
         
