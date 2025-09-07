@@ -39,11 +39,13 @@
 
 ## 🧪 **Branches de test**
 
-### **`test/pdf-optimization-and-print-fixes`**
-- **Rôle** : Branche de test pour optimisations PDF
-- **URL** : `https://babash.github.io/FichesNSI/test/pdf-optimization-and-print-fixes/`
-- **Usage** : Tests spécifiques (à supprimer une fois terminée)
-- **Statut** : ⏳ **En évaluation**
+### **Aucune branche de test active**
+- **Raison** : La branche `test/pdf-optimization-and-print-fixes` a été intégrée dans `dev`
+- **Améliorations intégrées** :
+  - ✅ Validation PDF améliorée avec `head` command
+  - ✅ Chemins CSS corrigés dans la génération statique
+  - ✅ CSS optimisé pour éviter les erreurs de parsing
+- **Statut** : ✅ **Intégrée et supprimée**
 
 ## 🔄 **Workflow de développement**
 
@@ -77,10 +79,12 @@ git push origin main
 - ❌ `cursor/fix-masonry-layout-on-columns-fe2d`
 - ❌ `cursor/ajuster-la-hauteur-des-blocs-de-fiche-649c`
 - ❌ `gh-pages-dev` (remplacée par `/dev/` dans `gh-pages`)
+- ❌ `test/pdf-optimization-and-print-fixes` (intégrée dans `dev`)
 
 ### **Raison de la suppression :**
 - **Branches Cursor** : Fonctionnalités intégrées dans `main`/`dev`
 - **`gh-pages-dev`** : Architecture simplifiée avec un seul déploiement
+- **`test/pdf-optimization-and-print-fixes`** : Améliorations intégrées dans `dev`
 
 ## 📊 **État actuel**
 
@@ -88,12 +92,10 @@ git push origin main
 - ✅ `main` (production)
 - ✅ `dev` (développement)
 - ✅ `gh-pages` (déploiement)
-- ⏳ `test/pdf-optimization-and-print-fixes` (en évaluation)
 
 ### **Environnements :**
 - 🌐 **Production** : `https://babash.github.io/FichesNSI/`
 - 🌐 **Développement** : `https://babash.github.io/FichesNSI/dev/`
-- 🌐 **Test** : `https://babash.github.io/FichesNSI/test/pdf-optimization-and-print-fixes/`
 
 ## 🎯 **Recommandations**
 
