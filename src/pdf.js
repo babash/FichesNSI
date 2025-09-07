@@ -37,6 +37,7 @@ class PDFGenerator {
         <meta charset="UTF-8">
         <title>${fiche.title}</title>
         <link rel="stylesheet" href="css/fiche-nsi.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
       </head>
       <body>
         <main>

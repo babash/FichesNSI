@@ -78,7 +78,7 @@ element_supprime = nombres.pop()
 print(f"Élément supprimé : {element_supprime}") # Élément supprimé : 40
 print(nombres)    # [10, 30]
 </code></pre>
-</ul>s
+</ul>
 
 </section>
 
