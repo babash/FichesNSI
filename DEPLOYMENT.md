@@ -1,106 +1,131 @@
-# Déploiement Automatique - Fiches NSI
+# 🚀 Guide de Déploiement - Fiches NSI
 
-## 🚀 Déploiement Automatique
+Ce document explique le système de déploiement multi-environnements du site Fiches NSI.
 
-Ce projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pages avec génération de site statique et PDFs pré-générés.
+## 🌐 Environnements disponibles
 
-### 📋 Workflows Configurés
-
-#### 1. **Production** (`main` branch)
-- **Déclencheur** : Push sur `main`
-- **URL** : https://babash.github.io/FichesNSI/
-- **Tests** : Tests complets incluant validation PDF
+### **Production** 
+- **Branche source** : `main`
+- **Branche de déploiement** : `gh-pages`
+- **URL** : `https://babash.github.io/FichesNSI/`
 - **Workflow** : `.github/workflows/deploy-production.yml`
+- **Déclenchement** : Push sur `main` ou `workflow_dispatch`
 
-#### 2. **Branches de Test** (`test/*` branches)
-- **Déclencheur** : Push sur `test/*`
-- **URL** : https://babash.github.io/FichesNSI/{branch-name}/
-- **Tests** : Tests de base + validation PDF
+### **Développement**
+- **Branche source** : `dev`
+- **Branche de déploiement** : `gh-pages-dev`
+- **URL** : `https://babash.github.io/FichesNSI/dev/`
+- **Workflow** : `.github/workflows/deploy-development.yml`
+- **Déclenchement** : Push sur `dev` ou `workflow_dispatch`
+
+### **Tests**
+- **Branche source** : `test/*`
+- **Branche de déploiement** : `gh-pages-test`
+- **URL** : `https://babash.github.io/FichesNSI/test/nom-de-la-branche/`
 - **Workflow** : `.github/workflows/deploy-test.yml`
+- **Déclenchement** : Push sur `test/*` ou Pull Request
 
-### 🔧 Configuration
+## 🔄 Workflow de développement
 
-#### GitHub Pages
-- **Source** : GitHub Actions
-- **Branche de déploiement** : `gh-pages` (production) / `gh-pages-test` (tests)
-
-#### Tests Automatiques
-- ✅ Installation des dépendances Node.js
-- ✅ Génération du site statique complet
-- ✅ Validation des fichiers HTML générés
-- ✅ Validation des fichiers CSS générés
-- ✅ Génération de tous les PDFs individuels
-- ✅ Génération du PDF combiné
-- ✅ Validation des PDFs (format et taille)
-- ✅ Déploiement sur GitHub Pages
-
-### 📝 Utilisation
-
-#### Déploiement en Production
+### 1. **Développement quotidien**
 ```bash
-# Merger vers main
-git checkout main
-git merge test/pdf-optimization-and-print-fixes
-git push origin main
+# Travailler sur la branche dev
+git checkout dev
+# Faire vos modifications
+git add .
+git commit -m "feat: nouvelle fonctionnalité"
+git push origin dev
 ```
+→ **Déploiement automatique** sur `https://babash.github.io/FichesNSI/dev/`
 
-#### Test d'une Branche
+### 2. **Tests de fonctionnalités**
 ```bash
 # Créer une branche de test
 git checkout -b test/ma-nouvelle-fonctionnalite
-# Faire des modifications
-git add .
-git commit -m "feat: nouvelle fonctionnalité"
+# Faire vos modifications
 git push origin test/ma-nouvelle-fonctionnalite
 ```
+→ **Déploiement automatique** sur `https://babash.github.io/FichesNSI/test/ma-nouvelle-fonctionnalite/`
 
-### 🔍 Monitoring
-
-- **Actions** : Voir les déploiements dans l'onglet "Actions" du repo
-- **Logs** : Chaque déploiement génère des logs détaillés
-- **Notifications** : Les PR reçoivent automatiquement un lien de preview
-
-### 🛠️ Dépannage
-
-#### Si le déploiement échoue
-1. Vérifier les logs dans GitHub Actions
-2. Tester localement avec `npm start`
-3. Vérifier que tous les tests passent
-
-#### Si les PDFs ne se génèrent pas
-1. Vérifier que `html-pdf-node` est installé
-2. Tester la génération locale avec `npm run build`
-3. Vérifier que le serveur temporaire démarre correctement
-4. Vérifier les logs de génération dans GitHub Actions
-
-### 🔄 Processus de Génération
-
-#### Étapes du Build
-1. **Installation** des dépendances (`npm ci`)
-2. **Chargement** des fiches Markdown
-3. **Copie** des assets statiques (CSS, JS, images)
-4. **Génération** des pages HTML individuelles
-5. **Démarrage** du serveur temporaire (port 3001)
-6. **Génération** de tous les PDFs avec html-pdf-node
-7. **Arrêt** du serveur temporaire
-8. **Validation** des fichiers générés
-9. **Déploiement** sur GitHub Pages
-
-#### Structure Générée
+### 3. **Mise en production**
+```bash
+# Fusionner dev dans main
+git checkout main
+git merge dev
+git push origin main
 ```
-dist/
-├── index.html                    # Page d'accueil
-├── css/                         # Styles CSS
-├── js/                          # Scripts JavaScript
-├── images/                      # Images
-├── fiches/                      # Pages des fiches
-│   ├── all.pdf                  # PDF combiné
-│   ├── {slug}.pdf              # PDFs individuels
-│   └── {slug}/index.html       # Pages HTML
-└── .nojekyll                   # Désactive Jekyll
+→ **Déploiement automatique** sur `https://babash.github.io/FichesNSI/`
+
+## 📋 Processus de déploiement
+
+Chaque déploiement suit ces étapes :
+
+1. **Checkout** du code source
+2. **Installation** des dépendances Node.js
+3. **Génération** du site statique avec PDFs
+4. **Validation** des fichiers générés
+5. **Déploiement** sur la branche GitHub Pages appropriée
+
+## ✅ Tests automatiques
+
+Chaque déploiement vérifie :
+- ✅ Génération du site statique
+- ✅ Présence des fichiers CSS et JS
+- ✅ Génération des PDFs individuels
+- ✅ Génération du PDF combiné
+- ✅ Déploiement réussi
+
+## 🛠️ Commandes utiles
+
+### Vérifier le statut des déploiements
+```bash
+# Voir les workflows en cours
+gh workflow list
+
+# Voir les runs récents
+gh run list
 ```
 
-### 📊 Status des Déploiements
+### Déclencher un déploiement manuel
+```bash
+# Déploiement de production
+gh workflow run "Deploy Production"
 
-- 🟢 **Production** : https://babash.github.io/FichesNSI/
-- 🟡 **Tests** : https://babash.github.io/FichesNSI/{branch-name}/
+# Déploiement de développement
+gh workflow run "Deploy Development"
+```
+
+## 🔧 Configuration GitHub Pages
+
+### Production
+- **Source** : Deploy from a branch
+- **Branch** : `gh-pages`
+- **Folder** : `/ (root)`
+
+### Développement et Tests
+- Les branches `gh-pages-dev` et `gh-pages-test` sont automatiquement créées
+- Pas de configuration GitHub Pages nécessaire (sous-dossiers)
+
+## 📝 Notes importantes
+
+- **Cache** : GitHub Pages peut mettre 5-10 minutes à se mettre à jour
+- **PDFs** : Générés automatiquement à chaque déploiement
+- **CSS/JS** : Chemins relatifs pour compatibilité GitHub Pages
+- **Sécurité** : Utilise `GITHUB_TOKEN` pour les déploiements
+
+## 🚨 Dépannage
+
+### Site non accessible
+1. Vérifier que la branche de déploiement existe
+2. Attendre 5-10 minutes (cache GitHub Pages)
+3. Vérifier les logs du workflow GitHub Actions
+
+### PDFs corrompus
+1. Vérifier que `html-pdf-node` fonctionne localement
+2. Consulter les logs de génération PDF
+3. Tester avec une fiche simple
+
+### CSS/JS non chargés
+1. Vérifier les chemins relatifs dans les fichiers HTML
+2. S'assurer que `.nojekyll` est présent
+3. Vérifier que les fichiers sont bien déployés
