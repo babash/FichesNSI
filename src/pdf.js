@@ -1,28 +1,22 @@
-const puppeteer = require('puppeteer');
+const htmlPdf = require('html-pdf-node');
 
 class PDFGenerator {
   constructor() {
-    this.browser = null;
+    // Pas besoin d'initialisation pour html-pdf-node
   }
 
   /**
-   * Initialise le navigateur Puppeteer
+   * Initialise le générateur PDF
    */
   async init() {
-    console.log('[Puppeteer] Lancement du navigateur...');
-    this.browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
-    console.log('[Puppeteer] Navigateur prêt.');
+    console.log('[PDF] Générateur PDF initialisé.');
   }
 
   /**
-   * Ferme le navigateur
+   * Ferme le générateur PDF
    */
   async close() {
-    if (this.browser) {
-      console.log('[Puppeteer] Fermeture du navigateur...');
-      await this.browser.close();
-      this.browser = null;
-    }
+    console.log('[PDF] Générateur PDF fermé.');
   }
 
   /**
@@ -36,7 +30,7 @@ class PDFGenerator {
       <head>
         <meta charset="UTF-8">
         <title>${fiche.title}</title>
-        <link rel="stylesheet" href="css/fiche-nsi.css">
+        <link rel="stylesheet" href="/css/fiche-nsi.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
       </head>
       <body>
@@ -87,38 +81,42 @@ class PDFGenerator {
    * Génère un PDF depuis une URL
    */
   async generatePDF(url, filename) {
-    if (!this.browser) {
-      throw new Error('Le navigateur n\'est pas initialisé');
-    }
-
-    let page;
     try {
-      console.log(`[PDF] Génération de ${filename}...`);
-      page = await this.browser.newPage();
-
-      // S'assurer d'utiliser les styles d'impression et que les couleurs de fond sont imprimées
-      await page.emulateMediaType('print');
-
-      await page.goto(url, { waitUntil: 'networkidle2' });
-      await page.evaluateHandle('document.fonts.ready');
-
-      const pdfBuffer = await page.pdf({
+      console.log(`[PDF] Génération de ${filename} depuis ${url}...`);
+      
+      const options = {
         format: 'A4',
         printBackground: true,
-        preferCSSPageSize: true,
-        margin: { top: '0', right: '0', bottom: '0', left: '0' },
-        tagged: false,
-        timeout: 0,
-      });
+        margin: {
+          top: '10mm',
+          right: '10mm',
+          bottom: '10mm',
+          left: '10mm'
+        },
+        displayHeaderFooter: false,
+        timeout: 30000
+      };
 
-      console.log(`[PDF] ${filename} généré avec succès`);
+      const pdfBuffer = await htmlPdf.generatePdf({ url }, options);
+
+      // Vérifier que le PDF est valide
+      if (!pdfBuffer || pdfBuffer.length === 0) {
+        throw new Error('Le PDF généré est vide');
+      }
+
+      // Vérifier que c'est bien un PDF (commence par %PDF)
+      const pdfHeader = pdfBuffer.slice(0, 4).toString();
+      if (pdfHeader !== '%PDF') {
+        console.error(`[PDF] En-tête invalide: ${pdfHeader}`);
+        throw new Error('Le fichier généré n\'est pas un PDF valide');
+      }
+
+      console.log(`[PDF] ${filename} généré avec succès (${pdfBuffer.length} bytes)`);
       return pdfBuffer;
 
     } catch (error) {
       console.error(`[PDF] Erreur lors de la génération de ${filename}:`, error);
       throw error;
-    } finally {
-      if (page) await page.close();
     }
   }
 }
