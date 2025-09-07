@@ -22,9 +22,9 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Generate static site
+    - name: Generate static site with PDFs
       run: |
-        # Générer le site statique
+        # Générer le site statique avec PDFs
         node scripts/generate-static.js
         
         # Vérifier que les fichiers ont été générés
@@ -39,13 +39,37 @@ jobs:
         fi
         
         if [ ! -f "dist/fiches/liste/index.html" ]; then
-          echo "❌ Fiches non générées"
+          echo "❌ Fiches HTML non générées"
           exit 1
         fi
         
-        echo "✅ Site statique généré avec succès"
+        # Vérifier que les PDFs ont été générés
+        if [ ! -f "dist/fiches/liste.pdf" ]; then
+          echo "❌ PDFs non générés"
+          exit 1
+        fi
+        
+        if [ ! -f "dist/fiches/all.pdf" ]; then
+          echo "❌ PDF combiné non généré"
+          exit 1
+        fi
+        
+        # Vérifier que les PDFs sont valides
+        if ! file dist/fiches/liste.pdf | grep -q "PDF"; then
+          echo "❌ PDF liste invalide"
+          exit 1
+        fi
+        
+        if ! file dist/fiches/all.pdf | grep -q "PDF"; then
+          echo "❌ PDF combiné invalide"
+          exit 1
+        fi
+        
+        echo "✅ Site statique avec PDFs généré avec succès"
         echo "📁 Fichiers générés:"
-        find dist -type f | head -10
+        find dist -type f | head -15
+        echo "📄 PDFs générés:"
+        ls -la dist/fiches/*.pdf
         
     - name: Deploy to production
       uses: peaceiris/actions-gh-pages@v3

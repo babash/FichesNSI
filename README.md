@@ -1,25 +1,28 @@
 # 📚 Générateur de Fiches de Révision NSI
 
-Un serveur web Node.js moderne qui transforme des fichiers Markdown en fiches de révision NSI élégantes avec génération automatique de PDF. Optimisé pour l'impression et la distribution.
+Un générateur de site statique moderne qui transforme des fichiers Markdown en fiches de révision NSI élégantes avec génération automatique de PDF. Optimisé pour l'impression, la distribution et le déploiement sur GitHub Pages.
 
 ## ✨ Fonctionnalités
 
 ### 📄 Génération de Contenu
-* **Pages Web Dynamiques** : Conversion automatique des fichiers Markdown en pages web stylisées
-* **Génération PDF Automatique** : Export PDF haute qualité avec un clic
-* **PDF Sans Marges** : Optimisé pour l'impression avec marges supprimées
+* **Site Statique** : Génération de site statique compatible GitHub Pages
+* **Pages Web Optimisées** : Conversion automatique des fichiers Markdown en pages web stylisées
+* **Génération PDF Automatique** : Export PDF haute qualité avec html-pdf-node
+* **PDFs Pré-générés** : Tous les PDFs générés lors du build pour un déploiement rapide
 * **PDF Combiné** : Téléchargement de toutes les fiches en un seul PDF
 
 ### 🎨 Présentation
 * **Interface Moderne** : Design épuré avec CSS Grid et typographie professionnelle
+* **Layout Masonry** : Affichage dense en colonnes pour une meilleure organisation
 * **Mise en Page A4** : Style optimisé pour l'impression directe
 * **Coloration Syntaxique** : Mise en forme automatique du code Python
 * **Responsive** : Compatible mobile et desktop
 
 ### ⚡ Performance & Organisation
 * **Architecture Modulaire** : Code organisé en modules séparés pour la maintenabilité
-* **Navigateur Partagé** : Instance Puppeteer réutilisée pour des performances optimales
-* **Arrêt Propre** : Gestion gracieuse des signaux système
+* **Déploiement Automatique** : GitHub Actions pour déploiement automatique sur GitHub Pages
+* **Site Statique** : Génération de fichiers statiques pour des performances optimales
+* **Build Optimisé** : Génération rapide avec serveur temporaire pour les PDFs
 
 ### 📜 Licence Intégrée
 * **CC0 1.0** : Licence Creative Commons intégrée automatiquement dans tous les PDFs
@@ -30,9 +33,9 @@ Un serveur web Node.js moderne qui transforme des fichiers Markdown en fiches de
 ## 🚀 Installation et Lancement
 
 ### Prérequis
-- Node.js 16+ 
+- Node.js 18+ 
 - npm
-- Système avec support Chromium (pour Puppeteer)
+- Système avec support Chromium (pour html-pdf-node)
 
 ### Installation
 
@@ -46,21 +49,27 @@ Un serveur web Node.js moderne qui transforme des fichiers Markdown en fiches de
    ```bash
    npm install
    ```
-   *Cette commande installe automatiquement Puppeteer avec Chromium.*
+   *Cette commande installe automatiquement html-pdf-node avec Chromium.*
 
-3. **Lancer le serveur** :
+3. **Lancer le serveur de développement** :
    ```bash
    npm start
    ```
 
-4. **Accéder à l'application** :
-   Ouvrez http://localhost:3000 dans votre navigateur.
+4. **Générer le site statique** :
+   ```bash
+   npm run build
+   ```
 
-5.  **Exporter en PDF** :
-    - Depuis la page d’accueil:
-      - Télécharger une fiche: cliquer sur l’icône à droite d’un titre
+5. **Accéder à l'application** :
+   - **Développement** : http://localhost:3000
+   - **Site statique** : Ouvrir `dist/index.html` dans votre navigateur
+
+6. **Exporter en PDF** :
+    - Depuis la page d'accueil:
+      - Télécharger une fiche: cliquer sur l'icône à droite d'un titre
       - Télécharger toutes les fiches: « Tout télécharger » en haut de liste
-    - En backend, Puppeteer génère un PDF A4 avec les styles d’impression.
+    - Les PDFs sont pré-générés lors du build pour un accès instantané.
 
 ---
 
@@ -79,6 +88,8 @@ Les PDFs sont générés automatiquement avec :
 - ✅ Licence CC0 en bas de page
 - ✅ Qualité d'impression optimisée
 - ✅ Préservation du style CSS
+- ✅ Pré-génération pour un accès instantané
+- ✅ Validation automatique des PDFs
 
 ---
 
@@ -134,11 +145,15 @@ La nouvelle fiche apparaît automatiquement sur la page d'accueil.
 fiches-nsi/
 ├── src/                    # Modules principaux
 │   ├── fiches.js          # Gestion des fiches Markdown
-│   ├── pdf.js             # Génération PDF avec Puppeteer
+│   ├── pdf.js             # Génération PDF avec html-pdf-node
 │   └── routes.js          # Routes Express
+├── scripts/               # Scripts de build
+│   └── generate-static.js # Générateur de site statique
 ├── content/               # Fiches en Markdown
 ├── views/                 # Templates EJS
 ├── public/               # Assets statiques (CSS, JS, images)
+├── dist/                 # Site statique généré
+├── .github/workflows/    # GitHub Actions
 ├── server.js             # Point d'entrée principal
 └── package.json          # Configuration npm
 ```
@@ -151,14 +166,21 @@ fiches-nsi/
 - Cache en mémoire pour les performances
 
 #### `src/pdf.js` - PDFGenerator  
-- Instance Puppeteer partagée
+- Génération PDF avec html-pdf-node
 - Génération HTML optimisée pour PDF
 - Licence CC0 automatique
+- Validation des PDFs générés
 
 #### `src/routes.js` - RoutesManager
 - Routes web et API
 - Gestion des erreurs 404
 - Endpoints de génération PDF
+
+#### `scripts/generate-static.js` - StaticSiteGenerator
+- Génération de site statique complet
+- Serveur temporaire pour génération PDF
+- Copie des assets statiques
+- Génération des pages HTML
 
 ---
 
@@ -167,7 +189,7 @@ fiches-nsi/
 ### Backend
 - **Node.js** - Runtime JavaScript
 - **Express.js** - Framework web
-- **Puppeteer** - Génération PDF via Chromium
+- **html-pdf-node** - Génération PDF via Chromium
 - **EJS** - Moteur de templates
 
 ### Processing
@@ -176,8 +198,51 @@ fiches-nsi/
 
 ### Frontend
 - **CSS Grid** - Mise en page responsive
+- **Layout Masonry** - Affichage dense en colonnes
 - **Google Fonts** - Typographie (Lato, Orbitron, Fira Code)
 - **Vanilla JS** - Interactions (recherche, affichage/masquage)
+
+### Déploiement
+- **GitHub Pages** - Hébergement de site statique
+- **GitHub Actions** - Déploiement automatique
+- **Site Statique** - Génération de fichiers HTML/CSS/JS
+
+---
+
+## 🚀 Déploiement Automatique
+
+Le projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pages :
+
+### Branches et Déploiement
+
+#### **Production** (branche `main`)
+- **Déclenchement** : Push sur `main` ou action manuelle
+- **URL** : https://babash.github.io/FichesNSI/
+- **Contenu** : Site statique complet avec PDFs
+
+#### **Test** (branches `test/*`)
+- **Déclenchement** : Push sur toute branche `test/*`
+- **URL** : https://babash.github.io/FichesNSI/{nom-branche}/
+- **Contenu** : Version de test avec PDFs
+
+### Processus de Build
+
+1. **Installation** des dépendances Node.js
+2. **Génération** du site statique avec `npm run build`
+3. **Validation** des fichiers générés (HTML, CSS, PDFs)
+4. **Déploiement** automatique sur GitHub Pages
+5. **Notification** en cas d'erreur
+
+### Commandes Locales
+
+```bash
+# Générer le site statique localement
+npm run build
+
+# Tester le site généré
+cd dist && python -m http.server 8000
+# Puis ouvrir http://localhost:8000
+```
 
 ---
 

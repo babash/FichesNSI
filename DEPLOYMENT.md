@@ -2,7 +2,7 @@
 
 ## 🚀 Déploiement Automatique
 
-Ce projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pages.
+Ce projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pages avec génération de site statique et PDFs pré-générés.
 
 ### 📋 Workflows Configurés
 
@@ -25,11 +25,14 @@ Ce projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pag
 - **Branche de déploiement** : `gh-pages` (production) / `gh-pages-test` (tests)
 
 #### Tests Automatiques
-- ✅ Démarrage du serveur
-- ✅ Accessibilité des pages principales
-- ✅ Génération PDF individuelle
-- ✅ Génération PDF complète
+- ✅ Installation des dépendances Node.js
+- ✅ Génération du site statique complet
+- ✅ Validation des fichiers HTML générés
+- ✅ Validation des fichiers CSS générés
+- ✅ Génération de tous les PDFs individuels
+- ✅ Génération du PDF combiné
 - ✅ Validation des PDFs (format et taille)
+- ✅ Déploiement sur GitHub Pages
 
 ### 📝 Utilisation
 
@@ -66,8 +69,36 @@ git push origin test/ma-nouvelle-fonctionnalite
 
 #### Si les PDFs ne se génèrent pas
 1. Vérifier que `html-pdf-node` est installé
-2. Tester l'endpoint `/fiches/liste/pdf` localement
-3. Vérifier les logs du serveur
+2. Tester la génération locale avec `npm run build`
+3. Vérifier que le serveur temporaire démarre correctement
+4. Vérifier les logs de génération dans GitHub Actions
+
+### 🔄 Processus de Génération
+
+#### Étapes du Build
+1. **Installation** des dépendances (`npm ci`)
+2. **Chargement** des fiches Markdown
+3. **Copie** des assets statiques (CSS, JS, images)
+4. **Génération** des pages HTML individuelles
+5. **Démarrage** du serveur temporaire (port 3001)
+6. **Génération** de tous les PDFs avec html-pdf-node
+7. **Arrêt** du serveur temporaire
+8. **Validation** des fichiers générés
+9. **Déploiement** sur GitHub Pages
+
+#### Structure Générée
+```
+dist/
+├── index.html                    # Page d'accueil
+├── css/                         # Styles CSS
+├── js/                          # Scripts JavaScript
+├── images/                      # Images
+├── fiches/                      # Pages des fiches
+│   ├── all.pdf                  # PDF combiné
+│   ├── {slug}.pdf              # PDFs individuels
+│   └── {slug}/index.html       # Pages HTML
+└── .nojekyll                   # Désactive Jekyll
+```
 
 ### 📊 Status des Déploiements
 
