@@ -11,8 +11,7 @@
     "express": "^4.21.2",
     "front-matter": "^4.0.2",
     "html-pdf-node": "^1.0.8",
-    "marked": "^4.3.0",
-    "puppeteer": "^23.11.1"
+    "marked": "^4.3.0"
   },
   "author": "babash",
   "license": "MIT"
