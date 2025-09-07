@@ -27,7 +27,7 @@ Ce document explique le système de déploiement multi-environnements du site Fi
 
 ## 🔄 Workflow de développement
 
-### 1. **Développement quotidien**
+### 1. **Développement et tests** (Environnement principal)
 ```bash
 # Travailler sur la branche dev
 git checkout dev
@@ -37,24 +37,32 @@ git commit -m "feat: nouvelle fonctionnalité"
 git push origin dev
 ```
 → **Déploiement automatique** sur `https://babash.github.io/FichesNSI/dev/`
+→ **Tester toutes les fonctionnalités** sur l'environnement de développement
 
-### 2. **Tests de fonctionnalités**
+### 2. **Tests de fonctionnalités spécifiques** (Optionnel)
 ```bash
-# Créer une branche de test
+# Créer une branche de test pour des expérimentations
 git checkout -b test/ma-nouvelle-fonctionnalite
 # Faire vos modifications
 git push origin test/ma-nouvelle-fonctionnalite
 ```
 → **Déploiement automatique** sur `https://babash.github.io/FichesNSI/test/ma-nouvelle-fonctionnalite/`
 
-### 3. **Mise en production**
+### 3. **Validation et mise en production**
 ```bash
-# Fusionner dev dans main
+# Une fois que vous avez validé sur dev, basculer en production
 git checkout main
 git merge dev
 git push origin main
 ```
 → **Déploiement automatique** sur `https://babash.github.io/FichesNSI/`
+
+## 🎯 **Méthode de travail recommandée**
+
+1. **Développement** : Toujours sur la branche `dev`
+2. **Tests** : Effectuer tous les tests sur `https://babash.github.io/FichesNSI/dev/`
+3. **Validation** : Une fois satisfait, fusionner `dev` → `main`
+4. **Production** : Le site de production est mis à jour automatiquement
 
 ## 📋 Processus de déploiement
 
