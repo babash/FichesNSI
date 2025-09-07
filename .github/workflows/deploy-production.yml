@@ -1,0 +1,94 @@
+name: Deploy Production
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run comprehensive tests
+      run: |
+        # Test que le serveur démarre correctement
+        npm start &
+        SERVER_PID=$!
+        sleep 10
+        
+        # Test des endpoints principaux
+        curl -f http://localhost:3000/ || exit 1
+        curl -f http://localhost:3000/fiches/liste || exit 1
+        curl -f http://localhost:3000/fiches/chaines-de-caracteres || exit 1
+        curl -f http://localhost:3000/fiches/structures-de-donnees || exit 1
+        
+        # Test des PDFs
+        curl -f http://localhost:3000/fiches/liste/pdf || exit 1
+        curl -f http://localhost:3000/fiches/all/pdf || exit 1
+        
+        # Test que les PDFs sont valides
+        curl -s http://localhost:3000/fiches/liste/pdf -o /tmp/test_liste.pdf
+        curl -s http://localhost:3000/fiches/all/pdf -o /tmp/test_all.pdf
+        
+        if ! file /tmp/test_liste.pdf | grep -q "PDF"; then
+          echo "PDF individuel generation failed"
+          exit 1
+        fi
+        
+        if ! file /tmp/test_all.pdf | grep -q "PDF"; then
+          echo "PDF complet generation failed"
+          exit 1
+        fi
+        
+        # Test de la taille des PDFs (doivent être raisonnables)
+        LISTE_SIZE=$(stat -c%s /tmp/test_liste.pdf)
+        ALL_SIZE=$(stat -c%s /tmp/test_all.pdf)
+        
+        if [ $LISTE_SIZE -lt 1000000 ]; then
+          echo "PDF individuel trop petit: $LISTE_SIZE bytes"
+          exit 1
+        fi
+        
+        if [ $ALL_SIZE -lt 2000000 ]; then
+          echo "PDF complet trop petit: $ALL_SIZE bytes"
+          exit 1
+        fi
+        
+        echo "✅ Tous les tests sont passés"
+        echo "📄 PDF individuel: $LISTE_SIZE bytes"
+        echo "📚 PDF complet: $ALL_SIZE bytes"
+        
+        # Arrêter le serveur
+        kill $SERVER_PID
+        
+    - name: Deploy to production
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        publish_branch: gh-pages
+        
+    - name: Notify deployment success
+      if: success()
+      run: |
+        echo "🎉 Déploiement en production réussi !"
+        echo "🌐 Site disponible sur: https://babash.github.io/FichesNSI/"
+        echo "📋 Tests validés:"
+        echo "  - ✅ Serveur fonctionnel"
+        echo "  - ✅ Toutes les pages accessibles"
+        echo "  - ✅ Génération PDF individuelle"
+        echo "  - ✅ Génération PDF complète"
+        echo "  - ✅ PDFs valides et de taille correcte"

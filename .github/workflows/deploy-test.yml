@@ -1,0 +1,69 @@
+name: Deploy Test Branch
+
+on:
+  push:
+    branches: [ test/* ]
+  pull_request:
+    branches: [ test/* ]
+
+jobs:
+  deploy-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Test build
+      run: |
+        # Test que le serveur démarre correctement
+        npm start &
+        SERVER_PID=$!
+        sleep 10
+        
+        # Test des endpoints principaux
+        curl -f http://localhost:3000/ || exit 1
+        curl -f http://localhost:3000/fiches/liste || exit 1
+        curl -f http://localhost:3000/fiches/liste/pdf || exit 1
+        
+        # Test que le PDF est valide
+        curl -s http://localhost:3000/fiches/liste/pdf -o /tmp/test.pdf
+        if ! file /tmp/test.pdf | grep -q "PDF"; then
+          echo "PDF generation failed"
+          exit 1
+        fi
+        
+        # Arrêter le serveur
+        kill $SERVER_PID
+        
+    - name: Deploy test branch
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        publish_branch: gh-pages-test
+        destination_dir: ${{ github.ref_name }}
+        
+    - name: Comment PR with preview link
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const branchName = context.payload.pull_request.head.ref;
+          const previewUrl = `https://babash.github.io/FichesNSI/${branchName}/`;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `🚀 **Preview déployé !**\n\nVotre branche de test est maintenant disponible à l'adresse :\n${previewUrl}\n\n📋 **Tests effectués :**\n- ✅ Serveur démarre correctement\n- ✅ Pages principales accessibles\n- ✅ Génération PDF fonctionnelle\n- ✅ PDF valide et non corrompu`
+          });
