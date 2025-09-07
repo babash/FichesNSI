@@ -8,8 +8,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 
-# Fichiers générés localement (mais pas ceux du build)
-dist/
+# Fichiers temporaires locaux
 temp/
 tmp/
 
