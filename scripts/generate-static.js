@@ -120,8 +120,8 @@ class StaticSiteGenerator {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Fiches de révision NSI</title>
-    <link rel="stylesheet" href="css/fiche-nsi.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="./css/fiche-nsi.css">
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
     <div class="index-container">
@@ -133,7 +133,7 @@ class StaticSiteGenerator {
 
         <div class="list-header" id="toggle-fiches" title="Cliquer pour afficher/masquer la liste">
             <h2>Liste des fiches disponibles</h2>
-            <a href="fiches/all.pdf" download class="download-all-link">
+            <a href="./fiches/all.pdf" download class="download-all-link">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 <span>Tout télécharger</span>
             </a>
@@ -142,8 +142,8 @@ class StaticSiteGenerator {
         <ul class="fiche-list" id="fiches-list">
             ${fiches.map(fiche => `
                 <li>
-                    <a href="fiches/${fiche.slug}" class="fiche-name">${fiche.title}</a>
-                    <a href="fiches/${fiche.slug}.pdf" download class="download-link">
+                    <a href="./fiches/${fiche.slug}" class="fiche-name">${fiche.title}</a>
+                    <a href="./fiches/${fiche.slug}.pdf" download class="download-link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" title="Télécharger en PDF"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     </a>
                 </li>
@@ -162,8 +162,8 @@ class StaticSiteGenerator {
             </div>
         </footer>
     </div>
-    <script src="js/index.js"></script>
-    <script src="js/masonry-layout.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/masonry-layout.js"></script>
 </body>
 </html>`;
   }
