@@ -168,11 +168,11 @@ class PDFGenerator {
       
       const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
       const footerTemplate = `
-        <div style="font-size:7pt;width:100%; padding: 0 8mm; color:#6c757d;">
+        <div style="font-size:6pt;width:100%; padding: 0 8mm; color:#6c757d; line-height:1.2;">
           <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-            <span style="white-space:nowrap;">Fiches NSI — ${filename}</span>
+            <span style="white-space:nowrap;">« Fiches de révision NSI » par babash — CC0 1.0</span>
             <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
-            <span style="white-space:nowrap;">Généré: ${now}</span>
+            <span style="white-space:nowrap;">${now} (CET)</span>
           </div>
         </div>`;
 
