@@ -75,53 +75,47 @@ print(nombres)    # [10, 30]
 <p>Une boucle for est l'outil principal pour parcourir les éléments d'une liste.</p>
 
 <p><h3>1. Par élément :</h3> C'est la méthode la plus simple et la plus courante. On parcourt directement chaque valeur de la liste.</p>
-<pre><code class="language-python">pizzas = ["reine", "calzone", "pepperoni"]
+<pre><code class="language-python">pizzas = ["reine", "calzone"]
 for pizza in pizzas:
   print(pizza)
 
 Affiche :
 reine
 calzone
-pepperoni
 </code></pre>
 
 <p><h3>2. Par index :</h3> Utile si vous avez besoin de la position de l'élément en plus de sa valeur. On utilise la fonction range(len(liste)). </p>
-<pre><code class="language-python">pizzas = ["reine", "calzone", "pepperoni"]
+<pre><code class="language-python">pizzas = ["reine", "calzone"]
 for i in range(len(pizzas)):
   print(f"Pizza n°{i} : {pizzas[i]}")
 
 Affiche :
 Pizza n°0 : reine
 Pizza n°1 : calzone
-Pizza n°2 : pepperoni
 </code></pre>
 
 <p><h3>3. Parcours mixte (avec enumerate) :</h3>  La méthode la plus élégante pour avoir à la fois l'index et l'élément. Elle est à privilégier par rapport à la méthode précédente.</p>
-<pre><code class="language-python">pizzas = ["reine", "calzone", "pepperoni"]
+<pre><code class="language-python">pizzas = ["reine", "calzone"]
 for index, pizza in enumerate(pizzas):
   print(f"Index {index} correspond à la {pizza}.")
 
 Affiche :
 Index 0 correspond à la reine.
 Index 1 correspond à la calzone.
-Index 2 correspond à la pepperoni.
 </code></pre>
 </section>
 
 <section>
 <h2 data-icon="🤔">Copier une liste</h2>
 <p>Si vous attribuez une liste à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.</p>
+<p>Pour faire une vraie copie, on peut utiliser la technique du slicing ou la méthode <code>.copy()</code>.</p>
 <pre><code class="language-python">liste_a = [1, 2, 3]
 liste_b = liste_a  # C'est une référence, pas une copie !
 liste_b.append(4)
 print(liste_a) # Affiche [1, 2, 3, 4] !
-</code></pre>
-
-<p>Pour faire une vraie copie, on peut utiliser la technique du slicing ou la méthode <code>.copy()</code>.</p>
-<pre><code class="language-python">liste_a = [1, 2, 3]
 liste_c = liste_a[:] # Vraie copie avec slicing
-liste_c.append(4)
-print(liste_a) # Affiche [1, 2, 3]
-print(liste_c) # Affiche [1, 2, 3, 4]
+liste_c.append(5)
+print(liste_a) # Affiche [1, 2, 3, 4]
+print(liste_c) # Affiche [1, 2, 3, 4, 5]
 </code></pre>
 </section>
