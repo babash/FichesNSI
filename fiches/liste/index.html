@@ -86,37 +86,35 @@ print(nombres)    # [10, 30]
 <pre><code class="language-python">pizzas = ["reine", "calzone"]
 for pizza in pizzas:
   print(pizza)
-</code></pre>
-<pre>Affiche :
+
+<p>Affiche :
 reine
 calzone
-</pre>
-
+</code></pre></p>
 <p><h3>2. Par index :</h3> Utile si vous avez besoin de la position de l'élément en plus de sa valeur. On utilise la fonction range(len(liste)). </p>
 <pre><code class="language-python">pizzas = ["reine", "calzone"]
 for i in range(len(pizzas)):
   print(f"Pizza n°{i} : {pizzas[i]}")
-</code></pre>
-<pre>Affiche :
+
+<p>Affiche :
 Pizza n°0 : reine
 Pizza n°1 : calzone
-</pre>
-
+</code></pre></p>
 <p><h3>3. Parcours mixte (avec enumerate) :</h3>  La méthode la plus élégante pour avoir à la fois l'index et l'élément. Elle est à privilégier par rapport à la méthode précédente.</p>
 <pre><code class="language-python">pizzas = ["reine", "calzone"]
 for index, pizza in enumerate(pizzas):
   print(f"Index {index} correspond à la {pizza}.")
-</code></pre>
-<pre>Affiche :
+
+<p>Affiche :
 Index 0 correspond à la reine.
 Index 1 correspond à la calzone.
-</pre>
+</code></pre></p>
 </section>
 
 <section>
 <h2 data-icon="🤔">Copier une liste</h2>
-<p>⚠️ Si vous attribuez une liste à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.
-Pour faire une vraie copie, on peut utiliser la technique du slicing ou la méthode <code>.copy()</code>.</p>
+<p>⚠️ Si vous attribuez une liste à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.</p>
+<p>Pour faire une vraie copie, on peut utiliser la technique du slicing ou la méthode <strong>.copy()</strong>.</p>
 <pre><code class="language-python">liste_a = [1, 2, 3]
 liste_b = liste_a  # C'est une référence, pas une copie !
 liste_b.append(4)
