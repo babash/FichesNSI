@@ -41,9 +41,9 @@ print(animaux[2:])  # Affiche ['oiseau', 'poisson']
 <p>Les listes sont mutables, ce qui signifie qu'on peut ajouter ou supprimer des éléments après leur création.</p>
 
 <h3>Ajouter des éléments</h3>
--><span>append(element)</span> : ajoute un élément à la fin de la liste.
--><span>insert(index, element)</span> : insère un élément à un index précis.
--><span>extend(iterable)</span> : ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.
+<p><span>append(element)</span> : ajoute un élément à la fin de la liste.</p>
+<p><span>insert(index, element)</span> : insère un élément à un index précis.</p>
+<p><span>extend(iterable)</span> : ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.</p>
 <pre><code class="language-python">jours = ["lundi", "mardi"]
 jours.append("jeudi")
 print(jours) # ['lundi', 'mardi', 'jeudi']
