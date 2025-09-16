@@ -10,8 +10,6 @@ footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
 ma_liste = []
 # Création une liste avec des éléments
 fruits = ["pomme", "banane", "orange"]
-# Une liste peut contenir des types différents
-melange = ["Python", 2024, True, 3.14]
 # Obtenir la longueur d'une liste avec len()
 longueur = len(fruits)
 print(f"La liste 'fruits' contient {longueur} éléments.") 
@@ -76,7 +74,7 @@ print(nombres)    # [10, 30]
 for pizza in pizzas:
   print(pizza)
 </code></pre>
-<pre><code class="language-python">
+<pre><code>
 Affiche :
 reine
 calzone
@@ -87,7 +85,7 @@ calzone
 for i in range(len(pizzas)):
   print(f"Pizza n°{i} : {pizzas[i]}")
 </code></pre>
-<pre><code class="language-python">
+<pre><code>
 Affiche :
 Pizza n°0 : reine
 Pizza n°1 : calzone
@@ -98,7 +96,7 @@ Pizza n°1 : calzone
 for index, pizza in enumerate(pizzas):
   print(f"Index {index} correspond à la {pizza}.")
 </code></pre>
-<pre><code class="language-python">
+<pre><code>
 Affiche :
 Index 0 correspond à la reine.
 Index 1 correspond à la calzone.
