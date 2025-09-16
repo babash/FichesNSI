@@ -30,7 +30,8 @@ print(animaux[2])   # Affiche "oiseau"
 # Indexation négative
 print(animaux[-1])  # Affiche "poisson"
 print(animaux[-3])  # Affiche "chat"
-# Le slicing : Extraire une partie de la liste [début:fin] : La fin est exclue !
+# Le slicing : Extraire une partie de la liste [début:fin]
+# ⚠️ La fin est exclue !
 print(animaux[1:3]) # Affiche ['chat', 'oiseau']
 print(animaux[2:])  # Affiche ['oiseau', 'poisson']
 </code></pre>
@@ -47,14 +48,15 @@ print(animaux[2:])  # Affiche ['oiseau', 'poisson']
 <li><span>insert(index, element)</span> : insère un élément à un index précis.</li>
 <li><span>extend(iterable)</span> : ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.</li>
 </ul>
-<pre><code class="language-python">jours = ["lundi", "mardi", "jeudi"]
-jours.append("vendredi")
-print(jours)   # ['lundi', 'mardi', 'jeudi', 'vendredi']
+<pre><code class="language-python">jours = ["lundi", "mardi"]
+jours.append("jeudi")
+print(jours)   # ['lundi', 'mardi', 'jeudi']
 jours.insert(2, "mercredi")
-print(jours)   # ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi']
-week_end = ["samedi", "dimanche"]
+print(jours)   # ['lundi', 'mardi', 'mercredi', 'jeudi']
+week_end = ["vendrei", "samedi"]
 jours.extend(week_end)
-print(jours)   # ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche']
+print(jours)
+# Affiche : ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi']
 </code></pre>
 
 <h3>Supprimer des éléments</h3>
