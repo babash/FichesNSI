@@ -5,7 +5,7 @@ footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
 
 <section>
 <h2 data-icon="💡">Définition et Création</h2>
-<p>Une liste est une collection de données ordonnée et modifiable. C'est l'une des structures de données les plus importantes en Python. Elle est reconnaissable par les crochets <spam>[]</spam> qui l'entourent. On peut y stocker des éléments de types différents (nombres, chaînes de caractères, booléens, etc.).</p>
+<p>Une liste est une collection de données ordonnée et modifiable. C'est l'une des structures de données les plus importantes en Python. Elle est reconnaissable par les crochets <strong>[]</strong> qui l'entourent. On peut y stocker des éléments de types différents (nombres, chaînes de caractères, booléens, etc.).</p>
 <pre><code class="language-python"># Création une liste vide
 ma_liste = []
 # Création une liste avec des éléments
@@ -21,7 +21,7 @@ print(f"La liste 'fruits' contient {longueur} éléments.")
 
 <section>
 <h2 data-icon="🧭">Indexation et Accès aux éléments</h2>
-<p>Chaque élément d'une liste possède une position, appelée index. En Python, <spam>l'indexation commence à 0<spam>.</p>
+<p>Chaque élément d'une liste possède une position, appelée index. En Python, ⚠️<strong>l'indexation commence à 0<strong>.</p>
 <p>On peut aussi utiliser des index négatifs pour accéder aux éléments à partir de la fin de la liste. L'index -1 correspond au dernier élément, -2 à l'avant-dernier, et ainsi de suite.</p>
 <pre><code class="language-python">animaux = ["chien", "chat", "oiseau", "poisson"]
 # Indexation positive
@@ -41,9 +41,9 @@ print(animaux[2:])  # Affiche ['oiseau', 'poisson']
 <p>Les listes sont mutables, ce qui signifie qu'on peut ajouter ou supprimer des éléments après leur création.</p>
 
 <h3>Ajouter des éléments</h3>
-<p><span>append(element)</span> : ajoute un élément à la fin de la liste.</p>
-<p><span>insert(index, element)</span> : insère un élément à un index précis.</p>
-<p><span>extend(iterable)</span> : ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.</p>
+<p><strong>append(element)</strong> : ajoute un élément à la fin de la liste.</br>
+<strong>insert(index, element)</strong> : insère un élément à un index précis.</br>
+<strong>extend(iterable)</strong> : ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.</p>
 <pre><code class="language-python">jours = ["lundi", "mardi"]
 jours.append("jeudi")
 print(jours) # ['lundi', 'mardi', 'jeudi']
@@ -52,16 +52,16 @@ print(jours) # ['lundi', 'mardi', 'mercredi', 'jeudi']
 week_end = ["vendrei", "samedi"]
 jours.extend(week_end)
 print(jours)
-# Affiche : ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi']
+# ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi']
 </code></pre>
 
 <h3>Supprimer des éléments</h3>
-<span>pop(index)</span> : supprime l'élément à l'index donné et le renvoie. Si l'index est omis, il supprime et renvoie le dernier élément.
+<strong>pop(index)</strong> : supprime l'élément à l'index donné et le renvoie. Si l'index est omis, il supprime et renvoie le dernier élément.
 <pre><code class="language-python">nombres = [10, 20, 30, 40]
 # Supprimer le dernier élément et le stocker
 element_supprime = nombres.pop()
 print(f"Élément supprimé : {element_supprime}")
-# Affiche : Élément supprimé : 40
+# Élément supprimé : 40
 print(nombres)    # [10, 30]
 </code></pre>
 
@@ -75,7 +75,8 @@ print(nombres)    # [10, 30]
 <pre><code class="language-python">pizzas = ["reine", "calzone"]
 for pizza in pizzas:
   print(pizza)
-
+</code></pre>
+<pre><code class="language-python">
 Affiche :
 reine
 calzone
@@ -85,7 +86,8 @@ calzone
 <pre><code class="language-python">pizzas = ["reine", "calzone"]
 for i in range(len(pizzas)):
   print(f"Pizza n°{i} : {pizzas[i]}")
-
+</code></pre>
+<pre><code class="language-python">
 Affiche :
 Pizza n°0 : reine
 Pizza n°1 : calzone
@@ -95,7 +97,8 @@ Pizza n°1 : calzone
 <pre><code class="language-python">pizzas = ["reine", "calzone"]
 for index, pizza in enumerate(pizzas):
   print(f"Index {index} correspond à la {pizza}.")
-
+</code></pre>
+<pre><code class="language-python">
 Affiche :
 Index 0 correspond à la reine.
 Index 1 correspond à la calzone.
@@ -104,7 +107,7 @@ Index 1 correspond à la calzone.
 
 <section>
 <h2 data-icon="🤔">Copier une liste</h2>
-<p>Si vous attribuez une liste à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.</p>
+<p>⚠️ Si vous attribuez une liste à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.</p>
 <p>Pour faire une vraie copie, on peut utiliser la technique du slicing ou la méthode <code>.copy()</code>.</p>
 <pre><code class="language-python">liste_a = [1, 2, 3]
 liste_b = liste_a  # C'est une référence, pas une copie !
