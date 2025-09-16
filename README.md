@@ -51,7 +51,7 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
    ```
    *Cette commande installe automatiquement html-pdf-node avec Chromium.*
 
-3. **Lancer le serveur de développement** :
+3. **Lancer le serveur local** :
    ```bash
    npm start
    ```
@@ -220,21 +220,12 @@ Le projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pag
 - **URL** : https://babash.github.io/FichesNSI/
 - **Contenu** : Site statique complet avec PDFs
 
-#### **Développement** (branche `dev`)
-- **Déclenchement** : Push sur `dev`
-- **URL** : https://babash.github.io/FichesNSI/dev/
-- **Contenu** : Environnement de développement pour tests
-
-#### **Test** (branches `test/*`)
-- **Déclenchement** : Push sur toute branche `test/*`
-- **URL** : https://babash.github.io/FichesNSI/{nom-branche}/
-- **Contenu** : Version de test avec PDFs
 
 ### 🎯 Méthode de travail recommandée
 
-1. **Développement** : Travailler sur la branche `dev`
-2. **Tests** : Tester sur `https://babash.github.io/FichesNSI/dev/`
-3. **Production** : Fusionner `dev` → `main` une fois validé
+1. Créer une branche de fonctionnalité depuis `main`
+2. Ouvrir une Pull Request vers `main` avec CI verte
+3. Merger vers `main` pour déclencher la production
 
 ### Processus de Build
 
