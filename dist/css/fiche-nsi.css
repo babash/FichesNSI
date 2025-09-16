@@ -24,11 +24,13 @@
   }
   
   .columns-wrapper {
-    gap: 0; /* Suppression complète de l'espace pour l'impression */
+    gap: 1mm; /* Espacement minimal pour l'impression */
   }
   
   .column {
     gap: 0.05rem; /* Espacement ultra-minimal entre sections */
+    background-color: rgba(248, 249, 250, 0.2); /* Fond gris très léger pour impression */
+    padding: 0.1rem; /* Padding minimal pour impression */
   }
   
   section {
@@ -145,17 +147,19 @@ h1 {
 /* Layout principal pour l'affichage web - OPTIMISÉ DENSITÉ */
 .container, .index-container {
   max-width: 210mm; /* Largeur A4 */
+  min-height: 297mm; /* Hauteur A4 */
   margin: 0 auto; /* Centrage sur le web */
-  padding: 0 10px; /* Padding réduit */
+  padding: 0; /* Suppression du padding pour taille exacte A4 */
   display: flex;
   flex-direction: column;
   gap: 0.2rem; /* Espacement minimal */
+  box-sizing: border-box;
 }
 
 /* Wrapper pour les deux colonnes */
 .columns-wrapper {
   display: flex;
-  gap: 0; /* Suppression de l'espace entre colonnes */
+  gap: 2mm; /* Espacement visuel entre colonnes */
   align-items: flex-start;
   min-height: 0; /* Permet aux colonnes de se rétrécir */
 }
@@ -167,6 +171,9 @@ h1 {
   flex-direction: column;
   gap: 0.2rem; /* Espacement minimal entre sections */
   min-width: 0; /* Permet aux colonnes de se rétrécir */
+  background-color: rgba(248, 249, 250, 0.3); /* Fond gris très léger */
+  padding: 0.3rem; /* Padding léger pour le fond */
+  border-radius: 4px; /* Coins légèrement arrondis */
 }
 
 section {
