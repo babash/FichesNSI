@@ -5,7 +5,7 @@ footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
 
 <section>
 <h2 data-icon="💡">Définition et Création</h2>
-<p>Une liste est une collection de données ordonnée et modifiable. C'est l'une des structures de données les plus importantes en Python. Elle est reconnaissable par les crochets <strong>[]</strong> qui l'entourent. On peut y stocker des éléments de types différents (nombres, chaînes de caractères, booléens, etc.).</p>
+<p>Une liste est une collection de données ordonnée et modifiable, on parle de <strong>Mutable</strong>. Elle est reconnaissable par les crochets <strong>[]</strong> qui l'entourent. On peut y stocker des éléments de types différents (nombres, chaînes de caractères, booléens, etc.).</p>
 <pre><code class="language-python"># Création une liste vide
 ma_liste = []
 # Création une liste avec des éléments
