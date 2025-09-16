@@ -90,30 +90,30 @@ print(nombres)    # [10, 30]
 for pizza in pizzas:
   print(pizza)
 </code></pre>
-<pre><code>Affiche :
+<pre>Affiche :
 reine
 calzone
-</code></pre>
+</pre>
 
 <p><h3>2. Par index :</h3> Utile si vous avez besoin de la position de l'élément en plus de sa valeur. On utilise la fonction range(len(liste)). </p>
 <pre><code class="language-python">pizzas = ["reine", "calzone"]
 for i in range(len(pizzas)):
   print(f"Pizza n°{i} : {pizzas[i]}")
 </code></pre>
-<pre><code>Affiche :
+<pre>Affiche :
 Pizza n°0 : reine
 Pizza n°1 : calzone
-</code></pre>
+</pre>
 
 <p><h3>3. Parcours mixte (avec enumerate) :</h3>  La méthode la plus élégante pour avoir à la fois l'index et l'élément. Elle est à privilégier par rapport à la méthode précédente.</p>
 <pre><code class="language-python">pizzas = ["reine", "calzone"]
 for index, pizza in enumerate(pizzas):
   print(f"Index {index} correspond à la {pizza}.")
 </code></pre>
-<pre><code>Affiche :
+<pre>Affiche :
 Index 0 correspond à la reine.
 Index 1 correspond à la calzone.
-</code></pre>
+</pre>
 </section>
 
 <section>
