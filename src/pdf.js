@@ -47,7 +47,6 @@ class PDFGenerator {
             </div>
             ${fiche.content}
           </article>
-          ${fiche.footer ? `<div class="footnote">${fiche.footer}</div>` : ''}
         </main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script>
@@ -110,7 +109,6 @@ class PDFGenerator {
             </div>
             ${fiche.content}
           </article>
-          ${fiche.footer ? `<div class="footnote">${fiche.footer}</div>` : ''}
         </section>
         <div style="page-break-after: always;"></div>
       `;
