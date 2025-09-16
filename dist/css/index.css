@@ -22,6 +22,8 @@ body {
     /* La couleur de fond est maintenant sur HTML, on s'assure que le body est bien transparent */
     background-color: transparent;
     color: #333;
+    width: auto !important; /* Override des styles des fiches */
+    height: auto !important; /* Override des styles des fiches */
 }
 
 .index-container {
@@ -34,6 +36,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Ombre portée subtile */
     /* On réinitialise la grille pour la page d'accueil */
     display: block;
+    min-height: auto !important; /* Override des styles des fiches */
 }
 
 .search-container {
