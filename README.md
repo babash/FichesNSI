@@ -274,3 +274,4 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 ---
 
 *Généré avec ❤️ pour la communauté NSI*
+<!-- maintenance: trigger production deploy  -->
