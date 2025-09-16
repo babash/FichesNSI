@@ -1,54 +1,50 @@
+# ℹ️ Note importante
+
+L'environnement de développement et les déploiements de test ont été supprimés. Ce document concerne désormais uniquement la production.
+
 # 🚀 Guide de Workflow - Développement Fiches NSI
 
 ## 🎯 **Méthode de travail établie**
 
 ### **Principe :**
-- **Développement** → Branche `dev` → Tests sur `https://babash.github.io/FichesNSI/dev/`
 - **Production** → Branche `main` → Site final sur `https://babash.github.io/FichesNSI/`
 
 ---
 
 ## 📝 **Workflow quotidien**
 
-### **1. Commencer le développement**
+### **1. Créer une branche de fonctionnalité**
 ```bash
-git checkout dev
+git checkout -b feature/ma-fonctionnalite
 # Faire vos modifications...
 ```
 
-### **2. Tester vos modifications**
+### **2. Ouvrir une Pull Request vers main**
 ```bash
 git add .
 git commit -m "feat: description de vos modifications"
-git push origin dev
+git push origin feature/ma-fonctionnalite
 ```
-→ **Attendre 2-3 minutes** pour le déploiement automatique
-→ **Tester** sur `https://babash.github.io/FichesNSI/dev/`
 
 ### **3. Valider et mettre en production**
 ```bash
-# Une fois satisfait des tests sur dev
+# Après revue et CI
 git checkout main
-git merge dev
+git merge --no-ff feature/ma-fonctionnalite
 git push origin main
 ```
-→ **Attendre 2-3 minutes** pour le déploiement automatique
-→ **Vérifier** sur `https://babash.github.io/FichesNSI/`
+→ **Déploiement automatique** sur `https://babash.github.io/FichesNSI/`
 
 ---
 
 ## 🔍 **Vérifications importantes**
 
 ### **Avant de mettre en production :**
-- [ ] Site de dev fonctionne correctement
-- [ ] CSS et JS se chargent sans erreur
-- [ ] PDFs se téléchargent correctement
-- [ ] Toutes les fiches s'affichent bien
-- [ ] Layout masonry fonctionne
-- [ ] Responsive design OK
+- [ ] Build local OK (HTML/CSS/JS)
+- [ ] PDFs générés et valides
+- [ ] Layout masonry et responsive OK
 
-### **URLs de test :**
-- **Développement** : `https://babash.github.io/FichesNSI/dev/`
+### **URL**
 - **Production** : `https://babash.github.io/FichesNSI/`
 
 ---
@@ -81,10 +77,8 @@ gh run list
 
 ## ⚠️ **Points d'attention**
 
-1. **Toujours tester sur dev avant de mettre en production**
-2. **Attendre que le déploiement se termine** (2-3 minutes)
-3. **Vérifier que les PDFs se génèrent correctement**
-4. **S'assurer que le CSS/JS se charge sans erreur**
+1. **Vérifier que les PDFs se génèrent correctement**
+2. **S'assurer que le CSS/JS se charge sans erreur**
 
 ---
 

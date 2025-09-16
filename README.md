@@ -1,3 +1,7 @@
+# ℹ️ Note importante
+
+L'environnement de développement (site de prévisualisation) et les déploiements de test ont été supprimés. Le dépôt conserve uniquement le site de production.
+
 # 📚 Générateur de Fiches de Révision NSI
 
 Un générateur de site statique moderne qui transforme des fichiers Markdown en fiches de révision NSI élégantes avec génération automatique de PDF. Optimisé pour l'impression, la distribution et le déploiement sur GitHub Pages.
@@ -62,7 +66,7 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
    ```
 
 5. **Accéder à l'application** :
-   - **Développement** : http://localhost:3000
+   - **Serveur local** : http://localhost:3000
    - **Site statique** : Ouvrir `dist/index.html` dans votre navigateur
 
 6. **Exporter en PDF** :
@@ -209,7 +213,7 @@ fiches-nsi/
 
 ---
 
-## 🚀 Déploiement Automatique
+## 🚀 Déploiement Automatique (Production uniquement)
 
 Le projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pages :
 
@@ -220,21 +224,11 @@ Le projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pag
 - **URL** : https://babash.github.io/FichesNSI/
 - **Contenu** : Site statique complet avec PDFs
 
-#### **Développement** (branche `dev`)
-- **Déclenchement** : Push sur `dev`
-- **URL** : https://babash.github.io/FichesNSI/dev/
-- **Contenu** : Environnement de développement pour tests
-
-#### **Test** (branches `test/*`)
-- **Déclenchement** : Push sur toute branche `test/*`
-- **URL** : https://babash.github.io/FichesNSI/{nom-branche}/
-- **Contenu** : Version de test avec PDFs
-
 ### 🎯 Méthode de travail recommandée
 
-1. **Développement** : Travailler sur la branche `dev`
-2. **Tests** : Tester sur `https://babash.github.io/FichesNSI/dev/`
-3. **Production** : Fusionner `dev` → `main` une fois validé
+1. Créer une branche de fonctionnalité depuis `main`
+2. Ouvrir une PR vers `main` avec CI verte
+3. Merger vers `main` pour déclencher la production
 
 ### Processus de Build
 
