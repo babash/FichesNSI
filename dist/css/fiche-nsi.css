@@ -13,8 +13,8 @@
   body { 
     margin: 0; 
     padding: 0;
-    font-size: 8pt; /* Taille très réduite pour densité maximale */
-    line-height: 1.1; /* Interligne minimal */
+    font-size: 7pt; /* Taille encore plus réduite pour densité maximale */
+    line-height: 1.05; /* Interligne ultra-minimal */
   }
   
   .container {
@@ -24,17 +24,17 @@
   }
   
   .columns-wrapper {
-    gap: 3mm; /* Espacement minimal pour l'impression */
+    gap: 2mm; /* Espacement ultra-minimal pour l'impression */
   }
   
   .column {
-    gap: 0.1rem; /* Espacement minimal entre sections */
+    gap: 0.05rem; /* Espacement ultra-minimal entre sections */
   }
   
   section {
     page-break-inside: avoid;
-    margin-bottom: 0.2em; /* Marge minimale */
-    padding: 0.2rem; /* Padding minimal */
+    margin-bottom: 0.1em; /* Marge ultra-minimale */
+    padding: 0.15rem; /* Padding ultra-minimal */
   }
   
   h1, h2, h3 {
@@ -42,46 +42,47 @@
   }
   
   h1 {
-    font-size: 1rem; /* Taille très réduite pour l'impression */
-    margin-bottom: 0.2rem;
-  }
-  
-  h2 {
-    font-size: 0.8rem; /* Taille très réduite */
-    padding: 0.1rem 0.3rem 0.1rem 1.2rem; /* Padding minimal */
+    font-size: 0.9rem; /* Taille ultra-réduite pour l'impression */
     margin-bottom: 0.1rem;
   }
   
+  h2 {
+    font-size: 0.7rem; /* Taille ultra-réduite */
+    padding: 0.08rem 0.2rem 0.08rem 1rem; /* Padding ultra-minimal */
+    margin-bottom: 0.05rem;
+  }
+  
   h2::before {
-    left: 0.3rem;
-    font-size: 0.7rem;
+    left: 0.25rem;
+    font-size: 0.6rem;
   }
   
   pre {
     page-break-inside: avoid;
-    font-size: 6pt; /* Taille ultra-réduite pour le code */
-    padding: 0.2rem; /* Padding minimal */
-    margin: 0.1rem 0;
+    font-size: 3pt; /* Taille ultra-compacte pour le code */
+    padding: 0.08rem; /* Padding ultra-minimal */
+    margin: 0.03rem 0;
+    line-height: 0.95; /* Interligne ultra-minimal */
   }
   
   pre::before {
-    font-size: 5pt;
-    margin-bottom: 0.05rem;
+    font-size: 2.5pt; /* Taille ultra-réduite */
+    margin-bottom: 0.01rem;
   }
   
   ul {
-    padding-left: 0.8rem; /* Padding minimal */
-    margin: 0.1rem 0;
+    padding-left: 0.6rem; /* Padding ultra-minimal */
+    margin: 0.05rem 0;
   }
   
   li {
-    margin-bottom: 0.05rem; /* Espacement minimal entre éléments */
-    font-size: 7pt;
+    margin-bottom: 0.02rem; /* Espacement ultra-minimal entre éléments */
+    font-size: 6pt;
   }
   
   .footnote {
-    font-size: 6pt;
-    margin-top: 0.1rem;
+    font-size: 5pt;
+    margin-top: 0.05rem;
   }
 }
 
@@ -204,21 +205,22 @@ h2::before {
 
 pre {
   background: var(--code-bg);
-  padding: 0.3rem; /* Padding minimal */
-  border-radius: 3px; /* Border radius minimal */
+  padding: 0.2rem; /* Padding encore plus minimal */
+  border-radius: 2px; /* Border radius minimal */
   overflow-x: auto;
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem; /* Taille très réduite pour le code */
+  font-size: 0.6rem; /* Taille ultra-réduite pour le code */
   position: relative;
-  margin: 0.2rem 0; /* Marges minimales */
+  margin: 0.1rem 0; /* Marges minimales */
+  line-height: 1.1; /* Interligne réduit */
 }
 
 pre::before {
   content: "root@python:~$ ";
   color: #555;
   display: block;
-  margin-bottom: 0.1rem; /* Marge réduite */
-  font-size: 0.6rem; /* Taille réduite */
+  margin-bottom: 0.05rem; /* Marge minimale */
+  font-size: 0.5rem; /* Taille ultra-réduite */
 }
 
 code {
@@ -271,6 +273,7 @@ li {
   }
   
   pre {
-    font-size: 0.6rem; /* Code plus petit sur mobile */
+    font-size: 0.5rem; /* Code ultra-petit sur mobile */
+    padding: 0.15rem;
   }
 }
