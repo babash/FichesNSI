@@ -37,10 +37,40 @@ class PDFGenerator {
         <main>
           <header><h1>${visibleTitle}</h1></header>
           <article class="container">
+            <div class="columns-wrapper">
+              <div class="column" id="column-left">
+                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+              </div>
+              <div class="column" id="column-right">
+                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+              </div>
+            </div>
             ${fiche.content}
           </article>
           ${fiche.footer ? `<div class="footnote">${fiche.footer}</div>` : ''}
         </main>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        <script>
+        // Script pour répartir automatiquement les sections en deux colonnes
+        document.addEventListener('DOMContentLoaded', function() {
+          const container = document.querySelector('.container');
+          const leftColumn = document.getElementById('column-left');
+          const rightColumn = document.getElementById('column-right');
+          
+          // Récupérer toutes les sections
+          const sections = container.querySelectorAll('section');
+          
+          // Répartir les sections alternativement entre les deux colonnes
+          sections.forEach((section, index) => {
+            if (index % 2 === 0) {
+              leftColumn.appendChild(section);
+            } else {
+              rightColumn.appendChild(section);
+            }
+          });
+        });
+        </script>
       </body>
       </html>`;
   }
@@ -55,6 +85,14 @@ class PDFGenerator {
         <section class="fiche">
           <header><h1>${visibleTitle}</h1></header>
           <article class="container">
+            <div class="columns-wrapper">
+              <div class="column" id="column-left-${fiche.slug}">
+                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+              </div>
+              <div class="column" id="column-right-${fiche.slug}">
+                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+              </div>
+            </div>
             ${fiche.content}
           </article>
           ${fiche.footer ? `<div class="footnote">${fiche.footer}</div>` : ''}
@@ -70,9 +108,38 @@ class PDFGenerator {
         <meta charset="UTF-8">
         <title>Toutes les fiches NSI</title>
         <link rel="stylesheet" href="/css/fiche-nsi.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
       </head>
       <body>
         <main class="wrapper">${fichesHtml}</main>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        <script>
+        // Script pour répartir automatiquement les sections en deux colonnes pour toutes les fiches
+        document.addEventListener('DOMContentLoaded', function() {
+          const fiches = document.querySelectorAll('.fiche');
+          
+          fiches.forEach(fiche => {
+            const container = fiche.querySelector('.container');
+            const leftColumn = fiche.querySelector('[id^="column-left"]');
+            const rightColumn = fiche.querySelector('[id^="column-right"]');
+            
+            if (container && leftColumn && rightColumn) {
+              // Récupérer toutes les sections de cette fiche
+              const sections = container.querySelectorAll('section');
+              
+              // Répartir les sections alternativement entre les deux colonnes
+              sections.forEach((section, index) => {
+                if (index % 2 === 0) {
+                  leftColumn.appendChild(section);
+                } else {
+                  rightColumn.appendChild(section);
+                }
+              });
+            }
+          });
+        });
+        </script>
       </body>
       </html>`;
   }
@@ -94,7 +161,17 @@ class PDFGenerator {
           left: '10mm'
         },
         displayHeaderFooter: false,
-        timeout: 30000
+        timeout: 60000, // Timeout augmenté pour laisser le temps au JS de s'exécuter
+        waitUntil: 'networkidle0', // Attendre que le réseau soit inactif
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--no-first-run',
+          '--no-zygote',
+          '--disable-gpu'
+        ]
       };
 
       const pdfBuffer = await htmlPdf.generatePdf({ url }, options);
