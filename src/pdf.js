@@ -178,6 +178,7 @@ class PDFGenerator {
         displayHeaderFooter: false,
         timeout: 60000, // Timeout augmenté pour laisser le temps au JS de s'exécuter
         waitUntil: 'networkidle0', // Attendre que le réseau soit inactif
+        preferCSSPageSize: false, // Ignorer les marges CSS @page
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
@@ -185,7 +186,13 @@ class PDFGenerator {
           '--disable-accelerated-2d-canvas',
           '--no-first-run',
           '--no-zygote',
-          '--disable-gpu'
+          '--disable-gpu',
+          '--disable-web-security',
+          '--disable-features=VizDisplayCompositor',
+          '--run-all-compositor-stages-before-draw',
+          '--disable-background-timer-throttling',
+          '--disable-backgrounding-occluded-windows',
+          '--disable-renderer-backgrounding'
         ]
       };
 

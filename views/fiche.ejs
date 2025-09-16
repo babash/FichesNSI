@@ -21,41 +21,21 @@
 <%- include('partials/footer') %>
 
 <script>
-// Script pour répartir intelligemment les sections en deux colonnes
+// Script pour répartir automatiquement les sections en deux colonnes
 document.addEventListener('DOMContentLoaded', function() {
   const container = document.querySelector('.container');
   const leftColumn = document.getElementById('column-left');
   const rightColumn = document.getElementById('column-right');
   
   // Récupérer toutes les sections
-  const sections = Array.from(container.querySelectorAll('section'));
+  const sections = container.querySelectorAll('section');
   
-  // Fonction pour calculer la hauteur d'une colonne
-  function getColumnHeight(column) {
-    return column.scrollHeight;
-  }
-  
-  // Répartir les sections de manière équilibrée
-  let leftHeight = 0;
-  let rightHeight = 0;
-  
+  // Répartir les sections alternativement entre les deux colonnes
   sections.forEach((section, index) => {
-    // Mesurer temporairement la section
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.visibility = 'hidden';
-    tempDiv.appendChild(section.cloneNode(true));
-    document.body.appendChild(tempDiv);
-    const sectionHeight = tempDiv.scrollHeight;
-    document.body.removeChild(tempDiv);
-    
-    // Ajouter la section à la colonne la plus courte
-    if (leftHeight <= rightHeight) {
+    if (index % 2 === 0) {
       leftColumn.appendChild(section);
-      leftHeight += sectionHeight;
     } else {
       rightColumn.appendChild(section);
-      rightHeight += sectionHeight;
     }
   });
 });
