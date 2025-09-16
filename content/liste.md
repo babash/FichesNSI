@@ -74,8 +74,7 @@ print(nombres)    # [10, 30]
 for pizza in pizzas:
   print(pizza)
 </code></pre>
-<pre><code>
-Affiche :
+<pre><code>Affiche :
 reine
 calzone
 </code></pre>
@@ -85,8 +84,7 @@ calzone
 for i in range(len(pizzas)):
   print(f"Pizza n°{i} : {pizzas[i]}")
 </code></pre>
-<pre><code>
-Affiche :
+<pre><code>Affiche :
 Pizza n°0 : reine
 Pizza n°1 : calzone
 </code></pre>
@@ -96,8 +94,7 @@ Pizza n°1 : calzone
 for index, pizza in enumerate(pizzas):
   print(f"Index {index} correspond à la {pizza}.")
 </code></pre>
-<pre><code>
-Affiche :
+<pre><code>Affiche :
 Index 0 correspond à la reine.
 Index 1 correspond à la calzone.
 </code></pre>
