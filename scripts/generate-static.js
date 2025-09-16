@@ -78,8 +78,8 @@ class StaticSiteGenerator {
         // URL pour générer le PDF
         const url = `http://localhost:${this.tempPort}/fiches/${fiche.slug}/html-for-pdf`;
         
-        // Générer le PDF
-        const pdfBuffer = await this.pdfGenerator.generatePDF(url, `${fiche.slug}.pdf`);
+        // Générer le PDF avec le footer spécifique de la fiche
+        const pdfBuffer = await this.pdfGenerator.generatePDF(url, `${fiche.slug}.pdf`, fiche.footer);
         
         // Sauvegarder le PDF
         const pdfPath = path.join(pdfDir, `${fiche.slug}.pdf`);

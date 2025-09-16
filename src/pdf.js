@@ -162,15 +162,16 @@ class PDFGenerator {
   /**
    * Génère un PDF depuis une URL
    */
-  async generatePDF(url, filename) {
+  async generatePDF(url, filename, ficheFooter = null) {
     try {
       console.log(`[PDF] Génération de ${filename} depuis ${url}...`);
       
       const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+      const footerText = ficheFooter || 'Fiches de révision NSI';
       const footerTemplate = `
         <div style="font-size:6pt;width:100%; padding: 0 8mm; color:#6c757d; line-height:1.2;">
           <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-            <span style="white-space:nowrap;">« Fiches de révision NSI » par babash — CC0 1.0</span>
+            <span style="white-space:nowrap;">${footerText}</span>
             <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
             <span style="white-space:nowrap;">${now} (CET)</span>
           </div>
