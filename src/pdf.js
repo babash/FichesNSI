@@ -155,10 +155,10 @@ class PDFGenerator {
         format: 'A4',
         printBackground: true,
         margin: {
-          top: '10mm',
-          right: '10mm',
-          bottom: '10mm',
-          left: '10mm'
+          top: '0mm',
+          right: '0mm',
+          bottom: '0mm',
+          left: '0mm'
         },
         displayHeaderFooter: false,
         timeout: 60000, // Timeout augmenté pour laisser le temps au JS de s'exécuter
