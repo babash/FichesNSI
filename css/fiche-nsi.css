@@ -16,6 +16,10 @@
     font-size: 7pt; /* Taille ultra-dense pour cheatsheet */
     line-height: 1.05; /* Interligne ultra-minimal */
   }
+  /* Réserver de l'espace pour le footer template puppeteer */
+  .container {
+    padding-bottom: 14mm;
+  }
   
   .container {
     max-width: none;
