@@ -11,6 +11,14 @@
 <main>
   <header><h1>Les Listes en Python</h1></header>
   <article class="container">
+    <div class="columns-wrapper">
+      <div class="column" id="column-left">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+      <div class="column" id="column-right">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+    </div>
     <section>
 <h2 data-icon="💡">Définition et Création</h2>
 <p>Une liste est une collection de données ordonnée et modifiable. C'est l'une des structures de données les plus importantes en Python. Elle est reconnaissable par les crochets <spam>[]</spam> qui l'entourent. On peut y stocker des éléments de types différents (nombres, chaînes de caractères, booléens, etc.).</p>
@@ -151,5 +159,25 @@ print(liste_c) # Affiche [1, 2, 3, 4]
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>
+  <script>
+// Script pour répartir automatiquement les sections en deux colonnes
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.container');
+  const leftColumn = document.getElementById('column-left');
+  const rightColumn = document.getElementById('column-right');
+  
+  // Récupérer toutes les sections
+  const sections = container.querySelectorAll('section');
+  
+  // Répartir les sections alternativement entre les deux colonnes
+  sections.forEach((section, index) => {
+    if (index % 2 === 0) {
+      leftColumn.appendChild(section);
+    } else {
+      rightColumn.appendChild(section);
+    }
+  });
+});
+</script>
 </body>
 </html>

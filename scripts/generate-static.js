@@ -187,6 +187,14 @@ class StaticSiteGenerator {
 <main>
   <header><h1>${visibleTitle}</h1></header>
   <article class="container">
+    <div class="columns-wrapper">
+      <div class="column" id="column-left">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+      <div class="column" id="column-right">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+    </div>
     ${fiche.content}
   </article>
   
@@ -196,6 +204,26 @@ class StaticSiteGenerator {
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>
+  <script>
+// Script pour répartir automatiquement les sections en deux colonnes
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.container');
+  const leftColumn = document.getElementById('column-left');
+  const rightColumn = document.getElementById('column-right');
+  
+  // Récupérer toutes les sections
+  const sections = container.querySelectorAll('section');
+  
+  // Répartir les sections alternativement entre les deux colonnes
+  sections.forEach((section, index) => {
+    if (index % 2 === 0) {
+      leftColumn.appendChild(section);
+    } else {
+      rightColumn.appendChild(section);
+    }
+  });
+});
+</script>
 </body>
 </html>`;
   }
