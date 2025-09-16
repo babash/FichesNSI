@@ -42,10 +42,8 @@ print(f"La liste 'fruits' contient {longueur} éléments.")
 <pre><code class="language-python">animaux = ["chien", "chat", "oiseau", "poisson"]
 # Indexation positive
 print(animaux[0])   # Affiche "chien"
-print(animaux[2])   # Affiche "oiseau"
 # Indexation négative
 print(animaux[-1])  # Affiche "poisson"
-print(animaux[-3])  # Affiche "chat"
 # Le slicing : Extraire une partie de la liste [début:fin]
 # ⚠️ La fin est exclue !
 print(animaux[1:3]) # Affiche ['chat', 'oiseau']
@@ -59,16 +57,14 @@ print(animaux[2:])  # Affiche ['oiseau', 'poisson']
 <p>Les listes sont mutables, ce qui signifie qu'on peut ajouter ou supprimer des éléments après leur création.</p>
 
 <h3>Ajouter des éléments</h3>
-<ul>
-<li><span>append(element)</span> : ajoute un élément à la fin de la liste.</li>
-<li><span>insert(index, element)</span> : insère un élément à un index précis.</li>
-<li><span>extend(iterable)</span> : ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.</li>
-</ul>
+-><span>append(element)</span> : ajoute un élément à la fin de la liste.
+-><span>insert(index, element)</span> : insère un élément à un index précis.
+-><span>extend(iterable)</span> : ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.
 <pre><code class="language-python">jours = ["lundi", "mardi"]
 jours.append("jeudi")
-print(jours)   # ['lundi', 'mardi', 'jeudi']
+print(jours) # ['lundi', 'mardi', 'jeudi']
 jours.insert(2, "mercredi")
-print(jours)   # ['lundi', 'mardi', 'mercredi', 'jeudi']
+print(jours) # ['lundi', 'mardi', 'mercredi', 'jeudi']
 week_end = ["vendrei", "samedi"]
 jours.extend(week_end)
 print(jours)
@@ -76,16 +72,14 @@ print(jours)
 </code></pre>
 
 <h3>Supprimer des éléments</h3>
-<ul>
-<li><span>pop(index)</span> : supprime l'élément à l'index donné et le renvoie. Si l'index est omis, il supprime et renvoie le dernier élément.</li>
+-><span>pop(index)</span> : supprime l'élément à l'index donné et le renvoie. Si l'index est omis, il supprime et renvoie le dernier élément.
 <pre><code class="language-python">nombres = [10, 20, 30, 40]
 # Supprimer le dernier élément et le stocker
 element_supprime = nombres.pop()
 print(f"Élément supprimé : {element_supprime}")
-# Élément supprimé : 40
+# Affiche : Élément supprimé : 40
 print(nombres)    # [10, 30]
 </code></pre>
-</ul>
 
 </section>
 
