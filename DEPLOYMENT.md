@@ -1,8 +1,8 @@
-# 🚀 Guide de Déploiement - Fiches NSI
+# 🚀 Guide de Déploiement - Fiches NSI (Production only)
 
-Ce document explique le système de déploiement multi-environnements du site Fiches NSI.
+Ce document décrit le déploiement en production unique du site Fiches NSI.
 
-## 🌐 Environnements disponibles
+## 🌐 Environnement disponible
 
 ### **Production** 
 - **Branche source** : `main`
@@ -11,58 +11,23 @@ Ce document explique le système de déploiement multi-environnements du site Fi
 - **Workflow** : `.github/workflows/deploy-production.yml`
 - **Déclenchement** : Push sur `main` ou `workflow_dispatch`
 
-### **Développement**
-- **Branche source** : `dev`
-- **Branche de déploiement** : `gh-pages-dev`
-- **URL** : `https://babash.github.io/FichesNSI/dev/`
-- **Workflow** : `.github/workflows/deploy-development.yml`
-- **Déclenchement** : Push sur `dev` ou `workflow_dispatch`
-
-### **Tests**
-- **Branche source** : `test/*`
-- **Branche de déploiement** : `gh-pages-test`
-- **URL** : `https://babash.github.io/FichesNSI/test/nom-de-la-branche/`
-- **Workflow** : `.github/workflows/deploy-test.yml`
-- **Déclenchement** : Push sur `test/*` ou Pull Request
-
 ## 🔄 Workflow de développement
 
-### 1. **Développement et tests** (Environnement principal)
+### 1. **Validation et mise en production**
 ```bash
-# Travailler sur la branche dev
-git checkout dev
-# Faire vos modifications
+git checkout main
+# Faire vos modifications / merger une PR validée
 git add .
 git commit -m "feat: nouvelle fonctionnalité"
-git push origin dev
-```
-→ **Déploiement automatique** sur `https://babash.github.io/FichesNSI/dev/`
-→ **Tester toutes les fonctionnalités** sur l'environnement de développement
-
-### 2. **Tests de fonctionnalités spécifiques** (Optionnel)
-```bash
-# Créer une branche de test pour des expérimentations
-git checkout -b test/ma-nouvelle-fonctionnalite
-# Faire vos modifications
-git push origin test/ma-nouvelle-fonctionnalite
-```
-→ **Déploiement automatique** sur `https://babash.github.io/FichesNSI/test/ma-nouvelle-fonctionnalite/`
-
-### 3. **Validation et mise en production**
-```bash
-# Une fois que vous avez validé sur dev, basculer en production
-git checkout main
-git merge dev
 git push origin main
 ```
 → **Déploiement automatique** sur `https://babash.github.io/FichesNSI/`
 
 ## 🎯 **Méthode de travail recommandée**
 
-1. **Développement** : Toujours sur la branche `dev`
-2. **Tests** : Effectuer tous les tests sur `https://babash.github.io/FichesNSI/dev/`
-3. **Validation** : Une fois satisfait, fusionner `dev` → `main`
-4. **Production** : Le site de production est mis à jour automatiquement
+1. **Développement** : Branches de fonctionnalités + PR vers `main`
+2. **Validation** : CI sur la PR
+3. **Production** : Merge vers `main` déclenche le déploiement
 
 ## 📋 Processus de déploiement
 
@@ -98,9 +63,6 @@ gh run list
 ```bash
 # Déploiement de production
 gh workflow run "Deploy Production"
-
-# Déploiement de développement
-gh workflow run "Deploy Development"
 ```
 
 ## 🔧 Configuration GitHub Pages
@@ -111,8 +73,7 @@ gh workflow run "Deploy Development"
 - **Folder** : `/ (root)`
 
 ### Développement et Tests
-- Les branches `gh-pages-dev` et `gh-pages-test` sont automatiquement créées
-- Pas de configuration GitHub Pages nécessaire (sous-dossiers)
+- Les environnements de développement et de test ne sont plus utilisés
 
 ## 📝 Notes importantes
 

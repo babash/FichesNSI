@@ -5,64 +5,31 @@
 ### **`main`** 🏷️ **production**
 - **Rôle** : Branche de production stable
 - **URL** : `https://babash.github.io/FichesNSI/`
-- **Usage** : Code validé et testé, prêt pour la production
-- **Workflow** : Fusion depuis `dev` après validation
+- **Usage** : Code validé et prêt pour la production
 - **Tag** : `production`
-
-### **`dev`** 🏷️ **development**
-- **Rôle** : Branche de développement principal
-- **URL** : `https://babash.github.io/FichesNSI/dev/`
-- **Usage** : Développement quotidien, tests avant production
-- **Workflow** : Branche de travail principale
-- **Tag** : `development`
 
 ### **`gh-pages`** 🏷️ **deployment**
 - **Rôle** : Branche de déploiement GitHub Pages
-- **Contenu** : Site statique + dossier `/dev/`
+- **Contenu** : Site statique de production uniquement
 - **Usage** : Déploiement automatique via GitHub Actions
-- **Structure** :
-  ```
-  gh-pages/
-  ├── index.html          # Production
-  ├── css/               # Production
-  ├── js/                # Production
-  ├── fiches/            # Production
-  ├── img/               # Production
-  └── dev/               # Développement
-      ├── index.html
-      ├── css/
-      ├── js/
-      ├── fiches/
-      └── img/
-  ```
 - **Tag** : `deployment`
 
-## 🧪 **Branches de test**
+## 🔄 **Workflow de contribution**
 
-### **Aucune branche de test active**
-- **Raison** : La branche `test/pdf-optimization-and-print-fixes` a été intégrée dans `dev`
-- **Améliorations intégrées** :
-  - ✅ Validation PDF améliorée avec `head` command
-  - ✅ Chemins CSS corrigés dans la génération statique
-  - ✅ CSS optimisé pour éviter les erreurs de parsing
-- **Statut** : ✅ **Intégrée et supprimée**
-
-## 🔄 **Workflow de développement**
-
-### **1. Développement quotidien**
+### **1. Développement sur branche de fonctionnalité**
 ```bash
-git checkout dev
+git checkout -b feature/ma-fonctionnalite
 # Faire vos modifications
 git add .
 git commit -m "feat: description"
-git push origin dev
+git push origin feature/ma-fonctionnalite
 ```
-→ **Test** sur `https://babash.github.io/FichesNSI/dev/`
+→ Ouvrir une Pull Request vers `main`
 
 ### **2. Mise en production**
 ```bash
 git checkout main
-git merge dev
+git merge --no-ff feature/ma-fonctionnalite
 git push origin main
 ```
 → **Production** sur `https://babash.github.io/FichesNSI/`
@@ -70,40 +37,32 @@ git push origin main
 ## 🏷️ **Tags de référence**
 
 - **`production`** : Marque la branche de production stable
-- **`development`** : Marque la branche de développement
 - **`deployment`** : Marque la branche de déploiement GitHub Pages
 
 ## 🧹 **Branches supprimées**
 
 ### **Branches obsolètes supprimées :**
-- ❌ `cursor/fix-masonry-layout-on-columns-fe2d`
-- ❌ `cursor/ajuster-la-hauteur-des-blocs-de-fiche-649c`
-- ❌ `gh-pages-dev` (remplacée par `/dev/` dans `gh-pages`)
-- ❌ `test/pdf-optimization-and-print-fixes` (intégrée dans `dev`)
+- ❌ Branches de développement et de test
+- ❌ Branches temporaires de travail
 
 ### **Raison de la suppression :**
-- **Branches Cursor** : Fonctionnalités intégrées dans `main`/`dev`
-- **`gh-pages-dev`** : Architecture simplifiée avec un seul déploiement
-- **`test/pdf-optimization-and-print-fixes`** : Améliorations intégrées dans `dev`
+- **Simplification** : Architecture production only
 
 ## 📊 **État actuel**
 
 ### **Branches actives :**
 - ✅ `main` (production)
-- ✅ `dev` (développement)
 - ✅ `gh-pages` (déploiement)
 
 ### **Environnements :**
 - 🌐 **Production** : `https://babash.github.io/FichesNSI/`
-- 🌐 **Développement** : `https://babash.github.io/FichesNSI/dev/`
 
 ## 🎯 **Recommandations**
 
-1. **Toujours travailler sur `dev`** pour le développement quotidien
-2. **Tester sur l'environnement de développement** avant de mettre en production
-3. **Fusionner `dev` → `main`** uniquement après validation complète
-4. **Supprimer les branches de test** une fois les fonctionnalités intégrées
+1. Créer des PRs vers `main`
+2. Utiliser le CI pour valider les builds et les PDFs
+3. Merger vers `main` pour déclencher la production
 
 ---
 
-**🎉 Architecture simplifiée et claire pour un développement efficace !**
+**🎉 Architecture simplifiée et claire pour un dépôt production-only !**
