@@ -16,6 +16,7 @@ melange = ["Python", 2024, True, 3.14]
 longueur = len(fruits)
 print(f"La liste 'fruits' contient {longueur} éléments.") # La liste 'fruits' contient 3 éléments.
 </code></pre>
+</section>
 
 <section>
 <h2 data-icon="🧭">Indexation et Accès aux éléments</h2>
