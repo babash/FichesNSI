@@ -104,18 +104,6 @@ html {
   height: 100%;
 }
 
-/* Styles spécifiques pour la page d'accueil - override des styles des fiches */
-.index-container {
-  max-width: 800px !important;
-  min-height: auto !important;
-  margin: 0 !important;
-  padding: 2rem !important;
-  display: block !important;
-  gap: normal !important;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
 
 /*
  * Technique robuste pour afficher un fond sur chaque page d'un PDF.
@@ -162,15 +150,20 @@ h1 {
 }
 
 /* Layout principal pour l'affichage web - OPTIMISÉ DENSITÉ */
-.container {
+.container, .index-container {
   max-width: 210mm; /* Largeur A4 */
-  min-height: 297mm; /* Hauteur A4 */
   margin: 0 auto; /* Centrage sur le web */
-  padding: 0; /* Suppression du padding pour taille exacte A4 */
+  padding: 0 10px; /* Padding réduit pour l'accueil */
   display: flex;
   flex-direction: column;
   gap: 0.2rem; /* Espacement minimal */
   box-sizing: border-box;
+}
+
+/* Styles spécifiques pour les fiches uniquement */
+.container {
+  min-height: 297mm; /* Hauteur A4 pour les fiches */
+  padding: 0; /* Suppression du padding pour taille exacte A4 */
 }
 
 /* Wrapper pour les deux colonnes */
