@@ -36,8 +36,6 @@ print(animaux[2:])  # Affiche ['oiseau', 'poisson']
 
 <section>
 <h2 data-icon="⚙️">Modification de la liste</h2>
-<p>Les listes sont mutables, ce qui signifie qu'on peut ajouter ou supprimer des éléments après leur création.</p>
-
 <h3>Ajouter des éléments</h3>
 <p><strong>append(element)</strong> : ajoute un élément à la fin de la liste.</br>
 <strong>insert(index, element)</strong> : insère un élément à un index précis.</br>
@@ -62,7 +60,6 @@ print(f"Élément supprimé : {element_supprime}")
 # Élément supprimé : 40
 print(nombres)    # [10, 30]
 </code></pre>
-
 </section>
 
 <section>
@@ -102,8 +99,8 @@ Index 1 correspond à la calzone.
 
 <section>
 <h2 data-icon="🤔">Copier une liste</h2>
-<p>⚠️ Si vous attribuez une liste à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.</p>
-<p>Pour faire une vraie copie, on peut utiliser la technique du slicing ou la méthode <code>.copy()</code>.</p>
+<p>⚠️ Si vous attribuez une liste à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.
+Pour faire une vraie copie, on peut utiliser la technique du slicing ou la méthode <code>.copy()</code>.</p>
 <pre><code class="language-python">liste_a = [1, 2, 3]
 liste_b = liste_a  # C'est une référence, pas une copie !
 liste_b.append(4)
