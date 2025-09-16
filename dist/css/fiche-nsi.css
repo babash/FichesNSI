@@ -13,8 +13,8 @@
   body { 
     margin: 0; 
     padding: 0;
-    font-size: 7pt; /* Taille encore plus réduite pour densité maximale */
-    line-height: 1.05; /* Interligne ultra-minimal */
+    font-size: 10pt; /* Taille harmonisée avec le web */
+    line-height: 1.1; /* Interligne légèrement réduit */
   }
   
   .container {
@@ -24,17 +24,17 @@
   }
   
   .columns-wrapper {
-    gap: 2mm; /* Espacement ultra-minimal pour l'impression */
+    gap: 0; /* Suppression complète de l'espace pour l'impression */
   }
   
   .column {
-    gap: 0.05rem; /* Espacement ultra-minimal entre sections */
+    gap: 0.1rem; /* Espacement minimal entre sections */
   }
   
   section {
     page-break-inside: avoid;
-    margin-bottom: 0.1em; /* Marge ultra-minimale */
-    padding: 0.15rem; /* Padding ultra-minimal */
+    margin-bottom: 0.2em; /* Marge minimale */
+    padding: 0.3rem; /* Padding minimal */
   }
   
   h1, h2, h3 {
@@ -42,47 +42,47 @@
   }
   
   h1 {
-    font-size: 0.9rem; /* Taille ultra-réduite pour l'impression */
-    margin-bottom: 0.1rem;
+    font-size: 1.1rem; /* Taille harmonisée avec le web */
+    margin-bottom: 0.2rem;
   }
   
   h2 {
-    font-size: 0.7rem; /* Taille ultra-réduite */
-    padding: 0.08rem 0.2rem 0.08rem 1rem; /* Padding ultra-minimal */
-    margin-bottom: 0.05rem;
+    font-size: 0.85rem; /* Taille harmonisée avec le web */
+    padding: 0.15rem 0.3rem 0.15rem 1.2rem; /* Padding minimal */
+    margin-bottom: 0.1rem;
   }
   
   h2::before {
-    left: 0.25rem;
-    font-size: 0.6rem;
+    left: 0.3rem;
+    font-size: 0.75rem;
   }
   
   pre {
     page-break-inside: avoid;
-    font-size: 3pt; /* Taille ultra-compacte pour le code */
-    padding: 0.08rem; /* Padding ultra-minimal */
-    margin: 0.03rem 0;
-    line-height: 0.95; /* Interligne ultra-minimal */
+    font-size: 0.6rem; /* Taille harmonisée avec le web */
+    padding: 0.2rem; /* Padding minimal */
+    margin: 0.1rem 0;
+    line-height: 1.0; /* Interligne minimal */
   }
   
   pre::before {
-    font-size: 2.5pt; /* Taille ultra-réduite */
-    margin-bottom: 0.01rem;
+    font-size: 0.5rem; /* Taille harmonisée */
+    margin-bottom: 0.05rem;
   }
   
   ul {
-    padding-left: 0.6rem; /* Padding ultra-minimal */
-    margin: 0.05rem 0;
+    padding-left: 0.8rem; /* Padding minimal */
+    margin: 0.1rem 0;
   }
   
   li {
-    margin-bottom: 0.02rem; /* Espacement ultra-minimal entre éléments */
-    font-size: 6pt;
+    margin-bottom: 0.05rem; /* Espacement minimal entre éléments */
+    font-size: 0.85rem; /* Taille harmonisée */
   }
   
   .footnote {
-    font-size: 5pt;
-    margin-top: 0.05rem;
+    font-size: 0.7rem; /* Taille harmonisée */
+    margin-top: 0.1rem;
   }
 }
 
@@ -155,7 +155,7 @@ h1 {
 /* Wrapper pour les deux colonnes */
 .columns-wrapper {
   display: flex;
-  gap: 4mm; /* Espacement réduit entre colonnes */
+  gap: 0; /* Suppression de l'espace entre colonnes */
   align-items: flex-start;
   min-height: 0; /* Permet aux colonnes de se rétrécir */
 }
