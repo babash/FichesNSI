@@ -13,8 +13,8 @@
   body { 
     margin: 0; 
     padding: 0;
-    font-size: 10pt; /* Taille réduite pour plus de densité */
-    line-height: 1.2; /* Interligne réduit */
+    font-size: 8pt; /* Taille très réduite pour densité maximale */
+    line-height: 1.1; /* Interligne minimal */
   }
   
   .container {
@@ -24,17 +24,17 @@
   }
   
   .columns-wrapper {
-    gap: 6mm; /* Espacement réduit pour l'impression */
+    gap: 3mm; /* Espacement minimal pour l'impression */
   }
   
   .column {
-    gap: 0.3rem; /* Espacement très réduit entre sections */
+    gap: 0.1rem; /* Espacement minimal entre sections */
   }
   
   section {
     page-break-inside: avoid;
-    margin-bottom: 0.5em; /* Marge réduite */
-    padding: 0.5rem; /* Padding réduit */
+    margin-bottom: 0.2em; /* Marge minimale */
+    padding: 0.2rem; /* Padding minimal */
   }
   
   h1, h2, h3 {
@@ -42,27 +42,46 @@
   }
   
   h1 {
-    font-size: 1.4rem; /* Taille réduite pour l'impression */
-    margin-bottom: 0.5rem;
+    font-size: 1rem; /* Taille très réduite pour l'impression */
+    margin-bottom: 0.2rem;
   }
   
   h2 {
-    font-size: 1rem; /* Taille réduite */
-    padding: 0.3rem 0.5rem 0.3rem 1.5rem; /* Padding réduit */
+    font-size: 0.8rem; /* Taille très réduite */
+    padding: 0.1rem 0.3rem 0.1rem 1.2rem; /* Padding minimal */
+    margin-bottom: 0.1rem;
+  }
+  
+  h2::before {
+    left: 0.3rem;
+    font-size: 0.7rem;
   }
   
   pre {
     page-break-inside: avoid;
-    font-size: 8pt; /* Taille très réduite pour le code */
-    padding: 0.4rem; /* Padding réduit */
+    font-size: 6pt; /* Taille ultra-réduite pour le code */
+    padding: 0.2rem; /* Padding minimal */
+    margin: 0.1rem 0;
+  }
+  
+  pre::before {
+    font-size: 5pt;
+    margin-bottom: 0.05rem;
   }
   
   ul {
-    padding-left: 1rem; /* Padding réduit */
+    padding-left: 0.8rem; /* Padding minimal */
+    margin: 0.1rem 0;
   }
   
   li {
-    margin-bottom: 0.2rem; /* Espacement réduit entre éléments */
+    margin-bottom: 0.05rem; /* Espacement minimal entre éléments */
+    font-size: 7pt;
+  }
+  
+  .footnote {
+    font-size: 6pt;
+    margin-top: 0.1rem;
   }
 }
 
@@ -100,6 +119,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif;
+  font-size: 12px; /* Taille de base réduite pour plus de densité */
+  line-height: 1.2; /* Interligne réduit */
   color: #333;
   /* Le body doit être transparent pour que le pseudo-élément ::before (avec l'image de fond)
      qui est positionné en arrière-plan (z-index: -1) soit visible. */
@@ -114,25 +135,26 @@ header {
 
 h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.2rem; /* Taille drastiquement réduite */
   color: var(--python-blue);
   text-align: center;
+  margin: 0.3rem 0; /* Marges réduites */
 }
 
-/* Layout principal pour l'affichage web */
+/* Layout principal pour l'affichage web - OPTIMISÉ DENSITÉ */
 .container, .index-container {
   max-width: 210mm; /* Largeur A4 */
   margin: 0 auto; /* Centrage sur le web */
-  padding: 0 20px;
+  padding: 0 10px; /* Padding réduit */
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* Espacement réduit pour plus de densité */
+  gap: 0.2rem; /* Espacement minimal */
 }
 
 /* Wrapper pour les deux colonnes */
 .columns-wrapper {
   display: flex;
-  gap: 8mm; /* Espacement entre colonnes */
+  gap: 4mm; /* Espacement réduit entre colonnes */
   align-items: flex-start;
   min-height: 0; /* Permet aux colonnes de se rétrécir */
 }
@@ -142,58 +164,61 @@ h1 {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* Espacement réduit entre sections */
+  gap: 0.2rem; /* Espacement minimal entre sections */
   min-width: 0; /* Permet aux colonnes de se rétrécir */
 }
 
 section {
   background: var(--accent-bg);
-  padding: 0.7rem; /* Padding réduit pour plus de densité */
-  border-radius: 6px; /* Border radius réduit */
-  box-shadow: 0 0 6px rgba(0,0,0,0.05); /* Ombre réduite */
+  padding: 0.4rem; /* Padding minimal pour densité maximale */
+  border-radius: 4px; /* Border radius minimal */
+  box-shadow: 0 0 3px rgba(0,0,0,0.05); /* Ombre très réduite */
   width: 100%;
   box-sizing: border-box;
   break-inside: avoid; /* Évite la coupure des sections */
+  margin-bottom: 0.2rem; /* Marge minimale */
 }
 
 h2 {
   color: #000;
-  font-size: 1.1rem;
-  margin-top: 0;
+  font-size: 0.9rem; /* Taille drastiquement réduite */
+  margin: 0 0 0.3rem 0; /* Marges minimales */
   font-weight: 700;
   font-family: 'Orbitron', sans-serif;
   position: relative;
-  padding: 0.5rem 0.75rem 0.5rem 2rem;
+  padding: 0.2rem 0.4rem 0.2rem 1.5rem; /* Padding minimal */
   background: var(--yellow-bg);
-  border-left: 0.5rem solid var(--python-yellow);
-  border-radius: 6px;
-  box-shadow: inset 0 0 0.15em rgba(255, 212, 59, 0.8);
+  border-left: 0.3rem solid var(--python-yellow); /* Bordure réduite */
+  border-radius: 3px; /* Border radius minimal */
+  box-shadow: inset 0 0 0.1em rgba(255, 212, 59, 0.8);
 }
 
 h2::before {
   content: attr(data-icon);
   position: absolute;
-  left: 0.6rem;
+  left: 0.4rem; /* Position ajustée */
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1rem;
+  font-size: 0.8rem; /* Taille réduite */
 }
 
 pre {
   background: var(--code-bg);
-  padding: 0.75rem;
-  border-radius: 6px;
+  padding: 0.3rem; /* Padding minimal */
+  border-radius: 3px; /* Border radius minimal */
   overflow-x: auto;
   font-family: 'Fira Code', monospace;
-  font-size: 0.85rem;
+  font-size: 0.7rem; /* Taille très réduite pour le code */
   position: relative;
+  margin: 0.2rem 0; /* Marges minimales */
 }
 
 pre::before {
   content: "root@python:~$ ";
   color: #555;
   display: block;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.1rem; /* Marge réduite */
+  font-size: 0.6rem; /* Taille réduite */
 }
 
 code {
@@ -201,13 +226,19 @@ code {
 }
 
 ul {
-  padding-left: 1.2rem;
+  padding-left: 1rem; /* Padding réduit */
+  margin: 0.2rem 0; /* Marges minimales */
+}
+
+li {
+  margin-bottom: 0.1rem; /* Espacement minimal entre éléments */
+  font-size: 0.9rem; /* Taille légèrement réduite */
 }
 
 .footnote {
   text-align: center;
-  font-size: 0.8rem;
-  margin-top: 0.5rem; /* Marge réduite */
+  font-size: 0.7rem; /* Taille réduite */
+  margin-top: 0.3rem; /* Marge minimale */
   color: #555;
   width: 100%;
 }
@@ -215,36 +246,31 @@ ul {
 /* Responsive design pour les petits écrans */
 @media screen and (max-width: 768px) {
   .container {
-    padding: 0 10px;
+    padding: 0 5px; /* Padding encore plus réduit sur mobile */
   }
   
   .columns-wrapper {
     flex-direction: column; /* Passage en une colonne sur mobile */
-    gap: 0.5rem;
+    gap: 0.2rem;
   }
   
   .column {
-    gap: 0.5rem;
+    gap: 0.2rem;
   }
   
   section {
-    padding: 0.8rem; /* Padding légèrement augmenté sur mobile */
+    padding: 0.3rem; /* Padding minimal sur mobile */
   }
-}
-
-/* Styles pour optimiser la densité sur tous les écrans */
-h2 {
-  margin-bottom: 0.5rem; /* Marge réduite */
-}
-
-pre {
-  margin: 0.3rem 0; /* Marge réduite */
-}
-
-ul {
-  margin: 0.3rem 0; /* Marge réduite */
-}
-
-li {
-  margin-bottom: 0.3rem; /* Espacement réduit entre éléments de liste */
+  
+  h1 {
+    font-size: 1rem; /* Taille réduite sur mobile */
+  }
+  
+  h2 {
+    font-size: 0.8rem; /* Taille réduite sur mobile */
+  }
+  
+  pre {
+    font-size: 0.6rem; /* Code plus petit sur mobile */
+  }
 }
