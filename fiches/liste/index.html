@@ -30,7 +30,8 @@ fruits = ["pomme", "banane", "orange"]
 melange = ["Python", 2024, True, 3.14]
 # Obtenir la longueur d'une liste avec len()
 longueur = len(fruits)
-print(f"La liste 'fruits' contient {longueur} éléments.") # La liste 'fruits' contient 3 éléments.
+print(f"La liste 'fruits' contient {longueur} éléments.") 
+# Affiche "La liste 'fruits' contient 3 éléments."
 </code></pre>
 </section>
 
@@ -58,9 +59,9 @@ print(animaux[2:])  # Affiche ['oiseau', 'poisson']
 
 <h3>Ajouter des éléments</h3>
 <ul>
-<li>append(element): ajoute un élément à la fin de la liste.</li>
-<li>insert(index, element): insère un élément à un index précis.</li>
-<li>extend(iterable): ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.</li>
+<li><span>append(element)</span> : ajoute un élément à la fin de la liste.</li>
+<li><span>insert(index, element)</span> : insère un élément à un index précis.</li>
+<li><span>extend(iterable)</span> : ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.</li>
 </ul>
 <pre><code class="language-python">jours = ["lundi", "mardi", "jeudi"]
 jours.append("vendredi")
@@ -74,13 +75,7 @@ print(jours)   # ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', '
 
 <h3>Supprimer des éléments</h3>
 <ul>
-<li>del ma_liste[index] : supprime l'élément à l'index donné.</li>
-<pre><code class="language-python">nombres = [10, 20, 30, 40]
-# Supprimer élément à index 1 (le nombre 20)
-del nombres[1]
-print(nombres) # [10, 30, 40]
-</code></pre>
-<li>pop(index) : supprime l'élément à l'index donné et le renvoie. Si l'index est omis, il supprime et renvoie le dernier élément.</li>
+<li><span>pop(index)</span> : supprime l'élément à l'index donné et le renvoie. Si l'index est omis, il supprime et renvoie le dernier élément.</li>
 <pre><code class="language-python">nombres = [10, 20, 30, 40]
 # Supprimer le dernier élément et le stocker
 element_supprime = nombres.pop()
