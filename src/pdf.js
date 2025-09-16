@@ -166,16 +166,28 @@ class PDFGenerator {
     try {
       console.log(`[PDF] Génération de ${filename} depuis ${url}...`);
       
+      const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+      const footerTemplate = `
+        <div style="font-size:7pt;width:100%; padding: 0 8mm; color:#6c757d;">
+          <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+            <span style="white-space:nowrap;">Fiches NSI — ${filename}</span>
+            <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
+            <span style="white-space:nowrap;">Généré: ${now}</span>
+          </div>
+        </div>`;
+
       const options = {
         format: 'A4',
         printBackground: true,
         margin: {
-          top: '0mm',
+          top: '6mm',
           right: '0mm',
-          bottom: '0mm',
+          bottom: '12mm',
           left: '0mm'
         },
-        displayHeaderFooter: false,
+        displayHeaderFooter: true,
+        headerTemplate: '<div></div>',
+        footerTemplate,
         timeout: 60000, // Timeout augmenté pour laisser le temps au JS de s'exécuter
         waitUntil: 'networkidle0', // Attendre que le réseau soit inactif
         preferCSSPageSize: false, // Ignorer les marges CSS @page
