@@ -9,10 +9,10 @@ footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
 <pre><code class="language-python"># Création d'une chaîne de caractères vide
 ma_chaine = ""
 # Création d'une chaîne avec du texte
-salutation = "Bonjour le monde"
+salut = "Bonjour le monde"
 # Obtenir la longueur d'une chaîne avec len()
-longueur = len(salutation)
-print(f"La chaîne 'salutation' contient {longueur} caractères.") 
+longueur = len(salut)
+print(f"La chaîne 'salut' contient {longueur} caractères.") 
 # Affiche "La chaîne 'salutation' contient 16 caractères."
 </code></pre>
 </section>
@@ -61,6 +61,7 @@ print(chaine.lower())    # Affiche "hello world"
 <pre><code class="language-python">mot = "code"
 for caractere in mot:
   print(caractere)
+
 Affiche :
 c
 o
@@ -72,6 +73,7 @@ e
 <pre><code class="language-python">mot = "code"
 for i in range(len(mot)):
   print(f"Caractère n°{i} : {mot[i]}")
+
 Affiche :
 Caractère n°0 : c
 Caractère n°1 : o
@@ -87,7 +89,7 @@ Caractère n°3 : e
 # Cette instruction générera une erreur !
 # slogan[8] = 'C'
 # TypeError: 'str' object does not support item assignment
-# Pour obtenir le résultat souhaité, il faut créer une nouvelle chaîne
+# Solution : créer une nouvelle chaîne
 nouveau_slogan = slogan[:8] + "le Python"
 print(nouveau_slogan) # Affiche "J'adore le Python"
 </code></pre>
