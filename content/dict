@@ -27,7 +27,10 @@ print(f"Le dictionnaire 'personne' contient {nombre_elements} éléments.")
 }
 # Accès par la clé
 print(etudiants["id_1"])   # Affiche "Jean"
-# Utilisation de la méthode .get()
+# Utilisation de la méthode .get() avec une valeur par défaut
+print(etudiants.get("id_2", "Non trouvé"))  # Affiche "Marie"
+print(etudiants.get("id_4", "Non trouvé"))  # Affiche "Non trouvé"
+# Utilisation de la méthode .get() sans valeur par défaut
 print(etudiants.get("id_2"))  # Affiche "Marie"
 # Remarque : La méthode .get() ne génère pas d'erreur si la clé n'existe pas, elle renvoie None.
 </code></pre>
@@ -112,5 +115,20 @@ dict_c = dict_a.copy()  # Vraie copie avec .copy()
 dict_c["d"] = 4
 print(dict_a) # Affiche {'a': 1, 'b': 2, 'c': 3}
 print(dict_c) # Affiche {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+</code></pre>
+</section>
+
+<section>
+<h2 data-icon="🕵️">Vérifier la présence d'une clé</h2>
+<p>L'opérateur <strong>in</strong> est utilisé pour tester si une clé est présente dans un dictionnaire. Il renvoie un booléen : <strong>True</strong> si la clé est trouvée, et <strong>False</strong> sinon.</p>
+<pre><code class="language-python">eleves = {"prenom": "Léo", "matiere": "Maths", "note": 15}
+# Tester si "prenom" est dans le dictionnaire
+if "prenom" in eleves:
+    print("La clé 'prenom' existe dans le dictionnaire.")
+# Affiche "La clé 'prenom' existe dans le dictionnaire."
+# Tester si "age" n'est pas dans le dictionnaire
+if "age" not in eleves:
+    print("La clé 'age' n'est pas présente.")
+# Affiche "La clé 'age' n'est pas présente."
 </code></pre>
 </section>
