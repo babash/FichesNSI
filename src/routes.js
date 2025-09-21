@@ -39,7 +39,7 @@ class RoutesManager {
 
       try {
         const url = `http://localhost:${this.port}/fiches/${slug}/html-for-pdf`;
-        const pdfBuffer = await this.pdfGenerator.generatePDF(url, `${slug}.pdf`);
+        const pdfBuffer = await this.pdfGenerator.generatePDF(url, `${slug}.pdf`, fiche.footer);
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename="${slug}.pdf"`);
