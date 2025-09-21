@@ -167,7 +167,7 @@ class PDFGenerator {
       const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
       const footerText = ficheFooter || 'Fiches de révision NSI';
       const footerTemplate = `
-        <div style="font-size:6pt;width:100%; padding: 0 8mm; color:#6c757d; line-height:1.2;">
+        <div style="font-size:5pt;width:100%; padding: 0 6mm; color:#6c757d; line-height:1.1;">
           <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
             <span style="white-space:nowrap;">${footerText}</span>
             <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
@@ -181,7 +181,7 @@ class PDFGenerator {
         margin: {
           top: '6mm',
           right: '0mm',
-          bottom: '12mm',
+          bottom: '8mm',
           left: '0mm'
         },
         displayHeaderFooter: true,

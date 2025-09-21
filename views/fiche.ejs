@@ -15,7 +15,14 @@
   </article>
 </main>
 
-<%- include('partials/footer') %>
+<footer class="fiche-footer">
+  <div class="footer-content">
+    <div class="footer-info">
+      <span>Fiches de révision NSI</span>
+      <span>Page générée le <%= new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }) %> (CET)</span>
+    </div>
+  </div>
+</footer>
 
 <script>
 // Script pour répartir automatiquement les sections en deux colonnes
