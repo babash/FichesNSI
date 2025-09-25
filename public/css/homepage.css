@@ -14,13 +14,14 @@
 }
 
 /*
- * On applique la couleur de fond à l'élément HTML.
- * Cela permet au `body` de rester transparent (comme défini dans fiche-nsi.css)
- * pour laisser passer l'image de fond, tout en ayant une couleur de fond
- * générale pour la page d'accueil.
+ * Fond avec image pour la page d'accueil, comme pour les fiches
  */
 html {
-    background-color: #f4f7f6; /* Fond général de la page */
+    background-image: url('/img/fond1.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
 }
 
 body {
@@ -32,7 +33,7 @@ body {
     margin: 0;
     padding: 2rem 1rem; /* Marge de sécurité sur les petits écrans */
     box-sizing: border-box;
-    /* La couleur de fond est maintenant sur HTML, on s'assure que le body est bien transparent */
+    /* Transparent pour laisser passer l'image de fond */
     background-color: transparent;
     color: #333;
 }
@@ -42,9 +43,10 @@ body {
     width: 100%;
     margin: 0; /* Le centrage est géré par le flexbox du body */
     padding: 2rem;
-    background-color: #ffffff; /* Fond blanc pour le conteneur principal */
+    background-color: rgba(255, 255, 255, 0.95); /* Fond blanc semi-transparent */
+    backdrop-filter: blur(10px); /* Effet de flou d'arrière-plan */
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Ombre portée subtile */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre portée plus prononcée */
     /* On réinitialise la grille pour la page d'accueil */
     display: block;
 }
