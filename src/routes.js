@@ -75,19 +75,33 @@ class RoutesManager {
     });
 
     // ÉDITEUR: Page split markdown/pdf
-    this.router.get('/editor/:slug?', (req, res) => {
+    this.router.get('/editor/:slug?', async (req, res) => {
       const { slug } = req.params;
-      const fiche = slug ? this.fichesManager.getFiche(slug) : null;
-      const initialMarkdown = fiche ? `---\n` +
-        `title: ${fiche.title}\n` +
-        `footer: ${fiche.footer || ''}\n` +
-        `---\n\n` +
-        `<!-- Corps en Markdown: utilisez la prévisualisation PDF -->\n` :
-        `---\n` +
-        `title: Titre de la fiche\n` +
-        `footer: \n` +
-        `---\n\n` +
-        `# Nouveau contenu\n\nÉcrivez votre fiche en Markdown.`;
+      let initialMarkdown = '';
+      
+      if (slug) {
+        // Charger le contenu markdown brut du fichier
+        try {
+          const fs = require('fs').promises;
+          const path = require('path');
+          const contentDir = path.join(__dirname, '../content');
+          const filePath = path.join(contentDir, `${slug}.md`);
+          const rawContent = await fs.readFile(filePath, 'utf8');
+          initialMarkdown = rawContent;
+        } catch (error) {
+          console.error(`[EDITOR] Erreur chargement ${slug}.md:`, error);
+          // Fallback vers la fiche en mémoire si le fichier n'existe pas
+          const fiche = this.fichesManager.getFiche(slug);
+          if (fiche) {
+            initialMarkdown = `---\ntitle: ${fiche.title}\nfooter: ${fiche.footer || ''}\n---\n\n<!-- Corps en Markdown -->\n`;
+          }
+        }
+      }
+      
+      if (!initialMarkdown) {
+        initialMarkdown = `---\ntitle: Titre de la fiche\nfooter: \n---\n\n# Nouveau contenu\n\nÉcrivez votre fiche en Markdown.`;
+      }
+      
       res.render('editor', { slug: slug || '', initialMarkdown });
     });
 
