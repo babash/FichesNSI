@@ -1,4 +1,5 @@
-const htmlPdf = require('html-pdf-node');
+const puppeteer = require('puppeteer-core');
+const chromium = require('@sparticuz/chromium');
 
 class PDFGenerator {
   constructor() {
@@ -9,7 +10,7 @@ class PDFGenerator {
    * Initialise le générateur PDF
    */
   async init() {
-    console.log('[PDF] Générateur PDF initialisé avec html-pdf-node.');
+    console.log('[PDF] Générateur PDF initialisé avec puppeteer-core + chromium.');
   }
 
   /**
@@ -161,6 +162,7 @@ class PDFGenerator {
    * Génère un PDF depuis une URL
    */
   async generatePDF(url, filename, ficheFooter = null) {
+    let browser = null;
     try {
       console.log(`[PDF] Génération de ${filename} depuis ${url}...`);
       
@@ -175,22 +177,10 @@ class PDFGenerator {
           </div>
         </div>`;
 
-      const options = {
-        format: 'A4',
-        printBackground: true,
-        margin: {
-          top: '6mm',
-          right: '0mm',
-          bottom: '8mm',
-          left: '0mm'
-        },
-        displayHeaderFooter: true,
-        headerTemplate: '<div></div>',
-        footerTemplate,
-        timeout: 60000, // Timeout augmenté pour laisser le temps au JS de s'exécuter
-        waitUntil: 'networkidle0', // Attendre que le réseau soit inactif
-        preferCSSPageSize: false, // Ignorer les marges CSS @page
+      // Configuration pour l'environnement serverless
+      const browserOptions = {
         args: [
+          ...chromium.args,
           '--no-sandbox',
           '--disable-setuid-sandbox',
           '--disable-dev-shm-usage',
@@ -204,10 +194,36 @@ class PDFGenerator {
           '--disable-background-timer-throttling',
           '--disable-backgrounding-occluded-windows',
           '--disable-renderer-backgrounding'
-        ]
+        ],
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
       };
 
-      const pdfBuffer = await htmlPdf.generatePdf({ url }, options);
+      browser = await puppeteer.launch(browserOptions);
+      const page = await browser.newPage();
+
+      await page.goto(url, { 
+        waitUntil: 'networkidle0',
+        timeout: 60000 
+      });
+
+      const pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+        margin: {
+          top: '6mm',
+          right: '0mm',
+          bottom: '8mm',
+          left: '0mm'
+        },
+        displayHeaderFooter: true,
+        headerTemplate: '<div></div>',
+        footerTemplate,
+        preferCSSPageSize: false,
+      });
+
+      await browser.close();
 
       // Vérifier que le PDF est valide
       if (!pdfBuffer || pdfBuffer.length === 0) {
@@ -225,6 +241,9 @@ class PDFGenerator {
       return pdfBuffer;
 
     } catch (error) {
+      if (browser) {
+        await browser.close();
+      }
       console.error(`[PDF] Erreur lors de la génération de ${filename}:`, error);
       throw error;
     }
@@ -234,6 +253,7 @@ class PDFGenerator {
    * Génère un PDF à partir d'un HTML brut (string) sans URL publique
    */
   async generatePDFFromHtml(html, filename, ficheFooter = null) {
+    let browser = null;
     try {
       console.log(`[PDF] Génération (raw HTML) de ${filename}...`);
 
@@ -248,22 +268,10 @@ class PDFGenerator {
           </div>
         </div>`;
 
-      const options = {
-        format: 'A4',
-        printBackground: true,
-        margin: {
-          top: '6mm',
-          right: '0mm',
-          bottom: '8mm',
-          left: '0mm'
-        },
-        displayHeaderFooter: true,
-        headerTemplate: '<div></div>',
-        footerTemplate,
-        timeout: 60000,
-        waitUntil: 'networkidle0',
-        preferCSSPageSize: false,
+      // Configuration pour l'environnement serverless
+      const browserOptions = {
         args: [
+          ...chromium.args,
           '--no-sandbox',
           '--disable-setuid-sandbox',
           '--disable-dev-shm-usage',
@@ -277,10 +285,36 @@ class PDFGenerator {
           '--disable-background-timer-throttling',
           '--disable-backgrounding-occluded-windows',
           '--disable-renderer-backgrounding'
-        ]
+        ],
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
       };
 
-      const pdfBuffer = await htmlPdf.generatePdf({ content: html }, options);
+      browser = await puppeteer.launch(browserOptions);
+      const page = await browser.newPage();
+
+      await page.setContent(html, { 
+        waitUntil: 'networkidle0',
+        timeout: 60000 
+      });
+
+      const pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+        margin: {
+          top: '6mm',
+          right: '0mm',
+          bottom: '8mm',
+          left: '0mm'
+        },
+        displayHeaderFooter: true,
+        headerTemplate: '<div></div>',
+        footerTemplate,
+        preferCSSPageSize: false,
+      });
+
+      await browser.close();
 
       if (!pdfBuffer || pdfBuffer.length === 0) {
         throw new Error('Le PDF généré est vide');
@@ -294,6 +328,9 @@ class PDFGenerator {
       console.log(`[PDF] ${filename} (raw HTML) généré avec succès (${pdfBuffer.length} bytes)`);
       return pdfBuffer;
     } catch (error) {
+      if (browser) {
+        await browser.close();
+      }
       console.error(`[PDF] Erreur lors de la génération (raw HTML) de ${filename}:`, error);
       throw error;
     }

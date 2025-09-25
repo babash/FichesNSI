@@ -11,11 +11,12 @@
     "deploy:force": "npm run build && git add . && git commit -m 'feat: déploiement forcé avec PDFs régénérés' && git push origin main --force && echo 'Force deployment completed'"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^138.0.2",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "front-matter": "^4.0.2",
-    "html-pdf-node": "^1.0.8",
-    "marked": "^4.3.0"
+    "marked": "^4.3.0",
+    "puppeteer-core": "^24.22.3"
   },
   "author": "babash",
   "license": "MIT",

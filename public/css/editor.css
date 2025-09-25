@@ -3,7 +3,8 @@
   --split-gutter: 10px;
 }
 
-body {
+/* Styles uniquement pour la page éditeur */
+body.editor-page {
   margin: 0;
   height: 100vh;
   display: flex;
