@@ -13,7 +13,7 @@
 
 /* Fond avec image pour les fiches */
 html {
-  background-image: url('/img/fond1.png');
+  background-image: url('/img/fond2.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -166,6 +166,9 @@ header h1 {
 }
 
 section {
+  background-image: url('/img/fond1.png');
+  background-size: cover;
+  background-position: center;
   background-color: var(--bg-light);
   padding: 1.5rem;
   border-radius: 8px;

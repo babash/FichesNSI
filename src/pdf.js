@@ -1,5 +1,4 @@
-const puppeteer = require('puppeteer-core');
-const chromium = require('@sparticuz/chromium');
+const { chromium } = require('playwright');
 
 class PDFGenerator {
   constructor() {
@@ -10,7 +9,7 @@ class PDFGenerator {
    * Initialise le générateur PDF
    */
   async init() {
-    console.log('[PDF] Générateur PDF initialisé avec puppeteer-core + chromium.');
+    console.log('[PDF] Générateur PDF initialisé avec playwright.');
   }
 
   /**
@@ -168,61 +167,22 @@ class PDFGenerator {
       
       const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
       const footerText = ficheFooter || 'Fiches de révision NSI';
-      const footerTemplate = `
-        <div style="font-size:5pt;width:100%; padding: 0 6mm; color:#6c757d; line-height:1.1;">
-          <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-            <span style="white-space:nowrap;">${footerText}</span>
-            <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
-            <span style="white-space:nowrap;">${now} (CET)</span>
-          </div>
-        </div>`;
-
-      // Configuration pour l'environnement serverless
-      const browserOptions = {
-        args: [
-          ...chromium.args,
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--no-first-run',
-          '--no-zygote',
-          '--disable-gpu',
-          '--disable-web-security',
-          '--disable-features=VizDisplayCompositor',
-          '--run-all-compositor-stages-before-draw',
-          '--disable-background-timer-throttling',
-          '--disable-backgrounding-occluded-windows',
-          '--disable-renderer-backgrounding'
-        ],
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath(),
-        headless: chromium.headless,
-      };
-
-      browser = await puppeteer.launch(browserOptions);
+      
+      browser = await chromium.launch();
       const page = await browser.newPage();
-
-      await page.goto(url, { 
-        waitUntil: 'networkidle0',
-        timeout: 60000 
-      });
-
+      
+      await page.goto(url, { waitUntil: 'networkidle' });
+      
       const pdfBuffer = await page.pdf({
         format: 'A4',
-        printBackground: true,
         margin: {
           top: '6mm',
           right: '0mm',
           bottom: '8mm',
           left: '0mm'
-        },
-        displayHeaderFooter: true,
-        headerTemplate: '<div></div>',
-        footerTemplate,
-        preferCSSPageSize: false,
+        }
       });
-
+      
       await browser.close();
 
       // Vérifier que le PDF est valide
@@ -257,63 +217,21 @@ class PDFGenerator {
     try {
       console.log(`[PDF] Génération (raw HTML) de ${filename}...`);
 
-      const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
-      const footerText = ficheFooter || 'Fiches de révision NSI';
-      const footerTemplate = `
-        <div style="font-size:5pt;width:100%; padding: 0 6mm; color:#6c757d; line-height:1.1;">
-          <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-            <span style="white-space:nowrap;">${footerText}</span>
-            <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
-            <span style="white-space:nowrap;">${now} (CET)</span>
-          </div>
-        </div>`;
-
-      // Configuration pour l'environnement serverless
-      const browserOptions = {
-        args: [
-          ...chromium.args,
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--no-first-run',
-          '--no-zygote',
-          '--disable-gpu',
-          '--disable-web-security',
-          '--disable-features=VizDisplayCompositor',
-          '--run-all-compositor-stages-before-draw',
-          '--disable-background-timer-throttling',
-          '--disable-backgrounding-occluded-windows',
-          '--disable-renderer-backgrounding'
-        ],
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath(),
-        headless: chromium.headless,
-      };
-
-      browser = await puppeteer.launch(browserOptions);
+      browser = await chromium.launch();
       const page = await browser.newPage();
-
-      await page.setContent(html, { 
-        waitUntil: 'networkidle0',
-        timeout: 60000 
-      });
-
+      
+      await page.setContent(html, { waitUntil: 'networkidle' });
+      
       const pdfBuffer = await page.pdf({
         format: 'A4',
-        printBackground: true,
         margin: {
           top: '6mm',
           right: '0mm',
           bottom: '8mm',
           left: '0mm'
-        },
-        displayHeaderFooter: true,
-        headerTemplate: '<div></div>',
-        footerTemplate,
-        preferCSSPageSize: false,
+        }
       });
-
+      
       await browser.close();
 
       if (!pdfBuffer || pdfBuffer.length === 0) {
