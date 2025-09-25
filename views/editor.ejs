@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Éditeur de fiche</title>
+  <link rel="stylesheet" href="/css/index.css" />
+  <style>
+    :root { --split-gutter: 10px; }
+    body { margin: 0; height: 100vh; display: flex; flex-direction: column; }
+    header { padding: 10px 16px; border-bottom: 1px solid #e5e5e5; display:flex; align-items:center; gap:12px; }
+    header .grow { flex: 1 1 auto; }
+    .split { flex: 1 1 auto; display: grid; grid-template-columns: 1fr var(--split-gutter) 1fr; height: calc(100vh - 56px); }
+    .pane { overflow: hidden; }
+    .gutter { background: #f2f2f2; cursor: col-resize; }
+    #editor { width: 100%; height: 100%; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 14px; line-height: 1.5; padding: 12px; border: none; outline: none; resize: none; box-sizing: border-box; }
+    #pdf { width: 100%; height: 100%; border: 0; background: #fafafa; }
+    .actions { display:flex; gap:8px; }
+    button { padding: 8px 12px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff; cursor: pointer; }
+    button.primary { background: #2da44e; border-color: #2da44e; color: white; }
+    .status { font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="grow">
+      <strong>Éditeur</strong>
+      <% if (slug) { %>
+        — <code><%= slug %>.md</code>
+      <% } %>
+    </div>
+    <div class="actions">
+      <button id="btn-refresh">Rafraîchir PDF</button>
+      <% if (slug) { %>
+      <button id="btn-save" class="primary">Enregistrer</button>
+      <% } %>
+    </div>
+    <div class="status" id="status"></div>
+  </header>
+  <div class="split" id="split">
+    <div class="pane">
+      <textarea id="editor" spellcheck="false"><%- initialMarkdown %></textarea>
+    </div>
+    <div class="gutter" id="gutter"></div>
+    <div class="pane">
+      <iframe id="pdf"></iframe>
+    </div>
+  </div>
+  <div id="app-data" data-slug="<%= slug || '' %>" hidden></div>
+
+  <script>
+    const slug = document.getElementById('app-data').dataset.slug || '';
+    const editorEl = document.getElementById('editor');
+    const pdfEl = document.getElementById('pdf');
+    const statusEl = document.getElementById('status');
+    const gutter = document.getElementById('gutter');
+    const split = document.getElementById('split');
+
+    // Simple draggable gutter
+    let isDragging = false;
+    gutter.addEventListener('mousedown', () => { isDragging = true; document.body.style.cursor = 'col-resize'; });
+    window.addEventListener('mouseup', () => { isDragging = false; document.body.style.cursor = 'default'; });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const rect = split.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const left = Math.max(200, Math.min(rect.width - 200, x));
+      split.style.gridTemplateColumns = left + 'px var(--split-gutter) 1fr';
+    });
+
+    function setStatus(msg) { statusEl.textContent = msg; }
+
+    async function fetchPdf(markdown) {
+      setStatus('Génération du PDF…');
+      const res = await fetch('/editor/preview-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ markdown })
+      });
+      if (!res.ok) throw new Error('Erreur de génération PDF');
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      pdfEl.src = url;
+      setStatus('A jour');
+    }
+
+    let debounceTimer = null;
+    function schedulePreview() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => fetchPdf(editorEl.value).catch(err => setStatus(err.message)), 500);
+    }
+
+    editorEl.addEventListener('input', schedulePreview);
+    document.getElementById('btn-refresh').addEventListener('click', () => fetchPdf(editorEl.value).catch(err => setStatus(err.message)));
+
+    if (slug) {
+      document.getElementById('btn-save').addEventListener('click', async () => {
+        setStatus('Enregistrement…');
+        const res = await fetch('/editor/save/' + encodeURIComponent(slug), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ markdown: editorEl.value })
+        });
+        if (res.ok) setStatus('Enregistré'); else setStatus('Échec de l\'enregistrement');
+      });
+    }
+
+    // Initial preview
+    fetchPdf(editorEl.value).catch(err => setStatus(err.message));
+  </script>
+</body>
+</html>

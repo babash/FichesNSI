@@ -229,6 +229,75 @@ class PDFGenerator {
       throw error;
     }
   }
+
+  /**
+   * Génère un PDF à partir d'un HTML brut (string) sans URL publique
+   */
+  async generatePDFFromHtml(html, filename, ficheFooter = null) {
+    try {
+      console.log(`[PDF] Génération (raw HTML) de ${filename}...`);
+
+      const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+      const footerText = ficheFooter || 'Fiches de révision NSI';
+      const footerTemplate = `
+        <div style="font-size:5pt;width:100%; padding: 0 6mm; color:#6c757d; line-height:1.1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+            <span style="white-space:nowrap;">${footerText}</span>
+            <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
+            <span style="white-space:nowrap;">${now} (CET)</span>
+          </div>
+        </div>`;
+
+      const options = {
+        format: 'A4',
+        printBackground: true,
+        margin: {
+          top: '6mm',
+          right: '0mm',
+          bottom: '8mm',
+          left: '0mm'
+        },
+        displayHeaderFooter: true,
+        headerTemplate: '<div></div>',
+        footerTemplate,
+        timeout: 60000,
+        waitUntil: 'networkidle0',
+        preferCSSPageSize: false,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--no-first-run',
+          '--no-zygote',
+          '--disable-gpu',
+          '--disable-web-security',
+          '--disable-features=VizDisplayCompositor',
+          '--run-all-compositor-stages-before-draw',
+          '--disable-background-timer-throttling',
+          '--disable-backgrounding-occluded-windows',
+          '--disable-renderer-backgrounding'
+        ]
+      };
+
+      const pdfBuffer = await htmlPdf.generatePdf({ content: html }, options);
+
+      if (!pdfBuffer || pdfBuffer.length === 0) {
+        throw new Error('Le PDF généré est vide');
+      }
+      const pdfHeader = pdfBuffer.slice(0, 4).toString();
+      if (pdfHeader !== '%PDF') {
+        console.error(`[PDF] En-tête invalide: ${pdfHeader}`);
+        throw new Error('Le fichier généré n\'est pas un PDF valide');
+      }
+
+      console.log(`[PDF] ${filename} (raw HTML) généré avec succès (${pdfBuffer.length} bytes)`);
+      return pdfBuffer;
+    } catch (error) {
+      console.error(`[PDF] Erreur lors de la génération (raw HTML) de ${filename}:`, error);
+      throw error;
+    }
+  }
 }
 
 module.exports = PDFGenerator;
