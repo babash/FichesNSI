@@ -168,7 +168,10 @@ class PDFGenerator {
       const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
       const footerText = ficheFooter || 'Fiches de révision NSI';
       
-      browser = await chromium.launch();
+      browser = await chromium.launch({ 
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      });
       const page = await browser.newPage();
       
       await page.goto(url, { waitUntil: 'networkidle' });
@@ -217,7 +220,10 @@ class PDFGenerator {
     try {
       console.log(`[PDF] Génération (raw HTML) de ${filename}...`);
 
-      browser = await chromium.launch();
+      browser = await chromium.launch({ 
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      });
       const page = await browser.newPage();
       
       await page.setContent(html, { waitUntil: 'networkidle' });
