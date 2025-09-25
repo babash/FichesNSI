@@ -17,7 +17,7 @@
  * Fond avec image pour la page d'accueil, comme pour les fiches
  */
 html {
-    background-image: url('/img/fond1.png');
+    background-image: url('/img/fond2.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
