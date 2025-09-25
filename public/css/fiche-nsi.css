@@ -24,7 +24,7 @@
   .container {
     max-width: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 12mm 0;
   }
   
   .columns-wrapper {
