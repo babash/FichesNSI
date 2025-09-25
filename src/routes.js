@@ -108,11 +108,14 @@ class RoutesManager {
     // ÉDITEUR: Preview PDF depuis markdown posté
     this.router.post('/editor/preview-pdf', async (req, res) => {
       try {
+        console.log('[EDITOR] Début preview PDF...');
         const { markdown } = req.body || {};
         if (typeof markdown !== 'string') {
+          console.log('[EDITOR] Erreur: markdown manquant ou invalide');
           return res.status(400).json({ error: 'Champ markdown manquant' });
         }
 
+        console.log('[EDITOR] Parsing markdown...');
         const fm = require('front-matter');
         const marked = require('marked');
         const page = fm(markdown);
@@ -120,16 +123,21 @@ class RoutesManager {
         const footer = page.attributes.footer || '';
         const content = marked.parse(page.body || '');
 
+        console.log('[EDITOR] Génération HTML...');
         const fiche = { title, footer, content, slug: 'preview' };
         const html = this.pdfGenerator.generateSingleFicheHTML(fiche);
 
+        console.log('[EDITOR] Génération PDF...');
         const pdfBuffer = await this.pdfGenerator.generatePDFFromHtml(html, 'preview.pdf', footer);
+        
+        console.log('[EDITOR] PDF généré avec succès, envoi...');
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Cache-Control', 'no-store');
         res.send(pdfBuffer);
       } catch (error) {
         console.error('[EDITOR] Erreur preview PDF:', error);
-        res.status(500).json({ error: 'Erreur lors de la génération du PDF' });
+        console.error('[EDITOR] Stack trace:', error.stack);
+        res.status(500).json({ error: 'Erreur lors de la génération du PDF', details: error.message });
       }
     });
 
