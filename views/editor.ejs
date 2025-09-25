@@ -58,18 +58,24 @@
     async function fetchPdf(markdown) {
       setStatus('Génération du PDF…');
       try {
+        console.log('🔄 Début génération PDF...');
         const res = await fetch('/editor/preview-pdf', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ markdown })
         });
         
+        console.log('📊 Réponse reçue:', res.status, res.statusText);
+        
         if (!res.ok) {
           const errorText = await res.text();
+          console.error('❌ Erreur serveur:', errorText);
           throw new Error(`Erreur serveur (${res.status}): ${errorText}`);
         }
         
         const blob = await res.blob();
+        console.log('📄 Blob reçu:', blob.size, 'bytes, type:', blob.type);
+        
         if (blob.size === 0) {
           throw new Error('PDF vide reçu du serveur');
         }
@@ -80,10 +86,22 @@
         }
         
         const url = URL.createObjectURL(blob);
+        console.log('🔗 URL blob créée:', url);
         pdfEl.src = url;
-        setStatus('A jour');
+        
+        // Attendre que l'iframe se charge
+        pdfEl.onload = () => {
+          console.log('✅ PDF chargé dans l\'iframe');
+          setStatus('A jour');
+        };
+        
+        pdfEl.onerror = () => {
+          console.error('❌ Erreur chargement PDF dans iframe');
+          setStatus('Erreur: Impossible de charger le PDF');
+        };
+        
       } catch (error) {
-        console.error('Erreur fetchPdf:', error);
+        console.error('❌ Erreur fetchPdf:', error);
         setStatus(`Erreur: ${error.message}`);
       }
     }
