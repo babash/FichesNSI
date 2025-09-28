@@ -219,23 +219,53 @@ class PDFGenerator {
     let browser = null;
     try {
       console.log(`[PDF] Génération (raw HTML) de ${filename}...`);
+      
+      const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+      const footerText = ficheFooter || 'Fiches de révision NSI';
+      const footerTemplate = `
+        <div style="font-size:5pt;width:100%; padding: 0 6mm; color:#6c757d; line-height:1.1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+            <span style="white-space:nowrap;">${footerText}</span>
+            <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
+            <span style="white-space:nowrap;">${now} (CET)</span>
+          </div>
+        </div>`;
 
       browser = await chromium.launch({ 
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--no-first-run',
+          '--no-zygote',
+          '--disable-gpu',
+          '--disable-web-security',
+          '--disable-features=VizDisplayCompositor',
+          '--run-all-compositor-stages-before-draw',
+          '--disable-background-timer-throttling',
+          '--disable-backgrounding-occluded-windows',
+          '--disable-renderer-backgrounding'
+        ]
       });
       const page = await browser.newPage();
       
-      await page.setContent(html, { waitUntil: 'networkidle' });
+      await page.setContent(html, { waitUntil: 'networkidle0' });
       
       const pdfBuffer = await page.pdf({
         format: 'A4',
+        printBackground: true,
         margin: {
           top: '6mm',
           right: '0mm',
           bottom: '8mm',
           left: '0mm'
-        }
+        },
+        displayHeaderFooter: true,
+        headerTemplate: '<div></div>',
+        footerTemplate,
+        preferCSSPageSize: false
       });
       
       await browser.close();
