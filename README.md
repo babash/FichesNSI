@@ -36,6 +36,7 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 - Node.js 18+ 
 - npm
 - Système avec support Chromium (pour Playwright)
+- **Permissions sudo** (pour installer les dépendances système de Playwright)
 
 ### Installation
 
@@ -48,9 +49,16 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 2. **Installer les dépendances** :
    ```bash
    npm install
-   npx playwright install
+   npm run install:playwright
+   sudo npm run install:playwright-deps
    ```
-   *Cette commande installe automatiquement Playwright avec Chromium.*
+   
+   **Ou en une seule commande** :
+   ```bash
+   npm run install:all
+   ```
+   
+   *Ces commandes installent automatiquement Playwright avec Chromium et les dépendances système.*
 
 3. **Lancer le serveur local** :
    ```bash

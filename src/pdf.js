@@ -10,6 +10,18 @@ class PDFGenerator {
    */
   async init() {
     console.log('[PDF] Générateur PDF initialisé avec playwright.');
+    
+    // Vérifier que Playwright est correctement installé
+    try {
+      const { execSync } = require('child_process');
+      execSync('npx playwright --version', { stdio: 'pipe' });
+      console.log('[PDF] Playwright vérifié avec succès.');
+    } catch (error) {
+      console.error('[PDF] ❌ Playwright n\'est pas correctement installé !');
+      console.error('[PDF] 💡 Exécutez: npm run install:playwright');
+      console.error('[PDF] 💡 Puis: sudo npm run install:playwright-deps');
+      throw new Error('Playwright n\'est pas installé. Exécutez npm run install:playwright');
+    }
   }
 
   /**
