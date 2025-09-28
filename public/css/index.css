@@ -186,35 +186,35 @@ body {
     height: 20px;
 }
 
-/* --- Header Actions Styles --- */
-.header-actions {
+/* --- Bouton flottant pour créer une fiche --- */
+.floating-create-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--python-blue), #1e4a72);
+    color: white;
+    border-radius: 50%;
     display: flex;
-    gap: 0.75rem;
     align-items: center;
-    flex-shrink: 0; /* Empêche la compression des boutons */
-}
-
-.create-new-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #007bff;
+    justify-content: center;
     text-decoration: none;
-    font-weight: 500;
-    padding: 6px 10px;
-    border-radius: 5px;
-    transition: background-color 0.2s ease;
+    box-shadow: 0 4px 12px rgba(48, 105, 152, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
 }
 
-.create-new-link:hover {
-    background-color: #e9ecef;
-    color: #0056b3;
+.floating-create-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(48, 105, 152, 0.4);
+    color: white;
     text-decoration: none;
 }
 
-.create-new-link .icon {
-    width: 18px;
-    height: 18px;
+.floating-create-btn .icon {
+    width: 24px;
+    height: 24px;
 }
 
 /* --- Fiche Actions Styles --- */
@@ -237,7 +237,7 @@ body {
 
 .edit-link:hover {
     background-color: #e9ecef;
-    color: #495057;
+    color: #343a40;
 }
 
 .edit-link .icon {

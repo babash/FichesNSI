@@ -16,16 +16,10 @@
 
         <div class="list-header" id="toggle-fiches" title="Cliquer pour afficher/masquer la liste">
             <h2>Liste des fiches disponibles</h2>
-            <div class="header-actions">
-                <a href="/editor" class="create-new-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 5v14M5 12h14"></path></svg>
-                    <span>Créer une fiche</span>
-                </a>
-                <a href="/fiches/all/pdf" download class="download-all-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    <span>Tout télécharger</span>
-                </a>
-            </div>
+            <a href="/fiches/all/pdf" download class="download-all-link">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Tout télécharger</span>
+            </a>
         </div>
 
         <ul class="fiche-list" id="fiches-list">
@@ -45,6 +39,11 @@
                 <% } %>
             <% }); %>
         </ul>
+
+        <!-- Bouton flottant pour créer une nouvelle fiche -->
+        <a href="/editor" class="floating-create-btn" title="Créer une nouvelle fiche">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 5v14M5 12h14"></path></svg>
+        </a>
 
         <footer class="index-footer">
             <div class="footer-license">
