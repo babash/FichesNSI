@@ -100,6 +100,29 @@ Les PDFs sont générés automatiquement avec :
 - ✅ Pré-génération pour un accès instantané
 - ✅ Validation automatique des PDFs
 
+### Scripts Disponibles
+
+#### **Installation et Vérification**
+```bash
+npm run install:playwright      # Installer les navigateurs Playwright
+npm run install:playwright-deps # Installer les dépendances système (sudo requis)
+npm run install:all            # Installation complète en une commande
+npm run check:playwright       # Vérifier l'installation de Playwright
+```
+
+#### **Développement et Build**
+```bash
+npm start                      # Démarrer le serveur de développement
+npm run build                  # Générer le site statique
+npm test                       # Exécuter les tests
+```
+
+#### **Déploiement**
+```bash
+npm run deploy                 # Déploiement automatique
+npm run deploy:force           # Déploiement forcé
+```
+
 ---
 
 ## ✍️ Créer une Nouvelle Fiche
@@ -156,8 +179,9 @@ fiches-nsi/
 │   ├── fiches.js          # Gestion des fiches Markdown
 │   ├── pdf.js             # Génération PDF avec Playwright
 │   └── routes.js          # Routes Express
-├── scripts/               # Scripts de build
-│   └── generate-static.js # Générateur de site statique
+├── scripts/               # Scripts de build et installation
+│   ├── generate-static.js # Générateur de site statique
+│   └── install-playwright.js # Installation automatique Playwright
 ├── content/               # Fiches en Markdown
 ├── views/                 # Templates EJS
 ├── public/               # Assets statiques (CSS, JS, images)
@@ -176,6 +200,7 @@ fiches-nsi/
 
 #### `src/pdf.js` - PDFGenerator  
 - Génération PDF avec Playwright
+- Vérification automatique de l'installation
 - Génération HTML optimisée pour PDF
 - Licence CC0 automatique
 - Validation des PDFs générés
@@ -190,6 +215,12 @@ fiches-nsi/
 - Serveur temporaire pour génération PDF
 - Copie des assets statiques
 - Génération des pages HTML
+
+#### `scripts/install-playwright.js` - Installation Automatique
+- Installation des navigateurs Playwright
+- Installation des dépendances système
+- Vérification de l'installation
+- Messages d'erreur clairs avec solutions
 
 ---
 
@@ -237,7 +268,7 @@ Le projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pag
 
 ### Processus de Build
 
-1. **Installation** des dépendances Node.js
+1. **Installation** des dépendances Node.js et Playwright
 2. **Génération** du site statique avec `npm run build`
 3. **Validation** des fichiers générés (HTML, CSS, PDFs)
 4. **Déploiement** automatique sur GitHub Pages
@@ -256,6 +287,35 @@ cd dist && python -m http.server 8000
 
 ---
 
+## 🔧 Dépannage
+
+### Playwright non installé
+```bash
+# Vérifier l'installation
+npm run check:playwright
+
+# Installer si nécessaire
+npm run install:playwright
+sudo npm run install:playwright-deps
+```
+
+### Erreurs de génération PDF
+1. Vérifier que Playwright fonctionne : `npm run check:playwright`
+2. Consulter les logs de génération PDF
+3. Tester avec une fiche simple
+
+### Site non accessible
+1. Vérifier que la branche de déploiement existe
+2. Attendre 5-10 minutes (cache GitHub Pages)
+3. Vérifier les logs du workflow GitHub Actions
+
+### CSS/JS non chargés
+1. Vérifier les chemins relatifs dans les fichiers HTML
+2. S'assurer que `.nojekyll` est présent
+3. Vérifier que les fichiers sont bien déployés
+
+---
+
 ## 📝 Licence
 
 Ce projet est sous licence MIT. Le contenu généré (fiches) est automatiquement placé sous licence [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.fr) (domaine public).
@@ -269,6 +329,14 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 - Proposer des améliorations
 - Soumettre des pull requests
 - Partager vos fiches de révision
+
+### Workflow de Contribution
+
+1. **Fork** le projet
+2. **Créer** une branche de fonctionnalité (`git checkout -b feature/AmazingFeature`)
+3. **Commit** vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** vers la branche (`git push origin feature/AmazingFeature`)
+5. **Ouvrir** une Pull Request
 
 ---
 
