@@ -2,64 +2,42 @@
 @import url('fiche-base.css');
 
 @media print {
+  @page {
+    size: A4;
+    margin: 6mm 0mm 8mm 0mm;
+  }
+  
   body { 
     margin: 0; 
     padding: 0;
-    font-size: 6.5pt; /* Taille encore plus dense */
-    line-height: 1.0; /* Interligne minimal */
+    font-size: 7pt; /* Taille ultra-dense pour cheatsheet */
+    line-height: 1.05; /* Interligne ultra-minimal */
   }
   /* Réserver de l'espace pour le footer template puppeteer */
   .container {
     max-width: none;
     margin: 0;
-    padding: 0 0 8mm 0; /* Réduire l'espace pour le footer */
-    height: 100vh; /* Forcer la hauteur de la page */
-    overflow: hidden; /* Éviter le débordement */
+    padding: 0 0 12mm 0;
   }
   
   .columns-wrapper {
-    gap: 0.5mm; /* Espacement encore plus minimal */
-    height: calc(100vh - 8mm); /* Hauteur maximale disponible */
+    gap: 1mm; /* Espacement minimal pour l'impression */
   }
   
   .column {
-    gap: 0.02rem; /* Espacement ultra-minimal entre sections */
+    gap: 0.05rem; /* Espacement ultra-minimal entre sections */
     background-color: rgba(248, 249, 250, 0.2); /* Fond gris très léger pour impression */
-    padding: 0.05rem; /* Padding encore plus minimal */
-    overflow: hidden; /* Éviter le débordement */
+    padding: 0.1rem; /* Padding minimal pour impression */
   }
   
   section {
     page-break-inside: avoid;
-    margin-bottom: 0.05em; /* Marge encore plus minimale */
-    padding: 0.1rem; /* Padding encore plus minimal */
+    margin-bottom: 0.1em; /* Marge ultra-minimale */
+    padding: 0.15rem; /* Padding ultra-minimal */
   }
   
   h1, h2, h3 {
     page-break-after: avoid;
-    page-break-inside: avoid;
-    margin-top: 0.1em;
-    margin-bottom: 0.1em;
-  }
-  
-  /* Éviter les sauts de page dans les éléments importants */
-  p, li, code, pre {
-    page-break-inside: avoid;
-    orphans: 2;
-    widows: 2;
-  }
-  
-  /* Optimiser les tableaux */
-  table {
-    page-break-inside: avoid;
-    font-size: 6pt;
-  }
-  
-  /* Optimiser les listes */
-  ul, ol {
-    page-break-inside: avoid;
-    margin: 0.1em 0;
-    padding: 0.1em 0;
   }
   
   h1 {

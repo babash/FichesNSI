@@ -202,16 +202,15 @@ class PDFGenerator {
         format: 'A4',
         printBackground: true,
         margin: {
-          top: '4mm',
+          top: '6mm',
           right: '0mm',
-          bottom: '6mm',
+          bottom: '8mm',
           left: '0mm'
         },
         displayHeaderFooter: true,
         headerTemplate: '<div></div>',
         footerTemplate,
-        preferCSSPageSize: false,
-        scale: 0.95
+        preferCSSPageSize: true
       });
       
       await browser.close();
@@ -285,16 +284,15 @@ class PDFGenerator {
         format: 'A4',
         printBackground: true,
         margin: {
-          top: '4mm',
+          top: '6mm',
           right: '0mm',
-          bottom: '6mm',
+          bottom: '8mm',
           left: '0mm'
         },
         displayHeaderFooter: true,
         headerTemplate: '<div></div>',
         footerTemplate,
-        preferCSSPageSize: false,
-        scale: 0.95
+        preferCSSPageSize: true
       });
       
       await browser.close();
