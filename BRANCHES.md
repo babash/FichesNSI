@@ -60,8 +60,36 @@ git push origin main
 ## 🎯 **Recommandations**
 
 1. Créer des PRs vers `main`
-2. Utiliser le CI pour valider les builds et les PDFs
+2. Utiliser le CI pour valider les builds et les PDFs avec Playwright
 3. Merger vers `main` pour déclencher la production
+4. Tester localement avec `npm run build` avant le push
+
+## 🛠️ **Commandes utiles**
+
+### **Vérifier les branches**
+```bash
+git branch -a
+```
+
+### **Créer une nouvelle branche**
+```bash
+git checkout -b feature/nom-de-la-fonctionnalite
+```
+
+### **Voir les branches distantes**
+```bash
+git branch -r
+```
+
+### **Supprimer une branche locale**
+```bash
+git branch -d nom-de-la-branche
+```
+
+### **Supprimer une branche distante**
+```bash
+git push origin --delete nom-de-la-branche
+```
 
 ---
 

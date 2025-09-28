@@ -7,7 +7,7 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 ### 📄 Génération de Contenu
 * **Site Statique** : Génération de site statique compatible GitHub Pages
 * **Pages Web Optimisées** : Conversion automatique des fichiers Markdown en pages web stylisées
-* **Génération PDF Automatique** : Export PDF haute qualité avec html-pdf-node
+* **Génération PDF Automatique** : Export PDF haute qualité avec Playwright
 * **PDFs Pré-générés** : Tous les PDFs générés lors du build pour un déploiement rapide
 * **PDF Combiné** : Téléchargement de toutes les fiches en un seul PDF
 
@@ -35,7 +35,7 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 ### Prérequis
 - Node.js 18+ 
 - npm
-- Système avec support Chromium (pour html-pdf-node)
+- Système avec support Chromium (pour Playwright)
 
 ### Installation
 
@@ -48,8 +48,9 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 2. **Installer les dépendances** :
    ```bash
    npm install
+   npx playwright install
    ```
-   *Cette commande installe automatiquement html-pdf-node avec Chromium.*
+   *Cette commande installe automatiquement Playwright avec Chromium.*
 
 3. **Lancer le serveur local** :
    ```bash
@@ -80,7 +81,7 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 - **Téléchargement individuel** : Icône PDF sur chaque fiche
 - **Téléchargement global** : Bouton "Tout télécharger" pour un PDF combiné
 
-Voir aussi: `GUIDE_MARKDOWN.md` pour des recommandations de rédaction et contraintes d’affichage optimisées A4.
+Voir aussi: `GUIDE_MARKDOWN.md` pour des recommandations de rédaction et contraintes d'affichage optimisées A4.
 
 ### Génération PDF
 Les PDFs sont générés automatiquement avec :
@@ -145,7 +146,7 @@ La nouvelle fiche apparaît automatiquement sur la page d'accueil.
 fiches-nsi/
 ├── src/                    # Modules principaux
 │   ├── fiches.js          # Gestion des fiches Markdown
-│   ├── pdf.js             # Génération PDF avec html-pdf-node
+│   ├── pdf.js             # Génération PDF avec Playwright
 │   └── routes.js          # Routes Express
 ├── scripts/               # Scripts de build
 │   └── generate-static.js # Générateur de site statique
@@ -166,7 +167,7 @@ fiches-nsi/
 - Cache en mémoire pour les performances
 
 #### `src/pdf.js` - PDFGenerator  
-- Génération PDF avec html-pdf-node
+- Génération PDF avec Playwright
 - Génération HTML optimisée pour PDF
 - Licence CC0 automatique
 - Validation des PDFs générés
@@ -189,7 +190,7 @@ fiches-nsi/
 ### Backend
 - **Node.js** - Runtime JavaScript
 - **Express.js** - Framework web
-- **html-pdf-node** - Génération PDF via Chromium
+- **Playwright** - Génération PDF via Chromium
 - **EJS** - Moteur de templates
 
 ### Processing
@@ -219,7 +220,6 @@ Le projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pag
 - **Déclenchement** : Push sur `main` ou action manuelle
 - **URL** : https://babash.github.io/FichesNSI/
 - **Contenu** : Site statique complet avec PDFs
-
 
 ### 🎯 Méthode de travail recommandée
 
@@ -265,4 +265,3 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 ---
 
 *Généré avec ❤️ pour la communauté NSI*
-<!-- maintenance: trigger production deploy  -->
