@@ -38,12 +38,8 @@ class PDFGenerator {
           <header><h1>${visibleTitle}</h1></header>
           <article class="container">
             <div class="columns-wrapper">
-              <div class="column" id="column-left">
-                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-              </div>
-              <div class="column" id="column-right">
-                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-              </div>
+              <div class="column" id="column-left"></div>
+              <div class="column" id="column-right"></div>
             </div>
             ${fiche.content}
           </article>

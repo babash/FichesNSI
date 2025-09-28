@@ -17,12 +17,12 @@
   .container {
     max-width: none;
     margin: 0;
-    padding: 0 0 12mm 0;
+    padding: 0 0 8mm 0; /* Réduire l'espace pour le footer */
   }
   
   .columns-wrapper {
     gap: 1mm; /* Espacement minimal pour l'impression */
-    height: 100vh; /* Hauteur fixe de la page */
+    height: calc(100vh - 20mm); /* Hauteur disponible moins header/footer */
     overflow: hidden; /* Éviter le débordement */
   }
   
@@ -32,6 +32,13 @@
     padding: 0.1rem; /* Padding minimal pour impression */
     height: 100%; /* Prendre toute la hauteur disponible */
     overflow: hidden; /* Éviter le débordement */
+  }
+  
+  /* Optimiser le header pour l'impression */
+  header h1 {
+    font-size: 0.8rem;
+    margin: 0.2rem 0;
+    padding: 0.2rem 0;
   }
   
   section {
