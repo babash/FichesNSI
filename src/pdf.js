@@ -51,7 +51,7 @@ class PDFGenerator {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script>
         <script>
-        // Script pour répartir intelligemment les sections en deux colonnes
+        // Layout fixe sans répartition automatique pour éviter les débordements
         document.addEventListener('DOMContentLoaded', function() {
           const container = document.querySelector('.container');
           const leftColumn = document.getElementById('column-left');
@@ -60,27 +60,12 @@ class PDFGenerator {
           // Récupérer toutes les sections
           const sections = Array.from(container.querySelectorAll('section'));
           
-          // Répartir les sections de manière équilibrée
-          let leftHeight = 0;
-          let rightHeight = 0;
-          
+          // Répartition simple : une section sur deux à gauche, une sur deux à droite
           sections.forEach((section, index) => {
-            // Mesurer temporairement la section
-            const tempDiv = document.createElement('div');
-            tempDiv.style.position = 'absolute';
-            tempDiv.style.visibility = 'hidden';
-            tempDiv.appendChild(section.cloneNode(true));
-            document.body.appendChild(tempDiv);
-            const sectionHeight = tempDiv.scrollHeight;
-            document.body.removeChild(tempDiv);
-            
-            // Ajouter la section à la colonne la plus courte
-            if (leftHeight <= rightHeight) {
+            if (index % 2 === 0) {
               leftColumn.appendChild(section);
-              leftHeight += sectionHeight;
             } else {
               rightColumn.appendChild(section);
-              rightHeight += sectionHeight;
             }
           });
         });

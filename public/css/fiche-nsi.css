@@ -22,18 +22,24 @@
   
   .columns-wrapper {
     gap: 1mm; /* Espacement minimal pour l'impression */
+    height: 100vh; /* Hauteur fixe de la page */
+    overflow: hidden; /* Éviter le débordement */
   }
   
   .column {
     gap: 0.05rem; /* Espacement ultra-minimal entre sections */
     background-color: rgba(248, 249, 250, 0.2); /* Fond gris très léger pour impression */
     padding: 0.1rem; /* Padding minimal pour impression */
+    height: 100%; /* Prendre toute la hauteur disponible */
+    overflow: hidden; /* Éviter le débordement */
   }
   
   section {
     page-break-inside: avoid;
     margin-bottom: 0.1em; /* Marge ultra-minimale */
     padding: 0.15rem; /* Padding ultra-minimal */
+    max-height: 45vh; /* Limiter la hauteur des sections */
+    overflow: hidden; /* Éviter le débordement */
   }
   
   h1, h2, h3 {
