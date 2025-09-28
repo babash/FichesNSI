@@ -1,4 +1,8 @@
 /* Styles spécifiques pour l'éditeur */
+
+/* Import des styles de base */
+@import url('base.css');
+
 :root {
   --split-gutter: 10px;
 }

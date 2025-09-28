@@ -1,15 +1,7 @@
 /* Styles spécifiques pour les fiches individuelles uniquement */
 
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Orbitron:wght@600&family=Lato:wght@400;700&display=swap');
-
-:root {
-  --python-blue: #306998;
-  --python-yellow: #FFD43B;
-  --bg-light: #ffffff;
-  --accent-bg: rgba(48, 105, 152, 0.05);
-  --code-bg: #f0f0f0;
-  --yellow-bg: rgba(255, 212, 59, 0.15);
-}
+/* Import des styles de base pour les fiches */
+@import url('fiche-base.css');
 
 /* Fond avec image pour les fiches */
 html {

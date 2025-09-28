@@ -1,8 +1,7 @@
 /* Styles spécifiques pour la page d'accueil */
 
-/* Import des fichiers communs */
-@import url('variables.css');
-@import url('common.css');
+/* Import des styles de base */
+@import url('base.css');
 
 /* Styles spécifiques à la page d'accueil */
 html {
