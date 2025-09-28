@@ -1,0 +1,188 @@
+/* Styles de base pour les fiches (affichage et PDF) */
+
+/* Import des styles de base */
+@import url('base.css');
+
+/* Variables spécifiques aux fiches */
+:root {
+    --fiche-bg: #ffffff;
+    --fiche-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --fiche-border-radius: 8px;
+    --fiche-padding: 2rem;
+}
+
+/* Styles communs pour les fiches */
+.fiche-container {
+    background-color: var(--fiche-bg);
+    border-radius: var(--fiche-border-radius);
+    box-shadow: var(--fiche-shadow);
+    padding: var(--fiche-padding);
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.fiche-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--python-blue);
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding: 1rem 2rem;
+    background: var(--yellow-bg);
+    border-left: 0.5rem solid var(--python-yellow);
+    border-radius: var(--fiche-border-radius);
+}
+
+.fiche-title::before {
+    content: '🐍';
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+}
+
+.fiche-content {
+    line-height: 1.6;
+    color: #333;
+}
+
+.fiche-content h1,
+.fiche-content h2,
+.fiche-content h3,
+.fiche-content h4,
+.fiche-content h5,
+.fiche-content h6 {
+    color: var(--python-blue);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.fiche-content h1 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--python-blue);
+    padding-bottom: 0.5rem;
+}
+
+.fiche-content h2 {
+    font-size: 1.25rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.25rem;
+}
+
+.fiche-content h3 {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.fiche-content p {
+    margin-bottom: 1rem;
+}
+
+.fiche-content ul,
+.fiche-content ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.fiche-content li {
+    margin-bottom: 0.25rem;
+}
+
+.fiche-content code {
+    background-color: var(--code-bg);
+    padding: 0.125rem 0.25rem;
+    border-radius: var(--border-radius-small);
+    font-family: var(--font-code);
+    font-size: 0.9em;
+    color: #d63384;
+}
+
+.fiche-content pre {
+    background-color: var(--code-bg);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--python-blue);
+}
+
+.fiche-content pre code {
+    background: none;
+    padding: 0;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.fiche-content blockquote {
+    border-left: 4px solid var(--python-yellow);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    background-color: var(--yellow-bg);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.fiche-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    background-color: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+}
+
+.fiche-content th,
+.fiche-content td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.fiche-content th {
+    background-color: var(--accent-bg);
+    font-weight: 600;
+    color: var(--python-blue);
+}
+
+.fiche-content tr:hover {
+    background-color: #f8f9fa;
+}
+
+.fiche-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+}
+
+.fiche-content .highlight {
+    background-color: var(--yellow-bg);
+    padding: 0.125rem 0.25rem;
+    border-radius: var(--border-radius-small);
+}
+
+.fiche-content .note {
+    background-color: #e7f3ff;
+    border-left: 4px solid #007bff;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: var(--border-radius);
+}
+
+.fiche-content .warning {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: var(--border-radius);
+}
+
+.fiche-content .error {
+    background-color: #f8d7da;
+    border-left: 4px solid #dc3545;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: var(--border-radius);
+}

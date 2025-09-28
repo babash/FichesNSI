@@ -131,7 +131,7 @@ class StaticSiteGenerator {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Fiches de révision NSI</title>
     <link rel="stylesheet" href="css/fiche-nsi.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/homepage.css">
 </head>
 <body>
     <div class="index-container">
@@ -272,12 +272,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Copier les CSS
     fs.copyFileSync(
+      path.join(__dirname, '../public/css/variables.css'),
+      path.join(this.outputDir, 'css/variables.css')
+    );
+    fs.copyFileSync(
+      path.join(__dirname, '../public/css/base.css'),
+      path.join(this.outputDir, 'css/base.css')
+    );
+    fs.copyFileSync(
+      path.join(__dirname, '../public/css/fiche-base.css'),
+      path.join(this.outputDir, 'css/fiche-base.css')
+    );
+    fs.copyFileSync(
+      path.join(__dirname, '../public/css/fiche.css'),
+      path.join(this.outputDir, 'css/fiche.css')
+    );
+    fs.copyFileSync(
       path.join(__dirname, '../public/css/fiche-nsi.css'),
       path.join(this.outputDir, 'css/fiche-nsi.css')
     );
     fs.copyFileSync(
-      path.join(__dirname, '../public/css/index.css'),
-      path.join(this.outputDir, 'css/index.css')
+      path.join(__dirname, '../public/css/homepage.css'),
+      path.join(this.outputDir, 'css/homepage.css')
+    );
+    fs.copyFileSync(
+      path.join(__dirname, '../public/css/editor.css'),
+      path.join(this.outputDir, 'css/editor.css')
     );
     
     // Copier les JS
