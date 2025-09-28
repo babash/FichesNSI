@@ -81,7 +81,7 @@ class StaticSiteGenerator {
         // Générer le PDF avec le footer spécifique de la fiche
         const pdfBuffer = await this.pdfGenerator.generatePDF(url, `${fiche.slug}.pdf`, fiche.footer);
         
-        // Sauvegarder le PDF
+        // Écrire le PDF
         const pdfPath = path.join(pdfDir, `${fiche.slug}.pdf`);
         fs.writeFileSync(pdfPath, pdfBuffer);
         

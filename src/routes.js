@@ -208,10 +208,6 @@ class RoutesManager {
       res.send(html);
     });
 
-    // ÉDITEUR: Sauvegarde désactivée - les utilisateurs ne peuvent pas sauvegarder les fiches
-    this.router.post('/editor/save/:slug', async (req, res) => {
-      res.status(403).json({ error: 'Sauvegarde désactivée - les fiches ne peuvent pas être modifiées' });
-    });
 
     // 404 Handler
     this.router.use((req, res) => {

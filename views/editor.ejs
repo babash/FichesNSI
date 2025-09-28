@@ -16,7 +16,6 @@
     </div>
     <div class="actions">
       <button id="btn-refresh">Rafraîchir PDF</button>
-      <!-- Sauvegarde désactivée -->
     </div>
     <div class="status" id="status"></div>
   </header>
@@ -112,8 +111,6 @@
 
     editorEl.addEventListener('input', schedulePreview);
     document.getElementById('btn-refresh').addEventListener('click', () => fetchPdf(editorEl.value));
-
-    // Sauvegarde désactivée
 
     // Initial preview
     fetchPdf(editorEl.value);
