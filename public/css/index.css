@@ -186,6 +186,65 @@ body {
     height: 20px;
 }
 
+/* --- Header Actions Styles --- */
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.create-new-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.create-new-link:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+    color: white;
+    text-decoration: none;
+}
+
+.create-new-link .icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* --- Fiche Actions Styles --- */
+.fiche-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.edit-link {
+    color: #28a745;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.edit-link:hover {
+    background-color: #d4edda;
+    color: #1e7e34;
+}
+
+.edit-link .icon {
+    width: 20px;
+    height: 20px;
+}
+
 /* --- Footer Styles --- */
 .index-footer {
     margin-top: 2.5rem;

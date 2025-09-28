@@ -16,9 +16,7 @@
     </div>
     <div class="actions">
       <button id="btn-refresh">Rafraîchir PDF</button>
-      <% if (slug) { %>
-      <button id="btn-save" class="primary">Enregistrer</button>
-      <% } %>
+      <!-- Sauvegarde désactivée -->
     </div>
     <div class="status" id="status"></div>
   </header>
@@ -115,17 +113,7 @@
     editorEl.addEventListener('input', schedulePreview);
     document.getElementById('btn-refresh').addEventListener('click', () => fetchPdf(editorEl.value));
 
-    if (slug) {
-      document.getElementById('btn-save').addEventListener('click', async () => {
-        setStatus('Enregistrement…');
-        const res = await fetch('/editor/save/' + encodeURIComponent(slug), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ markdown: editorEl.value })
-        });
-        if (res.ok) setStatus('Enregistré'); else setStatus('Échec de l\'enregistrement');
-      });
-    }
+    // Sauvegarde désactivée
 
     // Initial preview
     fetchPdf(editorEl.value);

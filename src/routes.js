@@ -99,7 +99,18 @@ class RoutesManager {
       }
       
       if (!initialMarkdown) {
-        initialMarkdown = `---\ntitle: Titre de la fiche\nfooter: \n---\n\n# Nouveau contenu\n\nÉcrivez votre fiche en Markdown.`;
+        // Utiliser "exemple-affichage" comme template par défaut pour les nouvelles fiches
+        try {
+          const fs = require('fs').promises;
+          const path = require('path');
+          const contentDir = path.join(__dirname, '../content');
+          const templatePath = path.join(contentDir, 'exemple-affichage.md');
+          initialMarkdown = await fs.readFile(templatePath, 'utf8');
+        } catch (error) {
+          console.error('[EDITOR] Erreur chargement template exemple-affichage:', error);
+          // Fallback vers un template simple
+          initialMarkdown = `---\ntitle: Titre de la fiche\nfooter: \n---\n\n# Nouveau contenu\n\nÉcrivez votre fiche en Markdown.`;
+        }
       }
       
       res.render('editor', { slug: slug || '', initialMarkdown });
@@ -197,30 +208,9 @@ class RoutesManager {
       res.send(html);
     });
 
-    // ÉDITEUR: Sauvegarde du markdown (écrase le fichier .md)
+    // ÉDITEUR: Sauvegarde désactivée - les utilisateurs ne peuvent pas sauvegarder les fiches
     this.router.post('/editor/save/:slug', async (req, res) => {
-      try {
-        const { slug } = req.params;
-        const { markdown } = req.body || {};
-        if (!slug) return res.status(400).json({ error: 'Slug requis' });
-        if (typeof markdown !== 'string') {
-          return res.status(400).json({ error: 'Champ markdown manquant' });
-        }
-
-        const path = require('path');
-        const fs = require('fs').promises;
-        const contentDir = path.join(__dirname, '../content');
-        const filePath = path.join(contentDir, `${slug}.md`);
-        await fs.writeFile(filePath, markdown, 'utf8');
-
-        // Recharger la fiche en mémoire
-        await this.fichesManager.loadFiche(contentDir, `${slug}.md`);
-
-        res.json({ ok: true });
-      } catch (error) {
-        console.error('[EDITOR] Erreur sauvegarde:', error);
-        res.status(500).json({ error: 'Erreur lors de la sauvegarde' });
-      }
+      res.status(403).json({ error: 'Sauvegarde désactivée - les fiches ne peuvent pas être modifiées' });
     });
 
     // 404 Handler
