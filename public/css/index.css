@@ -193,7 +193,7 @@ body {
     right: 2rem;
     width: 56px;
     height: 56px;
-    background: linear-gradient(135deg, var(--python-blue), #1e4a72);
+    background: linear-gradient(135deg, #306998, #1e4a72);
     color: white;
     border-radius: 50%;
     display: flex;
