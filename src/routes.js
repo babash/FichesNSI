@@ -105,6 +105,33 @@ class RoutesManager {
       res.render('editor', { slug: slug || '', initialMarkdown });
     });
 
+    // ÉDITEUR: Preview HTML temporaire pour PDF
+    this.router.post('/editor/preview-html', (req, res) => {
+      try {
+        const { markdown } = req.body || {};
+        if (typeof markdown !== 'string') {
+          return res.status(400).json({ error: 'Champ markdown manquant' });
+        }
+
+        const fm = require('front-matter');
+        const marked = require('marked');
+        const page = fm(markdown);
+        const title = page.attributes.title || 'Titre manquant';
+        const footer = page.attributes.footer || '';
+        const content = marked.parse(page.body || '');
+
+        const fiche = { title, footer, content, slug: 'preview' };
+        const html = this.pdfGenerator.generateSingleFicheHTML(fiche);
+        
+        res.setHeader('Content-Type', 'text/html');
+        res.setHeader('Cache-Control', 'no-store');
+        res.send(html);
+      } catch (error) {
+        console.error('[EDITOR] Erreur preview HTML:', error);
+        res.status(500).json({ error: 'Erreur lors de la génération du HTML', details: error.message });
+      }
+    });
+
     // ÉDITEUR: Preview PDF depuis markdown posté
     this.router.post('/editor/preview-pdf', async (req, res) => {
       try {
@@ -127,8 +154,25 @@ class RoutesManager {
         const fiche = { title, footer, content, slug: 'preview' };
         const html = this.pdfGenerator.generateSingleFicheHTML(fiche);
 
-        console.log('[EDITOR] Génération PDF...');
-        const pdfBuffer = await this.pdfGenerator.generatePDFFromHtml(html, 'preview.pdf', footer);
+        console.log('[EDITOR] Génération PDF via URL...');
+        // Créer un ID unique pour cette session
+        const sessionId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+        
+        // Stocker temporairement le HTML (en mémoire pour cette session)
+        if (!this.tempHtmlSessions) {
+          this.tempHtmlSessions = new Map();
+        }
+        this.tempHtmlSessions.set(sessionId, html);
+        
+        // Nettoyer après 5 minutes
+        setTimeout(() => {
+          if (this.tempHtmlSessions) {
+            this.tempHtmlSessions.delete(sessionId);
+          }
+        }, 5 * 60 * 1000);
+        
+        const url = `http://localhost:${this.port}/editor/temp-html/${sessionId}`;
+        const pdfBuffer = await this.pdfGenerator.generatePDF(url, 'preview.pdf', footer);
         
         console.log('[EDITOR] PDF généré avec succès, envoi...');
         res.setHeader('Content-Type', 'application/pdf');
@@ -139,6 +183,18 @@ class RoutesManager {
         console.error('[EDITOR] Stack trace:', error.stack);
         res.status(500).json({ error: 'Erreur lors de la génération du PDF', details: error.message });
       }
+    });
+
+    // ÉDITEUR: HTML temporaire pour PDF
+    this.router.get('/editor/temp-html/:sessionId', (req, res) => {
+      const { sessionId } = req.params;
+      if (!this.tempHtmlSessions || !this.tempHtmlSessions.has(sessionId)) {
+        return res.status(404).send('Session expirée');
+      }
+      
+      const html = this.tempHtmlSessions.get(sessionId);
+      res.setHeader('Content-Type', 'text/html');
+      res.send(html);
     });
 
     // ÉDITEUR: Sauvegarde du markdown (écrase le fichier .md)
