@@ -74,9 +74,9 @@ C. Votre score dépasse 70.
 </code></pre>
 
 <p><strong>Explication :</strong></p>
-<p>->Ligne A (Active) : Le programme teste if points &gt;= 50 (80 >= 50). C'est VRAI. Le message A est affiché. L'ensemble du bloc if/elif est alors quitté sans même tester la ligne B.</br>
-->Ligne B (Ignorée) : Bien que elif points &gt;= 75 soit vrai (80 >= 75), cette ligne est ignorée car elle est subordonnée au premier if et qu'une condition a déjà été satisfaite dans ce bloc.</br>
-->Ligne C (Active) : Le second if points &gt; 70 est un nouveau test indépendant. Il est VRAI. Le message C est affiché.</p>
+<p>-><strong>Ligne A (Active) :</strong> Le programme teste <code>if points &gt;= 50</code> (80 >= 50) est <strong>VRAI</strong>. Le message A est affiché. Le bloc if/elif s'arrete ici.</br>
+-><strong>Ligne B (Ignorée) :</strong> Le test <code>elif points &gt;= 75</code> est Vrai <strong>mais n'est jamais atteint</strong> car le bloc if/elif s'est terminé à la Ligne A.</br>
+-><strong>Ligne C (Active) :</strong> Le second <code>if points &gt; 70</code> est un <strong>nouveau test indépendant</strong>. Il est VRAI et e message C est affiché.</p>
 </section>
 
 <section>
