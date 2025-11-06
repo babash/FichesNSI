@@ -14,7 +14,8 @@ footer: "Fiche d'aide-mémoire - NSI Tani Malandi"
 prenoms = ["Alice", "Bob"]
 for p in prenoms:
     print(f"Bonjour {p}")
-
+</code></pre>
+<pre><code>
 # Affiche :
 # Bonjour Alice
 # Bonjour Bob
@@ -25,7 +26,8 @@ for p in prenoms:
 <pre><code class="language-python"># Utilisation de range(n) pour répéter n fois (de 0 à n-1)
 for i in range(3):
     print(f"Tour numéro {i}") # print permet d'afficher
-
+</code></pre>
+<pre><code>
 # Affiche :
 # Tour numéro 0
 # Tour numéro 1
@@ -41,12 +43,12 @@ while compteur < 3:
     print(f"Compteur : {compteur}")
     # Incrémentation pour éviter la boucle infinie
     compteur = compteur + 1
-
+</code></pre>
+<pre><code>
 # Affiche :
 # Compteur : 0
 # Compteur : 1
 # Compteur : 2
-
 </code></pre>
 
 <p><strong>Explication :</strong> Le code dans le <code>while</code> s'exécute tant que la variable <code>compteur</code> est strictement inférieure à 3. À chaque tour, on augmente <code>compteur</code> de 1, ce qui permet à la boucle de se terminer.</p>
@@ -61,9 +63,9 @@ while compteur < 3:
 <pre><code class="language-python">nombre = 10
 if nombre > 5:
     print("Le nombre est supérieur à 5.")
-
+</code></pre>
+<pre><code>
 # Affiche "Le nombre est supérieur à 5."
-
 </code></pre>
 
 <p><strong>Explication :</strong> L'instruction <code>print</code> est exécutée car la condition <code>nombre > 5</code> est vraie.</p>
@@ -75,7 +77,8 @@ if age >= 18:
     print("Vous êtes majeur.")
 else:
     print("Vous êtes mineur.")
-
+</code></pre>
+<pre><code>
 # Affiche "Vous êtes mineur."
 </code></pre>
 
@@ -90,7 +93,8 @@ elif note >= 10:
     print("Bien")
 else:
     print("Insuffisant")
-
+</code></pre>
+<pre><code>
 # Affiche "Bien"
 </code></pre>
 
