@@ -30,7 +30,8 @@
 prenoms = ["Alice", "Bob"]
 for p in prenoms:
     print(f"Bonjour {p}")
-
+</code></pre>
+<pre><code>
 # Affiche :
 # Bonjour Alice
 # Bonjour Bob
@@ -41,7 +42,8 @@ for p in prenoms:
 <pre><code class="language-python"># Utilisation de range(n) pour répéter n fois (de 0 à n-1)
 for i in range(3):
     print(f"Tour numéro {i}") # print permet d'afficher
-
+</code></pre>
+<pre><code>
 # Affiche :
 # Tour numéro 0
 # Tour numéro 1
@@ -57,12 +59,14 @@ while compteur < 3:
     print(f"Compteur : {compteur}")
     # Incrémentation pour éviter la boucle infinie
     compteur = compteur + 1
+</code></pre>
+<pre><code>
+# Affiche :
+# Compteur : 0
+# Compteur : 1
+# Compteur : 2
+</code></pre>
 
-<h1 id="affiche-">Affiche :</h1>
-<h1 id="compteur--0">Compteur : 0</h1>
-<h1 id="compteur--1">Compteur : 1</h1>
-<h1 id="compteur--2">Compteur : 2</h1>
-<p></code></pre></p>
 <p><strong>Explication :</strong> Le code dans le <code>while</code> s'exécute tant que la variable <code>compteur</code> est strictement inférieure à 3. À chaque tour, on augmente <code>compteur</code> de 1, ce qui permet à la boucle de se terminer.</p>
 </section>
 
@@ -75,9 +79,11 @@ while compteur < 3:
 <pre><code class="language-python">nombre = 10
 if nombre > 5:
     print("Le nombre est supérieur à 5.")
+</code></pre>
+<pre><code>
+# Affiche "Le nombre est supérieur à 5."
+</code></pre>
 
-<h1 id="affiche-le-nombre-est-supérieur-à-5">Affiche &quot;Le nombre est supérieur à 5.&quot;</h1>
-<p></code></pre></p>
 <p><strong>Explication :</strong> L'instruction <code>print</code> est exécutée car la condition <code>nombre > 5</code> est vraie.</p>
 
 <h3 data-icon="⚖️">Structure <code>if</code>...<code>else</code> (Si...Sinon)</h3>
@@ -87,9 +93,11 @@ if age >= 18:
     print("Vous êtes majeur.")
 else:
     print("Vous êtes mineur.")
+</code></pre>
+<pre><code>
+# Affiche "Vous êtes mineur."
+</code></pre>
 
-<h1 id="affiche-vous-êtes-mineur">Affiche &quot;Vous êtes mineur.&quot;</h1>
-<p></code></pre></p>
 <p><strong>Explication :</strong> La condition <code>age &gt;= 18</code> est fausse, donc le code sous le <code>else</code> est exécuté.</p>
 
 <h3 data-icon="🔗">Structure <code>if</code>...<code>elif</code>...<code>else</code> (Si...Sinon Si...Sinon)</h3>
@@ -101,9 +109,11 @@ elif note >= 10:
     print("Bien")
 else:
     print("Insuffisant")
+</code></pre>
+<pre><code>
+# Affiche "Bien"
+</code></pre>
 
-<h1 id="affiche-bien">Affiche &quot;Bien&quot;</h1>
-<p></code></pre></p>
 <p><strong>Explication :</strong> La première condition (<code>&gt;= 15</code>) est fausse. La deuxième (<code>elif note &gt; 10</code>) est vraie, donc le code sous le <code>elif</code> est exécuté et le reste est ignoré.</p>
 
 </section>
