@@ -16,9 +16,7 @@ if nombre > 5:
 </code></pre>
 
 <p><strong>Explication :</strong> L'instruction <code>print</code> est exécutée car la condition <code>nombre > 5</code> est vraie.</p>
-</section>
 
-<section>
 <h3 data-icon="⚖️">Structure <code>if</code>...<code>else</code> (Si...Sinon)</h3>
 <p>Exécute un premier bloc de code si la condition est vraie, <strong>sinon</strong> exécute un second bloc de code.</p>
 <pre><code class="language-python">age = 15
@@ -30,9 +28,7 @@ else:
 </code></pre>
 
 <p><strong>Explication :</strong> La condition <code>age &gt;= 18</code> est fausse, donc le code sous le <code>else</code> est exécuté.</p>
-</section>
 
-<section>
 <h3 data-icon="🔗">Structure <code>if</code>...<code>elif</code>...<code>else</code> (Si...Sinon Si...Sinon)</h3>
 <p>Permet de tester <strong>plusieurs conditions</strong> en séquence.</p>
 <pre><code class="language-python">note = 12
@@ -94,11 +90,12 @@ if not est_finit :
 # Affiche : Le travail continue.
 </code></pre>
 
-<p><strong>Explication :</strong><ul>
-<li>La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</li>
-<li>La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</li>
-<li>La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</li>
-</ul></p>
+<p><strong>Explication :</strong></p>
+<ul>
+<li><p>La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</p></li>
+<li><p>La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</p></li>
+<li><p>La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</p></li>
+</ul>
 </section>
 
 <section>
