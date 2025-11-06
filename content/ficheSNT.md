@@ -128,10 +128,7 @@ if not est_finit :
 </code></pre>
 
 <p><strong>Explication :</strong></p>
-<ul>
-<li><p>La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</p></li>
-<li><p>La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</p></li>
-<li><p>La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</p></li>
-</ul>
+-><p>La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</p>
+-><p>La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</p>
+-><p>La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</p>
 </section>
-
