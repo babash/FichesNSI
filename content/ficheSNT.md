@@ -13,28 +13,13 @@ footer: "Fiche d'aide-mémoire - NSI Tani Malandi"
 <pre><code class="language-python"># Utilisation de range(n) pour répéter n fois (de 0 à n-1)
 for i in range(3):
     print(f"Tour numéro {i}") # print permet d'afficher
-</code></pre>
-
-<pre><code># Affiche :
+# Affiche :
 # Tour numéro 0
 # Tour numéro 1
 # Tour numéro 2
 </code></pre>
 
 <p><strong>Explication :</strong> <code>range(3)</code> génère la séquence 0, 1, 2. La boucle s'exécute 3 fois.</p>
-
-<pre><code class="language-python"># Parcourir une séquence (liste)
-prenoms = ["Alice", "Bob"]
-for p in prenoms:
-    print(f"Bonjour {p}")
-</code></pre>
-
-<pre><code># Affiche :
-# Bonjour Alice
-# Bonjour Bob
-</code></pre>
-
-<p><strong>Explication :</strong> La boucle exécute le bloc de code (ici le <code>print</code>) une fois pour chaque élément de la liste <code>prenoms</code>.</p>
 
 <h3 data-icon="🔄">La Boucle <code>while</code> (Itération Conditionnelle)</h3>
 <p>Elle s'exécute <strong>tant qu'une condition reste vraie</strong>. Il faut s'assurer que la condition devienne fausse à un moment pour éviter une <strong>boucle infinie</strong>.</p>
@@ -43,9 +28,7 @@ while compteur < 3:
     print(f"Compteur : {compteur}")
     # Incrémentation pour éviter la boucle infinie
     compteur = compteur + 1
-</code></pre>
-
-<pre><code># Affiche :
+# Affiche :
 # Compteur : 0
 # Compteur : 1
 # Compteur : 2
@@ -63,9 +46,7 @@ while compteur < 3:
 <pre><code class="language-python">nombre = 10
 if nombre > 5:
     print("Le nombre est supérieur à 5.")
-</code></pre>
-
-<pre><code># Affiche :
+# Affiche :
 # "Le nombre est supérieur à 5."
 </code></pre>
 
@@ -78,9 +59,7 @@ if age >= 18:
     print("Vous êtes majeur.")
 else:
     print("Vous êtes mineur.")
-</code></pre>
-
-<pre><code># Affiche :
+# Affiche :
 # "Vous êtes mineur."
 </code></pre>
 
@@ -95,9 +74,7 @@ elif note >= 10:
     print("Bien")
 else:
     print("Insuffisant")
-</code></pre>
-
-<pre><code># Affiche :
+# Affiche :
 # "Bien"
 </code></pre>
 
@@ -132,9 +109,7 @@ temperature = 25
 ensoleille = True
 if temperature > 20 and ensoleille:
     print("Journée idéale pour une sortie.")
-</code></pre>
-
-<pre><code># Affiche
+# Affiche
 # "Journée idéale pour une sortie."
 </code></pre>
 
@@ -145,9 +120,7 @@ heure = 8
 jour = "dimanche"
 if heure < 9 or jour == "dimanche":
     print("C'est encore l'heure de dormir.")
-</code></pre>
-
-<pre><code># Affiche
+# Affiche
 # "C'est encore l'heure de dormir."
 </code></pre>
 
@@ -157,9 +130,7 @@ if heure < 9 or jour == "dimanche":
 est_finit = False
 if not est_finit :
     print("Le travail continue.")
-</code></pre>
-
-<pre><code># Affiche
+# Affiche
 # "Le travail continue."
 </code></pre>
 
