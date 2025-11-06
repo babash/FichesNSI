@@ -12,7 +12,6 @@ footer: "Fiche d'aide-mémoire - NSI Tani Malandi"
 <pre><code class="language-python">nombre = 10
 if nombre > 5:
     print("Le nombre est supérieur à 5.")
-
 # Affiche : Le nombre est supérieur à 5.
 </code></pre>
 
@@ -25,7 +24,6 @@ if age >= 18:
     print("Vous êtes majeur.")
 else:
     print("Vous êtes mineur.")
-
 # Affiche : Vous êtes mineur.
 </code></pre>
 
@@ -40,11 +38,26 @@ elif note >= 10:
     print("Bien")
 else:
     print("Insuffisant")
-
 # Affiche : Bien
 </code></pre>
 
 <p><strong>Explication :</strong> La première condition (<code>&gt;= 15</code>) est fausse. La deuxième (<code>elif note &gt; 10</code>) est vraie, donc le code sous le <code>elif</code> est exécuté et le reste est ignoré.</p>
+
+<pre><code class="language-python">points = 80
+if points >= 50:
+    print("A. Vous avez la moyenne.")
+elif points >= 75:
+    print("B. Vous avez un bon score.")
+
+if points > 70:
+    print("C. Votre score dépasse 70.")</code></pre>
+
+<pre><code># Résultat pour points = 80 :
+A. Vous avez la moyenne.
+C. Votre score dépasse 70.
+</code></pre>
+
+<p><strong>Explication :</strong>/p> <ol> <li>Ligne A (Active) : Le programme teste if points &gt;= 50 (80 >= 50). C'est VRAI. Le message A est affiché. L'ensemble du bloc if/elif est alors quitté sans même tester la ligne B.</li> <li>Ligne B (Ignorée) : Bien que elif points &gt;= 75 soit vrai (80 >= 75), cette ligne est ignorée car elle est subordonnée au premier if et qu'une condition a déjà été satisfaite dans ce bloc.</li> <li>Ligne C (Active) : Le second if points &gt; 70 est un nouveau test indépendant. Il est VRAI. Le message C est affiché.</li> </ol> <p>L'utilisation de l'indenteur elif vous force à n'exécuter qu'un seul chemin.</p>
 </section>
 
 <section>
@@ -93,18 +106,18 @@ while compteur < 3:
 <th title="Field #3">Quand est-ce Vrai ?</th>
 </tr></thead>
 <tbody><tr>
-<td>and</td>
-<td>ET logique</td>
-<td>Si toutes les conditions sont Vraies.</td>
+<td><code>and</code></td>
+<td><strong>ET</strong> logique</td>
+<td>Si <strong>toutes</strong> les conditions sont Vraies.</td>
 </tr>
 <tr>
-<td>or</td>
-<td>OU logique</td>
-<td>Si au moins une des conditions est Vraie.</td>
+<td><code>or</code></td>
+<td><strong>OU</strong> logique</td>
+<td>Si <strong>au moins une</strong> des conditions est Vraie.</td>
 </tr>
 <tr>
-<td>not</td>
-<td>NON logique</td>
+<td><code>not</code></td>
+<td><strong>NON</strong> logique</td>
 <td>Inverse la condition (Vrai devient Faux, et Faux devient Vrai).</td>
 </tr>
 </tbody></table>
@@ -118,7 +131,7 @@ if temperature > 20 and ensoleille:
 
 # Exemple avec OR
 heure = 8
-jour = "dimanche"
+jour = "dimanche"s
 if heure < 9 or jour == "dimanche":
     print("C'est encore l'heure de dormir.")
 # Affiche : C'est encore l'heure de dormir.
@@ -129,9 +142,11 @@ if not est_finit :
     print("Le travail continue.")
 # Affiche : Le travail continue.
 </code></pre>
-
+</section>
+<!--
 <p><strong>Explication :</strong></p>
 <p>->La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</br>
 ->La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</br>
 ->La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</p>
-</section>
+-->
+
