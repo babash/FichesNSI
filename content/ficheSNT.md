@@ -14,6 +14,7 @@ footer: "Fiche d'aide-mémoire - NSI Tani Malandi"
 for i in range(3):
     print(f"Tour numéro {i}") # print permet d'afficher
 </code></pre>
+
 <pre><code># Affiche :
 # Tour numéro 0
 # Tour numéro 1
@@ -27,6 +28,7 @@ prenoms = ["Alice", "Bob"]
 for p in prenoms:
     print(f"Bonjour {p}")
 </code></pre>
+
 <pre><code># Affiche :
 # Bonjour Alice
 # Bonjour Bob
@@ -42,6 +44,7 @@ while compteur < 3:
     # Incrémentation pour éviter la boucle infinie
     compteur = compteur + 1
 </code></pre>
+
 <pre><code># Affiche :
 # Compteur : 0
 # Compteur : 1
@@ -61,6 +64,7 @@ while compteur < 3:
 if nombre > 5:
     print("Le nombre est supérieur à 5.")
 </code></pre>
+
 <pre><code># Affiche :
 # "Le nombre est supérieur à 5."
 </code></pre>
@@ -75,6 +79,7 @@ if age >= 18:
 else:
     print("Vous êtes mineur.")
 </code></pre>
+
 <pre><code># Affiche :
 # "Vous êtes mineur."
 </code></pre>
@@ -91,6 +96,7 @@ elif note >= 10:
 else:
     print("Insuffisant")
 </code></pre>
+
 <pre><code># Affiche :
 # "Bien"
 </code></pre>
@@ -127,14 +133,20 @@ ensoleille = True
 if temperature > 20 and ensoleille:
     print("Journée idéale pour une sortie.")
 </code></pre>
+
 <pre><code># Affiche
 # "Journée idéale pour une sortie."
 </code></pre>
 
 <p><strong>Explication :</strong> La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</p>
 
-<pre><code class="language-python"># Exemple avec OR heure = 8 jour = "dimanche" if heure < 9 or jour == "dimanche": print("C'est encore l'heure de dormir.")
+<pre><code class="language-python"># Exemple avec OR
+heure = 8
+jour = "dimanche"
+if heure < 9 or jour == "dimanche":
+    print("C'est encore l'heure de dormir.")
 </code></pre>
+
 <pre><code># Affiche
 # "C'est encore l'heure de dormir."
 </code></pre>
@@ -143,9 +155,10 @@ if temperature > 20 and ensoleille:
 
 <pre><code class="language-python"># Exemple avec NOT
 est_finit = False
-if not est_finit:
+if not est_finit :
     print("Le travail continue.")
 </code></pre>
+
 <pre><code># Affiche
 # "Le travail continue."
 </code></pre>
