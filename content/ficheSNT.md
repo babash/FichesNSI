@@ -53,8 +53,8 @@ if points > 70:
     print("C. Votre score dépasse 70.")
 
 # Résultat pour points = 80 :
-A. Vous avez la moyenne.
-C. Votre score dépasse 70.
+# A. Vous avez la moyenne.
+# C. Votre score dépasse 70.
 </code></pre>
 
 <p><strong>Explication :</strong></p>
