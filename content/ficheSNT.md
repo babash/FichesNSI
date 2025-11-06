@@ -12,6 +12,7 @@ footer: "Fiche d'aide-mémoire - NSI Tani Malandi"
 <pre><code class="language-python">nombre = 10
 if nombre > 5:
     print("Le nombre est supérieur à 5.")
+
 # Affiche : Le nombre est supérieur à 5.
 </code></pre>
 
@@ -24,6 +25,7 @@ if age >= 18:
     print("Vous êtes majeur.")
 else:
     print("Vous êtes mineur.")
+
 # Affiche : Vous êtes mineur.
 </code></pre>
 
@@ -38,6 +40,7 @@ elif note >= 10:
     print("Bien")
 else:
     print("Insuffisant")
+
 # Affiche : Bien
 </code></pre>
 
@@ -128,7 +131,7 @@ if not est_finit :
 </code></pre>
 
 <p><strong>Explication :</strong></p>
-<p>->La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</p>
-<p>->La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</p>
-<p>->La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</p>
+<p>->La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</br>
+->La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</br>
+->La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</p>
 </section>
