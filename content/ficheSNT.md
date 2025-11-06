@@ -4,42 +4,6 @@ footer: "Fiche d'aide-mémoire - NSI Tani Malandi"
 ---
 
 <section>
-<h2 data-icon="🔁">Les Boucles (Itérations)</h2>
-<p>Les boucles permettent de répéter un bloc d'instructions. C'est essentiel pour automatiser des tâches ou parcourir des collections de données.</p>
-
-<h3 data-icon="➡️">La Boucle <code>for</code> (Itération Définie)</h3>
-<p>Elle est utilisée lorsque l'on connaît le nombre d'itérations à l'avance, souvent pour parcourir les éléments d'une séquence (comme une liste) ou un intervalle de nombres grâce à la fonction <code>range()</code>.</p>
-
-<pre><code class="language-python"># Utilisation de range(n) pour répéter n fois (de 0 à n-1)
-for i in range(3):
-    print(f"Tour numéro {i}") # print permet d'afficher
-# Affiche :
-# Tour numéro 0
-# Tour numéro 1
-# Tour numéro 2
-</code></pre>
-
-<p><strong>Explication :</strong> <code>range(3)</code> génère la séquence 0, 1, 2. La boucle s'exécute 3 fois.</p>
-</section>
-
-<section>
-<h3 data-icon="🔄">La Boucle <code>while</code> (Itération Conditionnelle)</h3>
-<p>Elle s'exécute <strong>tant qu'une condition reste vraie</strong>. Il faut s'assurer que la condition devienne fausse à un moment pour éviter une <strong>boucle infinie</strong>.</p>
-<pre><code class="language-python">compteur = 0
-while compteur < 3:
-    print(f"Compteur : {compteur}")
-    # Incrémentation pour éviter la boucle infinie
-    compteur = compteur + 1
-# Affiche :
-# Compteur : 0
-# Compteur : 1
-# Compteur : 2
-</code></pre>
-
-<p><strong>Explication :</strong> Le code dans le <code>while</code> s'exécute tant que la variable <code>compteur</code> est strictement inférieure à 3. À chaque tour, on augmente <code>compteur</code> de 1, ce qui permet à la boucle de se terminer.</p>
-</section>
-
-<section>
 <h2 data-icon="🚦">Les Conditions (Structures Conditionnelles)</h2>
 <p>Les conditions permettent d'exécuter un code <strong>uniquement si une expression est vraie</strong>.</p>
 
@@ -115,27 +79,60 @@ ensoleille = True
 if temperature > 20 and ensoleille:
     print("Journée idéale pour une sortie.")
 # Affiche : Journée idéale pour une sortie.
-</code></pre>
 
-<p><strong>Explication :</strong> La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</p>
-
-<pre><code class="language-python"># Exemple avec OR
+# Exemple avec OR
 heure = 8
 jour = "dimanche"
 if heure < 9 or jour == "dimanche":
     print("C'est encore l'heure de dormir.")
 # Affiche : C'est encore l'heure de dormir.
-</code></pre>
 
-<p><strong>Explication :</strong> La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</p>
-
-<pre><code class="language-python"># Exemple avec NOT
+# Exemple avec NOT
 est_finit = False
 if not est_finit :
     print("Le travail continue.")
 # Affiche : Le travail continue.
 </code></pre>
 
-<p><strong>Explication :</strong> La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</p>
+<p><strong>Explication :</strong><ul>
+<li>La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</li>
+<li>La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</li>
+<li>La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</li>
+</ul></p>
+</section>
 
+<section>
+<h2 data-icon="🔁">Les Boucles (Itérations)</h2>
+<p>Les boucles permettent de répéter un bloc d'instructions. C'est essentiel pour automatiser des tâches ou parcourir des collections de données.</p>
+
+<h3 data-icon="➡️">La Boucle <code>for</code> (Itération Définie)</h3>
+<p>Elle est utilisée lorsque l'on connaît le nombre d'itérations à l'avance, souvent pour parcourir les éléments d'une séquence (comme une liste) ou un intervalle de nombres grâce à la fonction <code>range()</code>.</p>
+
+<pre><code class="language-python"># Utilisation de range(n) pour répéter n fois (de 0 à n-1)
+for i in range(3):
+    print(f"Tour numéro {i}") # print permet d'afficher
+# Affiche :
+# Tour numéro 0
+# Tour numéro 1
+# Tour numéro 2
+</code></pre>
+
+<p><strong>Explication :</strong> <code>range(3)</code> génère la séquence 0, 1, 2. La boucle s'exécute 3 fois.</p>
+</section>
+
+<section>
+<h3 data-icon="🔄">La Boucle <code>while</code> (Itération Conditionnelle)</h3>
+<p>Elle s'exécute <strong>tant qu'une condition reste vraie</strong>. Il faut s'assurer que la condition devienne fausse à un moment pour éviter une <strong>boucle infinie</strong>.</p>
+<pre><code class="language-python">compteur = 0
+while compteur < 3:
+    print(f"Compteur : {compteur}")
+    # Incrémentation pour éviter la boucle infinie
+    compteur = compteur + 1
+# Affiche :
+# Compteur : 0
+# Compteur : 1
+# Compteur : 2
+</code></pre>
+
+<p><strong>Explication :</strong> Le code dans le <code>while</code> s'exécute tant que la variable <code>compteur</code> est strictement inférieure à 3. À chaque tour, on augmente <code>compteur</code> de 1, ce qui permet à la boucle de se terminer.</p>
 </section>
