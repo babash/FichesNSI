@@ -23,22 +23,8 @@
 <h2 data-icon="🔁">Les Boucles (Itérations)</h2>
 <p>Les boucles permettent de répéter un bloc d'instructions. C'est essentiel pour automatiser des tâches ou parcourir des collections de données.</p>
 
-<subsection>
 <h3 data-icon="➡️">La Boucle <code>for</code> (Itération Définie)</h3>
 <p>Elle est utilisée lorsque l'on connaît le nombre d'itérations à l'avance, souvent pour parcourir les éléments d'une séquence (comme une liste) ou un intervalle de nombres grâce à la fonction <code>range()</code>.</p>
-
-<pre><code class="language-python"># Parcourir une séquence (liste)
-prenoms = ["Alice", "Bob"]
-for p in prenoms:
-    print(f"Bonjour {p}")
-</code></pre>
-<pre><code># Affiche :
-# Bonjour Alice
-# Bonjour Bob
-</code></pre>
-
-<p><strong>Explication :</strong> La boucle exécute le bloc de code (ici le <code>print</code>) une fois pour chaque élément de la liste <code>prenoms</code>.</p>
-</subsection>
 
 <pre><code class="language-python"># Utilisation de range(n) pour répéter n fois (de 0 à n-1)
 for i in range(3):
@@ -51,6 +37,18 @@ for i in range(3):
 </code></pre>
 
 <p><strong>Explication :</strong> <code>range(3)</code> génère la séquence 0, 1, 2. La boucle s'exécute 3 fois.</p>
+
+<pre><code class="language-python"># Parcourir une séquence (liste)
+prenoms = ["Alice", "Bob"]
+for p in prenoms:
+    print(f"Bonjour {p}")
+</code></pre>
+<pre><code># Affiche :
+# Bonjour Alice
+# Bonjour Bob
+</code></pre>
+
+<p><strong>Explication :</strong> La boucle exécute le bloc de code (ici le <code>print</code>) une fois pour chaque élément de la liste <code>prenoms</code>.</p>
 
 <h3 data-icon="🔄">La Boucle <code>while</code> (Itération Conditionnelle)</h3>
 <p>Elle s'exécute <strong>tant qu'une condition reste vraie</strong>. Il faut s'assurer que la condition devienne fausse à un moment pour éviter une <strong>boucle infinie</strong>.</p>
@@ -80,7 +78,8 @@ if nombre > 5:
     print("Le nombre est supérieur à 5.")
 </code></pre>
 <pre><code># Affiche :
-# "Le nombre est supérieur à 5."</code></pre>
+# "Le nombre est supérieur à 5."
+</code></pre>
 
 <p><strong>Explication :</strong> L'instruction <code>print</code> est exécutée car la condition <code>nombre > 5</code> est vraie.</p>
 
@@ -93,7 +92,8 @@ else:
     print("Vous êtes mineur.")
 </code></pre>
 <pre><code># Affiche :
-# "Vous êtes mineur."</code></pre>
+# "Vous êtes mineur."
+</code></pre>
 
 <p><strong>Explication :</strong> La condition <code>age &gt;= 18</code> est fausse, donc le code sous le <code>else</code> est exécuté.</p>
 
@@ -108,9 +108,65 @@ else:
     print("Insuffisant")
 </code></pre>
 <pre><code># Affiche :
-# "Bien"</code></pre>
+# "Bien"
+</code></pre>
 
 <p><strong>Explication :</strong> La première condition (<code>&gt;= 15</code>) est fausse. La deuxième (<code>elif note &gt; 10</code>) est vraie, donc le code sous le <code>elif</code> est exécuté et le reste est ignoré.</p>
+
+<h3 data-icon="💡">Opérateurs Logiques (<code>not</code>, <code>and</code>, <code>or</code>)</h3> <p>Ils permettent de combiner ou d'inverser des conditions pour des tests plus complexes.</p>
+
+<table class="table table-bordered table-hover table-condensed">
+<thead><tr><th title="Field #1">Opérateur</th>
+<th title="Field #2">Signification</th>
+<th title="Field #3">Quand est-ce Vrai ?</th>
+</tr></thead>
+<tbody><tr>
+<td>and</td>
+<td>ET logique</td>
+<td>Si toutes les conditions sont Vraies.</td>
+</tr>
+<tr>
+<td>or</td>
+<td>OU logique</td>
+<td>Si au moins une des conditions est Vraie.</td>
+</tr>
+<tr>
+<td>not</td>
+<td>NON logique</td>
+<td>Inverse la condition (Vrai devient Faux, et Faux devient Vrai).</td>
+</tr>
+</tbody></table>
+
+<pre><code class="language-python"># Exemple avec AND
+temperature = 25
+ensoleille = True
+if temperature > 20 and ensoleille:
+    print("Journée idéale pour une sortie.")
+</code></pre>
+<pre><code># Affiche
+# "Journée idéale pour une sortie."
+</code></pre>
+
+<p><strong>Explication :</strong> La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</p>
+
+<pre><code class="language-python"># Exemple avec OR heure = 8 jour = "dimanche" if heure < 9 or jour == "dimanche": print("C'est encore l'heure de dormir.")
+</code></pre>
+<pre><code># Affiche
+# "C'est encore l'heure de dormir."
+</code></pre>
+
+<p><strong>Explication :</strong> La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</p>
+
+<pre><code class="language-python"># Exemple avec NOT
+est_finit = False
+if not est_finit:
+    print("Le travail continue.")
+</code></pre>
+<pre><code># Affiche
+# "Le travail continue."
+</code></pre>
+
+<p><strong>Explication :</strong> La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</p> </subsection> </section>
 
 </section>
 
