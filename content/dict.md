@@ -68,7 +68,7 @@ print(livre) # {'titre': '1984'}
 <h2 data-icon="📜">Parcourir un dictionnaire</h2>
 <p>La boucle for est l'outil principal pour parcourir un dictionnaire.</p>
 
-<p><h3>1. Par les clés :</h3> C'est la méthode la plus simple et la plus courante.</p>
+<p><strong>1. Par les clés :</strong> C'est la méthode la plus simple et la plus courante.</p>
 <pre><code class="language-python">profil = {"nom": "Alex", "age": 30, "poste": "Designer"}
 for cle in profil:
   print(cle)
@@ -78,22 +78,20 @@ age
 poste
 </code></pre>
 
-<p><h3>2. Par les valeurs :</h3> On utilise la méthode <strong>.values()</strong> pour parcourir uniquement les valeurs.</p>
+<p><strong>2. Par les valeurs :</strong> On utilise la méthode <strong>.values()</strong> pour parcourir uniquement les valeurs.</p>
 <pre><code class="language-python">profil = {"nom": "Alex", "age": 30, "poste": "Designer"}
 for valeur in profil.values():
   print(valeur)
-
 Affiche :
 Alex
 30
 Designer
 </code></pre>
 
-<p><h3>3. Par les paires clé-valeur (avec .items()) :</h3> La méthode la plus élégante pour avoir à la fois la clé et la valeur.</p>
+<p><strong>3. Par les paires clé-valeur (avec .items()) :</strong> La méthode la plus élégante pour avoir à la fois la clé et la valeur.</p>
 <pre><code class="language-python">profil = {"nom": "Alex", "age": 30, "poste": "Designer"}
 for cle, valeur in profil.items():
   print(f"La clé '{cle}' correspond à la valeur '{valeur}'.")
-
 Affiche :
 La clé 'nom' correspond à la valeur 'Alex'.
 La clé 'age' correspond à la valeur '30'.
