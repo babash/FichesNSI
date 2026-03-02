@@ -28,8 +28,8 @@ mon_dictionnaire = {}
 personne = {"nom": "Alice", "age": 25, "ville": "Paris"}
 # Obtenir le nombre d'éléments avec len()
 nombre_elements = len(personne)
-print(f"Le dictionnaire 'personne' contient {nombre_elements} éléments.") 
-# Affiche "Le dictionnaire 'personne' contient 3 éléments."
+print(f"personne contient {nombre_elements} éléments.") 
+# Affiche "personne contient 3 éléments."
 </code></pre>
 </section>
 
@@ -43,14 +43,14 @@ print(f"Le dictionnaire 'personne' contient {nombre_elements} éléments.")
 }
 # Accès par la clé
 print(etudiants["id_1"])   # Affiche "Jean"
-# Utilisation de la méthode .get() avec une valeur par défaut
-print(etudiants.get("id_2", "Non trouvé"))  # Affiche "Marie"
-print(etudiants.get("id_4", "Non trouvé"))  # Affiche "Non trouvé"
+# .get() avec une valeur par défaut
+print(etudiants.get("id_2", "Non trouvé"))  # "Marie"
+print(etudiants.get("id_4", "Non trouvé"))  # "Non trouvé"
 # Utilisation de la méthode .get() sans valeur par défaut
 print(etudiants.get("id_2"))  # Affiche "Marie"
-# Remarque : La méthode .get() ne génère pas d'erreur si la clé n'existe pas, elle renvoie None.
+#
 </code></pre>
-
+ ⚠️ Remarque : La méthode .get() ne génère pas d'erreur si la clé n'existe pas, elle renvoie None.⚠️
 </section>
 
 <section>
@@ -60,10 +60,12 @@ print(etudiants.get("id_2"))  # Affiche "Marie"
 <pre><code class="language-python">voiture = {"marque": "Ford", "modele": "Mustang"}
 # Ajout d'un nouvel élément
 voiture["annee"] = 1964
-print(voiture) # {'marque': 'Ford', 'modele': 'Mustang', 'annee': 1964}
+print(voiture)
+# {'marque': 'Ford', 'modele': 'Mustang', 'annee': 1964}
 # Modification d'un élément existant
 voiture["modele"] = "Focus"
-print(voiture) # {'marque': 'Ford', 'modele': 'Focus', 'annee': 1964}
+print(voiture)
+# {'marque': 'Ford', 'modele': 'Focus', 'annee': 1964}
 </code></pre>
 <h3>Supprimer des éléments</h3>
 <p><strong>pop(key)</strong> : supprime l'élément correspondant à la clé et renvoie sa valeur.</p>
