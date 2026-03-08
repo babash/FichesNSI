@@ -64,6 +64,10 @@ print(a, b) # Affiche 10 5
 <p>On utilise la boucle <code>for</code> exactement comme avec une liste.</p>
 <pre><code class="language-python">notes = (12, 15, 18)
 # Parcours par élément
+for i in range(len(notes)):
+    print(notes[i])
+    
+# Parcours par élément
 for n in notes:
     print(n)
 
