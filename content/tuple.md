@@ -44,22 +44,6 @@ print(couleurs[1:3]) # Affiche ('vert', 'bleu')
 </section>
 
 <section>
-<h2 data-icon="⚙️">Affectation Multiple (Unpacking)</h2>
-<p>Le tuple permet d'affecter plusieurs variables d'un coup. C'est une fonctionnalité très utilisée en Python, notamment pour retourner plusieurs valeurs avec une fonction.</p>
-<pre><code class="language-python"># Affectation multiple
-coordonnees = (48.85, 2.35)
-latitude, longitude = coordonnees
-print(latitude)  # 48.85
-
-# Échanger deux variables sans variable temporaire
-a = 5
-b = 10
-a, b = b, a
-print(a, b) # Affiche 10 5
-</code></pre>
-</section>
-
-<section>
 <h2 data-icon="📜">Parcourir un tuple</h2>
 <p>On utilise la boucle <code>for</code> exactement comme avec une liste.</p>
 <pre><code class="language-python"># Parcours par element
@@ -106,5 +90,21 @@ if "Python" in langages:
 if "HTML" not in langages:
     print("Le langage n'est pas présent.")
 # Affiche "Le langage n'est pas présent."
+</code></pre>
+</section>
+
+<section>
+<h2 data-icon="⚙️">Affectation Multiple (Unpacking)</h2>
+<p>Le tuple permet d'affecter plusieurs variables d'un coup. C'est une fonctionnalité très utilisée en Python, notamment pour retourner plusieurs valeurs avec une fonction.</p>
+<pre><code class="language-python"># Affectation multiple
+coordonnees = (48.85, 2.35)
+latitude, longitude = coordonnees
+print(latitude)  # 48.85
+
+# Échanger deux variables sans variable temporaire
+a = 5
+b = 10
+a, b = b, a
+print(a, b) # Affiche 10 5
 </code></pre>
 </section>
