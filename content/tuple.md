@@ -96,13 +96,15 @@ if "HTML" not in langages:
 <section>
 <h2 data-icon="⚙️">Affectation Multiple (Unpacking)</h2>
 <p>Le tuple permet d'affecter plusieurs variables d'un coup. C'est une fonctionnalité très utilisée en Python, notamment pour retourner plusieurs valeurs avec une fonction.</p>
-<pre><code class="language-python"># Affectation multiple
-coordonnees = (48.85, 2.35)
+
+<p><h3>2. Affectation multiple</h3> </p>
+<pre><code class="language-python">coordonnees = (48.85, 2.35)
 latitude, longitude = coordonnees
 print(latitude)  # 48.85
+</code></pre>
 
-# Échanger deux variables sans variable temporaire
-a = 5
+<p><h3>2. Échanger deux variables sans variable temporaire</h3></p>
+<pre><code class="language-python">a = 5
 b = 10
 a, b = b, a
 print(a, b) # Affiche 10 5
