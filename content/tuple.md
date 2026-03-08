@@ -62,7 +62,8 @@ print(a, b) # Affiche 10 5
 <section>
 <h2 data-icon="📜">Parcourir un tuple</h2>
 <p>On utilise la boucle <code>for</code> exactement comme avec une liste.</p>
-<pre><code class="language-python">notes = (12, 15, 18)
+<pre><code class="language-python"># Parcours par element
+    notes = (12, 15, 18)
 for n in notes:
     print(n)
 
@@ -71,9 +72,9 @@ Affiche :
 15
 18
 </code></pre>
-    
-<p><h3>2. Par index :</h3> Utile si vous avez besoin de la position de l'élément en plus de sa valeur. On utilise la fonction range(len(liste)).</p>
-<pre><code class="language-python">notes = (12, 15, 18)
+
+<pre><code class="language-python"># Parcours par index
+notes = (12, 15, 18)
 for i in range(len(notes)):
     print(f"Note n°{i} : {notes[i]}")
 
@@ -83,8 +84,8 @@ Note n°2 : 15
 Note n°2 : 18
 </code></pre>
 
-<p><h3>3. Parcours mixte (avec enumerate) :</h3>  La méthode la plus élégante pour avoir à la fois l'index et l'élément. Elle est à privilégier par rapport à la méthode précédente.</p>
-<pre><code class="language-python">notes = (12, 15, 18)
+<pre><code class="language-python"># Parcours mixte
+notes = (12, 15, 18)
 for i, n in enumerate(notes):
     print(f"Note n°{i} : {n}")
 
