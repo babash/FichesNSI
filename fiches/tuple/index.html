@@ -80,9 +80,12 @@ print(a, b) # Affiche 10 5
 <p>On utilise la boucle <code>for</code> exactement comme avec une liste.</p>
 <pre><code class="language-python">notes = (12, 15, 18)
 # Parcours par élément
-for n in notes:
-    print(n)
-
+for i in range(len(notes)):
+    print(notes[i])
+    
+<h1 id="parcours-par-élément">Parcours par élément</h1>
+<p>for n in notes:
+    print(n)</p>
 <h1 id="parcours-avec-enumerate-index-et-valeur">Parcours avec enumerate (index et valeur)</h1>
 <p>for i, n in enumerate(notes):
     print(f&quot;Note {i+1} : {n}&quot;)
