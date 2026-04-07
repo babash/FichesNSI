@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Fiche NSI – Le langage SQL</title>
+  <link rel="stylesheet" href="../../css/fiche-nsi.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
+</head>
+<body>
+
+<main>
+  <header><h1>Le langage SQL</h1></header>
+  <article class="container">
+    <div class="columns-wrapper">
+      <div class="column" id="column-left">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+      <div class="column" id="column-right">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+    </div>
+    <section>
+<h2 data-icon="🔍">Consultation (SELECT)</h2>
+<p>La commande <code>SELECT</code> permet de récupérer des données dans une table. On peut filtrer avec <code>WHERE</code> et trier avec <code>ORDER BY</code>.</p>
+<pre><code class="language-sql">-- Récupérer le nom et le prix des produits de plus de 10€
+SELECT nom, prix 
+FROM produits 
+WHERE prix > 10 
+ORDER BY prix DESC;
+
+<p>-- Récupérer toutes les colonnes
+SELECT * FROM eleves;
+</code></pre></p>
+</section>
+
+<section>
+<h2 data-icon="➕">Action sur les données (CRUD)</h2>
+<p>Les opérations de mise à jour et d'insertion permettent de manipuler le contenu des tables.</p>
+<pre><code class="language-sql">-- Insérer une nouvelle ligne
+INSERT INTO eleves (nom, prenom, classe) 
+VALUES ('Dupont', 'Jean', 'Terminale');
+
+<p>-- Mettre à jour une valeur
+UPDATE produits 
+SET prix = 12.5 
+WHERE id = 4;</p>
+<p>-- Supprimer une ligne
+DELETE FROM eleves 
+WHERE id = 10;
+</code></pre></p>
+</section>
+
+<section>
+<h2 data-icon="📊">Agrégateurs et Jointures</h2>
+<p>Les fonctions d'agrégation permettent d'effectuer des calculs sur un ensemble de lignes.</p>
+<pre><code class="language-sql">SELECT COUNT(*) FROM eleves;        -- Compte le nombre total
+SELECT AVG(note) FROM evaluations; -- Moyenne des notes
+SELECT MAX(prix) FROM produits;    -- Prix le plus élevé
+</code></pre>
+<p>La <strong>jointure</strong> permet de lier deux tables grâce à une clé étrangère.</p>
+<pre><code class="language-sql">SELECT eleves.nom, classes.nom_classe
+FROM eleves
+JOIN classes ON eleves.classe_id = classes.id;
+</code></pre>
+</section>
+  </article>
+</main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script>
+// Script pour répartir intelligemment les sections en deux colonnes
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.container');
+  const leftColumn = document.getElementById('column-left');
+  const rightColumn = document.getElementById('column-right');
+  
+  // Récupérer toutes les sections
+  const sections = Array.from(container.querySelectorAll('section'));
+  
+  // Fonction pour calculer la hauteur d'une colonne
+  function getColumnHeight(column) {
+    return column.scrollHeight;
+  }
+  
+  // Répartir les sections de manière équilibrée
+  let leftHeight = 0;
+  let rightHeight = 0;
+  
+  sections.forEach((section, index) => {
+    // Mesurer temporairement la section
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.visibility = 'hidden';
+    tempDiv.appendChild(section.cloneNode(true));
+    document.body.appendChild(tempDiv);
+    const sectionHeight = tempDiv.scrollHeight;
+    document.body.removeChild(tempDiv);
+    
+    // Ajouter la section à la colonne la plus courte
+    if (leftHeight <= rightHeight) {
+      leftColumn.appendChild(section);
+      leftHeight += sectionHeight;
+    } else {
+      rightColumn.appendChild(section);
+      rightHeight += sectionHeight;
+    }
+  });
+});
+</script>
+</body>
+</html>

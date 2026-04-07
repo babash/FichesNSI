@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Fiche NSI – Les Graphes</title>
+  <link rel="stylesheet" href="../../css/fiche-nsi.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
+</head>
+<body>
+
+<main>
+  <header><h1>Les Graphes</h1></header>
+  <article class="container">
+    <div class="columns-wrapper">
+      <div class="column" id="column-left">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+      <div class="column" id="column-right">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+    </div>
+    <section>
+<h2 data-icon="🕸️">Vocabulaire et Définitions</h2>
+<p>Un graphe est composé de <strong>sommets</strong> (ou nœuds) reliés par des <strong>arêtes</strong> (non orienté) ou des <strong>arcs</strong> (orienté).</p>
+<ul>
+<li><strong>Ordre :</strong> Nombre de sommets.</li>
+<li><strong>Degré :</strong> Nombre d'arêtes liées à un sommet.</li>
+<li><strong>Cycle :</strong> Chemin qui revient à son point de départ.</li>
+</ul>
+</section>
+
+<section>
+<h2 data-icon="⚙️">Implémentations (Représentations)</h2>
+<p>Il existe deux manières classiques de représenter un graphe en mémoire :</p>
+
+<p><strong>1. Matrice d'adjacence :</strong> Un tableau 2D (0 ou 1 si lien).</p>
+<pre><code class="language-python"># Graphe avec 3 sommets A(0), B(1), C(2)
+matrice = [
+    [0, 1, 1], # A est lié à B et C
+    [1, 0, 0], # B est lié à A
+    [1, 0, 0]  # C est lié à A
+]
+</code></pre>
+
+<p><strong>2. Dictionnaire d'adjacence :</strong> Clés = sommets, Valeurs = listes des voisins.</p>
+<pre><code class="language-python">graphe = {
+    'A': ['B', 'C'],
+    'B': ['A'],
+    'C': ['A']
+}
+</code></pre>
+</section>
+
+<section>
+<h2 data-icon="🧭">Algorithmes de Parcours</h2>
+<ul>
+<li><strong>Parcours en Largeur (BFS) :</strong> Utilise une <strong>file</strong>. Trouve le chemin le plus court (en nombre d'arêtes).</li>
+<li><strong>Parcours en Profondeur (DFS) :</strong> Utilise la <strong>récursivité</strong> (ou une pile). Explore un chemin le plus loin possible avant de revenir.</li>
+</ul>
+</section>
+  </article>
+</main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script>
+// Script pour répartir intelligemment les sections en deux colonnes
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.container');
+  const leftColumn = document.getElementById('column-left');
+  const rightColumn = document.getElementById('column-right');
+  
+  // Récupérer toutes les sections
+  const sections = Array.from(container.querySelectorAll('section'));
+  
+  // Fonction pour calculer la hauteur d'une colonne
+  function getColumnHeight(column) {
+    return column.scrollHeight;
+  }
+  
+  // Répartir les sections de manière équilibrée
+  let leftHeight = 0;
+  let rightHeight = 0;
+  
+  sections.forEach((section, index) => {
+    // Mesurer temporairement la section
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.visibility = 'hidden';
+    tempDiv.appendChild(section.cloneNode(true));
+    document.body.appendChild(tempDiv);
+    const sectionHeight = tempDiv.scrollHeight;
+    document.body.removeChild(tempDiv);
+    
+    // Ajouter la section à la colonne la plus courte
+    if (leftHeight <= rightHeight) {
+      leftColumn.appendChild(section);
+      leftHeight += sectionHeight;
+    } else {
+      rightColumn.appendChild(section);
+      rightHeight += sectionHeight;
+    }
+  });
+});
+</script>
+</body>
+</html>

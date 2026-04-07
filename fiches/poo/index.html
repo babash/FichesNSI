@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Fiche NSI – La Programmation Orientée Objet (POO)</title>
+  <link rel="stylesheet" href="../../css/fiche-nsi.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
+</head>
+<body>
+
+<main>
+  <header><h1>La Programmation Orientée Objet (POO)</h1></header>
+  <article class="container">
+    <div class="columns-wrapper">
+      <div class="column" id="column-left">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+      <div class="column" id="column-right">
+        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
+      </div>
+    </div>
+    <section>
+<h2 data-icon="🏗️">Concepts de base</h2>
+<p>La <strong>POO</strong> est un paradigme de programmation qui consiste à définir des <strong>objets</strong> représentant des entités réelles ou abstraites. Un objet regroupe des <strong>données</strong> (attributs) et des <strong>comportements</strong> (méthodes).</p>
+<ul>
+<li><strong>Classe :</strong> Le "plan de construction" (le moule).</li>
+<li><strong>Objet :</strong> Une instance concrète créée à partir d'une classe.</li>
+<li><strong>Attribut :</strong> Une variable propre à l'objet.</li>
+<li><strong>Méthode :</strong> Une fonction définie dans une classe.</li>
+</ul>
+</section>
+
+<section>
+<h2 data-icon="🐍">Définition d'une classe</h2>
+<p>On utilise le mot-clé <code>class</code>. La méthode spéciale <code>__init__</code> est le <strong>constructeur</strong> : elle initialise les attributs lors de la création de l'objet.</p>
+<pre><code class="language-python">class Voiture:
+    def __init__(self, marque, couleur):
+        # Initialisation des attributs
+        self.marque = marque
+        self.couleur = couleur
+        self.vitesse = 0
+
+<pre><code>def accelerer(self, valeur):
+    # Une méthode pour modifier l&#39;état de l&#39;objet
+    self.vitesse = self.vitesse + valeur
+
+def afficher_infos(self):
+    print(f&quot;Voiture {self.marque} de couleur {self.couleur}&quot;)
+</code></pre>
+<p></code></pre></p>
+</section>
+
+<section>
+<h2 data-icon="⚙️">Instanciation et Utilisation</h2>
+<p>Créer un objet s'appelle l'<strong>instanciation</strong>. On accède aux attributs et méthodes avec le point <code>.</code>.</p>
+<pre><code class="language-python"># Création de deux instances (objets)
+ma_voiture = Voiture("Peugeot", "Bleue")
+ta_voiture = Voiture("Tesla", "Rouge")
+
+<h1 id="accès-aux-attributs">Accès aux attributs</h1>
+<p>print(ma_voiture.marque)  # Affiche &quot;Peugeot&quot;</p>
+<h1 id="appel-dune-méthode">Appel d&#39;une méthode</h1>
+<p>ma_voiture.accelerer(30)
+print(ma_voiture.vitesse) # Affiche 30
+</code></pre></p>
+<p>⚠️ <strong>Le mot-clé self :</strong> Il représente l'objet lui-même. Il est obligatoire comme premier paramètre de chaque méthode pour accéder aux attributs de l'instance.</p>
+</section>
+  </article>
+</main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script>
+// Script pour répartir intelligemment les sections en deux colonnes
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.container');
+  const leftColumn = document.getElementById('column-left');
+  const rightColumn = document.getElementById('column-right');
+  
+  // Récupérer toutes les sections
+  const sections = Array.from(container.querySelectorAll('section'));
+  
+  // Fonction pour calculer la hauteur d'une colonne
+  function getColumnHeight(column) {
+    return column.scrollHeight;
+  }
+  
+  // Répartir les sections de manière équilibrée
+  let leftHeight = 0;
+  let rightHeight = 0;
+  
+  sections.forEach((section, index) => {
+    // Mesurer temporairement la section
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.visibility = 'hidden';
+    tempDiv.appendChild(section.cloneNode(true));
+    document.body.appendChild(tempDiv);
+    const sectionHeight = tempDiv.scrollHeight;
+    document.body.removeChild(tempDiv);
+    
+    // Ajouter la section à la colonne la plus courte
+    if (leftHeight <= rightHeight) {
+      leftColumn.appendChild(section);
+      leftHeight += sectionHeight;
+    } else {
+      rightColumn.appendChild(section);
+      rightHeight += sectionHeight;
+    }
+  });
+});
+</script>
+</body>
+</html>
