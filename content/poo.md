@@ -68,6 +68,8 @@ print(mon_robot.v) # Affiche 2.0
 <section>
 <h2 data-icon="⚙️">Les Méthodes et leur Appel</h2>
 <p>Une <strong>méthode</strong> est une fonction définie à l'intérieur d'une classe. Elle représente un comportement de l'objet. Le paramètre <code>self</code> permet à la méthode d'accéder aux attributs de l'objet qui l'appelle.</p>
+
+<strong>Définition de méthode</strong>
 <pre><code class="language-python">class Robot:
     def __init__(self, nom, version=1.0):
         # Initialisation des attributs (état de l'objet)
@@ -82,6 +84,7 @@ print(mon_robot.v) # Affiche 2.0
         self.batt += energie
 </code></pre>
 
+<strong>Appel de méthode</strong>
 <p>Voyons maintenant un exemple d'appel de la méthode.</p>
 <pre><code class="language-python"># Appel de méthode
 mon_robot.saluer()       # Affiche "Bonjour, je suis R2D2"
@@ -100,7 +103,9 @@ mon_robot.charger(20)    # Modifie l'état interne (batterie)
     # Sans "self.", Python chercherait une variable locale
     # Avec "self.", il va chercher l'attribut DANS l'objet.
     print(f"Mon nom est {self.nom}")
-
-robot_A.afficher_nom() # Python fait secrètement : afficher_nom(robot_A)
+</code></pre>
+<p><strong>Self</strong> n'est jamais utilisé en dehors de la clqasse (en dehors des méthodes).</p>
+<pre><code class="language-python">robot_A.afficher_nom() 
+# Python fait secrètement : afficher_nom(robot_A)
 </code></pre>
 </section>
