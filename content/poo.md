@@ -9,13 +9,11 @@ footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
 
 <strong>L'analogie du Robot :</strong>
 
-<ul>
-<li><p><strong>La Classe (Le Plan) :</strong> C'est le schéma technique à l'usine. Il définit que tout robot <em>doit</em> avoir un nom et une batterie, et <em>sait</em> marcher. Ce n'est pas encore un robot réel, c'est un <strong>nouveau type</strong> de donnée que vous créez.</p></li>
-<li><p><strong>L'Objet ou Instance (Le Robot réel) :</strong> C'est l'unité qui sort de l'usine. On peut créer des "jumeaux" issus du même plan : deux robots identiques au départ, mais qui mèneront leur propre vie.</p></li>
-<li><p><strong>L'Attribut (Caractéristique) :</strong> Ce sont les propriétés du robot (son nom, son niveau de batterie). Même s'ils ont le même constructeur, un robot peut être à 100% de batterie et l'autre à 10%.</p></li>
-<li><p><strong>La Méthode (Action) :</strong> Ce sont les capacités du robot (marcher, saluer). C'est une fonction interne à l'objet.</p></li>
-<li><p><strong>Le Constructeur (L'assemblage) :</strong> C'est l'étape de fabrication qui donne ses caractéristiques initiales au robot au moment où il "naît".</p></li>
-</ul>
+<p>-><strong>La Classe (Le Plan) :</strong> C'est le schéma technique à l'usine. Il définit que tout robot <em>doit</em> avoir un nom et une batterie, et <em>sait</em> marcher. Ce n'est pas encore un robot réel, c'est un <strong>nouveau type</strong> de donnée que vous créez.</p>
+<p>-><strong>L'Objet ou Instance (Le Robot réel) :</strong> C'est l'unité qui sort de l'usine. On peut créer des "jumeaux" issus du même plan : deux robots identiques au départ, mais qui mèneront leur propre vie.</p>
+<p>-><strong>L'Attribut (Caractéristique) :</strong> Ce sont les propriétés du robot (son nom, son niveau de batterie). Même s'ils ont le même constructeur, un robot peut être à 100% de batterie et l'autre à 10%.</p>
+<p>-><strong>La Méthode (Action) :</strong> Ce sont les capacités du robot (marcher, saluer). C'est une fonction interne à l'objet.</p>
+<p>-><strong>Le Constructeur (L'assemblage) :</strong> C'est l'étape de fabrication qui donne ses caractéristiques initiales au robot au moment où il "naît".</p>
 
 </section>
 
@@ -38,15 +36,15 @@ footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
 <p>Pour cree un objet on utilise <strong>le nom de la classe</strong> comme si c'etait une fonction. La fonction véritablenment appelé est <code>__init__</code> mais on ne l'appelle jamais explicitement.</p>
 
 <strong>Creation d'objet</strong>
-<pre><code class="language-python"># Création de "jumeaux" (Appel automatique de __init__)
-robot_A = Robot("R2D2")
+<p>Création de "jumeaux" (Appel automatique de __init__).</p>
+<pre><code class="language-python">robot_A = Robot("R2D2")
 robot_B = Robot("R2D2")
 robot_C = Robot("C3PO", 4.0)
 </code></pre>
 
 <strong>Indépendance des objets</strong>
-<pre><code class="language-python"># Ils sont du même type (Robot) mais sont des objets distincts
-robot_A.batt = 20  # Robot_A est déchargé, mais pas Robot_B !
+<p>Ils sont du même type (Robot) mais sont des objets distincts.</p>
+<pre><code class="language-python">robot_A.batt = 20  # Robot_A est déchargé, mais pas Robot_B !
 print(robot_A.batt) # Affiche 20
 print(robot_B.batt) # Affiche 100
 </code></pre>
@@ -66,7 +64,7 @@ print(mon_robot.v) # Affiche 2.0
 </section>
 
 <section>
-<h2 data-icon="⚙️">Les Méthodes et leur Appel</h2>
+<h2 data-icon="⚙️">Les Méthodes et leurs Appels</h2>
 <p>Une <strong>méthode</strong> est une fonction définie à l'intérieur d'une classe. Elle représente un comportement de l'objet. Le paramètre <code>self</code> permet à la méthode d'accéder aux attributs de l'objet qui l'appelle.</p>
 
 <strong>Définition de méthode</strong>
@@ -95,9 +93,8 @@ mon_robot.charger(20)    # Modifie l'état interne (batterie)
 <section>
 <h2 data-icon="🆔">Comprendre le mot-clé "self"</h2>
 <p><strong>Self</strong> représente l'instance elle-même (le "moi"). C'est le lien entre le code générique de la classe et l'objet spécifique en mémoire.</p>
-<ul>
-<li><p><strong>Pourquoi est-il partout ?</strong> Dans la classe, Python ne sait pas encore quel robot va appeler la méthode. <code>self</code> dit : "Applique cette action sur l'objet qui m'a appelé".</p></li>
-<li><p><strong>Le paramètre invisible :</strong> Il doit être le <strong>premier argument</strong> de chaque méthode dans la classe, mais on ne lui passe <strong>jamais</strong> de valeur lors de l'appel.</p></li>
+<p>-><strong>Pourquoi est-il partout ?</strong> Dans la classe, Python ne sait pas encore quel robot va appeler la méthode. <code>self</code> dit : "Applique cette action sur l'objet qui m'a appelé".</p>
+<p>-><strong>Le paramètre invisible :</strong> Il doit être le <strong>premier argument</strong> de chaque méthode dans la classe, mais on ne lui passe <strong>jamais</strong> de valeur lors de l'appel.</p>
 </ul>
 <pre><code class="language-python">def afficher_nom(self):
     # Sans "self.", Python chercherait une variable locale
