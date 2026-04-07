@@ -65,7 +65,11 @@ print(mon_robot.v) # Affiche 2.0
 <h2 data-icon="⚙️">Les Méthodes et leur Appel</h2>
 <p>Une <strong>méthode</strong> est une fonction définie à l'intérieur d'une classe. Elle représente un comportement de l'objet. Le paramètre <code>self</code> permet à la méthode d'accéder aux attributs de l'objet qui l'appelle.</p>
 <pre><code class="language-python">class Robot:
-    # ... (constructeur précédent) ...
+    def __init__(self, nom, version=1.0):
+        # Initialisation des attributs (état de l'objet)
+        self.nom = nom        # Passé à l'assemblage
+        self.v = version      # Valeur par défaut
+        self.batt = 100       # Valeur fixe au départ
 
     def saluer(self): # Définition d'une méthode
         print(f"Bonjour, je suis {self.nom}")
@@ -73,6 +77,7 @@ print(mon_robot.v) # Affiche 2.0
     def charger(self, energie):
         self.batt += energie
 </code></pre>
+
 <pre><code class="language-python"># Appel de méthode
 mon_robot.saluer()       # Affiche "Bonjour, je suis R2D2"
 mon_robot.charger(20)    # Modifie l'état interne (batterie)
