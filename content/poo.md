@@ -20,21 +20,32 @@ footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
 
 
 <section>
-<h2 data-icon="🏗️">Le Constructeur et l'Instance</h2>
-<p>En Python, le constructeur s'appelle <code>__init__</code>. C'est ici que l'on transforme le plan en un objet concret avec ses propres valeurs.</p>
+<h2 data-icon="🏗️">Le Constructeur</h2>
+<p>En Python, le constructeur s'appelle <code>__init__</code>, il permet de donner une valeur aux attributs d'un objet. Il est appelé à la création de chaque objet.C'est ici que l'on transforme le plan en un objet concret avec ses propres valeurs.</p>
 <pre><code class="language-python">class Robot:
     def __init__(self, nom, version=1.0):
         # Initialisation des attributs (état de l'objet)
         self.nom = nom              # Passé à l'assemblage
         self.v = version      # Valeur par défaut
         self.batt = 100         # Valeur fixe au départ
+</code></pre>
 
-# Création de "jumeaux" (Instances différentes du même plan)
+<p>Contrairement aux autres méthodes, on ne l'appelle jamais manuellement (on n'écrit pas <code>robot.__init__()</code>) : Python l'exécute <strong>automatiquement</strong> en arrière-plan au moment précis où l'on crée l'objet pour garantir qu'il naisse dans un état valide.</p>
+</section>
+
+<section>
+<h2 data-icon="🏗️">Création d'objet (Instanciation)</h2>
+<p>Pour cree un objet on utilise <strong>le nom de la classe</strong> comme si c'etait une fonction. La fonction véritablenment appelé est <code>__init__</code> mais on ne l'appelle jamais explicitement.</p>
+<pre><code class="language-python"># Création de "jumeaux" (Appel automatique de __init__)
 robot_A = Robot("R2D2")
-robot_B = Robot("C3PO")
-
-# Ils sont du même type (Robot) mais sont des objets distincts
+robot_B = Robot("R2D2")
+robot_C = Robot("C3PO", 4.0)
+</code></pre>
+</section>
+<pre><code class="language-python"># Ils sont du même type (Robot) mais sont des objets distincts
 robot_A.batt = 20  # Robot_A est déchargé, mais pas Robot_B !
+print(robot_A.batt) # Affiche 20
+print(robot_B.batt) # Affiche 100
 </code></pre>
 </section>
 
