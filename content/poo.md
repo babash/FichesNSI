@@ -4,31 +4,50 @@ footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
 ---
 
 <section>
-<h2 data-icon="🏗️">Le Constructeur et l'Instance</h2>
-<p>La <strong>classe</strong> est le plan de construction. L'<strong>instance</strong> est l'objet réel créé à partir de ce plan.</p>
-<p>Le <strong>constructeur</strong> (méthode <code>__init__</code>) est appelé automatiquement lors de la <strong>création d'une instance</strong> pour préparer l'objet.</p>
-<pre><code class="language-python">class Robot:
-    def __init__(self, nom, version=1.0): # Constructeur
-        self.nom = nom              # Attribut passé en paramètre
-        self.version = version      # Attribut avec valeur par défaut
-        self.batterie = 100         # Attribut par défaut (fixe)
+<h2 data-icon="💡">Concept et Définition</h2>
+<p>La <strong>POO</strong> (Programmation Orientée Objet) est un <strong>paradigme de programmation</strong> qui consiste à définir des "objets" informatiques. Au lieu de voir un programme comme une simple suite d'instructions, on le conçoit comme une interaction entre des entités autonomes.</p>
 
-# Création d'une instance (instanciation)
-mon_robot = Robot("R2D2") 
+<p><strong>L'analogie du Robot :</strong></p>
+<ul>
+<li><strong>La Classe (Le Plan) :</strong> C'est le schéma technique à l'usine. Il définit que tout robot <em>doit</em> avoir un nom et une batterie, et <em>sait</em> marcher. Ce n'est pas encore un robot réel, c'est un <strong>nouveau type</strong> de donnée que vous créez.</li>
+<li><strong>L'Objet ou Instance (Le Robot réel) :</strong> C'est l'unité qui sort de l'usine. On peut créer des "jumeaux" issus du même plan : deux robots identiques au départ, mais qui mèneront leur propre vie.</li>
+<li><strong>L'Attribut (Caractéristique) :</strong> Ce sont les propriétés du robot (son nom, son niveau de batterie). Même s'ils ont le même constructeur, un robot peut être à 100% de batterie et l'autre à 10%.</li>
+<li><strong>La Méthode (Action) :</strong> Ce sont les capacités du robot (marcher, saluer). C'est une fonction interne à l'objet.</li>
+<li><strong>Le Constructeur (L'assemblage) :</strong> C'est l'étape de fabrication qui donne ses caractéristiques initiales au robot au moment où il "naît".</li>
+</ul>
+</section>
+
+
+
+<section>
+<h2 data-icon="🏗️">Le Constructeur et l'Instance</h2>
+<p>En Python, le constructeur s'appelle <code>__init__</code>. C'est ici que l'on transforme le plan en un objet concret avec ses propres valeurs.</p>
+<pre><code class="language-python">class Robot:
+    def __init__(self, nom, version=1.0):
+        # Initialisation des attributs (état de l'objet)
+        self.nom = nom              # Passé à l'assemblage
+        self.v = version      # Valeur par défaut
+        self.batt = 100         # Valeur fixe au départ
+
+# Création de "jumeaux" (Instances différentes du même plan)
+robot_A = Robot("R2D2")
+robot_B = Robot("C3PO")
+
+# Ils sont du même type (Robot) mais sont des objets distincts
+robot_A.batt = 20  # Robot_A est déchargé, mais pas Robot_B !
 </code></pre>
 </section>
 
-[Image showing the relationship between a class and an instance in object oriented programming]
 
 <section>
 <h2 data-icon="📊">Les Attributs : Accès et Modification</h2>
 <p>Un <strong>attribut</strong> est une variable interne à l'objet qui définit son état. On utilise la notation pointée <code>.</code> pour agir dessus.</p>
 <pre><code class="language-python"># Accès à un attribut
 print(mon_robot.nom)  # Affiche "R2D2"
-
-# Modification d'un attribut
-mon_robot.version = 2.0
-print(mon_robot.version) # Affiche 2.0
+</code></pre>
+<pre><code class="language-python"># Modification d'un attribut
+mon_robot.v = 2.0
+print(mon_robot.v) # Affiche 2.0
 </code></pre>
 </section>
 
@@ -42,8 +61,9 @@ print(mon_robot.version) # Affiche 2.0
         print(f"Bonjour, je suis {self.nom}")
 
     def charger(self, energie):
-        self.batterie += energie
-
+        self.batt += energie
+</code></pre>
+<pre><code class="language-python">
 # Appel de méthode
 mon_robot.saluer()       # Affiche "Bonjour, je suis R2D2"
 mon_robot.charger(20)    # Modifie l'état interne (batterie)
