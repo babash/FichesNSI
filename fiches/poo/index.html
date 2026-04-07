@@ -24,15 +24,14 @@
 <p>La <strong>POO</strong> (Programmation Orientée Objet) est un <strong>paradigme de programmation</strong> qui consiste à définir des "objets" informatiques. Au lieu de voir un programme comme une simple suite d'instructions, on le conçoit comme une interaction entre des entités autonomes.</p>
 
 <p><strong>L&#39;analogie du Robot :</strong></p>
-<p>
 <ul>
-<li><strong>La Classe (Le Plan) :</strong> C'est le schéma technique à l'usine. Il définit que tout robot <em>doit</em> avoir un nom et une batterie, et <em>sait</em> marcher. Ce n'est pas encore un robot réel, c'est un <strong>nouveau type</strong> de donnée que vous créez.</li>
-<li><strong>L'Objet ou Instance (Le Robot réel) :</strong> C'est l'unité qui sort de l'usine. On peut créer des "jumeaux" issus du même plan : deux robots identiques au départ, mais qui mèneront leur propre vie.</li>
-<li><strong>L'Attribut (Caractéristique) :</strong> Ce sont les propriétés du robot (son nom, son niveau de batterie). Même s'ils ont le même constructeur, un robot peut être à 100% de batterie et l'autre à 10%.</li>
-<li><strong>La Méthode (Action) :</strong> Ce sont les capacités du robot (marcher, saluer). C'est une fonction interne à l'objet.</li>
-<li><strong>Le Constructeur (L'assemblage) :</strong> C'est l'étape de fabrication qui donne ses caractéristiques initiales au robot au moment où il "naît".</li>
+<li><p><strong>La Classe (Le Plan) :</strong> C'est le schéma technique à l'usine. Il définit que tout robot <em>doit</em> avoir un nom et une batterie, et <em>sait</em> marcher. Ce n'est pas encore un robot réel, c'est un <strong>nouveau type</strong> de donnée que vous créez.</p></li>
+<li><p><strong>L'Objet ou Instance (Le Robot réel) :</strong> C'est l'unité qui sort de l'usine. On peut créer des "jumeaux" issus du même plan : deux robots identiques au départ, mais qui mèneront leur propre vie.</p></li>
+<li><p><strong>L'Attribut (Caractéristique) :</strong> Ce sont les propriétés du robot (son nom, son niveau de batterie). Même s'ils ont le même constructeur, un robot peut être à 100% de batterie et l'autre à 10%.</p></li>
+<li><p><strong>La Méthode (Action) :</strong> Ce sont les capacités du robot (marcher, saluer). C'est une fonction interne à l'objet.</p></li>
+<li><p><strong>Le Constructeur (L'assemblage) :</strong> C'est l'étape de fabrication qui donne ses caractéristiques initiales au robot au moment où il "naît".</p></li>
 </ul>
-</p>
+
 </section>
 
 <section>
@@ -52,11 +51,15 @@
 <section>
 <h2 data-icon="🏗️">Création d'objet (Instanciation)</h2>
 <p>Pour cree un objet on utilise <strong>le nom de la classe</strong> comme si c'etait une fonction. La fonction véritablenment appelé est <code>__init__</code> mais on ne l'appelle jamais explicitement.</p>
+
+<p><strong>Creation d&#39;objet</strong></p>
 <pre><code class="language-python"># Création de "jumeaux" (Appel automatique de __init__)
 robot_A = Robot("R2D2")
 robot_B = Robot("R2D2")
 robot_C = Robot("C3PO", 4.0)
 </code></pre>
+
+<p><strong>Indépendance des objets</strong></p>
 <pre><code class="language-python"># Ils sont du même type (Robot) mais sont des objets distincts
 robot_A.batt = 20  # Robot_A est déchargé, mais pas Robot_B !
 print(robot_A.batt) # Affiche 20
@@ -67,7 +70,7 @@ print(robot_B.batt) # Affiche 100
 
 <section>
 <h2 data-icon="📊">Les Attributs : Accès et Modification</h2>
-<p>Un <strong>attribut</strong> est une variable interne à l'objet qui définit son état. On utilise la notation pointée <code>.</code> pour agir dessus.</p>
+<p>Un <strong>attribut</strong> est une variable interne à l'objet qui définit son état. On utilise la notation pointée <code>.</code> pour agir dessus. On trouve usuellement les attributs dans le constructeur (__init__).</p>
 <pre><code class="language-python"># Accès à un attribut
 print(mon_robot.nom)  # Affiche "R2D2"
 </code></pre>
@@ -94,6 +97,7 @@ def charger(self, energie):
     self.batt += energie
 </code></pre>
 <p></code></pre></p>
+<p>Voyons maintenant un exemple d'appel de la méthode.</p>
 <pre><code class="language-python"># Appel de méthode
 mon_robot.saluer()       # Affiche "Bonjour, je suis R2D2"
 mon_robot.charger(20)    # Modifie l'état interne (batterie)
@@ -104,8 +108,8 @@ mon_robot.charger(20)    # Modifie l'état interne (batterie)
 <h2 data-icon="🆔">Comprendre le mot-clé "self"</h2>
 <p><strong>Self</strong> représente l'instance elle-même (le "moi"). C'est le lien entre le code générique de la classe et l'objet spécifique en mémoire.</p>
 <ul>
-<li><strong>Pourquoi est-il partout ?</strong> Dans la classe, Python ne sait pas encore quel robot va appeler la méthode. <code>self</code> dit : "Applique cette action sur l'objet qui m'a appelé".</li>
-<li><strong>Le paramètre invisible :</strong> Il doit être le <strong>premier argument</strong> de chaque méthode dans la classe, mais on ne lui passe <strong>jamais</strong> de valeur lors de l'appel.</li>
+<li><p><strong>Pourquoi est-il partout ?</strong> Dans la classe, Python ne sait pas encore quel robot va appeler la méthode. <code>self</code> dit : "Applique cette action sur l'objet qui m'a appelé".</p></li>
+<li><p><strong>Le paramètre invisible :</strong> Il doit être le <strong>premier argument</strong> de chaque méthode dans la classe, mais on ne lui passe <strong>jamais</strong> de valeur lors de l'appel.</p></li>
 </ul>
 <pre><code class="language-python">def afficher_nom(self):
     # Sans "self.", Python chercherait une variable locale
