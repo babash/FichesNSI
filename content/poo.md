@@ -41,7 +41,6 @@ robot_A = Robot("R2D2")
 robot_B = Robot("R2D2")
 robot_C = Robot("C3PO", 4.0)
 </code></pre>
-</section>
 <pre><code class="language-python"># Ils sont du même type (Robot) mais sont des objets distincts
 robot_A.batt = 20  # Robot_A est déchargé, mais pas Robot_B !
 print(robot_A.batt) # Affiche 20
@@ -81,10 +80,17 @@ mon_robot.charger(20)    # Modifie l'état interne (batterie)
 </section>
 
 <section>
-<h2 data-icon="🧠">À retenir</h2>
+<h2 data-icon="🆔">Comprendre le mot-clé "self"</h2>
+<p><strong>Self</strong> représente l'instance elle-même (le "moi"). C'est le lien entre le code générique de la classe et l'objet spécifique en mémoire.</p>
 <ul>
-<li><strong>self</strong> : représente l'instance sur laquelle on travaille. Il doit être le 1er paramètre de chaque méthode.</li>
-<li><strong>Attribut par défaut</strong> : peut être défini dans les arguments de <code>__init__</code> (ex: <code>version=1.0</code>) ou directement dans le corps du constructeur (ex: <code>self.batterie = 100</code>).</li>
-<li><strong>Encapsulation</strong> : regrouper les données (attributs) et les fonctions (méthodes) au sein d'une même entité.</li>
+<li><strong>Pourquoi est-il partout ?</strong> Dans la classe, Python ne sait pas encore quel robot va appeler la méthode. <code>self</code> dit : "Applique cette action sur l'objet qui m'a appelé".</li>
+<li><strong>Le paramètre invisible :</strong> Il doit être le <strong>premier argument</strong> de chaque méthode dans la classe, mais on ne lui passe <strong>jamais</strong> de valeur lors de l'appel.</li>
 </ul>
+<pre><code class="language-python">def afficher_nom(self):
+    # Sans "self.", Python chercherait une variable locale
+    # Avec "self.", il va chercher l'attribut DANS l'objet.
+    print(f"Mon nom est {self.nom}")
+
+robot_A.afficher_nom() # Python fait secrètement : afficher_nom(robot_A)
+</code></pre>
 </section>
