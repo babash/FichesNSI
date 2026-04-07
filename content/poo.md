@@ -35,14 +35,14 @@ footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
 <h2 data-icon="🏗️">Création d'objet (Instanciation)</h2>
 <p>Pour cree un objet on utilise <strong>le nom de la classe</strong> comme si c'etait une fonction. La fonction véritablenment appelé est <code>__init__</code> mais on ne l'appelle jamais explicitement.</p>
 
-<strong>Creation d'objet</strong>
+<strong>Creation d'objet :</strong>
 <p>Création de "jumeaux" (Appel automatique de __init__).</p>
 <pre><code class="language-python">robot_A = Robot("R2D2")
 robot_B = Robot("R2D2")
 robot_C = Robot("C3PO", 4.0)
 </code></pre>
 
-<strong>Indépendance des objets</strong>
+<strong>Indépendance des objets :</strong>
 <p>Ils sont du même type (Robot) mais sont des objets distincts.</p>
 <pre><code class="language-python">robot_A.batt = 20  # Robot_A est déchargé, mais pas Robot_B !
 print(robot_A.batt) # Affiche 20
@@ -54,9 +54,11 @@ print(robot_B.batt) # Affiche 100
 <section>
 <h2 data-icon="📊">Les Attributs : Accès et Modification</h2>
 <p>Un <strong>attribut</strong> est une variable interne à l'objet qui définit son état. On utilise la notation pointée <code>.</code> pour agir dessus. On trouve usuellement les attributs dans le constructeur (__init__).</p>
+<strong>Accès :</strong>
 <pre><code class="language-python"># Accès à un attribut
 print(mon_robot.nom)  # Affiche "R2D2"
 </code></pre>
+<strong>Modification :</strong>
 <pre><code class="language-python"># Modification d'un attribut
 mon_robot.v = 2.0
 print(mon_robot.v) # Affiche 2.0
@@ -67,7 +69,7 @@ print(mon_robot.v) # Affiche 2.0
 <h2 data-icon="⚙️">Les Méthodes et leurs Appels</h2>
 <p>Une <strong>méthode</strong> est une fonction définie à l'intérieur d'une classe. Elle représente un comportement de l'objet. Le paramètre <code>self</code> permet à la méthode d'accéder aux attributs de l'objet qui l'appelle.</p>
 
-<strong>Définition de méthode</strong>
+<strong>Définition de méthode :</strong>
 <pre><code class="language-python">class Robot:
     def __init__(self, nom, version=1.0):
         # Initialisation des attributs (état de l'objet)
@@ -82,7 +84,7 @@ print(mon_robot.v) # Affiche 2.0
         self.batt += energie
 </code></pre>
 
-<strong>Appel de méthode</strong>
+<strong>Appel de méthode :</strong>
 <p>Voyons maintenant un exemple d'appel de la méthode.</p>
 <pre><code class="language-python"># Appel de méthode
 mon_robot.saluer()       # Affiche "Bonjour, je suis R2D2"
