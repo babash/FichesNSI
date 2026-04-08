@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Éditeur de fiche</title>
+  <link rel="stylesheet" href="/css/editor.css" />
+</head>
+<body class="editor-page">
+  <header>
+    <div class="grow">
+      <strong>Éditeur</strong>
+      <% if (slug) { %>
+        — <code><%= slug %>.md</code>
+      <% } %>
+    </div>
+    <div class="actions">
+      <button id="btn-refresh">Rafraîchir PDF</button>
+    </div>
+    <div class="status" id="status"></div>
+  </header>
+  <div class="split" id="split">
+    <div class="pane">
+      <textarea id="editor" spellcheck="false"><%- initialMarkdown %></textarea>
+    </div>
+    <div class="gutter" id="gutter"></div>
+    <div class="pane">
+      <iframe id="pdf"></iframe>
+    </div>
+  </div>
+  <div id="app-data" data-slug="<%= slug || '' %>" hidden></div>
+
+  <script>
+    const slug = document.getElementById('app-data').dataset.slug || '';
+    const editorEl = document.getElementById('editor');
+    const pdfEl = document.getElementById('pdf');
+    const statusEl = document.getElementById('status');
+    const gutter = document.getElementById('gutter');
+    const split = document.getElementById('split');
+
+    // Simple draggable gutter
+    let isDragging = false;
+    gutter.addEventListener('mousedown', () => { isDragging = true; document.body.style.cursor = 'col-resize'; });
+    window.addEventListener('mouseup', () => { isDragging = false; document.body.style.cursor = 'default'; });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const rect = split.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const left = Math.max(200, Math.min(rect.width - 200, x));
+      split.style.gridTemplateColumns = left + 'px var(--split-gutter) 1fr';
+    });
+
+    function setStatus(msg) { statusEl.textContent = msg; }
+
+    async function fetchPdf(markdown) {
+      setStatus('Génération du PDF…');
+      try {
+        console.log('🔄 Début génération PDF...');
+        const res = await fetch('/editor/preview-pdf', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ markdown })
+        });
+        
+        console.log('📊 Réponse reçue:', res.status, res.statusText);
+        
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error('❌ Erreur serveur:', errorText);
+          throw new Error(`Erreur serveur (${res.status}): ${errorText}`);
+        }
+        
+        const blob = await res.blob();
+        console.log('📄 Blob reçu:', blob.size, 'bytes, type:', blob.type);
+        
+        if (blob.size === 0) {
+          throw new Error('PDF vide reçu du serveur');
+        }
+        
+        // Libérer l'ancienne URL si elle existe
+        if (pdfEl.src && pdfEl.src.startsWith('blob:')) {
+          URL.revokeObjectURL(pdfEl.src);
+        }
+        
+        const url = URL.createObjectURL(blob);
+        console.log('🔗 URL blob créée:', url);
+        pdfEl.src = url;
+        
+        // Attendre que l'iframe se charge
+        pdfEl.onload = () => {
+          console.log('✅ PDF chargé dans l\'iframe');
+          setStatus('A jour');
+        };
+        
+        pdfEl.onerror = () => {
+          console.error('❌ Erreur chargement PDF dans iframe');
+          setStatus('Erreur: Impossible de charger le PDF');
+        };
+        
+      } catch (error) {
+        console.error('❌ Erreur fetchPdf:', error);
+        setStatus(`Erreur: ${error.message}`);
+      }
+    }
+
+    let debounceTimer = null;
+    function schedulePreview() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => fetchPdf(editorEl.value), 500);
+    }
+
+    editorEl.addEventListener('input', schedulePreview);
+    document.getElementById('btn-refresh').addEventListener('click', () => fetchPdf(editorEl.value));
+
+    // Initial preview
+    fetchPdf(editorEl.value);
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-const htmlPdf = require('html-pdf-node');
+const { chromium } = require('playwright');
 
 class PDFGenerator {
   constructor() {
@@ -9,7 +9,19 @@ class PDFGenerator {
    * Initialise le générateur PDF
    */
   async init() {
-    console.log('[PDF] Générateur PDF initialisé avec html-pdf-node.');
+    console.log('[PDF] Générateur PDF initialisé avec playwright.');
+    
+    // Vérifier que Playwright est correctement installé
+    try {
+      const { execSync } = require('child_process');
+      execSync('npx playwright --version', { stdio: 'pipe' });
+      console.log('[PDF] Playwright vérifié avec succès.');
+    } catch (error) {
+      console.error('[PDF] ❌ Playwright n\'est pas correctement installé !');
+      console.error('[PDF] 💡 Exécutez: npm run install:playwright');
+      console.error('[PDF] 💡 Puis: sudo npm run install:playwright-deps');
+      throw new Error('Playwright n\'est pas installé. Exécutez npm run install:playwright');
+    }
   }
 
   /**
@@ -38,12 +50,8 @@ class PDFGenerator {
           <header><h1>${visibleTitle}</h1></header>
           <article class="container">
             <div class="columns-wrapper">
-              <div class="column" id="column-left">
-                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-              </div>
-              <div class="column" id="column-right">
-                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-              </div>
+              <div class="column" id="column-left"></div>
+              <div class="column" id="column-right"></div>
             </div>
             ${fiche.content}
           </article>
@@ -51,7 +59,7 @@ class PDFGenerator {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script>
         <script>
-        // Script pour répartir intelligemment les sections en deux colonnes
+        // Layout fixe sans répartition automatique pour éviter les débordements
         document.addEventListener('DOMContentLoaded', function() {
           const container = document.querySelector('.container');
           const leftColumn = document.getElementById('column-left');
@@ -60,27 +68,12 @@ class PDFGenerator {
           // Récupérer toutes les sections
           const sections = Array.from(container.querySelectorAll('section'));
           
-          // Répartir les sections de manière équilibrée
-          let leftHeight = 0;
-          let rightHeight = 0;
-          
+          // Répartition simple : une section sur deux à gauche, une sur deux à droite
           sections.forEach((section, index) => {
-            // Mesurer temporairement la section
-            const tempDiv = document.createElement('div');
-            tempDiv.style.position = 'absolute';
-            tempDiv.style.visibility = 'hidden';
-            tempDiv.appendChild(section.cloneNode(true));
-            document.body.appendChild(tempDiv);
-            const sectionHeight = tempDiv.scrollHeight;
-            document.body.removeChild(tempDiv);
-            
-            // Ajouter la section à la colonne la plus courte
-            if (leftHeight <= rightHeight) {
+            if (index % 2 === 0) {
               leftColumn.appendChild(section);
-              leftHeight += sectionHeight;
             } else {
               rightColumn.appendChild(section);
-              rightHeight += sectionHeight;
             }
           });
         });
@@ -161,6 +154,7 @@ class PDFGenerator {
    * Génère un PDF depuis une URL
    */
   async generatePDF(url, filename, ficheFooter = null) {
+    let browser = null;
     try {
       console.log(`[PDF] Génération de ${filename} depuis ${url}...`);
       
@@ -175,21 +169,8 @@ class PDFGenerator {
           </div>
         </div>`;
 
-      const options = {
-        format: 'A4',
-        printBackground: true,
-        margin: {
-          top: '6mm',
-          right: '0mm',
-          bottom: '8mm',
-          left: '0mm'
-        },
-        displayHeaderFooter: true,
-        headerTemplate: '<div></div>',
-        footerTemplate,
-        timeout: 60000, // Timeout augmenté pour laisser le temps au JS de s'exécuter
-        waitUntil: 'networkidle0', // Attendre que le réseau soit inactif
-        preferCSSPageSize: false, // Ignorer les marges CSS @page
+      browser = await chromium.launch({ 
+        headless: true,
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
@@ -205,9 +186,27 @@ class PDFGenerator {
           '--disable-backgrounding-occluded-windows',
           '--disable-renderer-backgrounding'
         ]
-      };
-
-      const pdfBuffer = await htmlPdf.generatePdf({ url }, options);
+      });
+      const page = await browser.newPage();
+      
+      await page.goto(url, { waitUntil: 'networkidle0' });
+      
+      const pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+        margin: {
+          top: '6mm',
+          right: '0mm',
+          bottom: '8mm',
+          left: '0mm'
+        },
+        displayHeaderFooter: true,
+        headerTemplate: '<div></div>',
+        footerTemplate,
+        preferCSSPageSize: true
+      });
+      
+      await browser.close();
 
       // Vérifier que le PDF est valide
       if (!pdfBuffer || pdfBuffer.length === 0) {
@@ -225,7 +224,88 @@ class PDFGenerator {
       return pdfBuffer;
 
     } catch (error) {
+      if (browser) {
+        await browser.close();
+      }
       console.error(`[PDF] Erreur lors de la génération de ${filename}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Génère un PDF à partir d'un HTML brut (string) sans URL publique
+   */
+  async generatePDFFromHtml(html, filename, ficheFooter = null) {
+    let browser = null;
+    try {
+      console.log(`[PDF] Génération (raw HTML) de ${filename}...`);
+      
+      const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+      const footerText = ficheFooter || 'Fiches de révision NSI';
+      const footerTemplate = `
+        <div style="font-size:5pt;width:100%; padding: 0 6mm; color:#6c757d; line-height:1.1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+            <span style="white-space:nowrap;">${footerText}</span>
+            <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
+            <span style="white-space:nowrap;">${now} (CET)</span>
+          </div>
+        </div>`;
+
+      browser = await chromium.launch({ 
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--no-first-run',
+          '--no-zygote',
+          '--disable-gpu',
+          '--disable-web-security',
+          '--disable-features=VizDisplayCompositor',
+          '--run-all-compositor-stages-before-draw',
+          '--disable-background-timer-throttling',
+          '--disable-backgrounding-occluded-windows',
+          '--disable-renderer-backgrounding'
+        ]
+      });
+      const page = await browser.newPage();
+      
+      await page.setContent(html, { waitUntil: 'networkidle0' });
+      
+      const pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+        margin: {
+          top: '6mm',
+          right: '0mm',
+          bottom: '8mm',
+          left: '0mm'
+        },
+        displayHeaderFooter: true,
+        headerTemplate: '<div></div>',
+        footerTemplate,
+        preferCSSPageSize: true
+      });
+      
+      await browser.close();
+
+      if (!pdfBuffer || pdfBuffer.length === 0) {
+        throw new Error('Le PDF généré est vide');
+      }
+      const pdfHeader = pdfBuffer.slice(0, 4).toString();
+      if (pdfHeader !== '%PDF') {
+        console.error(`[PDF] En-tête invalide: ${pdfHeader}`);
+        throw new Error('Le fichier généré n\'est pas un PDF valide');
+      }
+
+      console.log(`[PDF] ${filename} (raw HTML) généré avec succès (${pdfBuffer.length} bytes)`);
+      return pdfBuffer;
+    } catch (error) {
+      if (browser) {
+        await browser.close();
+      }
+      console.error(`[PDF] Erreur lors de la génération (raw HTML) de ${filename}:`, error);
       throw error;
     }
   }

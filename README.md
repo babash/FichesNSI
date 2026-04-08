@@ -7,7 +7,7 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 ### 📄 Génération de Contenu
 * **Site Statique** : Génération de site statique compatible GitHub Pages
 * **Pages Web Optimisées** : Conversion automatique des fichiers Markdown en pages web stylisées
-* **Génération PDF Automatique** : Export PDF haute qualité avec html-pdf-node
+* **Génération PDF Automatique** : Export PDF haute qualité avec Playwright
 * **PDFs Pré-générés** : Tous les PDFs générés lors du build pour un déploiement rapide
 * **PDF Combiné** : Téléchargement de toutes les fiches en un seul PDF
 
@@ -35,7 +35,8 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 ### Prérequis
 - Node.js 18+ 
 - npm
-- Système avec support Chromium (pour html-pdf-node)
+- Système avec support Chromium (pour Playwright)
+- **Permissions sudo** (pour installer les dépendances système de Playwright)
 
 ### Installation
 
@@ -48,8 +49,16 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 2. **Installer les dépendances** :
    ```bash
    npm install
+   npm run install:playwright
+   sudo npm run install:playwright-deps
    ```
-   *Cette commande installe automatiquement html-pdf-node avec Chromium.*
+   
+   **Ou en une seule commande** :
+   ```bash
+   npm run install:all
+   ```
+   
+   *Ces commandes installent automatiquement Playwright avec Chromium et les dépendances système.*
 
 3. **Lancer le serveur local** :
    ```bash
@@ -80,7 +89,7 @@ Un générateur de site statique moderne qui transforme des fichiers Markdown en
 - **Téléchargement individuel** : Icône PDF sur chaque fiche
 - **Téléchargement global** : Bouton "Tout télécharger" pour un PDF combiné
 
-Voir aussi: `GUIDE_MARKDOWN.md` pour des recommandations de rédaction et contraintes d’affichage optimisées A4.
+Voir aussi: `GUIDE_MARKDOWN.md` pour des recommandations de rédaction et contraintes d'affichage optimisées A4.
 
 ### Génération PDF
 Les PDFs sont générés automatiquement avec :
@@ -90,6 +99,29 @@ Les PDFs sont générés automatiquement avec :
 - ✅ Préservation du style CSS
 - ✅ Pré-génération pour un accès instantané
 - ✅ Validation automatique des PDFs
+
+### Scripts Disponibles
+
+#### **Installation et Vérification**
+```bash
+npm run install:playwright      # Installer les navigateurs Playwright
+npm run install:playwright-deps # Installer les dépendances système (sudo requis)
+npm run install:all            # Installation complète en une commande
+npm run check:playwright       # Vérifier l'installation de Playwright
+```
+
+#### **Développement et Build**
+```bash
+npm start                      # Démarrer le serveur de développement
+npm run build                  # Générer le site statique
+npm test                       # Exécuter les tests
+```
+
+#### **Déploiement**
+```bash
+npm run deploy                 # Déploiement automatique
+npm run deploy:force           # Déploiement forcé
+```
 
 ---
 
@@ -145,10 +177,11 @@ La nouvelle fiche apparaît automatiquement sur la page d'accueil.
 fiches-nsi/
 ├── src/                    # Modules principaux
 │   ├── fiches.js          # Gestion des fiches Markdown
-│   ├── pdf.js             # Génération PDF avec html-pdf-node
+│   ├── pdf.js             # Génération PDF avec Playwright
 │   └── routes.js          # Routes Express
-├── scripts/               # Scripts de build
-│   └── generate-static.js # Générateur de site statique
+├── scripts/               # Scripts de build et installation
+│   ├── generate-static.js # Générateur de site statique
+│   └── install-playwright.js # Installation automatique Playwright
 ├── content/               # Fiches en Markdown
 ├── views/                 # Templates EJS
 ├── public/               # Assets statiques (CSS, JS, images)
@@ -166,7 +199,8 @@ fiches-nsi/
 - Cache en mémoire pour les performances
 
 #### `src/pdf.js` - PDFGenerator  
-- Génération PDF avec html-pdf-node
+- Génération PDF avec Playwright
+- Vérification automatique de l'installation
 - Génération HTML optimisée pour PDF
 - Licence CC0 automatique
 - Validation des PDFs générés
@@ -182,6 +216,12 @@ fiches-nsi/
 - Copie des assets statiques
 - Génération des pages HTML
 
+#### `scripts/install-playwright.js` - Installation Automatique
+- Installation des navigateurs Playwright
+- Installation des dépendances système
+- Vérification de l'installation
+- Messages d'erreur clairs avec solutions
+
 ---
 
 ## 🛠️ Technologies
@@ -189,7 +229,7 @@ fiches-nsi/
 ### Backend
 - **Node.js** - Runtime JavaScript
 - **Express.js** - Framework web
-- **html-pdf-node** - Génération PDF via Chromium
+- **Playwright** - Génération PDF via Chromium
 - **EJS** - Moteur de templates
 
 ### Processing
@@ -220,7 +260,6 @@ Le projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pag
 - **URL** : https://babash.github.io/FichesNSI/
 - **Contenu** : Site statique complet avec PDFs
 
-
 ### 🎯 Méthode de travail recommandée
 
 1. Créer une branche de fonctionnalité depuis `main`
@@ -229,7 +268,7 @@ Le projet utilise GitHub Actions pour un déploiement automatique sur GitHub Pag
 
 ### Processus de Build
 
-1. **Installation** des dépendances Node.js
+1. **Installation** des dépendances Node.js et Playwright
 2. **Génération** du site statique avec `npm run build`
 3. **Validation** des fichiers générés (HTML, CSS, PDFs)
 4. **Déploiement** automatique sur GitHub Pages
@@ -248,6 +287,35 @@ cd dist && python -m http.server 8000
 
 ---
 
+## 🔧 Dépannage
+
+### Playwright non installé
+```bash
+# Vérifier l'installation
+npm run check:playwright
+
+# Installer si nécessaire
+npm run install:playwright
+sudo npm run install:playwright-deps
+```
+
+### Erreurs de génération PDF
+1. Vérifier que Playwright fonctionne : `npm run check:playwright`
+2. Consulter les logs de génération PDF
+3. Tester avec une fiche simple
+
+### Site non accessible
+1. Vérifier que la branche de déploiement existe
+2. Attendre 5-10 minutes (cache GitHub Pages)
+3. Vérifier les logs du workflow GitHub Actions
+
+### CSS/JS non chargés
+1. Vérifier les chemins relatifs dans les fichiers HTML
+2. S'assurer que `.nojekyll` est présent
+3. Vérifier que les fichiers sont bien déployés
+
+---
+
 ## 📝 Licence
 
 Ce projet est sous licence MIT. Le contenu généré (fiches) est automatiquement placé sous licence [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.fr) (domaine public).
@@ -262,7 +330,14 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 - Soumettre des pull requests
 - Partager vos fiches de révision
 
+### Workflow de Contribution
+
+1. **Fork** le projet
+2. **Créer** une branche de fonctionnalité (`git checkout -b feature/AmazingFeature`)
+3. **Commit** vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** vers la branche (`git push origin feature/AmazingFeature`)
+5. **Ouvrir** une Pull Request
+
 ---
 
 *Généré avec ❤️ pour la communauté NSI*
-<!-- maintenance: trigger production deploy  -->

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Fiches de révision NSI</title>
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/homepage.css">
 </head>
 <body>
     <div class="index-container">
@@ -24,14 +24,26 @@
 
         <ul class="fiche-list" id="fiches-list">
             <% fiches.forEach(function(fiche) { %>
+                <% if (fiche.slug !== 'exemple-affichage') { %>
                 <li>
                     <a href="/fiches/<%= fiche.slug %>" class="fiche-name"><%= fiche.title %></a>
-                    <a href="/fiches/<%= fiche.slug %>/pdf" download class="download-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" title="Télécharger en PDF"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    </a>
+                    <div class="fiche-actions">
+                        <a href="/editor/<%= fiche.slug %>" class="edit-link" title="Éditer cette fiche">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </a>
+                        <a href="/fiches/<%= fiche.slug %>/pdf" download class="download-link" title="Télécharger en PDF">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        </a>
+                    </div>
                 </li>
+                <% } %>
             <% }); %>
         </ul>
+
+        <!-- Bouton flottant pour créer une nouvelle fiche -->
+        <a href="/editor" class="floating-create-btn" title="Créer une nouvelle fiche">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 5v14M5 12h14"></path></svg>
+        </a>
 
         <footer class="index-footer">
             <div class="footer-license">

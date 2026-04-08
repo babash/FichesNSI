@@ -1,15 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Orbitron:wght@600&family=Lato:wght@400;700&display=swap');
-
-:root {
-  --python-blue: #306998;
-  --python-yellow: #FFD43B;
-  --bg-light: #ffffff;
-  --accent-bg: rgba(48, 105, 152, 0.05);
-  --code-bg: #f0f0f0;
-  --yellow-bg: rgba(255, 212, 59, 0.15);
-}
+/* Import des styles de base pour les fiches */
+@import url('fiche-base.css');
 
 @media print {
+  @page {
+    size: A4;
+    margin: 6mm 0mm 8mm 0mm;
+  }
+  
   body { 
     margin: 0; 
     padding: 0;
@@ -18,29 +15,38 @@
   }
   /* Réserver de l'espace pour le footer template puppeteer */
   .container {
-    padding-bottom: 14mm;
-  }
-  
-  .container {
     max-width: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 8mm 0; /* Réduire l'espace pour le footer */
   }
   
   .columns-wrapper {
     gap: 1mm; /* Espacement minimal pour l'impression */
+    height: calc(100vh - 20mm); /* Hauteur disponible moins header/footer */
+    overflow: hidden; /* Éviter le débordement */
   }
   
   .column {
     gap: 0.05rem; /* Espacement ultra-minimal entre sections */
     background-color: rgba(248, 249, 250, 0.2); /* Fond gris très léger pour impression */
     padding: 0.1rem; /* Padding minimal pour impression */
+    height: 100%; /* Prendre toute la hauteur disponible */
+    overflow: hidden; /* Éviter le débordement */
+  }
+  
+  /* Optimiser le header pour l'impression */
+  header h1 {
+    font-size: 0.8rem;
+    margin: 0.2rem 0;
+    padding: 0.2rem 0;
   }
   
   section {
     page-break-inside: avoid;
     margin-bottom: 0.1em; /* Marge ultra-minimale */
     padding: 0.15rem; /* Padding ultra-minimal */
+    max-height: 45vh; /* Limiter la hauteur des sections */
+    overflow: hidden; /* Éviter le débordement */
   }
   
   h1, h2, h3 {
@@ -133,7 +139,9 @@ body {
   line-height: 1.2; /* Interligne réduit */
   color: #333;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   /* Le body doit être transparent pour que le pseudo-élément ::before (avec l'image de fond)
      qui est positionné en arrière-plan (z-index: -1) soit visible. */
   background-color: transparent;
@@ -259,6 +267,38 @@ li {
   margin-top: 0.3rem; /* Marge minimale */
   color: #555;
   width: 100%;
+}
+
+/* Footer pour les fiches HTML */
+.fiche-footer {
+  margin-top: auto;
+  padding: 1rem 0;
+  background-color: rgba(248, 249, 250, 0.8);
+  border-top: 1px solid #e9ecef;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.footer-content {
+  max-width: 210mm;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .footer-info {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 /* Responsive design pour les petits écrans */

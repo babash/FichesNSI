@@ -1,6 +1,6 @@
-# 🚀 Guide de Déploiement - Fiches NSI (Production only)
+# 🚀 Guide de Déploiement - Fiches NSI
 
-Ce document décrit le déploiement en production unique du site Fiches NSI.
+Ce document décrit le déploiement en production du site Fiches NSI sur GitHub Pages.
 
 ## 🌐 Environnement disponible
 
@@ -34,7 +34,7 @@ git push origin main
 Chaque déploiement suit ces étapes :
 
 1. **Checkout** du code source
-2. **Installation** des dépendances Node.js
+2. **Installation** des dépendances Node.js et Playwright
 3. **Génération** du site statique avec PDFs
 4. **Validation** des fichiers générés
 5. **Déploiement** sur la branche GitHub Pages appropriée
@@ -44,7 +44,7 @@ Chaque déploiement suit ces étapes :
 Chaque déploiement vérifie :
 - ✅ Génération du site statique
 - ✅ Présence des fichiers CSS et JS
-- ✅ Génération des PDFs individuels
+- ✅ Génération des PDFs individuels avec Playwright
 - ✅ Génération du PDF combiné
 - ✅ Déploiement réussi
 
@@ -65,6 +65,16 @@ gh run list
 gh workflow run "Deploy Production"
 ```
 
+### Test local
+```bash
+# Générer le site statique localement
+npm run build
+
+# Tester le site généré
+cd dist && python -m http.server 8000
+# Puis ouvrir http://localhost:8000
+```
+
 ## 🔧 Configuration GitHub Pages
 
 ### Production
@@ -72,15 +82,13 @@ gh workflow run "Deploy Production"
 - **Branch** : `gh-pages`
 - **Folder** : `/ (root)`
 
-### Développement et Tests
-- Les environnements de développement et de test ne sont plus utilisés
-
 ## 📝 Notes importantes
 
 - **Cache** : GitHub Pages peut mettre 5-10 minutes à se mettre à jour
-- **PDFs** : Générés automatiquement à chaque déploiement
+- **PDFs** : Générés automatiquement avec Playwright à chaque déploiement
 - **CSS/JS** : Chemins relatifs pour compatibilité GitHub Pages
 - **Sécurité** : Utilise `GITHUB_TOKEN` pour les déploiements
+- **Playwright** : Installé automatiquement dans le workflow GitHub Actions
 
 ## 🚨 Dépannage
 
@@ -90,7 +98,7 @@ gh workflow run "Deploy Production"
 3. Vérifier les logs du workflow GitHub Actions
 
 ### PDFs corrompus
-1. Vérifier que `html-pdf-node` fonctionne localement
+1. Vérifier que Playwright fonctionne localement
 2. Consulter les logs de génération PDF
 3. Tester avec une fiche simple
 
@@ -98,3 +106,8 @@ gh workflow run "Deploy Production"
 1. Vérifier les chemins relatifs dans les fichiers HTML
 2. S'assurer que `.nojekyll` est présent
 3. Vérifier que les fichiers sont bien déployés
+
+### Playwright ne fonctionne pas
+1. Vérifier que `npx playwright install` a été exécuté
+2. Consulter les logs d'installation de Playwright
+3. Tester localement avec `npm run build`

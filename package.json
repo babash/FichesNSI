@@ -7,6 +7,11 @@
     "start": "node server.js",
     "build": "node scripts/generate-static.js",
     "test": "node -e \"console.log('Tests passed')\"",
+    "install:playwright": "npx playwright install",
+    "install:playwright-deps": "npx playwright install-deps",
+    "install:all": "npm install && npm run install:playwright && npm run install:playwright-deps",
+    "check:playwright": "npx playwright --version",
+    "postinstall": "npx playwright install",
     "deploy": "npm run build && git add . && git commit -m 'feat: déploiement automatique avec PDFs régénérés' && git push origin main && echo 'Deployment completed'",
     "deploy:force": "npm run build && git add . && git commit -m 'feat: déploiement forcé avec PDFs régénérés' && git push origin main --force && echo 'Force deployment completed'"
   },
@@ -14,8 +19,9 @@
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "front-matter": "^4.0.2",
-    "html-pdf-node": "^1.0.7",
-    "marked": "^4.3.0"
+    "marked": "^4.3.0",
+    "node-fetch": "^3.3.2",
+    "playwright": "^1.55.1"
   },
   "author": "babash",
   "license": "MIT",
