@@ -17,7 +17,7 @@
     "html-pdf-node": "^1.0.7",
     "marked": "^4.3.0"
   },
-  "author": "babash",
+  "author": "Babash - NSI Tani Malandi",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"

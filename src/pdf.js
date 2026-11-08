@@ -1,5 +1,31 @@
 const htmlPdf = require('html-pdf-node');
 
+/**
+ * Mention de l'auteur et de la licence, en bas à droite de chaque page des PDF.
+ *
+ * Elle est écrite dans la page elle-même (position: fixed, répétée sur chaque page
+ * imprimée, comme l'image de fond) et non dans footerTemplate : avec le Chromium
+ * de Puppeteer 5.5, qui fabrique les PDF publiés, l'image de fond (body::before)
+ * recouvre le pied de page de footerTemplate, qui reste invisible.
+ */
+const MENTION_LICENCE_STYLE = `
+        <style>
+          .pdf-mention {
+            position: fixed;
+            right: 4mm;
+            bottom: 0.8mm;
+            z-index: 10;
+            padding: 0.2mm 1.2mm;
+            background: rgba(255, 255, 255, 0.85);
+            color: #495057;
+            font-family: 'Lato', sans-serif;
+            font-size: 6pt;
+            line-height: 1.2;
+            white-space: nowrap;
+          }
+        </style>`;
+const MENTION_LICENCE = `<div class="pdf-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence CC BY-SA 4.0</div>`;
+
 class PDFGenerator {
   constructor() {
     // Pas besoin d'initialisation pour html-pdf-node
@@ -31,9 +57,10 @@ class PDFGenerator {
         <meta charset="UTF-8">
         <title>${fiche.title}</title>
         <link rel="stylesheet" href="/css/fiche-nsi.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">${MENTION_LICENCE_STYLE}
       </head>
       <body>
+        ${MENTION_LICENCE}
         <main>
           <header><h1>${visibleTitle}</h1></header>
           <article class="container">
@@ -121,9 +148,10 @@ class PDFGenerator {
         <meta charset="UTF-8">
         <title>Toutes les fiches NSI</title>
         <link rel="stylesheet" href="/css/fiche-nsi.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">${MENTION_LICENCE_STYLE}
       </head>
       <body>
+        ${MENTION_LICENCE}
         <main class="wrapper">${fichesHtml}</main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script>

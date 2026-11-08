@@ -1,6 +1,6 @@
 ---
 title: "Fiche NSI – Les Arbres"
-footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
+footer: "Fiche d'aide-mémoire"
 ---
 
 <section>

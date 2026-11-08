@@ -1,6 +1,6 @@
 ---
 title: "Fiche NSI – Les structures de controle élémentaires en Python"
-footer: "Fiche d'aide-mémoire - NSI Tani Malandi"
+footer: "Fiche d'aide-mémoire"
 ---
 
 <section>

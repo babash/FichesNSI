@@ -1,6 +1,6 @@
 ---
 title: "Fiche NSI – Les Variables et Opérateurs en Python"
-footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
+footer: "Fiche d'aide-mémoire"
 ---
 
 <section>
