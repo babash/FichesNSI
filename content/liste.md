@@ -1,6 +1,6 @@
 ---
 title: "Fiche NSI – Les Listes en Python"
-footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
+footer: "Fiche d'aide-mémoire"
 ---
 
 <section>

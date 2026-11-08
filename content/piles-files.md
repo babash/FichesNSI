@@ -1,6 +1,6 @@
 ---
 title: "Fiche NSI – Piles et Files"
-footer: "Fiche d'aide-mémoire - NSI Tani Mallandi"
+footer: "Fiche d'aide-mémoire"
 ---
 
 <section>
