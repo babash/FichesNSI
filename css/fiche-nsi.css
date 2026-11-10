@@ -303,10 +303,12 @@ li {
   
   .columns-wrapper {
     flex-direction: column; /* Passage en une colonne sur mobile */
+    align-items: stretch; /* Chaque colonne prend la largeur de l'écran, pas celle du code le plus long */
     gap: 0.2rem;
   }
   
   .column {
+    box-sizing: border-box; /* La largeur comprend le padding : pas de débordement */
     gap: 0.2rem;
   }
   
@@ -325,5 +327,65 @@ li {
   pre {
     font-size: 0.5rem; /* Code ultra-petit sur mobile */
     padding: 0.15rem;
+  }
+}
+
+/* Coloration du code : les teintes du thème atom-one-light, assombries pour un
+   contraste d'au moins 4,5:1 sur le fond du code (#fafafa). */
+pre .hljs-comment,
+pre .hljs-quote { color: #696c77; }
+pre .hljs-addition,
+pre .hljs-attribute,
+pre .hljs-meta .hljs-string,
+pre .hljs-regexp,
+pre .hljs-string { color: #3b7d3a; }
+pre .hljs-built_in,
+pre .hljs-class .hljs-title,
+pre .hljs-title.class_ { color: #8a5d00; }
+pre .hljs-bullet,
+pre .hljs-link,
+pre .hljs-meta,
+pre .hljs-selector-id,
+pre .hljs-symbol,
+pre .hljs-title { color: #2f62d1; }
+pre .hljs-literal { color: #01729b; }
+pre .hljs-deletion,
+pre .hljs-name,
+pre .hljs-section,
+pre .hljs-selector-tag,
+pre .hljs-subst { color: #c4392d; }
+
+/* Mention de l'auteur et de la licence, en bas des pages web des fiches
+   (la même que dans les PDF). */
+.fiche-mention {
+  box-sizing: border-box;
+  width: calc(100% - 10px);
+  max-width: 210mm;
+  margin: 0.5rem auto 1rem;
+  padding: 0.4rem 0.8rem;
+  background-color: #ffffff;
+  border-radius: 4px;
+  color: #495057;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.fiche-mention a {
+  color: #0056b3;
+}
+
+/* Impression d'une page web de fiche depuis le navigateur : pas de page vide
+   (hauteur minimale de l'écran) et pas de code coupé à droite. */
+@media print {
+  body,
+  .container {
+    min-height: 0;
+  }
+
+  pre,
+  pre code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
 }

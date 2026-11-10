@@ -42,6 +42,7 @@ body {
     width: 100%;
     margin: 0; /* Le centrage est géré par le flexbox du body */
     padding: 2rem;
+    box-sizing: border-box; /* La largeur comprend le padding : pas de débordement sur téléphone */
     background-color: #ffffff; /* Fond blanc pour le conteneur principal */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Ombre portée subtile */
@@ -64,6 +65,8 @@ body {
 
 .list-header {
     display: flex;
+    flex-wrap: wrap; /* Sur téléphone, « Tout télécharger » passe sous le titre */
+    gap: 0.5rem;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1em;
@@ -114,7 +117,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #007bff;
+    color: #0056b3; /* 7:1 sur blanc (#007bff : 3,98:1) */
     text-decoration: none;
     font-weight: 500;
     padding: 6px 10px;
@@ -124,7 +127,7 @@ body {
 
 .download-all-link:hover {
     background-color: #e9ecef;
-    color: #0056b3;
+    color: #003d80;
 }
 
 .download-all-link .icon {
@@ -164,11 +167,11 @@ body {
 }
 
 .fiche-list .fiche-name:hover {
-    color: #007bff;
+    color: #0056b3;
 }
 
 .fiche-list .download-link {
-    color: #6c757d;
+    color: #5a6268;
     padding: 4px;
     border-radius: 50%;
     display: flex;
@@ -191,7 +194,7 @@ body {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
     border-top: 1px solid #e9ecef;
-    color: #6c757d;
+    color: #495057;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -206,7 +209,7 @@ body {
 
 .footer-license a,
 .footer-project a {
-    color: #007bff;
+    color: #0056b3; /* 7:1 sur blanc (#007bff : 3,98:1) */
     font-weight: 500;
     text-decoration: none;
 }
@@ -231,13 +234,13 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5em;
-    color: #6c757d;
+    color: #0056b3;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .footer-link-item:hover {
-    color: #007bff;
+    color: #003d80;
 }
 
 .footer-link-item .icon {
@@ -294,11 +297,22 @@ body {
 }
 
 .timestamp {
+    display: inline-block; /* Sur deux lignes au besoin, le cadre entoure tout le texte */
     font-size: 0.8rem;
-    color: #6c757d;
+    color: #495057; /* 7,8:1 sur #f8f9fa (#6c757d : 4,45:1) */
     font-style: italic;
     background-color: #f8f9fa;
     padding: 0.3rem 0.6rem;
     border-radius: 4px;
     border: 1px solid #e9ecef;
+}
+/* Téléphone : moins de marges autour du contenu */
+@media (max-width: 480px) {
+    body {
+        padding: 1rem 0.5rem;
+    }
+
+    .index-container {
+        padding: 1.25rem 1rem;
+    }
 }
