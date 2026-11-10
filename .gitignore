@@ -12,9 +12,12 @@ yarn-debug.log*
 temp/
 tmp/
 
-# PDFs temporaires (mais pas ceux générés par le build)
+# Site statique généré par `npm run build` : le workflow le refait à chaque
+# envoi sur main et le publie sur la branche gh-pages. Il n'est pas versionné.
+/dist/
+
+# PDF temporaires
 *.pdf
-!dist/fiches/*.pdf
 
 # Other files
 TODO.md
@@ -25,6 +28,3 @@ Thumbs.db
 
 # IA files
 .aiexclude
-
-# Ignore generated PDFs
-/dist/**/*.pdf

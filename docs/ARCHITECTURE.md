@@ -27,7 +27,7 @@ Le générateur transforme des fichiers Markdown en fiches de révision mises en
 - **Une génération rapide**, avec un serveur temporaire pour fabriquer les PDF.
 
 ### L'auteur et la licence dans les PDF
-Chaque page des PDF porte, en bas à droite, la mention « Fiches de révision NSI » · Babash - NSI Tani Malandi · licence CC BY-SA 4.0 (voir « Le pied des PDF »). La page d'accueil porte la même licence, avec un lien vers son texte.
+Chaque page des PDF porte, en bas à droite, la mention « Fiches de révision NSI » · Babash - NSI Tani Malandi · licence CC BY-SA 4.0 (voir « Le pied des PDF »). Chaque page web d'une fiche porte la même mention, en bas, avec un lien vers le texte de la licence ; la page d'accueil aussi.
 
 ## Écrire une nouvelle fiche
 
@@ -41,7 +41,7 @@ touch content/ma-nouvelle-fiche.md
 ````markdown
 ---
 title: "Fiche NSI – Mon titre"
-footer: "Facultatif : pied de page personnalisé"
+footer: "Facultatif : texte du pied de la page locale"
 ---
 
 <section>
@@ -66,10 +66,10 @@ footer: "Facultatif : pied de page personnalisé"
 ````
 
 - `title` : le titre de la fiche ; « Fiche NSI – » est retiré du titre affiché sur la fiche.
-- `footer` : le texte à gauche du pied de page des PDF (« Fiche d'aide-mémoire » pour les fiches actuelles). L'auteur et la licence sont ajoutés automatiquement : inutile de les écrire ici.
+- `footer` : facultatif. Il n'apparaît que dans le pied de la page du serveur local (`npm start`), ni dans les PDF ni sur le site publié. L'auteur et la licence sont ajoutés automatiquement : inutile de les écrire ici.
 - Chaque `<section>` devient un encadré. Les encadrés sont répartis sur deux colonnes.
 
-Les recommandations de rédaction et les contraintes d'affichage en A4 (longueur des sections, du code, des tableaux) sont dans [GUIDE_MARKDOWN.md](../GUIDE_MARKDOWN.md).
+Les recommandations de rédaction et les contraintes d'affichage en A4 (longueur des sections, du code, des tableaux) sont dans [GUIDE_MARKDOWN.md](GUIDE_MARKDOWN.md). Un exemple complet de mise en forme, non publié, est dans [exemple-affichage.md](exemple-affichage.md).
 
 ### 3. Redémarrer le serveur
 ```bash
@@ -83,6 +83,8 @@ La nouvelle fiche apparaît automatiquement sur la page d'accueil. Pour la publi
 
 Les PDF sont générés automatiquement, avec :
 - les marges blanches supprimées ;
+- une page A4 par fiche : si une fiche est plus haute que la page utile, son contenu est réduit (zoom, jusqu'à 70 %) pour tenir sur une page, sans rien couper ;
+- le code qui va à la ligne, au lieu d'être coupé à droite ;
 - l'auteur et la licence CC BY-SA 4.0 en bas de chaque page ;
 - une qualité d'impression optimisée ;
 - le style CSS conservé ;
@@ -91,11 +93,15 @@ Les PDF sont générés automatiquement, avec :
 
 ### Le pied des PDF
 
-`src/pdf.js` construit le pied de page de deux façons :
-- **le pied de page de Puppeteer** (`footerTemplate`) : à gauche le texte `footer` de la fiche (par défaut « Fiches de révision NSI »), au centre le numéro de page, à droite la date de génération ;
-- **la mention de l'auteur et de la licence**, écrite dans la page elle-même (`position: fixed`, répétée sur chaque page, comme l'image de fond), en bas à droite.
+La mention de l'auteur et de la licence est écrite dans la page elle-même (`position: fixed`, répétée sur chaque page, comme l'image de fond), en bas à droite. Les 4 derniers millimètres de la page lui sont laissés : le contenu ne passe pas dessous.
 
-La mention est dans la page parce que, dans les PDF publiés, fabriqués par le Chromium de Puppeteer 5.5, l'image de fond (`body::before`) recouvre le pied de page de Puppeteer, qui reste invisible. Avec un Chrome récent, les deux s'affichent, l'un au-dessus de l'autre.
+Il n'y a plus de pied de page de Puppeteer (`footerTemplate`) : dans les PDF publiés, fabriqués par le Chromium de Puppeteer 5.5, l'image de fond (`body::before`) le recouvrait, et il restait invisible.
+
+### Une page par fiche
+
+Les pages qui servent à fabriquer les PDF (`/fiches/<fiche>/html-for-pdf` et `/fiches/all-html`, construites par `src/pdf.js`) ont leurs propres règles :
+- pas de hauteur minimale : la hauteur d'une page A4 donnée à `.container` pour l'écran ajoutait une page vide à chaque PDF ;
+- un script répartit les sections entre les deux colonnes, puis, une fois les polices chargées, réduit la fiche si elle dépasse la page utile (297 mm moins les 4 mm de la mention : les pages n'ont pas de marge, car la règle `@page { margin: 0 }` de `fiche-nsi.css` l'emporte sur les marges passées à Puppeteer). Le PDF de toutes les fiches suit les mêmes règles, avec un saut de page entre deux fiches.
 
 ## L'organisation du projet
 
@@ -110,8 +116,8 @@ FichesNSI/
 ├── content/                # Fiches en Markdown
 ├── views/                  # Gabarits EJS
 ├── public/                 # Fichiers statiques (CSS, JS, images)
-├── dist/                   # Site statique généré
-├── docs/                   # Guides (installation, architecture)
+├── dist/                   # Site statique généré (non versionné, publié sur gh-pages)
+├── docs/                   # Guides (installation, architecture, rédaction, publication)
 ├── .github/workflows/      # GitHub Actions
 ├── server.js               # Point d'entrée principal
 └── package.json            # Configuration npm
@@ -127,7 +133,7 @@ FichesNSI/
 #### `src/pdf.js` : PDFGenerator
 - Génération des PDF avec html-pdf-node.
 - Pages HTML préparées pour les PDF (une fiche, ou toutes les fiches).
-- Pied de page et mention de l'auteur et de la licence.
+- Mention de l'auteur et de la licence, répartition en colonnes et réduction pour tenir sur une page.
 - Vérification des PDF générés.
 
 #### `src/routes.js` : RoutesManager

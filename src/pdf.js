@@ -1,15 +1,31 @@
 const htmlPdf = require('html-pdf-node');
 
 /**
- * Mention de l'auteur et de la licence, en bas à droite de chaque page des PDF.
- *
- * Elle est écrite dans la page elle-même (position: fixed, répétée sur chaque page
- * imprimée, comme l'image de fond) et non dans footerTemplate : avec le Chromium
- * de Puppeteer 5.5, qui fabrique les PDF publiés, l'image de fond (body::before)
- * recouvre le pied de page de footerTemplate, qui reste invisible.
+ * Hauteur utile d'une page A4 des PDF, en px CSS (96 px par pouce) : 297 mm, moins
+ * 4 mm laissés libres en bas pour la mention de l'auteur et de la licence.
+ * Les pages n'ont pas de marge : la règle `@page { margin: 0 }` de fiche-nsi.css
+ * l'emporte sur les marges passées à Puppeteer (vérifié avec Chromium 88 et 153).
  */
-const MENTION_LICENCE_STYLE = `
+const HAUTEUR_UTILE_PX = Math.floor((297 - 4) * 96 / 25.4);
+
+/**
+ * Styles propres aux pages qui servent à fabriquer les PDF.
+ *
+ * - La mention de l'auteur et de la licence est écrite dans la page elle-même
+ *   (position: fixed, répétée sur chaque page imprimée, comme l'image de fond).
+ * - Pas de hauteur minimale : `.container` (297 mm) et `body` (100vh), prévus pour
+ *   l'écran, dépassaient la page utile et ajoutaient une page vide à chaque PDF.
+ * - Le code va à la ligne : sur papier, une ligne trop longue était coupée à droite.
+ *
+ * Ces règles ne dépendent pas du média, pour que la mesure faite au chargement
+ * (média screen) soit celle de l'impression.
+ */
+const STYLE_PDF = `
         <style>
+          body, .container { min-height: 0; }
+          pre, pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+          .fiche { break-after: page; page-break-after: always; }
+          .fiche:last-child { break-after: auto; page-break-after: auto; }
           .pdf-mention {
             position: fixed;
             right: 4mm;
@@ -25,6 +41,73 @@ const MENTION_LICENCE_STYLE = `
           }
         </style>`;
 const MENTION_LICENCE = `<div class="pdf-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence CC BY-SA 4.0</div>`;
+
+/**
+ * Script des pages qui servent à fabriquer les PDF.
+ *
+ * 1. Répartit les sections d'une fiche entre ses deux colonnes, chaque section
+ *    allant dans la colonne la plus courte.
+ * 2. Une fois les polices chargées, réduit la fiche (zoom de son contenu) si elle
+ *    est plus haute que la page utile : chaque fiche tient sur une page A4, sans
+ *    rien couper. La hauteur est mesurée sur un parent non zoomé.
+ */
+const SCRIPT_PDF = `
+        <script>
+        (function () {
+          var HAUTEUR_UTILE = ${HAUTEUR_UTILE_PX};
+          var ZOOM_MIN = 0.7;
+
+          function repartir(fiche) {
+            var container = fiche.querySelector('.container');
+            var gauche = fiche.querySelector('.column[id^="column-left"]');
+            var droite = fiche.querySelector('.column[id^="column-right"]');
+            if (!container || !gauche || !droite) return;
+            var sections = Array.prototype.slice.call(container.querySelectorAll('section'));
+            var hGauche = 0;
+            var hDroite = 0;
+            sections.forEach(function (section) {
+              // Mesurer la section à part
+              var temp = document.createElement('div');
+              temp.style.position = 'absolute';
+              temp.style.visibility = 'hidden';
+              temp.appendChild(section.cloneNode(true));
+              document.body.appendChild(temp);
+              var h = temp.scrollHeight;
+              document.body.removeChild(temp);
+              // L'ajouter à la colonne la plus courte
+              if (hGauche <= hDroite) {
+                gauche.appendChild(section);
+                hGauche += h;
+              } else {
+                droite.appendChild(section);
+                hDroite += h;
+              }
+            });
+          }
+
+          function ajuster(fiche) {
+            var container = fiche.querySelector('.container');
+            if (!container) return;
+            var zoom = 1;
+            while (fiche.getBoundingClientRect().height > HAUTEUR_UTILE && zoom > ZOOM_MIN) {
+              zoom = Math.round((zoom - 0.01) * 100) / 100;
+              container.style.zoom = zoom;
+            }
+            if (fiche.getBoundingClientRect().height > HAUTEUR_UTILE) {
+              console.warn('[PDF] Fiche trop longue pour une page, même réduite : ' + (fiche.dataset.slug || ''));
+            }
+          }
+
+          document.addEventListener('DOMContentLoaded', function () {
+            var fiches = document.querySelectorAll('.fiche-pdf');
+            Array.prototype.forEach.call(fiches, repartir);
+            var polices = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+            polices.then(function () {
+              Array.prototype.forEach.call(fiches, ajuster);
+            });
+          });
+        })();
+        </script>`;
 
 class PDFGenerator {
   constructor() {
@@ -57,11 +140,11 @@ class PDFGenerator {
         <meta charset="UTF-8">
         <title>${fiche.title}</title>
         <link rel="stylesheet" href="/css/fiche-nsi.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">${MENTION_LICENCE_STYLE}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">${STYLE_PDF}
       </head>
       <body>
         ${MENTION_LICENCE}
-        <main>
+        <main class="fiche-pdf" data-slug="${fiche.slug}">
           <header><h1>${visibleTitle}</h1></header>
           <article class="container">
             <div class="columns-wrapper">
@@ -76,42 +159,7 @@ class PDFGenerator {
           </article>
         </main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script>
-        <script>
-        // Script pour répartir intelligemment les sections en deux colonnes
-        document.addEventListener('DOMContentLoaded', function() {
-          const container = document.querySelector('.container');
-          const leftColumn = document.getElementById('column-left');
-          const rightColumn = document.getElementById('column-right');
-          
-          // Récupérer toutes les sections
-          const sections = Array.from(container.querySelectorAll('section'));
-          
-          // Répartir les sections de manière équilibrée
-          let leftHeight = 0;
-          let rightHeight = 0;
-          
-          sections.forEach((section, index) => {
-            // Mesurer temporairement la section
-            const tempDiv = document.createElement('div');
-            tempDiv.style.position = 'absolute';
-            tempDiv.style.visibility = 'hidden';
-            tempDiv.appendChild(section.cloneNode(true));
-            document.body.appendChild(tempDiv);
-            const sectionHeight = tempDiv.scrollHeight;
-            document.body.removeChild(tempDiv);
-            
-            // Ajouter la section à la colonne la plus courte
-            if (leftHeight <= rightHeight) {
-              leftColumn.appendChild(section);
-              leftHeight += sectionHeight;
-            } else {
-              rightColumn.appendChild(section);
-              rightHeight += sectionHeight;
-            }
-          });
-        });
-        </script>
+        <script>hljs.highlightAll();</script>${SCRIPT_PDF}
       </body>
       </html>`;
   }
@@ -123,7 +171,7 @@ class PDFGenerator {
     const fichesHtml = fiches.map(fiche => {
       const visibleTitle = (fiche.title || '').replace('Fiche NSI – ', '');
       return `
-        <section class="fiche">
+        <section class="fiche fiche-pdf" data-slug="${fiche.slug}">
           <header><h1>${visibleTitle}</h1></header>
           <article class="container">
             <div class="columns-wrapper">
@@ -136,9 +184,7 @@ class PDFGenerator {
             </div>
             ${fiche.content}
           </article>
-        </section>
-        <div style="page-break-after: always;"></div>
-      `;
+        </section>`;
     }).join('');
 
     return `
@@ -148,39 +194,14 @@ class PDFGenerator {
         <meta charset="UTF-8">
         <title>Toutes les fiches NSI</title>
         <link rel="stylesheet" href="/css/fiche-nsi.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">${MENTION_LICENCE_STYLE}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">${STYLE_PDF}
       </head>
       <body>
         ${MENTION_LICENCE}
-        <main class="wrapper">${fichesHtml}</main>
+        <main class="wrapper">${fichesHtml}
+        </main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script>
-        <script>
-        // Script pour répartir automatiquement les sections en deux colonnes pour toutes les fiches
-        document.addEventListener('DOMContentLoaded', function() {
-          const fiches = document.querySelectorAll('.fiche');
-          
-          fiches.forEach(fiche => {
-            const container = fiche.querySelector('.container');
-            const leftColumn = fiche.querySelector('[id^="column-left"]');
-            const rightColumn = fiche.querySelector('[id^="column-right"]');
-            
-            if (container && leftColumn && rightColumn) {
-              // Récupérer toutes les sections de cette fiche
-              const sections = container.querySelectorAll('section');
-              
-              // Répartir les sections alternativement entre les deux colonnes
-              sections.forEach((section, index) => {
-                if (index % 2 === 0) {
-                  leftColumn.appendChild(section);
-                } else {
-                  rightColumn.appendChild(section);
-                }
-              });
-            }
-          });
-        });
-        </script>
+        <script>hljs.highlightAll();</script>${SCRIPT_PDF}
       </body>
       </html>`;
   }
@@ -188,33 +209,23 @@ class PDFGenerator {
   /**
    * Génère un PDF depuis une URL
    */
-  async generatePDF(url, filename, ficheFooter = null) {
+  async generatePDF(url, filename) {
     try {
       console.log(`[PDF] Génération de ${filename} depuis ${url}...`);
-      
-      const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
-      const footerText = ficheFooter || 'Fiches de révision NSI';
-      const footerTemplate = `
-        <div style="font-size:5pt;width:100%; padding: 0 6mm; color:#6c757d; line-height:1.1;">
-          <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-            <span style="white-space:nowrap;">${footerText}</span>
-            <span style="white-space:nowrap;">Page <span class="pageNumber"></span>/<span class="totalPages"></span></span>
-            <span style="white-space:nowrap;">${now} (CET)</span>
-          </div>
-        </div>`;
 
+      // Pas de pied de page de Puppeteer (footerTemplate) : l'image de fond le
+      // recouvrait, et l'auteur et la licence sont écrits dans la page (MENTION_LICENCE).
       const options = {
         format: 'A4',
         printBackground: true,
+        // Sans effet : la règle `@page { margin: 0 }` de fiche-nsi.css l'emporte.
         margin: {
           top: '6mm',
           right: '0mm',
           bottom: '8mm',
           left: '0mm'
         },
-        displayHeaderFooter: true,
-        headerTemplate: '<div></div>',
-        footerTemplate,
+        displayHeaderFooter: false,
         timeout: 60000, // Timeout augmenté pour laisser le temps au JS de s'exécuter
         waitUntil: 'networkidle0', // Attendre que le réseau soit inactif
         preferCSSPageSize: false, // Ignorer les marges CSS @page

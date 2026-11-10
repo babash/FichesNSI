@@ -59,7 +59,8 @@ Toutes les fiches en un seul PDF : [fiches/all.pdf](https://babash.github.io/Fic
 |---|---|
 | [Installer sa copie](docs/INSTALLER.md) | Node.js et Chromium, le serveur local, la génération du site et des PDF, la publication sur GitHub Pages |
 | [Architecture](docs/ARCHITECTURE.md) | Écrire une nouvelle fiche, la mise en page et les PDF, les modules du générateur, les technologies |
-| [Guide de rédaction](GUIDE_MARKDOWN.md) | La longueur des sections, du code et des tableaux pour qu'une fiche tienne en A4 |
+| [Guide de rédaction](docs/GUIDE_MARKDOWN.md) | La longueur des sections, du code et des tableaux pour qu'une fiche tienne en A4, et un [exemple complet](docs/exemple-affichage.md) de mise en forme |
+| [Publication](docs/DEPLOYMENT.md) | Le workflow qui publie le site et les PDF, la [méthode de travail](docs/WORKFLOW.md) et les [branches](docs/BRANCHES.md) |
 
 ## Contact
 
@@ -74,3 +75,5 @@ Une question, une idée, un bug ? Les [issues GitHub](https://github.com/babash/
 - **[highlight.js](https://highlightjs.org)** (la coloration du code, chargée depuis cdnjs) : licence BSD 3-Clause.
 
 Tu peux les réutiliser et les modifier, y compris pour tes classes, en mentionnant Babash - NSI Tani Malandi et la licence ; un document modifié se partage sous la même licence. Si tu utilises l'IA pour les modifier, merci de le préciser.
+
+Jusqu'au 8 novembre 2026, les fiches étaient placées sous [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.fr) (domaine public). CC0 est irrévocable : les copies obtenues avant ce changement de licence restent sous CC0 ; les versions publiées depuis sont sous CC BY-SA 4.0.
