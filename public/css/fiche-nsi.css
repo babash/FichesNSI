@@ -373,6 +373,7 @@ pre .hljs-subst { color: #c4392d; }
 
 .fiche-mention a {
   color: #0056b3;
+  white-space: nowrap;
 }
 
 /* Impression d'une page web de fiche depuis le navigateur : pas de page vide
