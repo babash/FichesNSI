@@ -19,7 +19,7 @@ footer: "Fiche d'aide-mémoire"
 
 <section>
 <h2 data-icon="🏗️">Le Constructeur</h2>
-<p>En Python, le constructeur s'appelle <code>__init__</code>, il permet de donner une valeur aux attributs d'un objet. Il est appelé à la création de chaque objet.C'est ici que l'on transforme le plan en un objet concret avec ses propres valeurs.</p>
+<p>En Python, le constructeur s'appelle <code>__init__</code>, il permet de donner une valeur aux attributs d'un objet. Il est appelé à la création de chaque objet. C'est ici que l'on transforme le plan en un objet concret avec ses propres valeurs.</p>
 <pre><code class="language-python">class Robot:
     def __init__(self, nom, version=1.0):
         # Initialisation des attributs (état de l'objet)
@@ -28,14 +28,14 @@ footer: "Fiche d'aide-mémoire"
         self.batt = 100       # Valeur fixe au départ
 </code></pre>
 
-<p>Contrairement aux autres méthodes, on ne l'appelle jamais manuellement (on n'écrit pas <code>robot.__init__()</code>) : Python l'exécute <strong>automatiquement</strong> en arrière-plan au moment précis où l'on crée l'objet (en utilisant le nom de la classe <code>Robot()</code>)pour garantir qu'il naisse dans un état valide.</p>
+<p>Contrairement aux autres méthodes, on ne l'appelle jamais manuellement (on n'écrit pas <code>robot.__init__()</code>) : Python l'exécute <strong>automatiquement</strong> en arrière-plan au moment précis où l'on crée l'objet (en utilisant le nom de la classe <code>Robot()</code>) pour garantir qu'il naisse dans un état valide.</p>
 </section>
 
 <section>
 <h2 data-icon="🏗️">Création d'objet (Instanciation)</h2>
-<p>Pour cree un objet on utilise <strong>le nom de la classe</strong> comme si c'etait une fonction. La fonction véritablenment appelé est <code>__init__</code> mais on ne l'appelle jamais explicitement.</p>
+<p>Pour créer un objet on utilise <strong>le nom de la classe</strong> comme si c'était une fonction. La fonction véritablement appelée est <code>__init__</code> mais on ne l'appelle jamais explicitement.</p>
 
-<strong>Creation d'objet :</strong>
+<strong>Création d'objet :</strong>
 <p>Création de "jumeaux" (Appel automatique de __init__).</p>
 <pre><code class="language-python">robot_A = Robot("R2D2")
 robot_B = Robot("R2D2")
@@ -103,7 +103,7 @@ mon_robot.charger(20)    # Modifie l'état interne (batterie)
     # Avec "self.", il va chercher l'attribut DANS l'objet.
     print(f"Mon nom est {self.nom}")
 </code></pre>
-<p><strong>Self</strong> n'est jamais utilisé en dehors de la clqasse (en dehors des méthodes).</p>
+<p><strong>Self</strong> n'est jamais utilisé en dehors de la classe (en dehors des méthodes).</p>
 <pre><code class="language-python">robot_A.afficher_nom() 
 # Python fait secrètement : afficher_nom(robot_A)
 </code></pre>

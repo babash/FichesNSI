@@ -3,6 +3,7 @@
 ## 🎯 **Le principe**
 
 - **Production** → branche `main` → site publié sur `https://babash.github.io/FichesNSI/`
+- **Un seul workflow**, `.github/workflows/deploy-production.yml`, lancé à chaque envoi sur `main` : il publie le site. Aucun workflow ne tourne sur une branche de fonctionnalité ou une Pull Request : les vérifications se font en local, avant la fusion.
 
 ---
 
@@ -23,7 +24,7 @@ git push origin feature/ma-fonctionnalite
 
 ### **3. Valide et mets en production**
 ```bash
-# Après la relecture et une CI verte
+# Après la relecture et les vérifications locales (npm run build, voir « À vérifier »)
 git checkout main
 git merge --no-ff feature/ma-fonctionnalite
 git push origin main

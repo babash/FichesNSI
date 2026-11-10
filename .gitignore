@@ -11,6 +11,8 @@ yarn-debug.log*
 # Fichiers temporaires locaux
 temp/
 tmp/
+# Numéro de processus du serveur local, propre à chaque ordinateur
+server.pid
 
 # Site statique généré par `npm run build` : le workflow le refait à chaque
 # envoi sur main et le publie sur la branche gh-pages. Il n'est pas versionné.

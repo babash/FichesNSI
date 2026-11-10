@@ -26,7 +26,7 @@ git push origin main
 ## 🎯 **Méthode recommandée**
 
 1. **Développement** : une branche de fonctionnalité, puis une Pull Request vers `main`.
-2. **Validation** : la CI sur la Pull Request.
+2. **Vérification** : en local, avant la fusion. Aucun workflow ne tourne sur une branche ou une Pull Request : génère le site avec `npm run build`, puis vérifie les pages et les PDF du dossier `dist/`.
 3. **Production** : la fusion dans `main` lance la publication.
 
 ## 📋 Les étapes de la publication
@@ -41,12 +41,14 @@ Chaque publication suit ces étapes :
 
 ## ✅ Vérifications automatiques
 
-Chaque publication vérifie :
-- ✅ la génération du site statique ;
-- ✅ la présence des fichiers CSS et JS ;
-- ✅ la génération des PDF de chaque fiche ;
-- ✅ la génération du PDF de toutes les fiches ;
-- ✅ la réussite de la publication.
+Le seul workflow du dépôt est `deploy-production.yml` : il ne tourne qu'à la publication (un envoi sur `main`, ou un lancement à la main). Après la génération, il vérifie que ces fichiers existent :
+- ✅ `dist/index.html` (la page d'accueil) ;
+- ✅ `dist/css/fiche-nsi.css` (la feuille de style des fiches) ;
+- ✅ `dist/fiches/liste/index.html` (la page d'une fiche) ;
+- ✅ `dist/fiches/liste.pdf` (le PDF d'une fiche) ;
+- ✅ `dist/fiches/all.pdf` (le PDF de toutes les fiches).
+
+S'il en manque un, le workflow s'arrête et le site en ligne ne change pas. Les autres fiches ne sont pas vérifiées : si le PDF d'une autre fiche échoue, l'erreur est seulement écrite dans le journal (`[STATIC] Erreur génération PDF …`) et la publication continue sans ce PDF. Le message de fin du workflow (« Tests validés ») ne fait qu'afficher du texte : il ne lance aucun autre essai.
 
 ## 🛠️ Commandes utiles
 
