@@ -71,7 +71,7 @@ Le site est publié par GitHub Actions sur GitHub Pages, avec le workflow `.gith
 - **adresse** : https://babash.github.io/FichesNSI/ ;
 - **contenu** : le site statique complet, avec les PDF.
 
-Le workflow pousse le dossier `dist/` qu'il vient de générer sur la branche `gh-pages`, qui est la source de GitHub Pages (*Settings › Pages › Deploy from a branch › `gh-pages`, `/ (root)`*). Les fichiers de `dist/` suivis par Git dans `main` ne sont pas ceux du site publié : ils datent d'une ancienne génération.
+Le workflow pousse le dossier `dist/` qu'il vient de générer sur la branche `gh-pages`, qui est la source de GitHub Pages (*Settings › Pages › Deploy from a branch › `gh-pages`, `/ (root)`*). Le dossier `dist/` n'est pas versionné dans `main` (il est dans `.gitignore`) : il est refait à chaque publication.
 
 ### Méthode de travail recommandée
 
@@ -98,4 +98,4 @@ cd dist && python -m http.server 8000
 # puis ouvrir http://localhost:8000
 ```
 
-Voir aussi, à la racine du dépôt : `DEPLOYMENT.md` (le déploiement et son dépannage), `WORKFLOW.md` (le travail au quotidien) et `BRANCHES.md` (les branches).
+Voir aussi, dans ce dossier : [DEPLOYMENT.md](DEPLOYMENT.md) (la publication et son dépannage), [WORKFLOW.md](WORKFLOW.md) (le travail au quotidien), [BRANCHES.md](BRANCHES.md) (les branches) et [GUIDE_MARKDOWN.md](GUIDE_MARKDOWN.md) (la rédaction d'une fiche).
