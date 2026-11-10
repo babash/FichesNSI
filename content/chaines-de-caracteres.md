@@ -13,7 +13,7 @@ salut = "Bonjour le monde"
 # Obtenir la longueur d'une chaîne avec len()
 longueur = len(salut)
 print(f"La chaîne 'salut' contient {longueur} caractères.") 
-# Affiche "La chaîne 'salutation' contient 16 caractères."
+# Affiche "La chaîne 'salut' contient 16 caractères."
 </code></pre>
 </section>
 

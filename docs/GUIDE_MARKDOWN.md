@@ -18,7 +18,7 @@ Un exemple complet de mise en forme est dans [exemple-affichage.md](exemple-affi
   - Montre seulement le résultat important ; évite les commentaires trop longs.
 - **Images** :
   - Utilise des images légères (200 Ko au plus), avec une taille : `width="500"` au plus sur une colonne.
-  - Range-les dans `public/img/` et appelle-les avec une adresse absolue : `/img/mon-schema.png`.
+  - Range-les dans `public/img/` et appelle-les avec une adresse relative : `../../img/mon-schema.png`. Elle marche partout : sur le site publié, avec le serveur local (`npm start`) et dans les PDF. Une adresse absolue (`/img/mon-schema.png`) ne marche pas sur le site publié : elle vise `https://babash.github.io/img/…`, hors du site `https://babash.github.io/FichesNSI/`.
 - **Tableaux** :
   - 3 ou 4 colonnes au plus, avec un texte court. Évite les tableaux larges, qui risquent de déborder dans le PDF.
 - **Écriture et lisibilité** :

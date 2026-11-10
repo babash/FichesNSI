@@ -1,5 +1,5 @@
 ---
-title: "Fiche NSI – Les structures de controle élémentaires en Python"
+title: "Fiche NSI – Les structures de contrôle élémentaires en Python"
 footer: "Fiche d'aide-mémoire"
 ---
 
@@ -41,7 +41,7 @@ else:
 # Affiche : Bien
 </code></pre>
 
-<p><strong>Explication :</strong> La première condition (<code>&gt;= 15</code>) est fausse. La deuxième (<code>elif note &gt; 10</code>) est vraie, donc le code sous le <code>elif</code> est exécuté et le reste est ignoré.</p>
+<p><strong>Explication :</strong> La première condition (<code>&gt;= 15</code>) est fausse. La deuxième (<code>elif note &gt;= 10</code>) est vraie, donc le code sous le <code>elif</code> est exécuté et le reste est ignoré.</p>
 
 <pre><code class="language-python">points = 80
 if points >= 50:
@@ -58,9 +58,9 @@ if points > 70:
 </code></pre>
 
 <p><strong>Explication :</strong></p>
-<p>-><strong>Ligne A (Active) :</strong> Le programme teste <code>if points &gt;= 50</code> (80 >= 50) est <strong>VRAI</strong>. Le message A est affiché. Le bloc if/elif s'arrete ici.</br>
+<p>-><strong>Ligne A (Active) :</strong> Le programme teste <code>if points &gt;= 50</code> (80 >= 50) est <strong>VRAI</strong>. Le message A est affiché. Le bloc if/elif s'arrête ici.</br>
 -><strong>Ligne B (Ignorée) :</strong> Le test <code>elif points &gt;= 75</code> est Vrai <strong>mais n'est jamais atteint</strong> car le bloc if/elif s'est terminé à la Ligne A.</br>
--><strong>Ligne C (Active) :</strong> Le second <code>if points &gt; 70</code> est un <strong>nouveau test indépendant</strong>. Il est VRAI et e message C est affiché.</p>
+-><strong>Ligne C (Active) :</strong> Le second <code>if points &gt; 70</code> est un <strong>nouveau test indépendant</strong>. Il est VRAI et le message C est affiché.</p>
 </section>
 
 <section>
@@ -134,14 +134,14 @@ if temperature > 20 and ensoleille:
 
 # Exemple avec OR
 heure = 8
-jour = "dimanche"s
+jour = "dimanche"
 if heure < 9 or jour == "dimanche":
     print("C'est encore l'heure de dormir.")
 # Affiche : C'est encore l'heure de dormir.
 
 # Exemple avec NOT
-est_finit = False
-if not est_finit :
+est_fini = False
+if not est_fini :
     print("Le travail continue.")
 # Affiche : Le travail continue.
 </code></pre>

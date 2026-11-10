@@ -6,13 +6,11 @@
 - **Rôle** : la branche de production, stable
 - **Adresse** : `https://babash.github.io/FichesNSI/`
 - **Usage** : le code validé, prêt pour la production
-- **Étiquette (tag)** : `production`
 
 ### **`gh-pages`** 🏷️ **deployment**
 - **Rôle** : la branche publiée par GitHub Pages
 - **Contenu** : le site statique de production, rien d'autre
 - **Usage** : elle est remplie automatiquement par GitHub Actions ; tu n'y écris jamais toi-même
-- **Étiquette (tag)** : `deployment`
 
 ## 🔄 **Contribuer**
 
@@ -34,10 +32,9 @@ git push origin main
 ```
 → **Production** sur `https://babash.github.io/FichesNSI/`
 
-## 🏷️ **Étiquettes de référence**
+## 🏷️ **Étiquettes (tags)**
 
-- **`production`** : marque la branche de production stable.
-- **`deployment`** : marque la branche publiée par GitHub Pages.
+Trois étiquettes datent du 7 septembre 2025 : `production`, `deployment` et `development`. Une étiquette marque un commit, pas une branche : elles ne suivent ni `main` ni `gh-pages`, et la publication ne s'en sert pas.
 
 ## 🧹 **Branches supprimées**
 
@@ -50,9 +47,11 @@ git push origin main
 
 ## 📊 **État actuel**
 
-### **Branches actives :**
+### **Branches permanentes :**
 - ✅ `main` (production)
 - ✅ `gh-pages` (publication)
+
+Des branches de travail (celles des Pull Requests) peuvent exister à côté : elles ne sont ni vérifiées ni publiées.
 
 ### **Environnement :**
 - 🌐 **Production** : `https://babash.github.io/FichesNSI/`
@@ -60,7 +59,7 @@ git push origin main
 ## 🎯 **Recommandations**
 
 1. Ouvre tes Pull Requests vers `main`.
-2. Laisse la CI (les vérifications automatiques) valider la génération du site et des PDF.
+2. Vérifie en local la génération du site et des PDF (`npm run build`) : aucun workflow ne tourne sur les Pull Requests.
 3. Fusionne dans `main` pour lancer la mise en production.
 
 ---

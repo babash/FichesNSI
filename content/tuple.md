@@ -5,7 +5,7 @@ footer: "Fiche d'aide-mémoire"
 
 <section>
 <h2 data-icon="💡">Définition et Création</h2>
-<p>Un <strong>tuple</strong> (ou pultet) est une collection de données <strong>ordonnée</strong> mais <strong>immuable</strong> (non modifiable). Une fois créé, on ne peut ni ajouter, ni supprimer, ni modifier ses éléments. Il est reconnaissable par les parenthèses <strong>()</strong> qui l'entourent.</p>
+<p>Un <strong>tuple</strong> (ou p-uplet) est une collection de données <strong>ordonnée</strong> mais <strong>immuable</strong> (non modifiable). Une fois créé, on ne peut ni ajouter, ni supprimer, ni modifier ses éléments. Il est reconnaissable par les parenthèses <strong>()</strong> qui l'entourent.</p>
 <pre><code class="language-python"># Création d'un tuple vide
 mon_tuple = ()
 # Création d'un tuple avec des éléments
@@ -67,7 +67,7 @@ for i in range(len(notes)):
 
 Affiche :
 Note n°0 : 12
-Note n°2 : 15
+Note n°1 : 15
 Note n°2 : 18
 </code></pre>
 
@@ -78,7 +78,7 @@ for i, n in enumerate(notes):
 
 Affiche :
 Note n°0 : 12
-Note n°2 : 15
+Note n°1 : 15
 Note n°2 : 18
 </code></pre>
 </section>
@@ -95,10 +95,10 @@ if "HTML" not in langages:
 # Affiche "Le langage n'est pas présent."
 if "Python" not in langages:
     print("Le langage est présent.")
-# Ne fais rien
+# Ne fait rien
 if "HTML" in langages:
     print("Le langage n'est pas présent.")
-# Ne fais rien
+# Ne fait rien
 </code></pre>
 </section>
 

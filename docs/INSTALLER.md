@@ -76,7 +76,7 @@ Le workflow pousse le dossier `dist/` qu'il vient de générer sur la branche `g
 ### Méthode de travail recommandée
 
 1. Créer une branche de fonctionnalité depuis `main`.
-2. Ouvrir une Pull Request vers `main`, avec une CI verte.
+2. Ouvrir une Pull Request vers `main`, et vérifier en local la génération du site et des PDF (`npm run build`) : aucun workflow ne tourne sur les Pull Requests.
 3. Fusionner dans `main` pour déclencher la publication.
 
 ### Le processus de build
