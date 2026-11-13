@@ -71,6 +71,7 @@ Une question, une idée, un bug ? Les [issues GitHub](https://github.com/babash/
 
 - **Le code** (le générateur : `server.js`, `src/`, `scripts/`, `views/`, les feuilles de style et les scripts de `public/`, le workflow de `.github/`) est sous licence [MIT](LICENSE).
 - **Les documents** (les fiches de `content/`, leurs pages web et leurs PDF, et les guides) sont sous licence [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.fr).
+- **L'image de fond** (`public/img/fond2.png`, derrière chaque fiche, en ligne et en PDF) est générée par IA.
 - **Les polices** Lato, Orbitron et Fira Code : licence SIL OFL, par Google Fonts.
 - **[highlight.js](https://highlightjs.org)** (la coloration du code, chargée depuis cdnjs) : licence BSD 3-Clause.
 

@@ -58,7 +58,7 @@ print(s[::-1])  # ISN
 <section>
   <h2 data-icon="🖼️">Schéma (image)</h2>
   <p>
-    <img src="../../img/fond1.png" alt="Illustration générique" width="500" />
+    <img src="../../img/fond2.png" alt="Illustration générique" width="500" />
   </p>
 </section>
 
