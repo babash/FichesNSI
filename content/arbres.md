@@ -14,7 +14,12 @@ mots_cles: [arbre, arbre binaire, nœud, racine, feuille, sous-arbre, taille, ha
 <p>Dans un <strong>arbre binaire</strong>, chaque nœud a au plus deux enfants : un <strong>sous-arbre gauche</strong> et un <strong>sous-arbre droit</strong>, éventuellement vides.</p>
 <ul>
 <li><strong>Taille</strong> : le nombre de nœuds.</li>
-<li><strong>Hauteur</strong> : le nombre de nœuds du plus long chemin de la racine à une feuille. <strong>Attention, convention</strong> : ici un arbre réduit à sa racine a une hauteur de 1 (l'arbre vide, 0) ; certains sujets comptent les arêtes (0 pour la racine seule). Lire l'énoncé.</li>
+<li><strong>Profondeur</strong> d'un nœud : le nombre d'arêtes entre la racine et lui (la racine est à la profondeur 0).</li>
+<li><strong>Hauteur</strong> : la plus grande profondeur d'un nœud, c'est-à-dire le nombre d'arêtes du plus long chemin de la racine à une feuille.</li>
+</ul>
+<p><strong>Convention de cette fiche</strong> : un arbre réduit à un nœud a une hauteur de <strong>0</strong> ; l'arbre vide, de <strong>−1</strong>. D'autres sujets comptent les nœuds et donnent 1 au nœud seul : un énoncé doit toujours préciser sa convention.</p>
+<ul>
+<li>Un arbre binaire de hauteur <em>h</em> a au plus 2<sup><em>h</em>+1</sup> − 1 nœuds.</li>
 </ul>
 </section>
 
@@ -32,8 +37,8 @@ def taille(a):
     return 1 + taille(a.gauche) + taille(a.droit)
 
 def hauteur(a):
-    if a is None:
-        return 0
+    if a is None:          # convention : vide → -1
+        return -1
     return 1 + max(hauteur(a.gauche), hauteur(a.droit))
 
 def prefixe(a):
@@ -47,7 +52,7 @@ arbre = Noeud("A", Noeud("B", Noeud("D"), Noeud("E")),
 print(taille(arbre), hauteur(arbre))
 print(prefixe(arbre))
 </code></pre>
-<pre class="sortie"><code>6 3
+<pre class="sortie"><code>6 2
 ['A', 'B', 'D', 'E', 'C', 'F']
 </code></pre>
 <p>Infixe : <code>g + [a.valeur] + d</code> ; suffixe : <code>g + d + [a.valeur]</code>.</p>
@@ -60,7 +65,7 @@ print(prefixe(arbre))
 <g fill="#fff" stroke="#306998" stroke-width="1.5"><circle cx="115" cy="18" r="13"/><circle cx="60" cy="58" r="13"/><circle cx="170" cy="58" r="13"/><circle cx="30" cy="100" r="13"/><circle cx="90" cy="100" r="13"/><circle cx="200" cy="100" r="13"/></g>
 <g font-family="Lato, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2328"><text x="115" y="23">A</text><text x="60" y="63">B</text><text x="170" y="63">C</text><text x="30" y="105">D</text><text x="90" y="105">E</text><text x="200" y="105">F</text></g>
 </svg>
-<p>Racine A ; feuilles D, E, F ; taille 6 ; hauteur 3 ; B est la racine du sous-arbre gauche.</p>
+<p>Racine A ; feuilles D, E, F ; taille 6 ; hauteur 2 (D, E et F sont à la profondeur 2) ; B est la racine du sous-arbre gauche.</p>
 <table>
 <thead><tr><th>Parcours</th><th>Règle</th><th>Ordre</th></tr></thead>
 <tbody>
@@ -76,8 +81,8 @@ print(prefixe(arbre))
 <h2>Erreurs fréquentes</h2>
 <ul>
 <li>Oublier le cas de l'arbre vide : <code>AttributeError: 'NoneType' object has no attribute 'gauche'</code>.</li>
-<li>Se tromper de convention pour la hauteur : vérifier la hauteur d'un arbre à un seul nœud dans l'énoncé.</li>
-<li>Confondre taille (nombre de nœuds) et hauteur (longueur du plus long chemin).</li>
+<li>Se tromper de convention pour la hauteur : ici un nœud seul a une hauteur 0 (et l'arbre vide −1) ; d'autres sujets prennent 1 : lire celle de l'énoncé.</li>
+<li>Confondre taille (nombre de nœuds) et hauteur (nombre d'arêtes du plus long chemin).</li>
 <li>Mélanger les parcours : le nom dit où est la racine : <strong>pré</strong>fixe avant, <strong>in</strong>fixe au milieu, <strong>suf</strong>fixe après.</li>
 </ul>
 </section>
@@ -87,7 +92,7 @@ print(prefixe(arbre))
 <ul>
 <li>Un arbre binaire est vide, ou un nœud avec un sous-arbre gauche et un droit.</li>
 <li>Les fonctions sur les arbres sont <strong>récursives</strong> : cas de base l'arbre vide, puis appels sur les deux sous-arbres.</li>
-<li>Taille = 1 + taille(gauche) + taille(droit) ; hauteur = 1 + max des deux hauteurs.</li>
+<li>Taille = 1 + taille(gauche) + taille(droit) ; hauteur = 1 + max des deux hauteurs, avec −1 pour l'arbre vide (nœud seul : 0).</li>
 <li>Largeur : une file ; profondeur (préfixe, infixe, suffixe) : la récursivité.</li>
 </ul>
 </section>
@@ -98,6 +103,6 @@ print(prefixe(arbre))
 <pre data-suite><code class="language-python">a = Noeud(5, Noeud(3, Noeud(1)), Noeud(8))
 </code></pre>
 <details class="reponse"><summary>Réponse</summary>
-<div class="a-l-envers">Infixe : 1 3 5 8 (les valeurs sont dans l'ordre croissant : c'est un arbre binaire de recherche). Hauteur : 3.</div>
+<div class="a-l-envers">Infixe : 1 3 5 8 (les valeurs sont dans l'ordre croissant : c'est un arbre binaire de recherche). Hauteur : 2 (avec la convention de la fiche : un nœud seul a une hauteur 0).</div>
 </details>
 </section>

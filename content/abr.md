@@ -15,7 +15,8 @@ mots_cles: [ABR, arbre binaire de recherche, clé, recherche, insertion, parcour
 <li>toutes les clés du sous-arbre <strong>gauche</strong> sont <strong>plus petites</strong> que la clé du nœud ;</li>
 <li>toutes les clés du sous-arbre <strong>droit</strong> sont <strong>plus grandes</strong>.</li>
 </ul>
-<p>Conséquences : le <strong>parcours infixe</strong> donne les clés dans l'ordre croissant ; pour chercher une clé, on descend à gauche ou à droite, sans explorer tout l'arbre. Le coût est au plus la <strong>hauteur</strong> : environ log<sub>2</sub>(<em>n</em>) si l'arbre est équilibré, mais <em>n</em> s'il est filiforme (une seule branche).</p>
+<p>Conséquences : le <strong>parcours infixe</strong> donne les clés dans l'ordre croissant ; pour chercher une clé, on descend à gauche ou à droite, sans explorer tout l'arbre. Une recherche fait au plus <em>h</em> + 1 comparaisons, où <em>h</em> est la <strong>hauteur</strong> : <em>h</em> vaut environ log<sub>2</sub>(<em>n</em>) si l'arbre est équilibré, mais <em>n</em> − 1 s'il est filiforme (une seule branche).</p>
+<p><strong>Convention</strong> : un arbre réduit à un nœud a une hauteur 0 (l'arbre dessiné a une hauteur 2) ; d'autres sujets prennent 1 : un énoncé doit toujours la préciser.</p>
 <svg class="schema" viewBox="0 0 230 120" width="230" height="120" role="img" aria-label="ABR : racine 12 ; à gauche 5, qui a pour enfants 2 et 9 ; à droite 18, qui a pour enfant gauche 15.">
 <g stroke="#306998" stroke-width="1.5"><line x1="115" y1="18" x2="60" y2="58"/><line x1="115" y1="18" x2="170" y2="58"/><line x1="60" y1="58" x2="30" y2="100"/><line x1="60" y1="58" x2="90" y2="100"/><line x1="170" y1="58" x2="140" y2="100"/></g>
 <g fill="#fff" stroke="#306998" stroke-width="1.5"><circle cx="115" cy="18" r="13"/><circle cx="60" cy="58" r="13"/><circle cx="170" cy="58" r="13"/><circle cx="30" cy="100" r="13"/><circle cx="90" cy="100" r="13"/><circle cx="140" cy="100" r="13"/></g>
@@ -85,7 +86,7 @@ print(infixe(abr))
 <ul>
 <li>À gauche plus petit, à droite plus grand, pour <strong>tous</strong> les nœuds des sous-arbres.</li>
 <li>Recherche et insertion : on descend d'un seul côté à chaque nœud.</li>
-<li>Coût proportionnel à la hauteur.</li>
+<li>Coût : au plus hauteur + 1 comparaisons.</li>
 <li>Parcours infixe = clés triées.</li>
 </ul>
 </section>
