@@ -1,113 +1,18 @@
 const htmlPdf = require('html-pdf-node');
 
-/**
- * Hauteur utile d'une page A4 des PDF, en px CSS (96 px par pouce) : 297 mm, moins
- * 4 mm laissés libres en bas pour la mention de l'auteur et de la licence.
- * Les pages n'ont pas de marge : la règle `@page { margin: 0 }` de fiche-nsi.css
- * l'emporte sur les marges passées à Puppeteer (vérifié avec Chromium 88 et 153).
- */
-const HAUTEUR_UTILE_PX = Math.floor((297 - 4) * 96 / 25.4);
+const { pagePdf } = require('./pages');
 
-/**
- * Styles propres aux pages qui servent à fabriquer les PDF.
- *
- * - La mention de l'auteur et de la licence est écrite dans la page elle-même
- *   (position: fixed, répétée sur chaque page imprimée, comme l'image de fond).
- * - Pas de hauteur minimale : `.container` (297 mm) et `body` (100vh), prévus pour
- *   l'écran, dépassaient la page utile et ajoutaient une page vide à chaque PDF.
- * - Le code va à la ligne : sur papier, une ligne trop longue était coupée à droite.
- *
- * Ces règles ne dépendent pas du média, pour que la mesure faite au chargement
- * (média screen) soit celle de l'impression.
- */
-const STYLE_PDF = `
-        <style>
-          body, .container { min-height: 0; }
-          pre, pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
-          .fiche { break-after: page; page-break-after: always; }
-          .fiche:last-child { break-after: auto; page-break-after: auto; }
-          .pdf-mention {
-            position: fixed;
-            right: 4mm;
-            bottom: 0.8mm;
-            z-index: 10;
-            padding: 0.2mm 1.2mm;
-            background: rgba(255, 255, 255, 0.85);
-            color: #495057;
-            font-family: 'Lato', sans-serif;
-            font-size: 6pt;
-            line-height: 1.2;
-            white-space: nowrap;
-          }
-        </style>`;
-const MENTION_LICENCE = `<div class="pdf-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence CC BY-SA 4.0</div>`;
-
-/**
- * Script des pages qui servent à fabriquer les PDF.
- *
- * 1. Répartit les sections d'une fiche entre ses deux colonnes, chaque section
- *    allant dans la colonne la plus courte.
- * 2. Une fois les polices chargées, réduit la fiche (zoom de son contenu) si elle
- *    est plus haute que la page utile : chaque fiche tient sur une page A4, sans
- *    rien couper. La hauteur est mesurée sur un parent non zoomé.
- */
-const SCRIPT_PDF = `
-        <script>
-        (function () {
-          var HAUTEUR_UTILE = ${HAUTEUR_UTILE_PX};
-          var ZOOM_MIN = 0.7;
-
-          function repartir(fiche) {
-            var container = fiche.querySelector('.container');
-            var gauche = fiche.querySelector('.column[id^="column-left"]');
-            var droite = fiche.querySelector('.column[id^="column-right"]');
-            if (!container || !gauche || !droite) return;
-            var sections = Array.prototype.slice.call(container.querySelectorAll('section'));
-            var hGauche = 0;
-            var hDroite = 0;
-            sections.forEach(function (section) {
-              // Mesurer la section à part
-              var temp = document.createElement('div');
-              temp.style.position = 'absolute';
-              temp.style.visibility = 'hidden';
-              temp.appendChild(section.cloneNode(true));
-              document.body.appendChild(temp);
-              var h = temp.scrollHeight;
-              document.body.removeChild(temp);
-              // L'ajouter à la colonne la plus courte
-              if (hGauche <= hDroite) {
-                gauche.appendChild(section);
-                hGauche += h;
-              } else {
-                droite.appendChild(section);
-                hDroite += h;
-              }
-            });
-          }
-
-          function ajuster(fiche) {
-            var container = fiche.querySelector('.container');
-            if (!container) return;
-            var zoom = 1;
-            while (fiche.getBoundingClientRect().height > HAUTEUR_UTILE && zoom > ZOOM_MIN) {
-              zoom = Math.round((zoom - 0.01) * 100) / 100;
-              container.style.zoom = zoom;
-            }
-            if (fiche.getBoundingClientRect().height > HAUTEUR_UTILE) {
-              console.warn('[PDF] Fiche trop longue pour une page, même réduite : ' + (fiche.dataset.slug || ''));
-            }
-          }
-
-          document.addEventListener('DOMContentLoaded', function () {
-            var fiches = document.querySelectorAll('.fiche-pdf');
-            Array.prototype.forEach.call(fiches, repartir);
-            var polices = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-            polices.then(function () {
-              Array.prototype.forEach.call(fiches, ajuster);
-            });
-          });
-        })();
-        </script>`;
+/** Les options de Chromium, pour html-pdf-node comme pour la vérification. */
+const ARGS_CHROMIUM = [
+  '--no-sandbox',
+  '--disable-setuid-sandbox',
+  '--disable-dev-shm-usage',
+  '--disable-accelerated-2d-canvas',
+  '--no-first-run',
+  '--no-zygote',
+  '--disable-gpu',
+  '--font-render-hinting=none'
+];
 
 class PDFGenerator {
   constructor() {
@@ -128,82 +33,46 @@ class PDFGenerator {
     console.log('[PDF] Générateur PDF fermé.');
   }
 
-  /**
-   * Génère le HTML pour une fiche individuelle (structure alignée sur fiche.ejs)
-   */
+  /** Le HTML qui sert à fabriquer le PDF d'une fiche. */
   generateSingleFicheHTML(fiche) {
-    const visibleTitle = (fiche.title || '').replace('Fiche NSI – ', '');
-    return `
-      <!DOCTYPE html>
-      <html lang="fr">
-      <head>
-        <meta charset="UTF-8">
-        <title>${fiche.title}</title>
-        <link rel="stylesheet" href="/css/fiche-nsi.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">${STYLE_PDF}
-      </head>
-      <body>
-        ${MENTION_LICENCE}
-        <main class="fiche-pdf" data-slug="${fiche.slug}">
-          <header><h1>${visibleTitle}</h1></header>
-          <article class="container">
-            <div class="columns-wrapper">
-              <div class="column" id="column-left">
-                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-              </div>
-              <div class="column" id="column-right">
-                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-              </div>
-            </div>
-            ${fiche.content}
-          </article>
-        </main>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script>${SCRIPT_PDF}
-      </body>
-      </html>`;
+    return pagePdf([fiche], fiche.title);
+  }
+
+  /** Le HTML qui sert à fabriquer le PDF de toutes les fiches (une par page). */
+  generateAllFichesHTML(fiches) {
+    return pagePdf(fiches, 'Toutes les fiches de révision NSI');
   }
 
   /**
-   * Génère le HTML pour toutes les fiches (structure homogène + saut de page)
+   * Vérifie, avant de fabriquer les PDF, que chaque fiche tient sur une page A4
+   * sans réduction. Renvoie, pour chaque adresse, le zoom appliqué (1 : aucune
+   * réduction) et si le contenu déborde encore.
    */
-  generateAllFichesHTML(fiches) {
-    const fichesHtml = fiches.map(fiche => {
-      const visibleTitle = (fiche.title || '').replace('Fiche NSI – ', '');
-      return `
-        <section class="fiche fiche-pdf" data-slug="${fiche.slug}">
-          <header><h1>${visibleTitle}</h1></header>
-          <article class="container">
-            <div class="columns-wrapper">
-              <div class="column" id="column-left-${fiche.slug}">
-                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-              </div>
-              <div class="column" id="column-right-${fiche.slug}">
-                <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-              </div>
-            </div>
-            ${fiche.content}
-          </article>
-        </section>`;
-    }).join('');
-
-    return `
-      <!DOCTYPE html>
-      <html lang="fr">
-      <head>
-        <meta charset="UTF-8">
-        <title>Toutes les fiches NSI</title>
-        <link rel="stylesheet" href="/css/fiche-nsi.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">${STYLE_PDF}
-      </head>
-      <body>
-        ${MENTION_LICENCE}
-        <main class="wrapper">${fichesHtml}
-        </main>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script>${SCRIPT_PDF}
-      </body>
-      </html>`;
+  async verifierPages(urls) {
+    const puppeteer = require('puppeteer');
+    const navigateur = await puppeteer.launch({ args: ARGS_CHROMIUM });
+    const resultats = [];
+    try {
+      const page = await navigateur.newPage();
+      const erreurs = [];
+      page.on('pageerror', (e) => erreurs.push(e.message));
+      page.on('requestfailed', (r) => erreurs.push(`ressource introuvable : ${r.url()}`));
+      for (const url of urls) {
+        erreurs.length = 0;
+        await page.goto(url, { waitUntil: 'networkidle0', timeout: 60000 });
+        await page.waitForSelector('body[data-pret]', { timeout: 30000 });
+        const fiches = await page.$$eval('.fiche-pdf', (els) => els.map((el) => ({
+          slug: el.dataset.slug,
+          zoom: Number(el.dataset.zoom),
+          hauteur: Number(el.dataset.hauteur),
+          deborde: el.dataset.deborde === 'oui',
+        })));
+        resultats.push({ url, fiches, erreurs: erreurs.slice() });
+      }
+    } finally {
+      await navigateur.close();
+    }
+    return resultats;
   }
 
   /**
@@ -218,32 +87,12 @@ class PDFGenerator {
       const options = {
         format: 'A4',
         printBackground: true,
-        // Sans effet : la règle `@page { margin: 0 }` de fiche-nsi.css l'emporte.
-        margin: {
-          top: '6mm',
-          right: '0mm',
-          bottom: '8mm',
-          left: '0mm'
-        },
+        // Les marges sont celles de la règle `@page` de fiche-nsi.css.
         displayHeaderFooter: false,
+        preferCSSPageSize: true,
         timeout: 60000, // Timeout augmenté pour laisser le temps au JS de s'exécuter
         waitUntil: 'networkidle0', // Attendre que le réseau soit inactif
-        preferCSSPageSize: false, // Ignorer les marges CSS @page
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--no-first-run',
-          '--no-zygote',
-          '--disable-gpu',
-          '--disable-web-security',
-          '--disable-features=VizDisplayCompositor',
-          '--run-all-compositor-stages-before-draw',
-          '--disable-background-timer-throttling',
-          '--disable-backgrounding-occluded-windows',
-          '--disable-renderer-backgrounding'
-        ]
+        args: ARGS_CHROMIUM
       };
 
       const pdfBuffer = await htmlPdf.generatePdf({ url }, options);

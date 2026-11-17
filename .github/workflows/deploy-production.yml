@@ -22,8 +22,16 @@ jobs:
         node-version: '18'
         cache: 'npm'
         
+    - name: Setup Python (exemples de code des fiches)
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+
     - name: Install dependencies
       run: npm ci
+
+    - name: Test the fiches (gabarit commun, exemples de code exécutés)
+      run: npm test
       
     - name: Generate static site with PDFs
       run: |
@@ -54,6 +62,12 @@ jobs:
         
         if [ ! -f "dist/fiches/all.pdf" ]; then
           echo "❌ PDF combiné non généré"
+          exit 1
+        fi
+        
+        # Aucune ressource chargée d'un autre site (polices, scripts, styles, images)
+        if grep -rlE "fonts.googleapis|cdnjs.cloudflare|mirrors.creativecommons|<script src=\"http" dist --include=*.html --include=*.css; then
+          echo "❌ Ressource chargée d'un autre site"
           exit 1
         fi
         

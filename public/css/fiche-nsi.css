@@ -1,392 +1,403 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Orbitron:wght@600&family=Lato:wght@400;700&display=swap');
+/*
+ * Fiches de révision NSI : la feuille de style des fiches.
+ *
+ * Trois usages, une seule structure de fiche :
+ * - `body.ecran` : la page web d'une fiche (et l'accueil, avec index.css) ;
+ * - `body.pdf`   : les pages qui servent à fabriquer les PDF (A4, une fiche par page) ;
+ * - l'impression d'une page web depuis le navigateur (@media print, en bas).
+ *
+ * Les polices sont dans ../fonts (licence SIL OFL) : rien n'est chargé d'un autre site.
+ * Contrastes : texte courant ≥ 7:1, petits textes et code ≥ 4,5:1 sur leur fond.
+ * Jamais la couleur seule : chaque type d'encadré a un titre écrit et un style de trait.
+ */
+
+@font-face { font-family: 'Lato'; font-style: normal; font-weight: 400; font-display: swap; src: url('../fonts/lato-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Lato'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/lato-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Orbitron'; font-style: normal; font-weight: 600; font-display: swap; src: url('../fonts/orbitron-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Fira Code'; font-style: normal; font-weight: 400; font-display: swap; src: url('../fonts/fira-code-latin-400-normal.woff2') format('woff2'); }
 
 :root {
-  --python-blue: #306998;
-  --python-yellow: #FFD43B;
-  --bg-light: #ffffff;
-  --accent-bg: rgba(48, 105, 152, 0.05);
-  --code-bg: #f0f0f0;
-  --yellow-bg: rgba(255, 212, 59, 0.15);
+  --bleu: #306998;          /* 6,1:1 sur blanc */
+  --bleu-fonce: #1d4466;
+  --jaune: #ffd43b;
+  --jaune-fond: #fff8dc;
+  --encre: #1f2328;         /* 15:1 sur blanc */
+  --encre-2: #3d4650;       /* 9,6:1 */
+  --trait: #b8c2cc;
+  --fond-encadre: #ffffff;
+  --fond-code: #f4f6f8;
+  --rouge: #a61b1b;         /* 7,6:1 */
+  --vert: #0e6b47;          /* 6,6:1 */
+  --violet: #5b2bb5;        /* 7,4:1 */
+  --lien: #0b5394;          /* 7,6:1 */
+  --police-texte: 'Lato', 'Segoe UI', Arial, sans-serif;
+  --police-titre: 'Orbitron', 'Lato', Arial, sans-serif;
+  --police-code: 'Fira Code', 'DejaVu Sans Mono', Consolas, monospace;
 }
 
-@media print {
-  body { 
-    margin: 0; 
-    padding: 0;
-    font-size: 7pt; /* Taille ultra-dense pour cheatsheet */
-    line-height: 1.05; /* Interligne ultra-minimal */
-  }
-  /* Réserver de l'espace pour le footer template puppeteer */
-  .container {
-    padding-bottom: 10mm;
-  }
-  
-  .container {
-    max-width: none;
-    margin: 0;
-    padding: 0 0 12mm 0;
-  }
-  
-  .columns-wrapper {
-    gap: 1mm; /* Espacement minimal pour l'impression */
-  }
-  
-  .column {
-    gap: 0.05rem; /* Espacement ultra-minimal entre sections */
-    background-color: rgba(248, 249, 250, 0.2); /* Fond gris très léger pour impression */
-    padding: 0.1rem; /* Padding minimal pour impression */
-  }
-  
-  section {
-    page-break-inside: avoid;
-    margin-bottom: 0.1em; /* Marge ultra-minimale */
-    padding: 0.15rem; /* Padding ultra-minimal */
-  }
-  
-  h1, h2, h3 {
-    page-break-after: avoid;
-  }
-  
-  h1 {
-    font-size: 0.9rem; /* Taille ultra-réduite pour cheatsheet */
-    margin-bottom: 0.1rem;
-  }
-  
-  h2 {
-    font-size: 0.7rem; /* Taille ultra-réduite pour cheatsheet */
-    padding: 0.08rem 0.2rem 0.08rem 1rem; /* Padding ultra-minimal */
-    margin-bottom: 0.05rem;
-  }
-  
-  h2::before {
-    left: 0.25rem;
-    font-size: 0.6rem;
-  }
-  
-  pre {
-    page-break-inside: avoid;
-    font-size: 3pt; /* Taille ultra-compacte pour le code */
-    padding: 0.08rem; /* Padding ultra-minimal */
-    margin: 0.03rem 0;
-    line-height: 0.95; /* Interligne ultra-minimal */
-  }
-  
-  pre::before {
-    font-size: 2.5pt; /* Taille ultra-réduite */
-    margin-bottom: 0.01rem;
-  }
-  
-  ul {
-    padding-left: 0.6rem; /* Padding ultra-minimal */
-    margin: 0.05rem 0;
-  }
-  
-  li {
-    margin-bottom: 0.02rem; /* Espacement ultra-minimal entre éléments */
-    font-size: 6pt; /* Taille ultra-dense */
-  }
-  
-  .footnote {
-    font-size: 5pt; /* Taille ultra-dense */
-    margin-top: 0.05rem;
-  }
-}
+/* ---------- Base ---------- */
 
-@page {
-  size: A4;
-  margin: 0; /* Suppression des marges @page */
-}
-
-/* Réinitialisation globale et fond par défaut */
 html {
-  margin: 0;
-  padding: 0;
-  background-color: white;
+  background: #eef2f5;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
-  width: 100%;
-  height: 100%;
 }
 
+body {
+  margin: 0;
+  font-family: var(--police-texte);
+  color: var(--encre);
+  background: transparent;
+}
 
-/*
- * Technique robuste pour afficher un fond sur chaque page d'un PDF.
- * On utilise un pseudo-élément 'fixed' qui se répète sur chaque page.
- */
+/* L'image de fond (générée par IA) : derrière la page, jamais derrière le texte,
+   car chaque encadré a un fond opaque. */
 body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  top: 0; left: 0; width: 100%; height: 100%;
   background: url('../img/fond2.png') no-repeat top center;
   background-size: cover;
   z-index: -1;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Lato', sans-serif;
-  font-size: 12px; /* Taille de base réduite pour plus de densité */
-  line-height: 1.2; /* Interligne réduit */
-  color: #333;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  /* Le body doit être transparent pour que le pseudo-élément ::before (avec l'image de fond)
-     qui est positionné en arrière-plan (z-index: -1) soit visible. */
-  background-color: transparent;
+a { color: var(--lien); }
+
+[hidden] { display: none !important; }
+
+:focus-visible {
+  outline: 3px solid var(--bleu);
+  outline-offset: 2px;
 }
 
-
-header {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem; /* Taille drastiquement réduite */
-  color: var(--python-blue);
-  text-align: center;
-  margin: 0.3rem 0; /* Marges réduites */
-}
-
-/* Layout principal pour l'affichage web des fiches - OPTIMISÉ DENSITÉ */
-.container {
-  max-width: 210mm; /* Largeur A4 */
-  min-height: 297mm; /* Hauteur A4 pour les fiches */
-  margin: 0 auto; /* Centrage sur le web */
-  padding: 0; /* Suppression du padding pour taille exacte A4 */
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem; /* Espacement minimal */
-  box-sizing: border-box;
-}
-
-/* Wrapper pour les deux colonnes */
-.columns-wrapper {
-  display: flex;
-  gap: 2mm; /* Espacement visuel entre colonnes */
-  align-items: flex-start;
-  min-height: 0; /* Permet aux colonnes de se rétrécir */
-}
-
-/* Colonnes de taille identique */
-.column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem; /* Espacement minimal entre sections */
-  min-width: 0; /* Permet aux colonnes de se rétrécir */
-  background-color: rgba(248, 249, 250, 0.3); /* Fond gris très léger */
-  padding: 0.3rem; /* Padding léger pour le fond */
-  border-radius: 4px; /* Coins légèrement arrondis */
-}
-
-section {
-  background: var(--accent-bg);
-  padding: 0.4rem; /* Padding minimal pour densité maximale */
-  border-radius: 4px; /* Border radius minimal */
-  box-shadow: 0 0 3px rgba(0,0,0,0.05); /* Ombre très réduite */
-  width: 100%;
-  box-sizing: border-box;
-  break-inside: avoid; /* Évite la coupure des sections */
-  margin-bottom: 0.2rem; /* Marge minimale */
-}
-
-h2 {
-  color: #000;
-  font-size: 0.9rem; /* Taille drastiquement réduite */
-  margin: 0 0 0.3rem 0; /* Marges minimales */
-  font-weight: 700;
-  font-family: 'Orbitron', sans-serif;
-  position: relative;
-  padding: 0.2rem 0.4rem 0.2rem 1.5rem; /* Padding minimal */
-  background: var(--yellow-bg);
-  border-left: 0.3rem solid var(--python-yellow); /* Bordure réduite */
-  border-radius: 3px; /* Border radius minimal */
-  box-shadow: inset 0 0 0.1em rgba(255, 212, 59, 0.8);
-}
-
-h2::before {
-  content: attr(data-icon);
-  position: absolute;
-  left: 0.4rem; /* Position ajustée */
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.8rem; /* Taille réduite */
-}
-
-pre {
-  background: var(--code-bg);
-  padding: 0.2rem; /* Padding encore plus minimal */
-  border-radius: 2px; /* Border radius minimal */
-  overflow-x: auto;
-  font-family: 'Fira Code', monospace;
-  font-size: 0.6rem; /* Taille ultra-réduite pour le code */
-  position: relative;
-  margin: 0.1rem 0; /* Marges minimales */
-  line-height: 1.1; /* Interligne réduit */
-}
-
-pre::before {
-  content: "root@python:~$ ";
-  color: #555;
-  display: block;
-  margin-bottom: 0.05rem; /* Marge minimale */
-  font-size: 0.5rem; /* Taille ultra-réduite */
-}
-
-code {
-  font-family: 'Fira Code', monospace;
-}
-
-ul {
-  padding-left: 1rem; /* Padding réduit */
-  margin: 0.2rem 0; /* Marges minimales */
-}
-
-li {
-  margin-bottom: 0.1rem; /* Espacement minimal entre éléments */
-  font-size: 0.9rem; /* Taille légèrement réduite */
-}
-
-.footnote {
-  text-align: center;
-  font-size: 0.7rem; /* Taille réduite */
-  margin-top: 0.3rem; /* Marge minimale */
-  color: #555;
-  width: 100%;
-}
-
-/* Footer pour les fiches HTML */
-.fiche-footer {
-  margin-top: auto;
-  padding: 1rem 0;
-  background-color: rgba(248, 249, 250, 0.8);
-  border-top: 1px solid #e9ecef;
-  text-align: center;
-  font-size: 0.8rem;
-  color: #6c757d;
-}
-
-.footer-content {
-  max-width: 210mm;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.footer-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-@media screen and (max-width: 768px) {
-  .footer-info {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-/* Responsive design pour les petits écrans */
-@media screen and (max-width: 768px) {
-  .container {
-    padding: 0 5px; /* Padding encore plus réduit sur mobile */
-  }
-  
-  .columns-wrapper {
-    flex-direction: column; /* Passage en une colonne sur mobile */
-    align-items: stretch; /* Chaque colonne prend la largeur de l'écran, pas celle du code le plus long */
-    gap: 0.2rem;
-  }
-  
-  .column {
-    box-sizing: border-box; /* La largeur comprend le padding : pas de débordement */
-    gap: 0.2rem;
-  }
-  
-  section {
-    padding: 0.3rem; /* Padding minimal sur mobile */
-  }
-  
-  h1 {
-    font-size: 1rem; /* Taille réduite sur mobile */
-  }
-  
-  h2 {
-    font-size: 0.8rem; /* Taille réduite sur mobile */
-  }
-  
-  pre {
-    font-size: 0.5rem; /* Code ultra-petit sur mobile */
-    padding: 0.15rem;
-  }
-}
-
-/* Coloration du code : les teintes du thème atom-one-light, assombries pour un
-   contraste d'au moins 4,5:1 sur le fond du code (#fafafa). */
-pre .hljs-comment,
-pre .hljs-quote { color: #696c77; }
-pre .hljs-addition,
-pre .hljs-attribute,
-pre .hljs-meta .hljs-string,
-pre .hljs-regexp,
-pre .hljs-string { color: #3b7d3a; }
-pre .hljs-built_in,
-pre .hljs-class .hljs-title,
-pre .hljs-title.class_ { color: #8a5d00; }
-pre .hljs-bullet,
-pre .hljs-link,
-pre .hljs-meta,
-pre .hljs-selector-id,
-pre .hljs-symbol,
-pre .hljs-title { color: #2f62d1; }
-pre .hljs-literal { color: #01729b; }
-pre .hljs-deletion,
-pre .hljs-name,
-pre .hljs-section,
-pre .hljs-selector-tag,
-pre .hljs-subst { color: #c4392d; }
-
-/* Mention de l'auteur et de la licence, en bas des pages web des fiches
-   (la même que dans les PDF). */
-.fiche-mention {
-  box-sizing: border-box;
-  width: calc(100% - 10px);
-  max-width: 210mm;
-  margin: 0.5rem auto 1rem;
-  padding: 0.4rem 0.8rem;
-  background-color: #ffffff;
-  border-radius: 4px;
-  color: #495057;
-  font-size: 0.8rem;
-  line-height: 1.4;
-  text-align: center;
-}
-
-.fiche-mention a {
-  color: #0056b3;
+.visuellement-cache {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
   white-space: nowrap;
 }
 
-/* Impression d'une page web de fiche depuis le navigateur : pas de page vide
-   (hauteur minimale de l'écran) et pas de code coupé à droite. */
-@media print {
-  body,
-  .container {
-    min-height: 0;
-  }
+.evitement {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  padding: 0.5rem 0.8rem;
+  background: #fff;
+  border: 2px solid var(--bleu);
+  z-index: 20;
+}
+.evitement:focus { top: 0.5rem; }
 
-  pre,
-  pre code {
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-  }
+/* ---------- La fiche (commune à l'écran et aux PDF) ---------- */
+
+.fiche-entete { text-align: center; }
+
+.fiche-niveau {
+  margin: 0;
+  font-weight: 700;
+  color: var(--encre-2);
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  font-family: var(--police-titre);
+  font-weight: 600;
+  color: var(--bleu);
+  margin: 0.1em 0 0.35em;
+  line-height: 1.15;
+}
+
+.fiche-corps {
+  column-count: 2;
+  column-gap: 0.9em;
+}
+
+.fiche-corps > section {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  display: inline-block;   /* Chromium 88 : garde l'encadré entier dans sa colonne */
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 0.55em;
+  padding: 0.45em 0.6em 0.5em;
+  background: var(--fond-encadre);
+  border: 1px solid var(--trait);
+  border-radius: 5px;
+}
+
+.fiche-corps h2 {
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 1.05em;
+  color: #000;
+  margin: 0 0 0.35em;
+  padding: 0.15em 0.5em;
+  background: var(--jaune-fond);
+  border-left: 0.3em solid var(--jaune);
+  border-radius: 3px;
+  line-height: 1.25;
+}
+
+.fiche-corps h3 {
+  font-size: 1em;
+  margin: 0.45em 0 0.15em;
+  color: var(--bleu-fonce);
+}
+
+.fiche-corps p { margin: 0.25em 0; }
+.fiche-corps ul, .fiche-corps ol { margin: 0.25em 0; padding-left: 1.2em; }
+.fiche-corps li { margin: 0.1em 0; }
+.fiche-corps strong { color: #000; }
+
+/* Les types d'encadrés : un titre écrit, un trait différent (lisible en noir et blanc). */
+.fiche-corps > section.essentiel { border-left: 5px solid var(--bleu); }
+.fiche-corps > section.erreurs { border: 2px dashed var(--rouge); }
+.fiche-corps > section.erreurs h2 { border-left-color: var(--rouge); background: #fdeeee; }
+.fiche-corps > section.retenir { border: 2.5px solid var(--vert); background: #f4fbf7; }
+.fiche-corps > section.retenir h2 { border-left-color: var(--vert); background: #e3f4ea; }
+.fiche-corps > section.eclair { border: 2px dotted var(--violet); }
+.fiche-corps > section.eclair h2 { border-left-color: var(--violet); background: #f1ecfb; }
+
+/* Le code : « Python » ou « SQL » au-dessus, l'affichage du programme à part. */
+.fiche-corps pre {
+  position: relative;
+  margin: 0.3em 0;
+  padding: 0.3em 0.5em 0.35em;
+  background: var(--fond-code);
+  border: 1px solid #d5dbe1;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: var(--police-code);
+  font-variant-ligatures: none;   /* « != » reste « != », jamais « ≠ » */
+  line-height: 1.3;
+  tab-size: 4;
+}
+
+.fiche-corps pre code { font-family: inherit; }
+
+.fiche-corps pre::before {
+  display: block;
+  font-family: var(--police-texte);
+  font-size: 0.8em;
+  font-weight: 700;
+  color: var(--encre-2);
+  margin-bottom: 0.1em;
+}
+.fiche-corps pre[data-langage="python"]::before { content: "Python"; }
+.fiche-corps pre[data-langage="sql"]::before { content: "SQL"; }
+.fiche-corps pre.sortie::before { content: "Affichage"; }
+.fiche-corps pre.sortie[data-titre]::before { content: attr(data-titre); }
+.fiche-corps pre.sortie {
+  background: #fff;
+  border: 1px solid #8a96a3;
+  border-left: 4px solid #586276;
+}
+
+.fiche-corps code {
+  font-family: var(--police-code);
+  font-variant-ligatures: none;
+  font-size: 0.95em;
+}
+.fiche-corps p code, .fiche-corps li code, .fiche-corps td code {
+  background: var(--fond-code);
+  padding: 0 0.2em;
+  border-radius: 3px;
+}
+
+/* Coloration (highlight.js, à la génération) : teintes à 4,5:1 au moins sur le fond du code. */
+.hljs-comment, .hljs-quote { color: #5c6370; font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-section { color: #8a1f8a; }
+.hljs-string, .hljs-addition, .hljs-regexp { color: #2f6b2c; }
+.hljs-number, .hljs-literal { color: #985a00; }
+.hljs-built_in, .hljs-type, .hljs-title.class_ { color: #0a5c7a; }
+.hljs-title, .hljs-title.function_, .hljs-meta { color: #1f55b8; }
+.hljs-params, .hljs-subst, .hljs-variable { color: var(--encre); }
+
+/* Tableaux */
+.fiche-corps table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.3em 0;
+}
+.fiche-corps th, .fiche-corps td {
+  border: 1px solid #c4ccd4;
+  padding: 0.15em 0.35em;
+  text-align: left;
+  vertical-align: top;
+}
+.fiche-corps th { background: #eef2f6; }
+
+/* Schémas originaux (SVG dans la fiche) */
+.fiche-corps svg.schema {
+  display: block;
+  margin: 0.3em auto;
+  max-width: 100%;
+  height: auto;
+}
+.fiche-corps figure { margin: 0.3em 0; }
+.fiche-corps figcaption { font-size: 0.85em; color: var(--encre-2); text-align: center; }
+
+/* La réponse de l'exercice éclair : repliée à l'écran, écrite à l'envers sur papier. */
+.fiche-corps details.reponse { margin-top: 0.35em; }
+.fiche-corps details.reponse > summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--violet);
+}
+
+/* ---------- La page web d'une fiche ---------- */
+
+body.ecran {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 0 12px 1rem;
+}
+
+.barre {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  max-width: 1120px;
+  margin: 0.75rem auto 0.25rem;
+}
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.45em 0.8em;
+  background: #fff;
+  color: var(--lien);
+  border: 1px solid #9fb3c8;
+  border-radius: 6px;
+  font-weight: 700;
+  text-decoration: none;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+.bouton:hover { background: #eaf1f8; }
+.icone { width: 1.1em; height: 1.1em; flex: none; }
+
+.ecran .fiche {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0.8rem 1rem 0.4rem;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+.ecran h1 { font-size: 1.7rem; }
+.ecran .fiche-niveau { font-size: 0.95rem; }
+.ecran .fiche-corps { column-gap: 1.1rem; }
+.ecran .fiche-corps pre { font-size: 14px; }
+.ecran .fiche-corps table { font-size: 0.95em; }
+
+.voisines {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  max-width: 1120px;
+  margin: 0.75rem auto;
+}
+.voisines a {
+  display: block;
+  max-width: 48%;
+  padding: 0.5em 0.8em;
+  background: #fff;
+  border: 1px solid #9fb3c8;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+}
+.voisines a.suivante { text-align: right; margin-left: auto; }
+.voisines .sens { display: block; font-weight: 400; font-size: 0.85em; color: var(--encre-2); }
+
+.pied {
+  max-width: 1120px;
+  margin: 1rem auto 0;
+  padding: 0.6rem 1rem;
+  background: #fff;
+  border-radius: 6px;
+  color: var(--encre-2);
+  font-size: 0.9rem;
+  text-align: center;
+}
+.pied p { margin: 0.25em 0; }
+.lien-icone { display: inline-flex; align-items: center; gap: 0.3em; white-space: nowrap; }
+
+@media (max-width: 899px) {
+  .ecran .fiche-corps { column-count: 1; }
+}
+
+@media (max-width: 480px) {
+  body.ecran { padding: 0 6px 1rem; }
+  .ecran .fiche { padding: 0.6rem 0.5rem 0.2rem; }
+  .ecran h1 { font-size: 1.35rem; }
+  .ecran .fiche-corps pre { font-size: 13px; }
+  .voisines { flex-direction: column; }
+  .voisines a { max-width: none; }
+}
+
+/* ---------- Les pages des PDF (A4, une fiche par page) ---------- */
+
+@page { size: A4; margin: 10mm 9mm 12mm; }   /* impression d'une page web ; les pages des PDF ont margin: 0 */
+
+body.pdf {
+  font-size: 13px;   /* 9,75 pt */
+  line-height: 1.3;
+  width: 210mm;
+}
+
+/* Une fiche = une page : 7 mm en haut, 8 mm sur les côtés, 17 mm en bas,
+   où la mention de l'auteur et de la licence est écrite à 10 mm du bord. */
+.pdf .fiche-pdf {
+  box-sizing: border-box;
+  width: 210mm;
+  height: 297mm;
+  padding: 7mm 8mm 17mm;
+  overflow: hidden;
+  break-after: page;
+  page-break-after: always;
+}
+.pdf .fiche-pdf:last-of-type { break-after: auto; page-break-after: auto; }
+
+.pdf h1 { font-size: 19px; }
+.pdf .fiche-niveau { font-size: 11px; }
+.pdf .fiche-corps pre { font-size: 11px; line-height: 1.25; white-space: pre-wrap; overflow-wrap: anywhere; overflow: visible; }
+.pdf .fiche-corps table { font-size: 11.5px; }
+
+.pdf-mention {
+  position: fixed;
+  right: 8mm;
+  bottom: 10mm;
+  padding: 0.3mm 1.5mm;
+  background: #fff;
+  color: #3d4650;
+  font-family: var(--police-texte);
+  font-size: 7.5pt;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Sur papier, la réponse de l'exercice éclair est dépliée et écrite à l'envers. */
+.pdf details.reponse > summary { list-style: none; display: inline; color: var(--violet); }
+.pdf details.reponse > summary::-webkit-details-marker { display: none; }
+.pdf details.reponse > summary::after { content: " (à l'envers)"; font-weight: 400; color: var(--encre-2); }
+.pdf details.reponse .a-l-envers { transform: rotate(180deg); }
+
+/* ---------- Impression d'une page web depuis le navigateur ---------- */
+
+@media print {
+  html { background: #fff; }
+  body.ecran { font-size: 12.5px; line-height: 1.3; padding: 0; }
+  body.ecran::before { display: none; }
+  .ecran .barre, .ecran .voisines, .ecran .evitement { display: none; }
+  .ecran .fiche { max-width: none; padding: 0; background: #fff; }
+  .ecran h1 { font-size: 19px; }
+  .ecran .fiche-corps { column-count: 2; }
+  .ecran .fiche-corps pre { font-size: 11px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .ecran .pied { font-size: 9px; padding: 0; }
 }
