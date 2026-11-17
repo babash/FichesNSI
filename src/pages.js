@@ -180,17 +180,29 @@ function scriptPdf(hauteurUtile) {
   (function () {
     var HAUTEUR = ${hauteurUtile};
     var ZOOM_MIN = 0.85;
+    // Les encadrés remplissent la colonne de gauche, puis celle de droite
+    // (column-fill: auto, hauteur fixe). Une fiche trop longue crée une
+    // troisième colonne, hors de la page : on la détecte par la largeur.
+    function deborde(corps) { return corps.scrollWidth > corps.clientWidth + 1; }
     function ajuster(fiche) {
       var interieur = fiche.querySelector('.zoom');
-      var hauteur = function () { return interieur.getBoundingClientRect().height; };
+      var corps = fiche.querySelector('.fiche-corps');
       var zoom = 1;
-      while (hauteur() > HAUTEUR && zoom > ZOOM_MIN) {
+      interieur.style.height = HAUTEUR + 'px';
+      while (deborde(corps) && zoom > ZOOM_MIN) {
         zoom = Math.round((zoom - 0.01) * 100) / 100;
         interieur.style.zoom = zoom;
+        interieur.style.height = (HAUTEUR / zoom) + 'px';
       }
+      // Hauteur occupée : le bas du plus bas des encadrés.
+      var bas = 0;
+      var haut = interieur.getBoundingClientRect().top;
+      Array.prototype.forEach.call(corps.children, function (s) {
+        bas = Math.max(bas, s.getBoundingClientRect().bottom - haut);
+      });
       fiche.setAttribute('data-zoom', zoom);
-      fiche.setAttribute('data-hauteur', Math.round(hauteur()));
-      if (hauteur() > HAUTEUR) fiche.setAttribute('data-deborde', 'oui');
+      fiche.setAttribute('data-hauteur', Math.round(bas));
+      if (deborde(corps)) fiche.setAttribute('data-deborde', 'oui');
     }
     function fin() {
       Array.prototype.forEach.call(document.querySelectorAll('details'), function (d) { d.open = true; });

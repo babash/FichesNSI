@@ -95,6 +95,15 @@ class FichesManager {
     const page = fm(data);
     const a = page.attributes;
     const slug = path.basename(file, '.md');
+    // Les blocs <pre> sont mis de côté pendant la conversion du Markdown : une
+    // ligne vide dans un code ne doit pas couper le bloc HTML (marked y
+    // ajouterait des paragraphes).
+    const blocsPre = [];
+    const corpsProtege = page.body.replace(/<pre[\s\S]*?<\/pre>/g, (bloc) => {
+      blocsPre.push(bloc);
+      return `<!--pre-${blocsPre.length - 1}-->`;
+    });
+    const html = marked.parse(corpsProtege).replace(/<!--pre-(\d+)-->/g, (t, i) => blocsPre[Number(i)]);
     const title = a.title || 'Titre manquant';
     const niveaux = liste(a.niveau).filter((n) => NIVEAUX[n]);
 
@@ -110,7 +119,7 @@ class FichesManager {
       resume: a.resume || '',
       motsCles: liste(a.mots_cles),
       footer: a.footer || '',
-      content: colorer(marked.parse(page.body)),
+      content: colorer(html),
     });
 
     console.log(`[OK] Fiche chargée : ${slug}`);

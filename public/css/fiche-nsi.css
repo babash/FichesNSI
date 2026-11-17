@@ -364,6 +364,8 @@ body.pdf {
 }
 .pdf .fiche-pdf:last-of-type { break-after: auto; page-break-after: auto; }
 
+.pdf .zoom { display: flex; flex-direction: column; }
+.pdf .fiche-corps { flex: 1 1 auto; min-height: 0; column-fill: auto; }
 .pdf h1 { font-size: 19px; }
 .pdf .fiche-niveau { font-size: 11px; }
 .pdf .fiche-corps pre { font-size: 11px; line-height: 1.25; white-space: pre-wrap; overflow-wrap: anywhere; overflow: visible; }
