@@ -46,6 +46,10 @@ html {
 body {
   margin: 0;
   font-family: var(--police-texte);
+  /* Pas de ligatures « fi », « fl » : dans les PDF, Chromium les extrait mal
+     (« sufØt » au lieu de « suffit ») pour la recherche, le copier-coller et
+     les lecteurs d'écran. */
+  font-variant-ligatures: no-common-ligatures;
   color: var(--encre);
   background: transparent;
 }
