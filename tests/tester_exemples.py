@@ -126,7 +126,7 @@ def tester(chemin):
             try:
                 obtenu = executer_sql(code, base)
             except sqlite3.Error as e:
-                obtenu = f'Erreur SQL : {e}\n'
+                obtenu = f'Erreur : {e}\n'
                 if attribut(attrs, 'data-erreur') is None:
                     print(f'ÉCHEC {lieu} : {obtenu.strip()}')
                     echecs += 1
