@@ -38,8 +38,8 @@ Ce guide reprend la partie technique de l'ancien README : lancer le générateur
    - **le site statique** : ouvre `dist/index.html` dans ton navigateur, ou sers le dossier (voir « Commandes locales » plus bas).
 
 6. **Exporter en PDF**, depuis la page d'accueil :
-   - une fiche : l'icône à droite de son titre ;
-   - toutes les fiches : **Tout télécharger**, en haut de la liste.
+   - une fiche : le bouton **PDF** de sa carte ;
+   - toutes les fiches : **Toutes les fiches (PDF)**, en haut de la page.
 
    Les PDF sont générés à l'avance, pendant `npm run build` : le téléchargement est immédiat.
 
@@ -52,13 +52,17 @@ PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 npm ci
 PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome npm run build
 ```
 
-Avec un Chrome récent, la mise en page des PDF peut différer un peu de celle des PDF publiés, qui sont fabriqués par le Chromium de Puppeteer 5.5 (voir « Le pied des PDF » dans [ARCHITECTURE.md](ARCHITECTURE.md)). Les polices (Google Fonts) et la coloration du code (highlight.js, sur cdnjs) se chargent par Internet pendant la génération.
+Avec un Chrome récent, la hauteur des fiches peut différer un peu de celle des PDF publiés, qui sont fabriqués par le Chromium de Puppeteer 5.5 (voir « La fabrication des PDF » dans [ARCHITECTURE.md](ARCHITECTURE.md)). La génération ne charge rien d'Internet : polices et coloration du code sont dans le dépôt.
+
+### Les tests
+
+`npm test` vérifie que chaque fiche suit le gabarit commun et exécute ses exemples de code (Python 3 et SQLite, à installer). Le workflow le lance avant chaque publication.
 
 ## L'interface web
 
-- **La page d'accueil** liste toutes les fiches, avec une recherche par titre.
-- **Le téléchargement d'une fiche** : l'icône PDF de chaque fiche.
-- **Le téléchargement global** : le bouton **Tout télécharger** donne un seul PDF avec toutes les fiches.
+- **La page d'accueil** range les fiches par niveau et par thème, avec une recherche (titre, résumé, thème, mots-clés).
+- **Une fiche** : le retour à l'accueil, son PDF, la fiche précédente et la suivante.
+- **Le téléchargement global** : **Toutes les fiches (PDF)** donne un seul PDF, une fiche par page.
 
 ## Le déploiement automatique
 
@@ -81,11 +85,12 @@ Le workflow pousse le dossier `dist/` qu'il vient de générer sur la branche `g
 
 ### Le processus de build
 
-1. **Installation** des dépendances Node.js (`npm ci`).
-2. **Génération** du site statique avec ses PDF (`node scripts/generate-static.js`).
-3. **Validation** des fichiers générés : `dist/index.html`, la feuille de style, une page de fiche, un PDF de fiche et le PDF complet.
-4. **Déploiement** sur la branche `gh-pages`.
-5. **Message** de réussite dans le journal du workflow.
+1. **Installation** de Python 3.13 et des dépendances Node.js (`npm ci`).
+2. **Tests** des fiches (`npm test`).
+3. **Génération** du site statique avec ses PDF (`node scripts/generate-static.js`).
+4. **Validation** des fichiers générés : `dist/index.html`, la feuille de style, une page de fiche, un PDF de fiche, le PDF complet, et aucune ressource chargée d'un autre site.
+5. **Déploiement** sur la branche `gh-pages`.
+6. **Message** de réussite dans le journal du workflow.
 
 ### Commandes locales
 

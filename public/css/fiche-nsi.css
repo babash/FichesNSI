@@ -342,6 +342,7 @@ body.ecran {
   .ecran h1 { font-size: 1.35rem; }
   .ecran .fiche-corps pre { font-size: 13px; }
   .voisines { flex-direction: column; }
+  .ecran .fiche-corps table { display: block; overflow-x: auto; }
   .voisines a { max-width: none; }
 }
 

@@ -1,69 +1,68 @@
 ---
-title: "Fiche NSI – Exemple d’affichage complet"
-footer: "Exemple de mise en page A4 optimisée"
+title: "Fiche NSI – Titre de la notion"
+niveau: 1re
+theme: "Algorithmique"
+programme: nsi-1re-2019.algorithmique.parcours-sequentiel
+ordre: 99
+resume: "Une phrase qui dit ce que la fiche contient (affichée sur l'accueil)."
+mots_cles: [mot, synonyme, terme anglais]
 ---
 
-<section>
-  <h2 data-icon="📌">Objectifs</h2>
-  <ul>
-    <li>Synthétiser les éléments clés d’un chapitre.</li>
-    <li>Illustrer avec un extrait de code concis.</li>
-    <li>Donner 1 à 2 repères visuels (tableau, schéma).</li>
-  </ul>
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Une définition courte, avec le <strong>vocabulaire du programme</strong> en gras.</p>
+<ul>
+<li>Une propriété importante.</li>
+<li>Une autre propriété.</li>
+</ul>
 </section>
 
-<section>
-  <h2 data-icon="💡">Définitions</h2>
-  <p><strong>Algorithme</strong> : suite finie d’instructions permettant de résoudre un problème.</p>
-  <p><strong>Complexité</strong> : quantité de ressources (temps, mémoire) consommées par un algorithme.</p>
-</section>
-
-<section>
-  <h2 data-icon="🐍">Code Python (basique)</h2>
-  <pre><code class="language-python">def somme(liste):
+<section class="exemple">
+<h2>Exemple</h2>
+<pre><code class="language-python">def somme(t):
     total = 0
-    for x in liste:
-        total += x
+    for x in t:
+        total = total + x
     return total
 
-print(somme([1, 2, 3]))  # 6
+print(somme([1, 2, 3]))
+</code></pre>
+<pre class="sortie"><code>6
 </code></pre>
 </section>
 
-<section>
-  <h2 data-icon="⚙️">Idiomes Python</h2>
-  <pre><code class="language-python"># Compréhension de liste
-evens = [x for x in range(10) if x % 2 == 0]
+<section class="trace">
+<h2>Trace</h2>
+<table>
+<thead><tr><th><code>x</code></th><th>1</th><th>2</th><th>3</th></tr></thead>
+<tbody><tr><td><code>total</code></td><td>1</td><td>3</td><td>6</td></tr></tbody>
+</table>
+</section>
 
-# Slicing
-s = "NSI"
-print(s[::-1])  # ISN
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Une erreur fréquente, avec le message réel de Python.</li>
+<li>Une conception erronée connue des élèves.</li>
+</ul>
+<pre data-suite data-erreur><code class="language-python">print(somme(5))
+</code></pre>
+<pre class="sortie"><code>TypeError: 'int' object is not iterable
 </code></pre>
 </section>
 
-<section>
-  <h2 data-icon="🧭">Tableau compact</h2>
-  <table>
-    <thead>
-      <tr><th>Structure</th><th>Mutable</th><th>Clés/Index</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>list</td><td>Oui</td><td>Index entiers</td></tr>
-      <tr><td>tuple</td><td>Non</td><td>Index entiers</td></tr>
-      <tr><td>dict</td><td>Oui</td><td>Clés hachables</td></tr>
-    </tbody>
-  </table>
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Une phrase à savoir par cœur.</li>
+<li>Une autre.</li>
+</ul>
 </section>
 
-<section>
-  <h2 data-icon="🖼️">Schéma (image)</h2>
-  <p>
-    <img src="../../img/fond2.png" alt="Illustration générique" width="500" />
-  </p>
-</section>
-
-<section>
-  <h2 data-icon="🗒️">Note</h2>
-  <blockquote>Astuce : préférez plusieurs petites sections à une seule très dense.</blockquote>
-  <p>Voir aussi : <a href="https://docs.python.org/3/" target="_blank" rel="noopener noreferrer">Documentation Python</a>.</p>
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Que renvoie <code>somme([4, 5])</code> ?</p>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>9</code> : 4 + 5.</div>
+</details>
 </section>

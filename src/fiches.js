@@ -13,7 +13,7 @@ hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'));
  * rangée sous le premier.
  */
 const NIVEAUX = {
-  SNT: { ordre: 0, libelle: 'Seconde SNT' },
+  SNT: { ordre: 0, libelle: 'SNT et début de 1re NSI' },
   '1re': { ordre: 1, libelle: 'Première NSI' },
   Tle: { ordre: 2, libelle: 'Terminale NSI' },
 };

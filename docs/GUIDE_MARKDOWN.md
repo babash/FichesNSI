@@ -1,62 +1,63 @@
-### Guide de rédaction Markdown (fiches NSI)
+### Guide de rédaction d'une fiche (gabarit commun)
 
-Un exemple complet de mise en forme est dans [exemple-affichage.md](exemple-affichage.md) : sections, code, tableau et image. Il n'est pas publié. Pour voir son rendu, copie-le dans `content/` et lance `npm start` ; retire-le ensuite de `content/`, sinon il serait publié avec les fiches.
+Toutes les fiches suivent le même gabarit : une page A4, deux colonnes, les mêmes encadrés dans le même ordre. Un modèle à copier est dans [exemple-affichage.md](exemple-affichage.md) ; `npm test` vérifie le gabarit et exécute les exemples de code.
 
-- **En-tête (front matter)** :
-  - `title` (obligatoire) : un texte court (80 caractères au plus), qui commence de préférence par « Fiche NSI – » ;
-  - `footer` (facultatif) : un texte court. Il n'apparaît ni dans les PDF ni sur le site publié, seulement en bas de la page du serveur local (`npm start`). L'auteur et la licence sont ajoutés automatiquement aux PDF et aux pages : inutile de les écrire.
-- **Structure de la page** :
-  - Utilise un bloc `<section>` pour chaque idée ou chapitre. Chaque `section` devient un encadré, réparti sur deux colonnes.
-  - Donne à chaque section un titre `<h2 data-icon="…">`, pour afficher une icône dans le halo jaune.
-- **Densité et longueur** :
-  - **Par section** : 80 à 120 mots, ou l'équivalent.
-  - **Nombre de sections par fiche** : 4 à 10, pour une page A4 lisible.
-  - **Listes** : 3 à 8 éléments courts (7 à 12 mots chacun).
-- **Code** :
-  - Préfère `<pre><code class="language-python">…</code></pre>` pour un rendu stable, y compris dans le PDF.
-  - **Longueur** : 5 à 15 lignes, 70 à 80 caractères par ligne au plus. Dans le PDF, une ligne trop longue passe à la ligne suivante ; à l'écran, elle fait défiler le bloc de code.
-  - Montre seulement le résultat important ; évite les commentaires trop longs.
-- **Images** :
-  - Utilise des images légères (200 Ko au plus), avec une taille : `width="500"` au plus sur une colonne.
-  - Range-les dans `public/img/` et appelle-les avec une adresse relative : `../../img/mon-schema.png`. Elle marche partout : sur le site publié, avec le serveur local (`npm start`) et dans les PDF. Une adresse absolue (`/img/mon-schema.png`) ne marche pas sur le site publié : elle vise `https://babash.github.io/img/…`, hors du site `https://babash.github.io/FichesNSI/`.
-- **Tableaux** :
-  - 3 ou 4 colonnes au plus, avec un texte court. Évite les tableaux larges, qui risquent de déborder dans le PDF.
-- **Écriture et lisibilité** :
-  - Préfère les phrases courtes, et l'infinitif pour les procédures.
-  - Évite les blocs très denses : aère avec des listes et des sous-titres.
-- **Accessibilité** :
-  - Les icônes ne font qu'accompagner le texte : ne fais jamais passer l'essentiel par la seule couleur.
-  - Pour une image, écris un `alt` court qui la décrit.
-- **Markdown et HTML** :
-  - Tu peux mélanger Markdown et HTML ; évite les imbrications compliquées.
-  - Pas de balise `<script>` dans le contenu.
+## L'en-tête (front matter)
 
-Contraintes d'affichage (A4)
-- **Format** : A4, sans marge (la règle `@page { margin: 0 }` de `public/css/fiche-nsi.css`). Les 4 derniers millimètres de la page sont laissés à la mention de l'auteur et de la licence.
-- **Une page par fiche** : si une fiche est plus haute que la page, son contenu est réduit pour tenir sur une page (jusqu'à 70 % de sa taille). Vise une fiche qui tient sans réduction : le texte reste plus lisible.
-- **Grille** : 2 colonnes. Une section doit tenir dans une colonne, si possible.
-- **Sauts de page** : dans le PDF de toutes les fiches, chaque fiche commence sur une nouvelle page.
-- **Polices** : une police à chasse fixe pour le code, une police lisible pour le texte (gérées par le thème).
+| Champ | Obligatoire | Rôle |
+|---|---|---|
+| `title` | oui | « Fiche NSI – Le titre » ; « Fiche NSI – » n'est pas affiché sur la fiche |
+| `niveau` | oui | `SNT`, `1re` ou `Tle`, ou une liste (`[SNT, 1re]`) : la fiche est rangée sous le premier |
+| `theme` | oui | le thème du programme, affiché sur l'accueil et en haut de la fiche ; reprendre exactement celui des autres fiches du même thème |
+| `ordre` | oui | la place dans le niveau (progression du programme), unique dans un niveau |
+| `resume` | oui | une phrase, affichée sur l'accueil et utilisée par la recherche |
+| `mots_cles` | non | des mots pour la recherche (synonymes, mots du code, termes anglais) |
+| `programme` | non | les identifiants des contenus du programme (référentiel du site Ressources NSI et SNT) |
 
-Exemple de squelette minimal
+## Les encadrés, dans cet ordre
 
+Chaque encadré est un `<section>` avec un titre `<h2>`. Les quatre encadrés obligatoires ont une classe ; leur titre écrit et leur style de trait les distinguent aussi en noir et blanc.
+
+1. `<section class="essentiel">` **L'essentiel** : la définition courte et le vocabulaire du programme.
+2. `<section>` les opérations ou la syntaxe (un tableau court), si utile.
+3. `<section class="exemple">` **Exemple** : un code, puis son affichage (voir plus bas).
+4. `<section class="trace">` **Trace**, quand elle aide : un tableau tour par tour.
+5. `<section class="erreurs">` **Erreurs fréquentes** : les vrais messages de Python, les conceptions erronées connues des élèves.
+6. `<section class="retenir">` **À retenir** : 4 à 6 phrases courtes.
+7. `<section class="eclair">` **Exercice éclair** : une question, et sa réponse repliée :
+
+```html
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers">La réponse, avec une phrase d'explication.</div>
+</details>
 ```
----
-title: "Fiche NSI – Sujet"
----
 
-<section>
-  <h2 data-icon="💡">Idée clé</h2>
-  <ul>
-    <li>Définition courte…</li>
-    <li>Règle ou principe…</li>
-  </ul>
-</section>
+À l'écran, la réponse s'ouvre d'un clic ; sur papier, elle est imprimée à l'envers.
 
-<section>
-  <h2 data-icon="🧪">Exemple</h2>
-  <pre><code class="language-python">x = 1
-print(x)
+## Le code et son affichage
+
+```html
+<pre><code class="language-python">print(7 // 2)
 </code></pre>
-</section>
+<pre class="sortie"><code>3
+</code></pre>
 ```
+
+- Le bloc `sortie` qui suit un code est **l'affichage réel** du programme : `npm test` exécute le code et compare.
+- Attributs du `<pre>` du code : `data-suite` (reprend les variables des blocs précédents de la fiche), `data-erreur` (le code doit lever une erreur : finir l'affichage par la dernière ligne du message), `data-entree="15"` (ce que l'élève tape), `data-pas-execute`.
+- SQL : `<pre data-base="lycee"><code class="language-sql">`, exécuté sur `tests/bases/lycee.sql` ; affichage : les noms de colonnes, puis une ligne par résultat, séparés par « | ». `data-titre="Résultat"` sur le bloc `sortie` change son étiquette.
+- Pas d'émoji (invisibles dans les PDF), pas de ligne de plus de 60 caractères environ (elle passe à la ligne sur papier), 4 espaces d'indentation.
+- Écrire `&lt;` pour `<` dans le code.
+
+## Tenir sur une page
+
+- Le texte du PDF est en 9,75 pt et le code en 8,25 pt : on ne réduit pas la police, on raccourcit le texte. La génération affiche la hauteur de chaque fiche (sur 1031 px) ; une fiche trop haute est signalée, et une fiche qui déborde arrête la publication.
+- Les encadrés remplissent la colonne de gauche, puis celle de droite. Si un grand encadré laisse un vide à gauche, le découper en deux (comme « Recherche » et « Insertion » dans la fiche des ABR).
+- 400 à 550 mots de texte environ, et 2 ou 3 blocs de code.
+
+## Écriture
+
+- Phrases courtes, vocabulaire du programme expliqué, termes anglais traduits (*string*, *stack*).
+- Consignes impersonnelles (« Qu'affiche ce programme ? ») ; langage inclusif (« élèves », « Admis·e »).
+- Contextes de Mayotte quand ils viennent naturellement (communes, barge, pluie), sans cliché ; données fictives signalées.
+- Schémas : SVG écrits à la main, dans la fiche, avec `class="schema"`, `role="img"` et un `aria-label` qui les décrit. Aucune image d'origine inconnue.
