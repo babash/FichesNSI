@@ -1,121 +1,111 @@
 ---
-title: "Fiche NSI – Les Tuples en Python"
-footer: "Fiche d'aide-mémoire"
+title: "Fiche NSI – Les p-uplets (tuples) en Python"
+niveau: 1re
+theme: "Chaînes et types construits"
+programme: nsi-1re-2019.types-construits.p-uplets
+ordre: 21
+resume: "Créer un p-uplet, lire ses éléments, l'affectation multiple, une fonction qui renvoie plusieurs valeurs, les p-uplets nommés."
+mots_cles: [tuple, p-uplet, n-uplet, immuable, affectation multiple, déballage, unpacking, renvoyer plusieurs valeurs, p-uplet nommé]
 ---
 
-<section>
-<h2 data-icon="💡">Définition et Création</h2>
-<p>Un <strong>tuple</strong> (ou p-uplet) est une collection de données <strong>ordonnée</strong> mais <strong>immuable</strong> (non modifiable). Une fois créé, on ne peut ni ajouter, ni supprimer, ni modifier ses éléments. Il est reconnaissable par les parenthèses <strong>()</strong> qui l'entourent.</p>
-<pre><code class="language-python"># Création d'un tuple vide
-mon_tuple = ()
-# Création d'un tuple avec des éléments
-point = (10, 20)
-# Un tuple peut contenir des types différents
-personne = ("Bob", 18, True)
-# Obtenir le nombre d'éléments avec len()
-taille = len(personne)
-print(f"Le tuple contient {taille} éléments.") 
-# Affiche "Le tuple contient 3 éléments."
-</code></pre>
-<p>⚠️ <strong>Attention :</strong> Pour créer un tuple avec <strong>un seul</strong> élément, il faut obligatoirement mettre une virgule : <code>mon_tuple = (5,)</code></p>
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Un <strong>p-uplet</strong> (type <code>tuple</code>) est une suite <strong>ordonnée</strong> de valeurs, écrite entre parenthèses : <code>(12, "Sada", True)</code>. Les valeurs peuvent être de types différents.</p>
+<ul>
+<li>On lit ses éléments par leur <strong>indice</strong>, comme une liste : <code>t[0]</code>, <code>t[-1]</code>.</li>
+<li>Il est <strong>immuable</strong> : on ne peut ni ajouter, ni retirer, ni changer un élément.</li>
+<li>Usages : des coordonnées, une date, une fonction qui <strong>renvoie plusieurs valeurs</strong>, une clé de dictionnaire.</li>
+</ul>
 </section>
 
 <section>
-<h2 data-icon="🧭">Indexation et Accès aux éléments</h2>
-<p>Comme pour les listes et les chaînes, chaque élément possède un index. ⚠️<strong>L'indexation commence à 0</strong>.</p>
-<pre><code class="language-python">couleurs = ("rouge", "vert", "bleu", "jaune")
-# Accès par index positif
-print(couleurs[0])   # Affiche "rouge"
-# Accès par index négatif
-print(couleurs[-1])  # Affiche "jaune"
-# Le slicing : Extraire une partie [début:fin]
-print(couleurs[1:3]) # Affiche ('vert', 'bleu')
-</code></pre>
+<h2>Les opérations</h2>
+<table>
+<thead><tr><th>Écriture</th><th>Résultat avec <code>t = (3, 5, 8)</code></th></tr></thead>
+<tbody>
+<tr><td><code>t[0]</code>, <code>t[-1]</code>, <code>t[0:2]</code></td><td><code>3</code>, <code>8</code>, <code>(3, 5)</code></td></tr>
+<tr><td><code>len(t)</code></td><td><code>3</code></td></tr>
+<tr><td><code>5 in t</code></td><td><code>True</code></td></tr>
+<tr><td><code>t + (13,)</code></td><td><code>(3, 5, 8, 13)</code> : un <strong>nouveau</strong> p-uplet</td></tr>
+<tr><td><code>a, b, c = t</code></td><td><code>a</code> vaut 3, <code>b</code> 5, <code>c</code> 8 (affectation multiple)</td></tr>
+<tr><td><code>for x in t:</code></td><td>parcourt 3, puis 5, puis 8</td></tr>
+</tbody>
+</table>
+<p>Un p-uplet d'un seul élément s'écrit avec une virgule : <code>(5,)</code>.</p>
 </section>
 
-<section>
-<h2 data-icon="🤔">Immuabilité</h2>
-<p>⚠️ Contrairement aux listes, le tuple est <strong>immuable</strong>. On ne peut pas modifier son contenu après sa création. C'est une structure sécurisée pour des données qui ne doivent pas changer (ex: coordonnées GPS, constantes).</p>
+<section class="exemple">
+<h2>Exemple : renvoyer deux valeurs</h2>
+<pre><code class="language-python">def extremes(valeurs):
+    return min(valeurs), max(valeurs)
 
-<h3 style="text-align: center"><strong>📢‼️ On ne peut pas modifier un tuple ‼️📢</strong></h3>
-
-<pre><code class="language-python">triplet = (1, 2, 3)
-# Cette instruction générera une erreur !
-# triplet[0] = 10 
-# TypeError: 'tuple' object does not support item assignment
+notes = [12, 8, 15, 11]
+resultat = extremes(notes)
+print(resultat)
+bas, haut = extremes(notes)
+print(bas, haut)
 </code></pre>
+<pre class="sortie"><code>(8, 15)
+8 15
+</code></pre>
+<p><code>return a, b</code> renvoie <strong>un</strong> p-uplet de deux valeurs, qu'on peut ranger dans deux variables.</p>
 </section>
 
-<section>
-<h2 data-icon="📜">Parcourir un tuple</h2>
-<p>On utilise la boucle <code>for</code> exactement comme avec une liste.</p>
-<p><strong>1. Par élément :</strong> C'est la méthode la plus simple et la plus courante. On parcourt directement chaque valeur du tuple.</p>
-<pre><code class="language-python">notes = (12, 15, 18)
-for n in notes:
-    print(n)
-
-Affiche :
-12
-15
-18
+<section class="exemple">
+<h2>Exemple : coordonnées et échange</h2>
+<pre><code class="language-python">mamoudzou = (-12.78, 45.23)  # (latitude, longitude)
+latitude, longitude = mamoudzou
+print(latitude)
+a, b = 1, 2
+a, b = b, a   # échange sans variable de plus
+print(a, b)
 </code></pre>
-
-<p><strong>2. Par index :</strong> Utile si vous avez besoin de la position de l'élément en plus de sa valeur. On utilise la fonction range(len(t)). </p>
-<pre><code class="language-python">notes = (12, 15, 18)
-for i in range(len(notes)):
-    print(f"Note n°{i} : {notes[i]}")
-
-Affiche :
-Note n°0 : 12
-Note n°1 : 15
-Note n°2 : 18
-</code></pre>
-
-<p><strong>3. Parcours mixte (avec enumerate) :</strong>  La méthode la plus élégante pour avoir à la fois l'index et l'élément. Elle est à privilégier par rapport à la méthode précédente.</p>
-<pre><code class="language-python">notes = (12, 15, 18)
-for i, n in enumerate(notes):
-    print(f"Note n°{i} : {n}")
-
-Affiche :
-Note n°0 : 12
-Note n°1 : 15
-Note n°2 : 18
+<pre class="sortie"><code>-12.78
+2 1
 </code></pre>
 </section>
 
 <section>
-<h2 data-icon="🕵️">Vérifier la présence d'une valeur</h2>
-<p>On utilise l'opérateur <strong>in</strong> pour tester si un élément appartient au tuple.</p>
-<pre><code class="language-python">langages = ("Python", "C", "Java")
-if "Python" in langages:
-    print("Le langage est présent.")
-# Affiche "Le langage est présent."
-if "HTML" not in langages:
-    print("Le langage n'est pas présent.")
-# Affiche "Le langage n'est pas présent."
-if "Python" not in langages:
-    print("Le langage est présent.")
-# Ne fait rien
-if "HTML" in langages:
-    print("Le langage n'est pas présent.")
-# Ne fait rien
+<h2>Les p-uplets nommés</h2>
+<p>Le programme appelle <strong>p-uplet nommé</strong> un p-uplet dont chaque élément a un nom. En Python, on l'écrit avec un dictionnaire :</p>
+<pre><code class="language-python">eleve = {"prenom": "Faïza", "classe": "1G3", "age": 16}
+print(eleve["classe"])
+</code></pre>
+<pre class="sortie"><code>1G3
 </code></pre>
 </section>
 
-<section>
-<h2 data-icon="⚙️">Affectation Multiple (Unpacking)</h2>
-<p>Le tuple permet d'affecter plusieurs variables d'un coup. C'est une fonctionnalité très utilisée en Python, notamment pour retourner plusieurs valeurs avec une fonction.</p>
-
-<p><h3>1. Affectation multiple</h3> </p>
-<pre><code class="language-python">coordonnees = (48.85, 2.35)
-latitude, longitude = coordonnees
-print(latitude)  # 48.85
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Vouloir modifier un élément : <code>t[0] = 10</code> provoque <code>TypeError: 'tuple' object does not support item assignment</code>.</li>
+<li>Oublier la virgule : <code>(5)</code> est l'entier 5, pas un p-uplet.</li>
+<li>Ne pas mettre autant de variables que de valeurs :</li>
+</ul>
+<pre data-erreur><code class="language-python">x, y = (1, 2, 3)
 </code></pre>
-
-<p><h3>2. Échanger deux variables sans variable temporaire</h3></p>
-<pre><code class="language-python">a = 5
-b = 10
-a, b = b, a
-print(a, b) # Affiche 10 5
+<pre class="sortie"><code>ValueError: too many values to unpack (expected 2)
 </code></pre>
+</section>
+
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Un p-uplet : des valeurs entre parenthèses, lues par indice.</li>
+<li>Il ne se modifie pas.</li>
+<li><code>return a, b</code> renvoie un p-uplet ; <code>x, y = f()</code> le déballe.</li>
+<li>Un p-uplet nommé s'écrit avec un dictionnaire en Python.</li>
+</ul>
+</section>
+
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre><code class="language-python">a, b = 3, 8
+a, b = b, a + b
+print(a, b)
+</code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>8 11</code> : la partie droite <code>(8, 3 + 8)</code> est calculée <strong>avant</strong> l'affectation.</div>
+</details>
 </section>
