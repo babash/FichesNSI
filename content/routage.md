@@ -24,7 +24,7 @@ mots_cles: [routage, routeur, table de routage, RIP, OSPF, protocole, métrique,
 <g stroke="#1f2328" stroke-width="1.5"><line x1="30" y1="65" x2="140" y2="20" stroke-dasharray="5 3"/><line x1="140" y1="20" x2="250" y2="65" stroke-dasharray="5 3"/><line x1="30" y1="65" x2="100" y2="110" stroke-width="3"/><line x1="100" y1="110" x2="190" y2="110" stroke-width="3"/><line x1="190" y1="110" x2="250" y2="65" stroke-width="3"/></g>
 <g fill="#fff" stroke="#306998" stroke-width="2"><rect x="15" y="52" width="30" height="26" rx="5"/><rect x="125" y="7" width="30" height="26" rx="5"/><rect x="85" y="97" width="30" height="26" rx="5"/><rect x="175" y="97" width="30" height="26" rx="5"/><rect x="235" y="52" width="30" height="26" rx="5"/></g>
 <g font-family="Lato, Arial, sans-serif" font-weight="700" font-size="13" text-anchor="middle" fill="#1f2328"><text x="30" y="70">A</text><text x="140" y="25">B</text><text x="100" y="115">C</text><text x="190" y="115">D</text><text x="250" y="70">E</text></g>
-<g font-family="Lato, Arial, sans-serif" font-size="10" fill="#1f2328"><text x="40" y="34">10 Mbit/s</text><text x="196" y="34">10 Mbit/s</text><text x="8" y="100">100 Mbit/s</text><text x="118" y="94">100 Mbit/s</text><text x="212" y="96">100 Mbit/s</text></g>
+<g font-family="Lato, Arial, sans-serif" font-size="10" fill="#1f2328"><text x="40" y="34">10 Mbit/s</text><text x="196" y="34">10 Mbit/s</text><text x="8" y="100">100 Mbit/s</text><text x="118" y="94">100 Mbit/s</text><text x="209" y="119">100 Mbit/s</text></g>
 </svg>
 <p>Traits fins pointillés : 10 Mbit/s ; traits épais : 100 Mbit/s. Coûts OSPF des routes A-B-E et A-C-D-E :</p>
 <pre><code class="language-python">def cout(debit):          # débit en bit/s

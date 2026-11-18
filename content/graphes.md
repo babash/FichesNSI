@@ -20,10 +20,10 @@ mots_cles: [graphe, sommet, arête, arc, orienté, pondéré, voisin, degré, ch
 
 <section>
 <h2>Un graphe et ses représentations</h2>
-<svg class="schema" viewBox="0 0 280 156" width="280" height="156" role="img" aria-label="Graphe : Koungou relié à Mamoudzou ; Mamoudzou relié à Ouangani et à Dembéni ; Ouangani relié à Sada ; Sada relié à Chirongui ; Chirongui relié à Dembéni.">
+<svg class="schema" viewBox="0 0 308 156" width="308" height="156" role="img" aria-label="Graphe : Koungou relié à Mamoudzou ; Mamoudzou relié à Ouangani et à Dembéni ; Ouangani relié à Sada ; Sada relié à Chirongui ; Chirongui relié à Dembéni.">
 <g stroke="#306998" stroke-width="1.6"><line x1="150" y1="20" x2="232" y2="55"/><line x1="232" y1="55" x2="125" y2="72"/><line x1="232" y1="55" x2="215" y2="118"/><line x1="125" y1="72" x2="45" y2="105"/><line x1="45" y1="105" x2="128" y2="135"/><line x1="128" y1="135" x2="215" y2="118"/></g>
 <g fill="#ffd43b" stroke="#1f2328"><circle cx="150" cy="20" r="5"/><circle cx="232" cy="55" r="5"/><circle cx="125" cy="72" r="5"/><circle cx="215" cy="118" r="5"/><circle cx="45" cy="105" r="5"/><circle cx="128" cy="135" r="5"/></g>
-<g font-family="Lato, Arial, sans-serif" font-size="11" fill="#1f2328"><text x="158" y="16">Koungou</text><text x="196" y="43">Mamoudzou</text><text x="96" y="64">Ouangani</text><text x="222" y="132">Dembéni</text><text x="8" y="96">Sada</text><text x="96" y="149">Chirongui</text></g>
+<g font-family="Lato, Arial, sans-serif" font-size="11" fill="#1f2328"><text x="158" y="16">Koungou</text><text x="241" y="51">Mamoudzou</text><text x="96" y="64">Ouangani</text><text x="222" y="132">Dembéni</text><text x="8" y="96">Sada</text><text x="96" y="149">Chirongui</text></g>
 </svg>
 <p>Réseau simplifié, sans valeur géographique. Avec un <strong>dictionnaire d'adjacence</strong> (chaque sommet donne la liste de ses voisins) :</p>
 <pre><code class="language-python">g = {"Mamoudzou": ["Koungou", "Dembéni",
