@@ -71,6 +71,7 @@ print(n, x)
 <li>Croire qu'un <code>while</code> s'arrête au milieu du bloc dès que sa condition devient fausse : elle n'est testée qu'au début du tour suivant (ci-dessus, <code>x</code> dépasse 100 et vaut 243).</li>
 <li>Oublier de modifier la variable testée par le <code>while</code> : boucle infinie (arrêt avec Ctrl+C).</li>
 <li>Décaler une ligne qui devait être après la boucle : elle s'exécute à chaque tour.</li>
+<li>Remplacer un <code>elif</code> par un second <code>if</code> : le second test devient indépendant, et son bloc peut s'exécuter aussi.</li>
 </ul>
 </section>
 

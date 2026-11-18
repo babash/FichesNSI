@@ -10,7 +10,7 @@ mots_cles: [ABR, arbre binaire de recherche, clé, recherche, insertion, parcour
 
 <section class="essentiel">
 <h2>L'essentiel</h2>
-<p>Un <strong>arbre binaire de recherche</strong> (ABR) est un arbre binaire où, pour <strong>chaque</strong> nœud :</p>
+<p>Un <strong>arbre binaire de recherche</strong> (ABR) est un arbre binaire où, pour <strong>chaque</strong> nœud (les clés sont ici toutes différentes) :</p>
 <ul>
 <li>toutes les clés du sous-arbre <strong>gauche</strong> sont <strong>plus petites</strong> que la clé du nœud ;</li>
 <li>toutes les clés du sous-arbre <strong>droit</strong> sont <strong>plus grandes</strong>.</li>

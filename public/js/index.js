@@ -14,8 +14,11 @@
   var themes = Array.prototype.slice.call(document.querySelectorAll('.theme'));
   var niveaux = Array.prototype.slice.call(document.querySelectorAll('.niveau'));
 
+  // Les accents séparés par normalize('NFD') : U+0300 à U+036F, écrits par leur code.
+  var ACCENTS = new RegExp('[' + String.fromCharCode(0x300) + '-' + String.fromCharCode(0x36f) + ']', 'g');
+
   function normaliser(texte) {
-    return texte.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    return texte.toLowerCase().normalize('NFD').replace(ACCENTS, '');
   }
 
   cartes.forEach(function (carte) {

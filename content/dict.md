@@ -28,7 +28,7 @@ mots_cles: [dict, dictionnaire, clé, valeur, items, keys, values, get, KeyError
 <tr><td><code>d[cle] = v</code></td><td>ajoute la paire, ou remplace la valeur</td></tr>
 <tr><td><code>cle in d</code></td><td><code>True</code> si la clé existe</td></tr>
 <tr><td><code>d.get(cle, defaut)</code></td><td>la valeur, ou <code>defaut</code> si la clé n'existe pas</td></tr>
-<tr><td><code>del d[cle]</code></td><td>supprime la paire</td></tr>
+<tr><td><code>del d[cle]</code>, <code>d.pop(cle)</code></td><td>supprime la paire (<code>pop</code> renvoie la valeur)</td></tr>
 <tr><td><code>len(d)</code></td><td>le nombre de paires</td></tr>
 <tr><td><code>d.keys()</code> · <code>d.values()</code> · <code>d.items()</code></td><td>les clés · les valeurs · les paires <code>(clé, valeur)</code></td></tr>
 </tbody>

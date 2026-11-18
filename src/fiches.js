@@ -59,6 +59,19 @@ function colorer(html) {
   );
 }
 
+/**
+ * Typographie française : une espace insécable après « et avant », et avant
+ * : ; ? ! (hors des blocs de code, mis de côté avant l'appel). Ainsi un
+ * guillemet ou un deux-points ne se retrouve jamais seul en début de ligne.
+ */
+const INSECABLE = String.fromCharCode(0xa0);
+function espacesInsecables(texte) {
+  return texte
+    .replace(/« /g, '«' + INSECABLE)
+    .replace(/ »/g, INSECABLE + '»')
+    .replace(/ ([:;?!])(?=[\s<])/g, INSECABLE + '$1');
+}
+
 /** Une valeur du front matter, toujours sous forme de liste. */
 function liste(valeur) {
   if (valeur === undefined || valeur === null || valeur === '') return [];
@@ -103,7 +116,7 @@ class FichesManager {
       blocsPre.push(bloc);
       return `<!--pre-${blocsPre.length - 1}-->`;
     });
-    const html = marked.parse(corpsProtege).replace(/<!--pre-(\d+)-->/g, (t, i) => blocsPre[Number(i)]);
+    const html = marked.parse(espacesInsecables(corpsProtege)).replace(/<!--pre-(\d+)-->/g, (t, i) => blocsPre[Number(i)]);
     const title = a.title || 'Titre manquant';
     const niveaux = liste(a.niveau).filter((n) => NIVEAUX[n]);
 

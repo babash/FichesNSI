@@ -22,7 +22,8 @@ mots_cles: [list, liste, tableau, indice, append, pop, compréhension, matrice, 
 <tr><td><code>t[i]</code>, <code>t[-1]</code></td><td>l'élément d'indice <code>i</code>, le dernier</td></tr>
 <tr><td><code>t[i] = v</code></td><td>remplace l'élément d'indice <code>i</code></td></tr>
 <tr><td><code>t.append(v)</code></td><td>ajoute <code>v</code> à la fin</td></tr>
-<tr><td><code>t.pop()</code></td><td>retire le dernier élément et le renvoie</td></tr>
+<tr><td><code>t.insert(i, v)</code></td><td>insère <code>v</code> à l'indice <code>i</code></td></tr>
+<tr><td><code>t.pop()</code>, <code>t.pop(i)</code></td><td>retire le dernier élément, ou celui d'indice <code>i</code>, et le renvoie</td></tr>
 <tr><td><code>len(t)</code>, <code>v in t</code></td><td>la taille ; <code>True</code> si <code>v</code> est présent</td></tr>
 <tr><td><code>t[a:b]</code></td><td>nouveau tableau, de <code>a</code> inclus à <code>b</code> exclu</td></tr>
 <tr><td><code>[0] * 5</code></td><td><code>[0, 0, 0, 0, 0]</code></td></tr>
@@ -30,7 +31,7 @@ mots_cles: [list, liste, tableau, indice, append, pop, compréhension, matrice, 
 <tr><td><code>[x for x in t if x > 0]</code></td><td>les éléments positifs de <code>t</code></td></tr>
 </tbody>
 </table>
-<p>Parcourir : <code>for x in t:</code> (les valeurs) ou <code>for i in range(len(t)):</code> (les indices).</p>
+<p>Parcourir : <code>for x in t:</code> (les valeurs), <code>for i in range(len(t)):</code> (les indices) ou <code>for i, x in enumerate(t):</code> (les deux).</p>
 </section>
 
 <section class="exemple">
@@ -97,7 +98,7 @@ print(g)
 <li><code>append</code> ajoute à la fin et modifie le tableau.</li>
 <li><code>[expression for x in ... if condition]</code> construit un tableau en compréhension.</li>
 <li><code>m[i][j]</code> : ligne <code>i</code>, colonne <code>j</code>.</li>
-<li><code>b = a</code> ne copie pas : <code>list(a)</code> ou <code>a[:]</code> copie.</li>
+<li><code>b = a</code> ne copie pas : <code>list(a)</code>, <code>a[:]</code> ou <code>a.copy()</code> copie.</li>
 </ul>
 </section>
 

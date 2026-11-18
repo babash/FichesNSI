@@ -39,7 +39,7 @@ mots_cles: [variable, affectation, type, int, float, str, bool, opérateur, modu
 </table>
 <p><strong>Comparaisons</strong> (résultat <code>True</code> ou <code>False</code>) : <code>==</code> égal, <code>!=</code> différent, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>.</p>
 <p><strong>Logique</strong> : <code>a and b</code> vrai si les deux sont vrais ; <code>a or b</code> vrai si au moins un est vrai ; <code>not a</code> inverse.</p>
-<p><strong>Raccourcis</strong> : <code>x += 1</code> veut dire <code>x = x + 1</code> (de même <code>-=</code>, <code>*=</code>).</p>
+<p><strong>Raccourcis</strong> : <code>x += 1</code> veut dire <code>x = x + 1</code> (de même <code>-=</code>, <code>*=</code>, <code>/=</code>).</p>
 </section>
 
 <section class="exemple">

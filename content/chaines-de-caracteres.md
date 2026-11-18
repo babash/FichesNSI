@@ -24,10 +24,11 @@ mots_cles: [str, chaîne, string, caractère, indice, tranche, slicing, concaté
 <tbody>
 <tr><td><code>len(s)</code></td><td><code>5</code> (le nombre de caractères)</td></tr>
 <tr><td><code>s[0]</code>, <code>s[-1]</code></td><td><code>'b'</code>, <code>'e'</code></td></tr>
-<tr><td><code>s[1:4]</code> (tranche)</td><td><code>'arg'</code> : de l'indice 1 inclus à 4 exclu</td></tr>
+<tr><td><code>s[1:4]</code>, <code>s[2:]</code> (tranches)</td><td><code>'arg'</code> : de l'indice 1 inclus à 4 exclu ; <code>'rge'</code> : de 2 à la fin</td></tr>
 <tr><td><code>s + "s"</code>, <code>"ha" * 3</code></td><td><code>'barges'</code>, <code>'hahaha'</code></td></tr>
 <tr><td><code>"ar" in s</code></td><td><code>True</code></td></tr>
-<tr><td><code>s.upper()</code>, <code>s.replace("b", "l")</code></td><td><code>'BARGE'</code>, <code>'large'</code></td></tr>
+<tr><td><code>s.upper()</code>, <code>"Sada".lower()</code></td><td><code>'BARGE'</code>, <code>'sada'</code></td></tr>
+<tr><td><code>s.replace("b", "l")</code></td><td><code>'large'</code></td></tr>
 <tr><td><code>"a b c".split(" ")</code></td><td><code>['a', 'b', 'c']</code> (une liste)</td></tr>
 <tr><td><code>"-".join(["a", "b"])</code></td><td><code>'a-b'</code></td></tr>
 <tr><td><code>f"{s} n°{3}"</code></td><td><code>'barge n°3'</code> (chaîne formatée)</td></tr>

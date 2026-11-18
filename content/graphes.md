@@ -14,7 +14,7 @@ mots_cles: [graphe, sommet, arête, arc, orienté, pondéré, voisin, degré, ch
 <ul>
 <li><strong>Voisins</strong> : deux sommets reliés par une arête. Le <strong>degré</strong> d'un sommet est son nombre de voisins.</li>
 <li><strong>Chemin</strong> : une suite de sommets voisins. Un <strong>cycle</strong> est un chemin qui revient à son départ.</li>
-<li>Un graphe est <strong>connexe</strong> si un chemin relie chaque paire de sommets.</li>
+<li>Un graphe est <strong>connexe</strong> si un chemin relie chaque paire de sommets. L'<strong>ordre</strong> d'un graphe est son nombre de sommets.</li>
 </ul>
 </section>
 
