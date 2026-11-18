@@ -42,7 +42,8 @@ mots_cles: [POO, objet, classe, instance, attribut, méthode, constructeur, __in
 b1 = Barge("Barge 1", 300)
 b2 = Barge("Barge 2", 250)
 print(b1.embarquer(120), b1.embarquer(200))
-print(b1.passagers, b1.places_libres(), b2.passagers)
+print(b1.passagers, b1.places_libres(),
+      b2.passagers)
 </code></pre>
 <pre class="sortie"><code>True False
 120 180 0

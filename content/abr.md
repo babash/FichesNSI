@@ -27,10 +27,10 @@ mots_cles: [ABR, arbre binaire de recherche, clé, recherche, insertion, parcour
 <section class="exemple">
 <h2>Recherche</h2>
 <pre><code class="language-python">class Noeud:
-    def __init__(self, valeur, gauche=None, droit=None):
+    def __init__(self, valeur, g=None, d=None):
         self.valeur = valeur
-        self.gauche = gauche
-        self.droit = droit
+        self.gauche = g    # sous-arbre gauche
+        self.droit = d     # sous-arbre droit
 
 def rechercher(a, v):
     if a is None:
@@ -58,7 +58,8 @@ def rechercher(a, v):
 def infixe(a):
     if a is None:
         return []
-    return infixe(a.gauche) + [a.valeur] + infixe(a.droit)
+    g, d = infixe(a.gauche), infixe(a.droit)
+    return g + [a.valeur] + d
 
 abr = None
 for v in [12, 5, 18, 2, 9, 15]:

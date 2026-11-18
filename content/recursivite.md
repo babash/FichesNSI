@@ -24,7 +24,8 @@ mots_cles: [récursivité, récursif, fonction récursive, cas de base, appel r�
 <pre><code class="language-python">def factorielle(n):
     if n == 0:                       # cas de base
         return 1
-    return n * factorielle(n - 1)    # appel plus petit
+    # appel sur un problème plus petit
+    return n * factorielle(n - 1)
 
 print(factorielle(4))
 </code></pre>
@@ -52,7 +53,8 @@ print(factorielle(4))
 <pre data-suite><code class="language-python">def somme(t):
     if len(t) == 0:
         return 0
-    return t[0] + somme(t[1:])   # t[1:] : t sans son premier élément
+    # t[1:] : t sans son premier élément
+    return t[0] + somme(t[1:])
 
 print(somme([3, 8, 1]))
 </code></pre>

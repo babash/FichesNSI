@@ -200,6 +200,27 @@ function scriptPdf(hauteurUtile) {
       Array.prototype.forEach.call(corps.children, function (s) {
         bas = Math.max(bas, s.getBoundingClientRect().bottom - haut);
       });
+      // Lignes de code trop longues : sur papier, elles passeraient à la ligne
+      // (white-space: pre-wrap), et la fin d'un commentaire ressemblerait à du
+      // code. Chaque ligne d'un bloc de code est mesurée. (Les blocs d'affichage
+      // peuvent passer à la ligne : ce sont de vrais messages de Python.)
+      var coupees = [];
+      Array.prototype.forEach.call(corps.querySelectorAll('pre[data-langage]'), function (pre) {
+        var style = getComputedStyle(pre);
+        var place = pre.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        var code = pre.querySelector('code');
+        var mesure = document.createElement('span');
+        mesure.style.whiteSpace = 'pre';
+        mesure.style.position = 'absolute';
+        mesure.style.visibility = 'hidden';
+        code.appendChild(mesure);
+        code.textContent.split(String.fromCharCode(10)).forEach(function (ligne) {
+          mesure.textContent = ligne;
+          if (mesure.getBoundingClientRect().width > place + 0.5) coupees.push(ligne.trim());
+        });
+        code.removeChild(mesure);
+      });
+      fiche.setAttribute('data-coupees', JSON.stringify(coupees));
       fiche.setAttribute('data-zoom', zoom);
       fiche.setAttribute('data-hauteur', Math.round(bas));
       if (deborde(corps)) fiche.setAttribute('data-deborde', 'oui');

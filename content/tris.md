@@ -34,7 +34,8 @@ def tri_insertion(t):
         cle = t[i]
         j = i - 1
         while j >= 0 and t[j] > cle:
-            t[j + 1] = t[j]      # décale vers la droite
+            # décale t[j] vers la droite
+            t[j + 1] = t[j]
             j = j - 1
         t[j + 1] = cle
 

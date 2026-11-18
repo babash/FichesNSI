@@ -66,6 +66,7 @@ class PDFGenerator {
           zoom: Number(el.dataset.zoom),
           hauteur: Number(el.dataset.hauteur),
           deborde: el.dataset.deborde === 'oui',
+          coupees: JSON.parse(el.dataset.coupees || '[]'),
         })));
         resultats.push({ url, fiches, erreurs: erreurs.slice() });
       }

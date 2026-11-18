@@ -22,7 +22,7 @@ mots_cles: [glouton, algorithme glouton, rendu de monnaie, sac à dos, optimisat
 <h2>Exemple : le rendu de monnaie</h2>
 <p>Rendre une somme avec le moins de pièces possible. Choix glouton : la plus grande pièce qui ne dépasse pas ce qui reste à rendre.</p>
 <pre><code class="language-python">def rendu(somme, pieces):
-    """pieces : de la plus grande à la plus petite."""
+    """pieces : par valeur décroissante."""
     resultat = []
     for p in pieces:
         while somme >= p:

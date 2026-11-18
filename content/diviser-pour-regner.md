@@ -22,7 +22,7 @@ mots_cles: [diviser pour régner, tri fusion, fusion, récursivité, merge sort,
 <section class="exemple">
 <h2>Le tri fusion en Python</h2>
 <pre><code class="language-python">def fusion(a, b):
-    """a et b sont triés ; renvoie leur fusion triée."""
+    """Fusionne a et b, déjà triés."""
     resultat = []
     i, j = 0, 0
     while i &lt; len(a) and j &lt; len(b):
@@ -32,13 +32,16 @@ mots_cles: [diviser pour régner, tri fusion, fusion, récursivité, merge sort,
         else:
             resultat.append(b[j])
             j = j + 1
-    return resultat + a[i:] + b[j:]   # ce qui reste
+    # on ajoute ce qui reste de a ou de b
+    return resultat + a[i:] + b[j:]
 
 def tri_fusion(t):
-    if len(t) &lt;= 1:                   # cas de base
+    if len(t) &lt;= 1:    # cas de base
         return t
     m = len(t) // 2
-    return fusion(tri_fusion(t[:m]), tri_fusion(t[m:]))
+    gauche = tri_fusion(t[:m])
+    droite = tri_fusion(t[m:])
+    return fusion(gauche, droite)
 
 print(tri_fusion([38, 27, 43, 3, 9, 82, 10]))
 </code></pre>

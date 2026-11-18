@@ -66,6 +66,12 @@ class StaticSiteGenerator {
           console.log(`[VÉRIF] ${f.slug} : une page, sans réduction (${f.hauteur} px sur ${require('../src/pages').HAUTEUR_UTILE_PX})`);
         }
       }
+      for (const f of r.fiches) {
+        for (const ligne of f.coupees) {
+          echec = true;
+          console.error(`[VÉRIF] ${f.slug} : ligne de code trop longue, elle passerait à la ligne sur papier : ${ligne}`);
+        }
+      }
       for (const e of r.erreurs) {
         echec = true;
         console.error(`[VÉRIF] ${r.url} : ${e}`);

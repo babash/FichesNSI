@@ -38,7 +38,8 @@ mots_cles: [dict, dictionnaire, clé, valeur, items, keys, values, get, KeyError
 <section class="exemple">
 <h2>Exemple : compter des occurrences</h2>
 <p>Combien d'élèves viennent de chaque commune ?</p>
-<pre><code class="language-python">communes = ["Sada", "Ouangani", "Sada", "Bandrélé", "Sada"]
+<pre><code class="language-python">communes = ["Sada", "Ouangani", "Sada",
+            "Bandrélé", "Sada"]
 effectifs = {}
 for c in communes:
     if c in effectifs:

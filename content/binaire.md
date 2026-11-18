@@ -47,7 +47,8 @@ mots_cles: [binaire, base 2, hexadécimal, base 16, base 10, décimal, bit, octe
         return "0"
     bits = ""
     while n > 0:
-        bits = str(n % 2) + bits   # le reste, à gauche
+        # le reste se place à gauche
+        bits = str(n % 2) + bits
         n = n // 2
     return bits
 

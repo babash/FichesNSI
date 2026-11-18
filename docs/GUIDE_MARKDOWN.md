@@ -1,4 +1,4 @@
-### Guide de rédaction d'une fiche (gabarit commun)
+# Guide de rédaction d'une fiche (gabarit commun)
 
 Toutes les fiches suivent le même gabarit : une page A4, deux colonnes, les mêmes encadrés dans le même ordre. Un modèle à copier est dans [exemple-affichage.md](exemple-affichage.md) ; `npm test` vérifie le gabarit et exécute les exemples de code.
 
@@ -46,12 +46,13 @@ Chaque encadré est un `<section>` avec un titre `<h2>`. Les quatre encadrés ob
 - Le bloc `sortie` qui suit un code est **l'affichage réel** du programme : `npm test` exécute le code et compare.
 - Attributs du `<pre>` du code : `data-suite` (reprend les variables des blocs précédents de la fiche), `data-erreur` (le code doit lever une erreur : finir l'affichage par la dernière ligne du message), `data-entree="15"` (ce que l'élève tape), `data-pas-execute`.
 - SQL : `<pre data-base="lycee"><code class="language-sql">`, exécuté sur `tests/bases/lycee.sql` ; affichage : les noms de colonnes, puis une ligne par résultat, séparés par « | ». `data-titre="Résultat"` sur le bloc `sortie` change son étiquette.
-- Pas d'émoji (invisibles dans les PDF), pas de ligne de plus de 60 caractères environ (elle passe à la ligne sur papier), 4 espaces d'indentation.
+- Pas d'émoji (invisibles dans les PDF), 4 espaces d'indentation.
+- Une ligne de code ne dépasse pas **46 caractères environ**, indentation comprise : plus longue, elle passerait à la ligne sur papier, et la fin d'un commentaire ressemblerait à du code. La génération mesure chaque ligne et s'arrête sur une ligne trop longue. Mettre un commentaire long sur la ligne d'avant ; couper une liste ou un appel après une virgule. (Les blocs d'affichage peuvent passer à la ligne : ce sont les vrais messages de Python.)
 - Écrire `&lt;` pour `<` dans le code.
 
 ## Tenir sur une page
 
-- Le texte du PDF est en 9,75 pt et le code en 8,25 pt : on ne réduit pas la police, on raccourcit le texte. La génération affiche la hauteur de chaque fiche (sur 1031 px) ; une fiche trop haute est signalée, et une fiche qui déborde arrête la publication.
+- Le texte du PDF est en 9,75 pt et le code des blocs en 8,25 pt (11 px) : on ne réduit pas la police, on raccourcit le texte. La génération affiche la hauteur de chaque fiche (sur 1031 px) ; une fiche trop haute est signalée, et une fiche qui déborde arrête la publication.
 - Les encadrés remplissent la colonne de gauche, puis celle de droite. Si un grand encadré laisse un vide à gauche, le découper en deux (comme « Recherche » et « Insertion » dans la fiche des ABR).
 - 400 à 550 mots de texte environ, et 2 ou 3 blocs de code.
 

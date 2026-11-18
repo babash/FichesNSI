@@ -26,10 +26,10 @@ mots_cles: [arbre, arbre binaire, nœud, racine, feuille, sous-arbre, taille, ha
 <section class="exemple">
 <h2>Exemple en Python</h2>
 <pre><code class="language-python">class Noeud:
-    def __init__(self, valeur, gauche=None, droit=None):
+    def __init__(self, valeur, g=None, d=None):
         self.valeur = valeur
-        self.gauche = gauche
-        self.droit = droit
+        self.gauche = g    # sous-arbre gauche
+        self.droit = d     # sous-arbre droit
 
 def taille(a):
     if a is None:          # arbre vide
@@ -37,9 +37,11 @@ def taille(a):
     return 1 + taille(a.gauche) + taille(a.droit)
 
 def hauteur(a):
-    if a is None:          # convention : vide → -1
+    if a is None:      # convention : vide, -1
         return -1
-    return 1 + max(hauteur(a.gauche), hauteur(a.droit))
+    g = hauteur(a.gauche)
+    d = hauteur(a.droit)
+    return 1 + max(g, d)
 
 def prefixe(a):
     if a is None:
@@ -47,8 +49,9 @@ def prefixe(a):
     g, d = prefixe(a.gauche), prefixe(a.droit)
     return [a.valeur] + g + d
 
-arbre = Noeud("A", Noeud("B", Noeud("D"), Noeud("E")),
-                   Noeud("C", None, Noeud("F")))
+b = Noeud("B", Noeud("D"), Noeud("E"))
+c = Noeud("C", None, Noeud("F"))
+arbre = Noeud("A", b, c)
 print(taille(arbre), hauteur(arbre))
 print(prefixe(arbre))
 </code></pre>

@@ -53,7 +53,8 @@ print(bas, haut)
 
 <section class="exemple">
 <h2>Exemple : coordonnées et échange</h2>
-<pre><code class="language-python">mamoudzou = (-12.78, 45.23)  # (latitude, longitude)
+<pre><code class="language-python"># Mamoudzou : (latitude, longitude)
+mamoudzou = (-12.78, 45.23)
 latitude, longitude = mamoudzou
 print(latitude)
 a, b = 1, 2
@@ -68,7 +69,8 @@ print(a, b)
 <section>
 <h2>Les p-uplets nommés</h2>
 <p>Le programme appelle <strong>p-uplet nommé</strong> un p-uplet dont chaque élément a un nom. En Python, on l'écrit avec un dictionnaire :</p>
-<pre><code class="language-python">eleve = {"prenom": "Faïza", "classe": "1G3", "age": 16}
+<pre><code class="language-python">eleve = {"prenom": "Faïza", "classe": "1G3",
+         "age": 16}
 print(eleve["classe"])
 </code></pre>
 <pre class="sortie"><code>1G3

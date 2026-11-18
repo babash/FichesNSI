@@ -26,7 +26,8 @@ mots_cles: [graphe, sommet, arête, arc, orienté, pondéré, voisin, degré, ch
 <g font-family="Lato, Arial, sans-serif" font-size="11" fill="#1f2328"><text x="158" y="16">Koungou</text><text x="196" y="43">Mamoudzou</text><text x="96" y="64">Ouangani</text><text x="222" y="132">Dembéni</text><text x="8" y="96">Sada</text><text x="96" y="149">Chirongui</text></g>
 </svg>
 <p>Réseau simplifié, sans valeur géographique. Avec un <strong>dictionnaire d'adjacence</strong> (chaque sommet donne la liste de ses voisins) :</p>
-<pre><code class="language-python">g = {"Mamoudzou": ["Koungou", "Dembéni", "Ouangani"],
+<pre><code class="language-python">g = {"Mamoudzou": ["Koungou", "Dembéni",
+                   "Ouangani"],
      "Koungou": ["Mamoudzou"],
      "Dembéni": ["Mamoudzou", "Chirongui"],
      "Ouangani": ["Mamoudzou", "Sada"],

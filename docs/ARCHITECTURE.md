@@ -24,7 +24,7 @@ Aucune ressource n'est chargée d'un autre site : les polices sont dans `public/
 
 - Les pages `/pdf/<fiche>` et `/pdf/toutes` (construites par `src/pages.js`) mettent chaque fiche dans une boîte A4 : 7 mm de marge en haut, 8 mm sur les côtés, 17 mm en bas, où la mention de l'auteur et de la licence est écrite à 10 mm du bord (`position: fixed`, répétée sur chaque page). La règle `@page { margin: 0 }` de ces pages laisse la mise en page à la boîte.
 - Les encadrés remplissent la colonne de gauche, puis celle de droite (`column-fill: auto`). Une fiche trop longue crée une troisième colonne, hors de la page : un script la détecte, réduit la fiche (jusqu'à 85 %) et le signale.
-- Avant de fabriquer les PDF, `scripts/generate-static.js` ouvre chaque page avec Puppeteer et affiche la hauteur occupée (sur 1031 px). Une fiche réduite est signalée ; une fiche qui déborde encore, une erreur JavaScript ou une ressource introuvable arrêtent la génération.
+- Avant de fabriquer les PDF, `scripts/generate-static.js` ouvre chaque page avec Puppeteer et affiche la hauteur occupée (sur 1031 px). Une fiche réduite est signalée ; une fiche qui déborde encore, une ligne de code qui passerait à la ligne sur papier, une erreur JavaScript ou une ressource introuvable arrêtent la génération.
 - Le texte est en 9,75 pt et le code en 8,25 pt ; les ligatures (« fi », « fl ») sont désactivées, car Chromium les extrait mal des PDF.
 - Les PDF publiés sont fabriqués par le Chromium de Puppeteer 5.5 (Chromium 88). Un Chromium plus récent donne des hauteurs un peu différentes.
 

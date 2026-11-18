@@ -22,16 +22,17 @@ mots_cles: [dichotomie, recherche dichotomique, tableau trié, milieu, intervall
 <section class="exemple">
 <h2>L'algorithme</h2>
 <pre><code class="language-python">def dichotomie(t, v):
-    g, d = 0, len(t) - 1       # zone de recherche : t[g..d]
+    # zone de recherche : de t[g] à t[d]
+    g, d = 0, len(t) - 1
     while g &lt;= d:
-        m = (g + d) // 2       # milieu (division entière)
+        m = (g + d) // 2   # milieu
         if t[m] == v:
             return m
         elif t[m] &lt; v:
             g = m + 1          # v est à droite
         else:
             d = m - 1          # v est à gauche
-    return -1                  # zone vide : absent
+    return -1    # zone vide : absent
 
 t = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
 print(dichotomie(t, 23), dichotomie(t, 7))
