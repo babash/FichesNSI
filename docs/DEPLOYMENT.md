@@ -31,24 +31,25 @@ git push origin main
 
 ## 📋 Les étapes de la publication
 
-Chaque publication suit ces étapes :
+Chaque publication suit ces étapes (les mêmes que « Le processus de build » de [INSTALLER.md](INSTALLER.md)) :
 
 1. **Récupération** du code source (checkout).
-2. **Installation** des dépendances Node.js.
-3. **Génération** du site statique et des PDF, dans le dossier `dist/` (il n'est pas versionné).
-4. **Vérification** des fichiers générés.
-5. **Publication** du dossier `dist/` sur la branche `gh-pages`.
+2. **Installation** de Python 3.13 et des dépendances Node.js (`npm ci`).
+3. **Tests** des fiches (`npm test`) : chaque fiche suit le gabarit commun, et chaque exemple de code est exécuté (Python 3 et SQLite) et comparé à l'affichage écrit dans la fiche.
+4. **Génération** du site statique et des PDF, dans le dossier `dist/` (il n'est pas versionné). Avant les PDF, chaque fiche est ouverte dans Chromium : une fiche réduite pour tenir sur une page est signalée ; une fiche qui déborde encore, une erreur JavaScript ou une ressource introuvable arrêtent la génération, comme une erreur de fabrication d'un PDF.
+5. **Vérification** des fichiers générés, et d'aucune ressource chargée d'un autre site.
+6. **Publication** du dossier `dist/` sur la branche `gh-pages`.
 
 ## ✅ Vérifications automatiques
 
-Le seul workflow du dépôt est `deploy-production.yml` : il ne tourne qu'à la publication (un envoi sur `main`, ou un lancement à la main). Après la génération, il vérifie que ces fichiers existent :
+Le seul workflow du dépôt est `deploy-production.yml` : il ne tourne qu'à la publication (un envoi sur `main`, ou un lancement à la main). Une étape qui échoue (tests, mise en page, PDF) arrête le workflow : le site en ligne ne change pas. Après la génération, il vérifie aussi que ces fichiers existent :
 - ✅ `dist/index.html` (la page d'accueil) ;
 - ✅ `dist/css/fiche-nsi.css` (la feuille de style des fiches) ;
 - ✅ `dist/fiches/liste/index.html` (la page d'une fiche) ;
 - ✅ `dist/fiches/liste.pdf` (le PDF d'une fiche) ;
-- ✅ `dist/fiches/all.pdf` (le PDF de toutes les fiches).
+- ✅ `dist/fiches/all.pdf` (le PDF de toutes les fiches) ;
 
-S'il en manque un, le workflow s'arrête et le site en ligne ne change pas. Les autres fiches ne sont pas vérifiées : si le PDF d'une autre fiche échoue, l'erreur est seulement écrite dans le journal (`[STATIC] Erreur génération PDF …`) et la publication continue sans ce PDF. Le message de fin du workflow (« Tests validés ») ne fait qu'afficher du texte : il ne lance aucun autre essai.
+et qu'aucune page ni feuille de style ne charge de police, de script ou de style d'un autre site (Google Fonts, cdnjs, creativecommons.org). Le message de fin du workflow (« Tests validés ») ne fait qu'afficher du texte : il ne lance aucun autre essai.
 
 ## 🛠️ Commandes utiles
 

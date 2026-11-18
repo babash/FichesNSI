@@ -1,134 +1,114 @@
 ---
-title: "Fiche NSI – Les Dictionnaires en Python"
-footer: "Fiche d'aide-mémoire"
+title: "Fiche NSI – Les dictionnaires en Python"
+niveau: 1re
+theme: "Chaînes et types construits"
+programme: nsi-1re-2019.types-construits.dictionnaires
+ordre: 23
+resume: "Associer des clés à des valeurs : créer, lire, modifier, parcourir avec items(), compter des occurrences."
+mots_cles: [dict, dictionnaire, clé, valeur, items, keys, values, get, KeyError, occurrences, compter]
 ---
 
-<section>
-<h2 data-icon="💡">Définition et Création</h2>
-<p>Un <strong>dictionnaire</strong> est une collection de données <strong>non ordonnée</strong> et <strong>modifiable</strong>. Contrairement aux listes qui utilisent des index numériques, un dictionnaire stocke des données sous forme de paires <strong>clé-valeur</strong>. Chaque clé est unique et sert d'identifiant pour accéder à sa valeur. Un dictionnaire est reconnaissable par les accolades <strong>{}</strong> qui l'entourent.</p>
-<pre><code class="language-python"># Création d'un dictionnaire vide
-mon_dictionnaire = {}
-# Création d'un dictionnaire avec des éléments
-personne = {"nom": "Alice", "age": 25, "ville": "Paris"}
-# Obtenir le nombre d'éléments avec len()
-nombre_elements = len(personne)
-print(f"personne contient {nombre_elements} éléments.") 
-# Affiche "personne contient 3 éléments."
-</code></pre>
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Un <strong>dictionnaire</strong> (type <code>dict</code>) associe des <strong>clés</strong> à des <strong>valeurs</strong>. On lit une valeur grâce à sa clé, jamais grâce à une position (un indice).</p>
+<ul>
+<li>Les clés sont <strong>uniques</strong> et d'un type non modifiable : <code>str</code>, <code>int</code>, <code>tuple</code>.</li>
+<li>Le dictionnaire est <strong>modifiable</strong> (on dit <em>mutable</em>) : on ajoute, change ou supprime des paires.</li>
+<li>Il s'écrit entre accolades : <code>{clé: valeur, clé: valeur}</code>.</li>
+</ul>
 </section>
 
 <section>
-<h2 data-icon="🧭">Accès aux éléments</h2>
-<p>Vous accédez à la valeur d'un dictionnaire en utilisant sa clé. ⚠️ Si la clé n'existe pas, une erreur est générée.</p>
-<pre><code class="language-python">etudiants = {
-  "id_1": "Jean",
-  "id_2": "Marie",
-  "id_3": "Paul"
-}
-# Accès par la clé
-print(etudiants["id_1"])   # Affiche "Jean"
-# .get() avec une valeur par défaut
-print(etudiants.get("id_2", "Non trouvé"))  # "Marie"
-print(etudiants.get("id_4", "Non trouvé"))  # "Non trouvé"
-# Utilisation de la méthode .get() sans valeur par défaut
-print(etudiants.get("id_2"))  # Affiche "Marie"
-#
-</code></pre>
- ⚠️ Remarque : La méthode .get() ne génère pas d'erreur si la clé n'existe pas, elle renvoie None.⚠️
+<h2>Les opérations</h2>
+<table>
+<thead><tr><th>Écriture</th><th>Effet</th></tr></thead>
+<tbody>
+<tr><td><code>d = {}</code></td><td>dictionnaire vide</td></tr>
+<tr><td><code>d[cle]</code></td><td>la valeur associée à <code>cle</code> (erreur si la clé n'existe pas)</td></tr>
+<tr><td><code>d[cle] = v</code></td><td>ajoute la paire, ou remplace la valeur</td></tr>
+<tr><td><code>cle in d</code></td><td><code>True</code> si la clé existe</td></tr>
+<tr><td><code>d.get(cle, defaut)</code></td><td>la valeur, ou <code>defaut</code> si la clé n'existe pas</td></tr>
+<tr><td><code>del d[cle]</code>, <code>d.pop(cle)</code></td><td>supprime la paire (<code>pop</code> renvoie la valeur)</td></tr>
+<tr><td><code>len(d)</code></td><td>le nombre de paires</td></tr>
+<tr><td><code>d.keys()</code> · <code>d.values()</code> · <code>d.items()</code></td><td>les clés · les valeurs · les paires <code>(clé, valeur)</code></td></tr>
+</tbody>
+</table>
 </section>
 
-<section>
-<h2 data-icon="⚙️">Modification du dictionnaire</h2>
-<h3>Ajouter et modifier des éléments</h3>
-<p>Vous pouvez ajouter une nouvelle paire clé-valeur ou modifier la valeur d'une clé existante en utilisant la syntaxe de l'indexation.</p>
-<pre><code class="language-python">voiture = {"marque": "Ford", "modele": "Mustang"}
-# Ajout d'un nouvel élément
-voiture["annee"] = 1964
-print(voiture)
-# {'marque': 'Ford', 'modele': 'Mustang', 'annee': 1964}
-# Modification d'un élément existant
-voiture["modele"] = "Focus"
-print(voiture)
-# {'marque': 'Ford', 'modele': 'Focus', 'annee': 1964}
+<section class="exemple">
+<h2>Exemple : compter des occurrences</h2>
+<p>Combien d'élèves viennent de chaque commune ?</p>
+<pre><code class="language-python">communes = ["Sada", "Ouangani", "Sada",
+            "Bandrélé", "Sada"]
+effectifs = {}
+for c in communes:
+    if c in effectifs:
+        effectifs[c] = effectifs[c] + 1
+    else:
+        effectifs[c] = 1
+print(effectifs)
+for commune, n in effectifs.items():
+    print(commune, ":", n)
 </code></pre>
-<h3>Supprimer des éléments</h3>
-<p><strong>pop(key)</strong> : supprime l'élément correspondant à la clé et renvoie sa valeur.</p>
-<p><strong>del</strong> : supprime l'élément avec la clé spécifiée.</p>
-<pre><code class="language-python">livre = {"titre": "1984", "auteur": "George Orwell", "annee": 1949}
-# Supprimer un élément avec pop()
-annee_supprimee = livre.pop("annee")
-print(f"Élément supprimé : {annee_supprimee}")
-# Élément supprimé : 1949
-print(livre) # {'titre': '1984', 'auteur': 'George Orwell'}
-# Supprimer un élément avec del
-del livre["auteur"]
-print(livre) # {'titre': '1984'}
+<pre class="sortie"><code>{'Sada': 3, 'Ouangani': 1, 'Bandrélé': 1}
+Sada : 3
+Ouangani : 1
+Bandrélé : 1
 </code></pre>
 </section>
 
-<section>
-<h2 data-icon="📜">Parcourir un dictionnaire</h2>
-<p>La boucle for est l'outil principal pour parcourir un dictionnaire.</p>
+<section class="trace">
+<h2>Trace de la boucle</h2>
+<table>
+<thead><tr><th>Tour</th><th><code>c</code></th><th><code>effectifs</code> après le tour</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Sada</td><td><code>{'Sada': 1}</code></td></tr>
+<tr><td>2</td><td>Ouangani</td><td><code>{'Sada': 1, 'Ouangani': 1}</code></td></tr>
+<tr><td>3</td><td>Sada</td><td><code>{'Sada': 2, 'Ouangani': 1}</code></td></tr>
+<tr><td>4</td><td>Bandrélé</td><td>… <code>'Bandrélé': 1</code> est ajouté</td></tr>
+<tr><td>5</td><td>Sada</td><td>… <code>'Sada'</code> passe à 3</td></tr>
+</tbody>
+</table>
+</section>
 
-<p><strong>1. Par les clés :</strong> C'est la méthode la plus simple et la plus courante.</p>
-<pre><code class="language-python">profil = {"nom": "Alex", "age": 30, "poste": "Designer"}
-for cle in profil:
-  print(cle)
-Affiche :
-nom
-age
-poste
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Lire une clé absente : <code>effectifs["Mtsamboro"]</code> provoque <code>KeyError: 'Mtsamboro'</code>. Tester <code>"Mtsamboro" in effectifs</code> avant, ou utiliser <code>get</code>.</li>
+<li>Croire que <code>d[0]</code> donne la première paire : <code>0</code> est cherché comme une <strong>clé</strong> (<code>KeyError: 0</code>).</li>
+<li>Prendre une liste comme clé : <code>TypeError: unhashable type: 'list'</code>. Utiliser un tuple.</li>
+<li>Croire que <code>for x in d</code> parcourt les valeurs : il parcourt les <strong>clés</strong>.</li>
+<li>Croire que <code>d2 = d</code> copie : les deux noms désignent le même dictionnaire. Copier avec <code>d.copy()</code>.</li>
+</ul>
+<pre data-erreur><code class="language-python">notes = {"Anli": 12}
+print(notes.get("Zaïna", "absente"))
+print(notes["Zaïna"])
 </code></pre>
-
-<p><strong>2. Par les valeurs :</strong> On utilise la méthode <strong>.values()</strong> pour parcourir uniquement les valeurs.</p>
-<pre><code class="language-python">profil = {"nom": "Alex", "age": 30, "poste": "Designer"}
-for valeur in profil.values():
-  print(valeur)
-Affiche :
-Alex
-30
-Designer
-</code></pre>
-
-<p><strong>3. Par les paires clé-valeur (avec .items()) :</strong> La méthode la plus élégante pour avoir à la fois la clé et la valeur.</p>
-<pre><code class="language-python">profil = {"nom": "Alex", "age": 30, "poste": "Designer"}
-for cle, valeur in profil.items():
-  print(f"La clé '{cle}' correspond à la valeur '{valeur}'.")
-Affiche :
-La clé 'nom' correspond à la valeur 'Alex'.
-La clé 'age' correspond à la valeur '30'.
-La clé 'poste' correspond à la valeur 'Designer'.
+<pre class="sortie"><code>absente
+KeyError: 'Zaïna'
 </code></pre>
 </section>
 
-<section>
-<h2 data-icon="🤔">Copier un dictionnaire</h2>
-<p>⚠️ Si vous attribuez un dictionnaire à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.</p>
-<p>Pour faire une vraie copie, vous devez utiliser la méthode <strong>.copy()</strong>.</p>
-<pre><code class="language-python">dict_a = {"a": 1, "b": 2}
-dict_b = dict_a  # C'est une référence
-dict_b["c"] = 3
-print(dict_a) # Affiche {'a': 1, 'b': 2, 'c': 3} !
-print(dict_b) # Affiche {'a': 1, 'b': 2, 'c': 3}
-
-dict_c = dict_a.copy()  # Vraie copie avec .copy()
-dict_c["d"] = 4
-print(dict_a) # Affiche {'a': 1, 'b': 2, 'c': 3}
-print(dict_c) # Affiche {'a': 1, 'b': 2, 'c': 3, 'd': 4}
-</code></pre>
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Une clé donne accès à sa valeur : <code>d[cle]</code>.</li>
+<li>Écrire <code>d[cle] = v</code> ajoute <strong>ou</strong> modifie.</li>
+<li><code>in</code> teste la présence d'une <strong>clé</strong>.</li>
+<li>Parcourir les paires : <code>for cle, valeur in d.items():</code></li>
+<li>Le motif « si la clé existe, ajouter 1 ; sinon, mettre 1 » sert à compter.</li>
+</ul>
 </section>
 
-<section>
-<h2 data-icon="🕵️">Vérifier la présence d'une clé</h2>
-<p>L'opérateur <strong>in</strong> est utilisé pour tester si une clé est présente dans un dictionnaire. Il renvoie un booléen : <strong>True</strong> si la clé est trouvée, et <strong>False</strong> sinon.</p>
-<pre><code class="language-python">eleves = {"prenom": "Léo", "matiere": "Maths", "note": 15}
-# Tester si "prenom" est dans le dictionnaire
-if "prenom" in eleves:
-    print("La clé 'prenom' existe dans le dictionnaire.")
-# Affiche "La clé 'prenom' existe dans le dictionnaire."
-# Tester si "age" n'est pas dans le dictionnaire
-if "age" not in eleves:
-    print("La clé 'age' n'est pas présente.")
-# Affiche "La clé 'age' n'est pas présente."
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre><code class="language-python">notes = {"Anli": 12, "Faïza": 15}
+notes["Anli"] = notes["Anli"] + 3
+notes["Zaïna"] = 9
+print(len(notes), notes["Anli"])
 </code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>3 15</code> : la clé <code>"Zaïna"</code> est ajoutée (3 paires) et la note d'Anli passe de 12 à 15.</div>
+</details>
 </section>

@@ -1,113 +1,116 @@
 ---
-title: "Fiche NSI – Les Listes en Python"
-footer: "Fiche d'aide-mémoire"
+title: "Fiche NSI – Les tableaux (listes) en Python"
+niveau: 1re
+theme: "Chaînes et types construits"
+programme: nsi-1re-2019.types-construits.tableaux
+ordre: 22
+resume: "Tableaux indexés : lire, modifier, ajouter, parcourir, construire en compréhension, tableaux de tableaux, copie et référence."
+mots_cles: [list, liste, tableau, indice, append, pop, compréhension, matrice, tableau de tableaux, référence, copie, IndexError]
 ---
 
-<section>
-<h2 data-icon="💡">Définition et Création</h2>
-<p>Une liste est une collection de données ordonnée et modifiable, on parle de <strong>Mutable</strong>. Elle est reconnaissable par les crochets <strong>[]</strong> qui l'entourent. On peut y stocker des éléments de types différents (nombres, chaînes de caractères, booléens, etc.).</p>
-<pre><code class="language-python"># Création d'une liste vide
-ma_liste = []
-# Création d'une liste avec des éléments
-fruits = ["pomme", "banane", "orange"]
-# Obtenir la longueur d'une liste avec len()
-longueur = len(fruits)
-print(f"La liste 'fruits' contient {longueur} éléments.") 
-# Affiche "La liste 'fruits' contient 3 éléments."
-</code></pre>
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Un <strong>tableau</strong> est une suite <strong>ordonnée</strong> de valeurs, repérées par leur <strong>indice</strong> : de <code>0</code> à <code>len(t) - 1</code>. En Python, c'est le type <code>list</code>, écrit entre crochets : <code>[28, 31, 30]</code>.</p>
+<p>Un tableau est <strong>modifiable</strong> (<em>mutable</em>) : on peut changer, ajouter ou retirer des éléments.</p>
 </section>
 
 <section>
-<h2 data-icon="🧭">Indexation et Accès aux éléments</h2>
-<p>Chaque élément d'une liste possède une position, appelée index. En Python, ⚠️<strong>l'indexation commence à 0</strong>.</p>
-<p>On peut aussi utiliser des index négatifs pour accéder aux éléments à partir de la fin de la liste. L'index -1 correspond au dernier élément, -2 à l'avant-dernier, et ainsi de suite.</p>
-<pre><code class="language-python">animaux = ["chien", "chat", "oiseau", "poisson"]
-# Indexation positive
-print(animaux[0])   # Affiche "chien"
-# Indexation négative
-print(animaux[-1])  # Affiche "poisson"
-# Le slicing : Extraire une partie de la liste [début:fin]
-# ⚠️ La fin est exclue !
-print(animaux[1:3]) # Affiche ['chat', 'oiseau']
-print(animaux[2:])  # Affiche ['oiseau', 'poisson']
-</code></pre>
-
+<h2>Les opérations</h2>
+<table>
+<thead><tr><th>Écriture</th><th>Effet</th></tr></thead>
+<tbody>
+<tr><td><code>t[i]</code>, <code>t[-1]</code></td><td>l'élément d'indice <code>i</code>, le dernier</td></tr>
+<tr><td><code>t[i] = v</code></td><td>remplace l'élément d'indice <code>i</code></td></tr>
+<tr><td><code>t.append(v)</code></td><td>ajoute <code>v</code> à la fin</td></tr>
+<tr><td><code>t.insert(i, v)</code></td><td>insère <code>v</code> à l'indice <code>i</code></td></tr>
+<tr><td><code>t.pop()</code>, <code>t.pop(i)</code></td><td>retire le dernier élément, ou celui d'indice <code>i</code>, et le renvoie</td></tr>
+<tr><td><code>len(t)</code>, <code>v in t</code></td><td>la taille ; <code>True</code> si <code>v</code> est présent</td></tr>
+<tr><td><code>t[a:b]</code></td><td>nouveau tableau, de <code>a</code> inclus à <code>b</code> exclu</td></tr>
+<tr><td><code>[0] * 5</code></td><td><code>[0, 0, 0, 0, 0]</code></td></tr>
+<tr><td><code>[x * x for x in range(4)]</code></td><td><code>[0, 1, 4, 9]</code> : tableau <strong>en compréhension</strong></td></tr>
+<tr><td><code>[x for x in t if x > 0]</code></td><td>les éléments positifs de <code>t</code></td></tr>
+</tbody>
+</table>
+<p>Parcourir : <code>for x in t:</code> (les valeurs), <code>for i in range(len(t)):</code> (les indices) ou <code>for i, x in enumerate(t):</code> (les deux).</p>
 </section>
 
-<section>
-<h2 data-icon="⚙️">Modification de la liste</h2>
-<h3>Ajouter des éléments</h3>
-<p><strong>append(element)</strong> : ajoute un élément à la fin de la liste.</br>
-<strong>insert(index, element)</strong> : insère un élément à un index précis.</br>
-<strong>extend(iterable)</strong> : ajoute tous les éléments d'un autre objet (comme une autre liste) à la fin.</p>
-<pre><code class="language-python">jours = ["lundi", "mardi"]
-jours.append("jeudi")
-print(jours) # ['lundi', 'mardi', 'jeudi']
-jours.insert(2, "mercredi")
-print(jours) # ['lundi', 'mardi', 'mercredi', 'jeudi']
-week_end = ["vendredi", "samedi"]
-jours.extend(week_end)
-print(jours)
-# ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi']
+<section class="exemple">
+<h2>Exemple</h2>
+<pre><code class="language-python">releves = [28, 31, 30, 33, 29]   # températures
+releves.append(32)
+print(len(releves), releves[0], releves[-1])
+chauds = [t for t in releves if t >= 31]
+print(chauds)
 </code></pre>
-
-<h3>Supprimer des éléments</h3>
-<strong>pop(index)</strong> : supprime l'élément à l'index donné et le renvoie. Si l'index est omis, il supprime et renvoie le dernier élément.
-<pre><code class="language-python">nombres = [10, 20, 30, 40]
-# Supprimer le dernier élément et le stocker
-element_supprime = nombres.pop()
-print(f"Élément supprimé : {element_supprime}")
-# Élément supprimé : 40
-print(nombres)    # [10, 20, 30]
+<pre class="sortie"><code>6 28 32
+[31, 33, 32]
 </code></pre>
 </section>
 
-<section>
-<h2 data-icon="📜">Parcourir une liste</h2>
-<p>La boucle for est l'outil principal pour parcourir une liste.</p>
-
-<p><h3>1. Par élément :</h3> C'est la méthode la plus simple et la plus courante. On parcourt directement chaque valeur de la liste.</p>
-<pre><code class="language-python">pizzas = ["reine", "calzone"]
-for pizza in pizzas:
-  print(pizza)
-
-Affiche :
-reine
-calzone
+<section class="exemple">
+<h2>Tableau de tableaux (matrice)</h2>
+<pre><code class="language-python">grille = [[1, 2, 3],
+          [4, 5, 6]]
+print(grille[1][2], len(grille), len(grille[0]))
+for ligne in grille:
+    print(sum(ligne))
 </code></pre>
-
-<p><h3>2. Par index :</h3> Utile si vous avez besoin de la position de l'élément en plus de sa valeur. On utilise la fonction range(len(liste)). </p>
-<pre><code class="language-python">pizzas = ["reine", "calzone"]
-for i in range(len(pizzas)):
-  print(f"Pizza n°{i} : {pizzas[i]}")
-
-Affiche :
-Pizza n°0 : reine
-Pizza n°1 : calzone
+<pre class="sortie"><code>6 2 3
+6
+15
 </code></pre>
+<p><code>grille[1][2]</code> : ligne d'indice 1, puis colonne d'indice 2.</p>
+</section>
 
-<p><h3>3. Parcours mixte (avec enumerate) :</h3>  La méthode la plus élégante pour avoir à la fois l'index et l'élément. Elle est à privilégier par rapport à la méthode précédente.</p>
-<pre><code class="language-python">pizzas = ["reine", "calzone"]
-for index, pizza in enumerate(pizzas):
-  print(f"Index {index} correspond à la {pizza}.")
-
-Affiche :
-Index 0 correspond à la reine.
-Index 1 correspond à la calzone.
+<section class="exemple">
+<h2>Référence et copie</h2>
+<pre><code class="language-python">a = [1, 2, 3]
+b = a          # b désigne LE MÊME tableau
+b.append(4)
+c = list(a)    # c est une copie
+c.append(5)
+print(a, c)
+</code></pre>
+<pre class="sortie"><code>[1, 2, 3, 4] [1, 2, 3, 4, 5]
 </code></pre>
 </section>
 
-<section>
-<h2 data-icon="🤔">Copier une liste</h2>
-<p>⚠️ Si vous attribuez une liste à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.</p>
-<p>Pour faire une vraie copie, on peut utiliser la technique du slicing ou la méthode <strong>.copy()</strong>.</p>
-<pre><code class="language-python">liste_a = [1, 2, 3]
-liste_b = liste_a  # C'est une référence, pas une copie !
-liste_b.append(4)
-print(liste_a) # Affiche [1, 2, 3, 4] !
-liste_c = liste_a[:] # Vraie copie avec slicing
-liste_c.append(5)
-print(liste_a) # Affiche [1, 2, 3, 4]
-print(liste_c) # Affiche [1, 2, 3, 4, 5]
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Lire <code>t[len(t)]</code> : <code>IndexError: list index out of range</code>. Le dernier indice est <code>len(t) - 1</code>.</li>
+<li>Croire que <code>b = a</code> copie le tableau (voir ci-dessus).</li>
+<li>Écrire <code>t = t.append(5)</code> : <code>append</code> modifie <code>t</code> et renvoie <code>None</code>, donc <code>t</code> vaut <code>None</code>.</li>
+<li>Créer une matrice avec <code>[[0] * 3] * 2</code> : les deux lignes sont le <strong>même</strong> tableau. Écrire <code>[[0] * 3 for i in range(2)]</code>.</li>
+</ul>
+<pre><code class="language-python">g = [[0] * 3] * 2
+g[0][0] = 9
+print(g)
 </code></pre>
+<pre class="sortie"><code>[[9, 0, 0], [9, 0, 0]]
+</code></pre>
+</section>
+
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Indices de <code>0</code> à <code>len(t) - 1</code>.</li>
+<li><code>append</code> ajoute à la fin et modifie le tableau.</li>
+<li><code>[expression for x in ... if condition]</code> construit un tableau en compréhension.</li>
+<li><code>m[i][j]</code> : ligne <code>i</code>, colonne <code>j</code>.</li>
+<li><code>b = a</code> ne copie pas : <code>list(a)</code>, <code>a[:]</code> ou <code>a.copy()</code> copie.</li>
+</ul>
+</section>
+
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre><code class="language-python">t = [5, 2, 7]
+t[1] = t[0] + t[2]
+t.append(t[1] * 2)
+print(t)
+</code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>[5, 12, 7, 24]</code> : <code>t[1]</code> devient 5 + 7 = 12, puis 24 est ajouté à la fin.</div>
+</details>
 </section>

@@ -1,110 +1,105 @@
 ---
-title: "Fiche NSI – Programmation Orientée Objet (POO)"
-footer: "Fiche d'aide-mémoire"
+title: "Fiche NSI – La programmation orientée objet"
+niveau: Tle
+theme: "Structures de données"
+programme: nsi-tle-2019.structures-de-donnees.poo
+ordre: 10
+resume: "Classe, objet (instance), attributs, méthodes, constructeur __init__ et rôle de self."
+mots_cles: [POO, objet, classe, instance, attribut, méthode, constructeur, __init__, self, interface, encapsulation]
 ---
 
-<section>
-<h2 data-icon="💡">Concept et Définition</h2>
-<p>La <strong>POO</strong> (Programmation Orientée Objet) est un <strong>paradigme de programmation</strong> qui consiste à définir des "objets" informatiques. Au lieu de voir un programme comme une simple suite d'instructions, on le conçoit comme une interaction entre des entités autonomes.</p>
-
-<strong>L'analogie du Robot :</strong>
-
-<p>-><strong>La Classe (Le Plan) :</strong> C'est le schéma technique à l'usine. Il définit que tout robot <em>doit</em> avoir un nom et une batterie, et <em>sait</em> marcher. Ce n'est pas encore un robot réel, c'est un <strong>nouveau type</strong> de donnée que vous créez.</p>
-<p>-><strong>L'Objet ou Instance (Le Robot réel) :</strong> C'est l'unité qui sort de l'usine. On peut créer des "jumeaux" issus du même plan : deux robots identiques au départ, mais qui mèneront leur propre vie.</p>
-<p>-><strong>L'Attribut (Caractéristique) :</strong> Ce sont les propriétés du robot (son nom, son niveau de batterie). Même s'ils ont le même constructeur, un robot peut être à 100% de batterie et l'autre à 10%.</p>
-<p>-><strong>La Méthode (Action) :</strong> Ce sont les capacités du robot (marcher, saluer). C'est une fonction interne à l'objet.</p>
-<p>-><strong>Le Constructeur (L'assemblage) :</strong> C'est l'étape de fabrication qui donne ses caractéristiques initiales au robot au moment où il "naît".</p>
-
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Une <strong>classe</strong> définit un nouveau type : c'est le plan. Un <strong>objet</strong> (une <strong>instance</strong>) est fabriqué à partir de ce plan ; on peut en créer autant qu'on veut, chacun avec ses propres valeurs.</p>
+<table>
+<tbody>
+<tr><td><strong>attribut</strong></td><td>une donnée de l'objet : <code>b1.passagers</code></td></tr>
+<tr><td><strong>méthode</strong></td><td>une fonction de la classe, appelée sur un objet : <code>b1.embarquer(120)</code></td></tr>
+<tr><td><strong>constructeur</strong></td><td>la méthode <code>__init__</code>, appelée automatiquement par <code>Barge(...)</code> : elle donne leur valeur de départ aux attributs</td></tr>
+<tr><td><code>self</code></td><td>le premier paramètre de chaque méthode : l'objet sur lequel la méthode travaille</td></tr>
+</tbody>
+</table>
+<p>L'<strong>interface</strong> d'une classe, ce sont ses méthodes : on s'en sert sans connaître son code (l'<strong>implémentation</strong>).</p>
 </section>
 
-<section>
-<h2 data-icon="🏗️">Le Constructeur</h2>
-<p>En Python, le constructeur s'appelle <code>__init__</code>, il permet de donner une valeur aux attributs d'un objet. Il est appelé à la création de chaque objet. C'est ici que l'on transforme le plan en un objet concret avec ses propres valeurs.</p>
-<pre><code class="language-python">class Robot:
-    def __init__(self, nom, version=1.0):
-        # Initialisation des attributs (état de l'objet)
-        self.nom = nom        # Passé à l'assemblage
-        self.v = version      # Valeur par défaut
-        self.batt = 100       # Valeur fixe au départ
+<section class="exemple">
+<h2>Exemple : une barge (fictive)</h2>
+<pre><code class="language-python">class Barge:
+    def __init__(self, nom, capacite):
+        self.nom = nom
+        self.capacite = capacite
+        self.passagers = 0
+
+    def embarquer(self, n):
+        if self.passagers + n &lt;= self.capacite:
+            self.passagers = self.passagers + n
+            return True
+        return False
+
+    def places_libres(self):
+        return self.capacite - self.passagers
+
+b1 = Barge("Barge 1", 300)
+b2 = Barge("Barge 2", 250)
+print(b1.embarquer(120), b1.embarquer(200))
+print(b1.passagers, b1.places_libres(),
+      b2.passagers)
 </code></pre>
-
-<p>Contrairement aux autres méthodes, on ne l'appelle jamais manuellement (on n'écrit pas <code>robot.__init__()</code>) : Python l'exécute <strong>automatiquement</strong> en arrière-plan au moment précis où l'on crée l'objet (en utilisant le nom de la classe <code>Robot()</code>) pour garantir qu'il naisse dans un état valide.</p>
-</section>
-
-<section>
-<h2 data-icon="🏗️">Création d'objet (Instanciation)</h2>
-<p>Pour créer un objet on utilise <strong>le nom de la classe</strong> comme si c'était une fonction. La fonction véritablement appelée est <code>__init__</code> mais on ne l'appelle jamais explicitement.</p>
-
-<strong>Création d'objet :</strong>
-<p>Création de "jumeaux" (Appel automatique de __init__).</p>
-<pre><code class="language-python">robot_A = Robot("R2D2")
-robot_B = Robot("R2D2")
-robot_C = Robot("C3PO", 4.0)
-</code></pre>
-
-<strong>Indépendance des objets :</strong>
-<p>Ils sont du même type (Robot) mais sont des objets distincts.</p>
-<pre><code class="language-python">robot_A.batt = 20  # Robot_A est déchargé, mais pas Robot_B !
-print(robot_A.batt) # Affiche 20
-print(robot_B.batt) # Affiche 100
+<pre class="sortie"><code>True False
+120 180 0
 </code></pre>
 </section>
 
-
-<section>
-<h2 data-icon="📊">Les Attributs : Accès et Modification</h2>
-<p>Un <strong>attribut</strong> est une variable interne à l'objet qui définit son état. On utilise la notation pointée <code>.</code> pour agir dessus. On trouve usuellement les attributs dans le constructeur (__init__).</p>
-<strong>Accès :</strong>
-<pre><code class="language-python"># Accès à un attribut
-print(mon_robot.nom)  # Affiche "R2D2"
-</code></pre>
-<strong>Modification :</strong>
-<pre><code class="language-python"># Modification d'un attribut
-mon_robot.v = 2.0
-print(mon_robot.v) # Affiche 2.0
-</code></pre>
+<section class="trace">
+<h2>Ce qui se passe</h2>
+<ol>
+<li><code>Barge("Barge 1", 300)</code> crée un objet, puis appelle <code>__init__(objet, "Barge 1", 300)</code> : <code>self</code> est le nouvel objet.</li>
+<li><code>b1.embarquer(120)</code> est traduit en <code>Barge.embarquer(b1, 120)</code> : 0 + 120 ≤ 300, donc 120 passagers.</li>
+<li><code>b1.embarquer(200)</code> : 120 + 200 > 300, l'objet ne change pas.</li>
+<li><code>b2</code> a ses propres attributs : ses passagers restent à 0.</li>
+</ol>
 </section>
 
-<section>
-<h2 data-icon="⚙️">Les Méthodes et leurs Appels</h2>
-<p>Une <strong>méthode</strong> est une fonction définie à l'intérieur d'une classe. Elle représente un comportement de l'objet. Le paramètre <code>self</code> permet à la méthode d'accéder aux attributs de l'objet qui l'appelle.</p>
-
-<strong>Définition de méthode :</strong>
-<pre><code class="language-python">class Robot:
-    def __init__(self, nom, version=1.0):
-        # Initialisation des attributs (état de l'objet)
-        self.nom = nom        # Passé à l'assemblage
-        self.v = version      # Valeur par défaut
-        self.batt = 100       # Valeur fixe au départ
-
-    def saluer(self): # Définition d'une méthode
-        print(f"Bonjour, je suis {self.nom}")
-
-    def charger(self, energie):
-        self.batt += energie
-</code></pre>
-
-<strong>Appel de méthode :</strong>
-<p>Voyons maintenant un exemple d'appel de la méthode.</p>
-<pre><code class="language-python"># Appel de méthode
-mon_robot.saluer()       # Affiche "Bonjour, je suis R2D2"
-mon_robot.charger(20)    # Modifie l'état interne (batterie)
-</code></pre>
-</section>
-
-<section>
-<h2 data-icon="🆔">Comprendre le mot-clé "self"</h2>
-<p><strong>Self</strong> représente l'instance elle-même (le "moi"). C'est le lien entre le code générique de la classe et l'objet spécifique en mémoire.</p>
-<p>-><strong>Pourquoi est-il partout ?</strong> Dans la classe, Python ne sait pas encore quel robot va appeler la méthode. <code>self</code> dit : "Applique cette action sur l'objet qui m'a appelé".</p>
-<p>-><strong>Le paramètre invisible :</strong> Il doit être le <strong>premier argument</strong> de chaque méthode dans la classe, mais on ne lui passe <strong>jamais</strong> de valeur lors de l'appel.</p>
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Oublier <code>self</code> dans la définition : <code>def places_libres():</code> provoque <code>TypeError: Barge.places_libres() takes 0 positional arguments but 1 was given</code>.</li>
+<li>Oublier <code>self.</code> devant un attribut : <code>return capacite - passagers</code> provoque <code>NameError</code>.</li>
+<li>Confondre la classe et l'objet : <code>Barge.passagers</code> provoque <code>AttributeError</code> ; c'est <code>b1.passagers</code>.</li>
+<li>Donner une valeur à <code>self</code> dans l'appel : on écrit <code>b1.embarquer(5)</code>, jamais <code>b1.embarquer(b1, 5)</code>.</li>
+<li>Croire que <code>b3 = b1</code> crée un nouvel objet : <code>b3</code> et <code>b1</code> désignent le même.</li>
 </ul>
-<pre><code class="language-python">def afficher_nom(self):
-    # Sans "self.", Python chercherait une variable locale
-    # Avec "self.", il va chercher l'attribut DANS l'objet.
-    print(f"Mon nom est {self.nom}")
+</section>
+
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li><code>class Nom:</code> définit le type ; <code>Nom(...)</code> crée un objet.</li>
+<li><code>__init__</code> initialise les attributs, avec <code>self.attribut = ...</code>.</li>
+<li>Chaque méthode a <code>self</code> en premier paramètre, mais on ne le donne pas à l'appel.</li>
+<li>Notation pointée : <code>objet.attribut</code> et <code>objet.methode(...)</code>.</li>
+<li>Chaque objet a ses propres valeurs d'attributs.</li>
+</ul>
+</section>
+
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre><code class="language-python">class Compteur:
+    def __init__(self):
+        self.valeur = 0
+
+    def ajouter(self):
+        self.valeur = self.valeur + 1
+
+a = Compteur()
+b = Compteur()
+a.ajouter()
+a.ajouter()
+b.ajouter()
+print(a.valeur, b.valeur)
 </code></pre>
-<p><strong>Self</strong> n'est jamais utilisé en dehors de la classe (en dehors des méthodes).</p>
-<pre><code class="language-python">robot_A.afficher_nom() 
-# Python fait secrètement : afficher_nom(robot_A)
-</code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>2 1</code> : <code>a</code> et <code>b</code> sont deux objets distincts, chacun avec son attribut <code>valeur</code>.</div>
+</details>
 </section>

@@ -1,82 +1,75 @@
 const express = require('express');
+const { pageAccueil, pageFiche } = require('./pages');
 
+/**
+ * Les adresses du serveur local, les mêmes que celles du site publié :
+ * - `/`                       l'accueil ;
+ * - `/fiches/<fiche>/`        la page web d'une fiche ;
+ * - `/fiches/<fiche>.pdf`     son PDF (fabriqué à la demande en local) ;
+ * - `/fiches/all.pdf`         toutes les fiches ;
+ * - `/pdf/<fiche>` et `/pdf/toutes` : les pages qui servent à fabriquer les PDF.
+ */
 class RoutesManager {
   constructor(fichesManager, pdfGenerator, port) {
     this.fichesManager = fichesManager;
     this.pdfGenerator = pdfGenerator;
     this.port = port;
-    this.router = express.Router();
+    this.router = express.Router({ strict: true });
     this.setupRoutes();
   }
 
+  async envoyerPdf(res, url, nom) {
+    try {
+      const pdf = await this.pdfGenerator.generatePDF(url, nom);
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `inline; filename="${nom}"`);
+      res.send(pdf);
+    } catch (error) {
+      console.error(`[PDF] Erreur pour ${nom} :`, error);
+      res.status(500).send('Erreur lors de la génération du PDF.');
+    }
+  }
+
   setupRoutes() {
-    // Page d'accueil
+    const fm = this.fichesManager;
+
     this.router.get('/', (req, res) => {
-      res.render('index', { fiches: this.fichesManager.getAllFiches() });
+      res.send(pageAccueil(fm.parNiveau(), '/', ''));
     });
 
-    // Fiche individuelle
+    // Pages des PDF
+    this.router.get('/pdf/toutes', (req, res) => {
+      res.send(this.pdfGenerator.generateAllFichesHTML(fm.getAllFichesSorted()));
+    });
+    this.router.get('/pdf/:slug', (req, res, next) => {
+      const fiche = fm.getFiche(req.params.slug);
+      if (!fiche) return next();
+      res.send(this.pdfGenerator.generateSingleFicheHTML(fiche));
+    });
+
+    // PDF
+    this.router.get('/fiches/all.pdf', (req, res) => {
+      this.envoyerPdf(res, `http://localhost:${this.port}/pdf/toutes`, 'all.pdf');
+    });
+    this.router.get(/^\/fiches\/([\w-]+)\.pdf$/, (req, res, next) => {
+      const slug = req.params[0];
+      if (!fm.getFiche(slug)) return next();
+      this.envoyerPdf(res, `http://localhost:${this.port}/pdf/${slug}`, `${slug}.pdf`);
+    });
+
+    // Pages web des fiches (avec la barre oblique finale, comme sur le site publié)
     this.router.get('/fiches/:slug', (req, res, next) => {
-      const fiche = this.fichesManager.getFiche(req.params.slug);
+      if (!fm.getFiche(req.params.slug)) return next();
+      res.redirect(301, `/fiches/${req.params.slug}/`);
+    });
+    this.router.get('/fiches/:slug/', (req, res, next) => {
+      const fiche = fm.getFiche(req.params.slug);
       if (!fiche) return next();
-      res.render('fiche', { fiche });
+      res.send(pageFiche(fiche, fm.voisines(fiche.slug), '/'));
     });
 
-    // HTML pour PDF d'une fiche
-    this.router.get('/fiches/:slug/html-for-pdf', (req, res, next) => {
-      const fiche = this.fichesManager.getFiche(req.params.slug);
-      if (!fiche) return next();
-      
-      const html = this.pdfGenerator.generateSingleFicheHTML(fiche);
-      res.send(html);
-    });
-
-    // PDF d'une fiche
-    this.router.get('/fiches/:slug/pdf', async (req, res, next) => {
-      const { slug } = req.params;
-      const fiche = this.fichesManager.getFiche(slug);
-      if (!fiche) return next();
-
-      try {
-        const url = `http://localhost:${this.port}/fiches/${slug}/html-for-pdf`;
-        const pdfBuffer = await this.pdfGenerator.generatePDF(url, `${slug}.pdf`);
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename="${slug}.pdf"`);
-        res.setHeader('Content-Length', pdfBuffer.length);
-        res.send(pdfBuffer);
-      } catch (error) {
-        console.error(`[PDF] Erreur lors de la génération du PDF pour ${slug}:`, error);
-        res.status(500).send('Erreur lors de la génération du PDF.');
-      }
-    });
-
-    // HTML pour PDF de toutes les fiches
-    this.router.get('/fiches/all-html', (req, res) => {
-      const fiches = this.fichesManager.getAllFichesSorted();
-      const html = this.pdfGenerator.generateAllFichesHTML(fiches);
-      res.send(html);
-    });
-
-    // PDF de toutes les fiches
-    this.router.get('/fiches/all/pdf', async (req, res) => {
-      try {
-        const url = `http://localhost:${this.port}/fiches/all-html`;
-        const pdfBuffer = await this.pdfGenerator.generatePDF(url, 'toutes-les-fiches-nsi.pdf');
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="toutes-les-fiches-nsi.pdf"');
-        res.setHeader('Content-Length', pdfBuffer.length);
-        res.send(pdfBuffer);
-      } catch (error) {
-        console.error('[PDF] Erreur lors de la génération du PDF combiné:', error);
-        res.status(500).send('Erreur lors de la génération du PDF combiné.');
-      }
-    });
-
-    // 404 Handler
     this.router.use((req, res) => {
-      res.status(404).send("Désolé, la page que vous cherchez n'existe pas.");
+      res.status(404).send("Désolé, cette page n'existe pas. <a href=\"/\">Retour aux fiches</a>");
     });
   }
 
