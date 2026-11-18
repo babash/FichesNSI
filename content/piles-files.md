@@ -80,7 +80,7 @@ print(f.popleft(), f.popleft())   # défiler
 
 <section>
 <h2>Et la liste chaînée ?</h2>
-<p>Une <strong>liste</strong> (type abstrait) est une suite de <em>cellules</em> : chacune contient une valeur et désigne la suivante. Ajouter en tête est immédiat ; atteindre le <em>n</em>-ième élément demande de passer par les précédents.</p>
+<p>Une <strong>liste chaînée</strong> (une implémentation du type abstrait liste) est une suite de <em>cellules</em> : chacune contient une valeur et désigne la suivante. Ajouter en tête est immédiat ; atteindre le <em>n</em>-ième élément demande de passer par les précédents.</p>
 <pre><code class="language-python">class Cellule:
     def __init__(self, valeur, suivante):
         self.valeur = valeur

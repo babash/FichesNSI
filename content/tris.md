@@ -70,7 +70,7 @@ print(autres)
 <li>Écrire <code>t = tri_selection(t)</code> : la fonction ne renvoie rien, <code>t</code> vaut alors <code>None</code>.</li>
 <li>Échanger en deux lignes, <code>t[i] = t[i_min]</code> puis <code>t[i_min] = t[i]</code> : une valeur est perdue. Écrire <code>t[i], t[i_min] = t[i_min], t[i]</code>.</li>
 <li>Retenir la plus petite <strong>valeur</strong> au lieu de son <strong>indice</strong> : on ne sait plus où faire l'échange.</li>
-<li>Oublier <code>j >= 0</code> dans le <code>while</code> : <code>t[-1]</code> est lu, le résultat est faux.</li>
+<li>Oublier <code>j >= 0</code> dans le <code>while</code> : <code>j</code> devient négatif, <code>t[-1]</code>, <code>t[-2]</code>… sont lus, et le programme s'arrête le plus souvent sur <code>IndexError: list index out of range</code> (ou donne un résultat faux).</li>
 <li>Confondre <code>t.sort()</code> (trie <code>t</code>, renvoie <code>None</code>) et <code>sorted(t)</code> (renvoie un nouveau tableau trié).</li>
 </ul>
 </section>
