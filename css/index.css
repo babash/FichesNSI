@@ -1,318 +1,162 @@
-/* Styles spécifiques pour la page d'accueil */
+/* Accueil des Fiches de révision NSI (après fiche-nsi.css, qui donne les polices,
+   les couleurs, les boutons et le pied de page). */
 
-/* Import des polices utilisées sur le site (accueil seulement) */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Orbitron:wght@600&family=Lato:wght@400;700&display=swap');
-
-/* Variables nécessaires pour l'accueil (indépendant des fiches) */
-:root {
-    --python-blue: #306998;
-    --python-yellow: #FFD43B;
-    --bg-light: #ffffff;
-    --accent-bg: rgba(48, 105, 152, 0.05);
-    --code-bg: #f0f0f0;
-    --yellow-bg: rgba(255, 212, 59, 0.15);
+.accueil-entete,
+.accueil main {
+  max-width: 1120px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-/*
- * On applique la couleur de fond à l'élément HTML.
- * Cela permet au `body` de rester transparent (comme défini dans fiche-nsi.css)
- * pour laisser passer l'image de fond, tout en ayant une couleur de fond
- * générale pour la page d'accueil.
- */
-html {
-    background-color: #f4f7f6; /* Fond général de la page */
+.accueil-entete {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  text-align: center;
 }
 
-body {
-    /* Centrage vertical et horizontal du contenu */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 2rem 1rem; /* Marge de sécurité sur les petits écrans */
-    box-sizing: border-box;
-    /* La couleur de fond est maintenant sur HTML, on s'assure que le body est bien transparent */
-    background-color: transparent;
-    color: #333;
+.accueil h1 { font-size: 2rem; margin-bottom: 0.25rem; }
+
+.accroche {
+  max-width: 46rem;
+  margin: 0 auto 0.9rem;
+  color: var(--encre-2);
 }
 
-.index-container {
-    max-width: 800px;
-    width: 100%;
-    margin: 0; /* Le centrage est géré par le flexbox du body */
-    padding: 2rem;
-    box-sizing: border-box; /* La largeur comprend le padding : pas de débordement sur téléphone */
-    background-color: #ffffff; /* Fond blanc pour le conteneur principal */
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Ombre portée subtile */
-    /* On réinitialise la grille pour la page d'accueil */
-    display: block;
+.outils {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.search-container {
-    margin-bottom: 1.5rem;
+#recherche {
+  flex: 1 1 18rem;
+  max-width: 34rem;
+  min-height: 44px;
+  padding: 0.5rem 0.8rem;
+  font: inherit;
+  border: 2px solid #8a9bb0;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
-#search-bar {
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
+.bouton-plein { background: var(--bleu); color: #fff; border-color: var(--bleu); }
+.bouton-plein:hover { background: var(--bleu-fonce); }
+
+.compte { margin: 0.5rem 0 0; color: var(--encre-2); font-size: 0.9rem; }
+
+.niveau {
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
 }
 
-.list-header {
-    display: flex;
-    flex-wrap: wrap; /* Sur téléphone, « Tout télécharger » passe sous le titre */
-    gap: 0.5rem;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1em;
-    padding: 8px 12px; /* Zone cliquable plus grande */
-    border-bottom: 2px solid #eee;
-    border-radius: 6px; /* Coins arrondis pour l'effet de survol */
-    cursor: pointer; /* Indique que toute la zone est cliquable */
-    transition: background-color 0.2s ease;
-    user-select: none; /* Empêche la sélection du texte sur toute la zone */
+.niveau h2 {
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--bleu);
+  margin: 0.2rem 0 0.5rem;
+  padding: 0.25rem 0.6rem;
+  background: var(--jaune-fond);
+  border-left: 0.4rem solid var(--jaune);
+  border-radius: 4px;
 }
 
-.list-header:hover {
-    background-color: #f0f2f5; /* Effet de survol unifié */
+.theme h3 {
+  font-size: 1rem;
+  margin: 0.9rem 0 0.4rem;
+  color: var(--encre-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.list-header h2 {
-    /* On restaure le style "halo jaune" des fiches pour la cohérence */
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 600;
-    font-size: 1.2rem;
-    color: var(--python-blue);
-    position: relative;
-    padding: 0.5rem 0.75rem 0.5rem 2rem;
-    margin: 0;
-    background: var(--yellow-bg);
-    border-left: 0.5rem solid var(--python-yellow);
-    border-radius: 6px;
-    box-shadow: inset 0 0 0.15em rgba(255, 212, 59, 0.8);
+.cartes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0.6rem;
 }
 
-/* Indicateur flèche pour l'accordéon */
-.list-header h2::before {
-    content: '▼';
-    position: absolute;
-    left: 0.6rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    color: var(--python-blue); /* Rendre la flèche visible sur le fond jaune */
-    transition: transform 0.3s ease-in-out;
+.carte {
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem 0.8rem;
+  background: #fff;
+  border: 1px solid #c4ccd4;
+  border-left: 4px solid var(--bleu);
+  border-radius: 6px;
 }
 
-.list-header.collapsed h2::before {
-    transform: translateY(-50%) rotate(-90deg);
+.carte-titre {
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+.carte-titre:hover { text-decoration: underline; }
+
+.carte-resume {
+  margin: 0.25rem 0 0.4rem;
+  font-size: 0.92rem;
+  color: var(--encre-2);
+  flex: 1;
 }
 
-.download-all-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #0056b3; /* 7:1 sur blanc (#007bff : 3,98:1) */
-    text-decoration: none;
-    font-weight: 500;
-    padding: 6px 10px;
-    border-radius: 5px;
-    transition: background-color 0.2s ease;
+.carte-liens {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
 }
 
-.download-all-link:hover {
-    background-color: #e9ecef;
-    color: #003d80;
+.carte-niveau { color: var(--encre-2); }
+
+.carte-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.3rem 0.55rem;
+  min-height: 36px;
+  box-sizing: border-box;
+  border: 1px solid #9fb3c8;
+  border-radius: 5px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.carte-pdf:hover { background: #eaf1f8; }
+
+.aucune {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  text-align: center;
 }
 
-.download-all-link .icon {
-    width: 18px;
-    height: 18px;
+.horodatage {
+  max-width: 1120px;
+  margin: 0.5rem auto 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--encre-2);
 }
+.horodatage { background: rgba(255, 255, 255, 0.9); border-radius: 4px; padding: 0.2rem; }
 
-.fiche-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out;
-}
-
-.fiche-list.collapsed {
-    max-height: 0; /* Le JS gère la hauteur, !important n'est plus nécessaire */
-}
-
-.fiche-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 12px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.fiche-list li:last-child {
-    border-bottom: none;
-}
-
-.fiche-list .fiche-name {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.fiche-list .fiche-name:hover {
-    color: #0056b3;
-}
-
-.fiche-list .download-link {
-    color: #5a6268;
-    padding: 4px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.fiche-list .download-link:hover {
-    background-color: #e9ecef;
-    color: #343a40;
-}
-
-.fiche-list .download-link .icon {
-    width: 20px;
-    height: 20px;
-}
-
-/* --- Footer Styles --- */
-.index-footer {
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e9ecef;
-    color: #495057;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    font-size: 0.9rem;
-}
-
-.footer-license {
-    text-align: center;
-    line-height: 1.5;
-}
-
-.footer-license a,
-.footer-project a {
-    color: #0056b3; /* 7:1 sur blanc (#007bff : 3,98:1) */
-    font-weight: 500;
-    text-decoration: none;
-}
-
-.footer-license a:hover,
-.footer-project a:hover {
-    text-decoration: underline;
-}
-
-.license-icon {
-    max-width: 1em;
-    max-height: 1em;
-    margin-left: .2em;
-    vertical-align: text-bottom; /* Aligne mieux les icônes avec le texte */
-}
-
-.footer-project {
-    margin-top: 0.75rem;
-}
-
-.footer-link-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    color: #0056b3;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.footer-link-item:hover {
-    color: #003d80;
-}
-
-.footer-link-item .icon {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
-}
-
-/* --- Masonry Layout Styles --- */
-.masonry-wrapper {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-}
-
-.masonry-column {
-    flex: 1;
-    min-width: 0; /* Permet aux colonnes de se rétrécir */
-}
-
-.masonry-column section {
-    margin-bottom: 20px;
-    break-inside: avoid; /* Évite de couper les sections entre les colonnes */
-}
-
-/* Responsive masonry */
-@media (max-width: 768px) {
-    .masonry-wrapper {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .masonry-column {
-        width: 100%;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-    .masonry-wrapper {
-        gap: 15px;
-    }
-}
-
-@media (min-width: 1025px) {
-    .masonry-wrapper {
-        gap: 25px;
-    }
-}
-
-/* --- Timestamp Styles --- */
-.footer-timestamp {
-    margin-top: 0.5rem;
-    text-align: center;
-}
-
-.timestamp {
-    display: inline-block; /* Sur deux lignes au besoin, le cadre entoure tout le texte */
-    font-size: 0.8rem;
-    color: #495057; /* 7,8:1 sur #f8f9fa (#6c757d : 4,45:1) */
-    font-style: italic;
-    background-color: #f8f9fa;
-    padding: 0.3rem 0.6rem;
-    border-radius: 4px;
-    border: 1px solid #e9ecef;
-}
-/* Téléphone : moins de marges autour du contenu */
 @media (max-width: 480px) {
-    body {
-        padding: 1rem 0.5rem;
-    }
+  .accueil-entete, .niveau { padding-left: 0.75rem; padding-right: 0.75rem; }
+  .accueil h1 { font-size: 1.45rem; }
+  .cartes { grid-template-columns: 1fr; }
+  .outils .bouton { width: 100%; justify-content: center; }
+}
 
-    .index-container {
-        padding: 1.25rem 1rem;
-    }
+@media print {
+  .outils, .compte, .evitement { display: none; }
+  .carte { break-inside: avoid; }
 }

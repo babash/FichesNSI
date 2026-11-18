@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diviser pour régner : le tri fusion · Fiches de révision NSI</title>
+  <meta name="description" content="Diviser un problème en sous-problèmes, les résoudre récursivement, combiner : le tri fusion et son coût en n log n.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../css/fiche-nsi.css">
+</head>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/diviser-pour-regner.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">Terminale NSI · Algorithmique</p>
+      <h1>Diviser pour régner : le tri fusion</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>La méthode <strong>diviser pour régner</strong> a trois étapes :</p>
+<ol>
+<li><strong>diviser</strong> le problème en sous-problèmes plus petits, du même type ;</li>
+<li><strong>régner</strong> : résoudre chaque sous-problème, souvent par un appel récursif ;</li>
+<li><strong>combiner</strong> les solutions des sous-problèmes.</li>
+</ol>
+<p>Le <strong>tri fusion</strong> coupe le tableau en deux moitiés, trie chaque moitié, puis <strong>fusionne</strong> les deux moitiés triées. Son coût est de l'ordre de <em>n</em> log<sub>2</sub>(<em>n</em>) : pour un million d'éléments, environ 20 millions d'opérations, contre environ 500 milliards de comparaisons pour un tri par sélection.</p>
+</section>
+
+<section class="exemple">
+<h2>Le tri fusion en Python</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fusion</span>(<span class="hljs-params">a, b</span>):
+    <span class="hljs-string">&quot;&quot;&quot;Fusionne a et b, déjà triés.&quot;&quot;&quot;</span>
+    resultat = []
+    i, j = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> i &lt; <span class="hljs-built_in">len</span>(a) <span class="hljs-keyword">and</span> j &lt; <span class="hljs-built_in">len</span>(b):
+        <span class="hljs-keyword">if</span> a[i] &lt;= b[j]:
+            resultat.append(a[i])
+            i = i + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            resultat.append(b[j])
+            j = j + <span class="hljs-number">1</span>
+    <span class="hljs-comment"># on ajoute ce qui reste de a ou de b</span>
+    <span class="hljs-keyword">return</span> resultat + a[i:] + b[j:]
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">tri_fusion</span>(<span class="hljs-params">t</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(t) &lt;= <span class="hljs-number">1</span>:    <span class="hljs-comment"># cas de base</span>
+        <span class="hljs-keyword">return</span> t
+    m = <span class="hljs-built_in">len</span>(t) // <span class="hljs-number">2</span>
+    gauche = tri_fusion(t[:m])
+    droite = tri_fusion(t[m:])
+    <span class="hljs-keyword">return</span> fusion(gauche, droite)
+
+<span class="hljs-built_in">print</span>(tri_fusion([<span class="hljs-number">38</span>, <span class="hljs-number">27</span>, <span class="hljs-number">43</span>, <span class="hljs-number">3</span>, <span class="hljs-number">9</span>, <span class="hljs-number">82</span>, <span class="hljs-number">10</span>]))
+</code></pre>
+<pre class="sortie" tabindex="0"><code>[3, 9, 10, 27, 38, 43, 82]
+</code></pre>
+</section>
+
+<section class="trace">
+<h2>Trace</h2>
+<table>
+<thead><tr><th>Étape</th><th>Tableaux</th></tr></thead>
+<tbody>
+<tr><td>diviser</td><td>[38, 27, 43] · [3, 9, 82, 10]</td></tr>
+<tr><td>diviser</td><td>[38] · [27, 43] · [3, 9] · [82, 10]</td></tr>
+<tr><td>diviser</td><td>[38] · [27] · [43] · [3] · [9] · [82] · [10]</td></tr>
+<tr><td>fusionner</td><td>[38] · [27, 43] · [3, 9] · [10, 82]</td></tr>
+<tr><td>fusionner</td><td>[27, 38, 43] · [3, 9, 10, 82]</td></tr>
+<tr><td>fusionner</td><td>[3, 9, 10, 27, 38, 43, 82]</td></tr>
+</tbody>
+</table>
+<p>Il y a environ log<sub>2</sub>(<em>n</em>) niveaux, et chaque niveau de fusions coûte environ <em>n</em> : d'où <em>n</em> log<sub>2</sub>(<em>n</em>).</p>
+</section>
+
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Oublier le cas de base : <code>RecursionError</code>.</li>
+<li>Oublier, à la fin de la fusion, les éléments qui restent dans <code>a</code> ou dans <code>b</code> : ils sont perdus.</li>
+<li>Fusionner des tableaux qui ne sont pas triés : le résultat ne l'est pas non plus.</li>
+<li>Couper avec <code>len(t) / 2</code> : un flottant ne peut pas servir d'indice.</li>
+<li>Croire que « diviser » suffit : sans l'étape « combiner », rien n'est trié.</li>
+</ul>
+</section>
+
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Diviser, régner (récursivement), combiner.</li>
+<li>Tri fusion : couper en deux, trier les moitiés, fusionner.</li>
+<li>La fusion de deux tableaux triés se fait en un seul parcours.</li>
+<li>Coût en <em>n</em> log <em>n</em>, bien meilleur que <em>n</em>² pour les grands tableaux.</li>
+<li>La recherche dichotomique est aussi un « diviser pour régner ».</li>
+</ul>
+</section>
+
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Que renvoie <code>fusion([1, 4, 9], [2, 3, 10])</code> ? Combien de comparaisons <code>a[i] &lt;= b[j]</code> sont faites ?</p>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>[1, 2, 3, 4, 9, 10]</code>, en 5 comparaisons ; 10 est ensuite ajouté sans comparaison.</div>
+</details>
+</section>
+
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/abr/" rel="prev"><span class="sens">← Fiche précédente</span>Les arbres binaires de recherche</a>
+    <span></span>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
+  <script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
+</body>
+</html>

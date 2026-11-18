@@ -2,185 +2,143 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiche NSI – Les Tuples en Python</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les p-uplets (tuples) en Python · Fiches de révision NSI</title>
+  <meta name="description" content="Créer un p-uplet, lire ses éléments, l'affectation multiple, une fonction qui renvoie plusieurs valeurs, les p-uplets nommés.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../css/fiche-nsi.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
 </head>
-<body>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/tuple.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">1re NSI · Chaînes et types construits</p>
+      <h1>Les p-uplets (tuples) en Python</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Un <strong>p-uplet</strong> (type <code>tuple</code>) est une suite <strong>ordonnée</strong> de valeurs, écrite entre parenthèses : <code>(12, "Sada", True)</code>. Les valeurs peuvent être de types différents.</p>
+<ul>
+<li>On lit ses éléments par leur <strong>indice</strong>, comme une liste : <code>t[0]</code>, <code>t[-1]</code>.</li>
+<li>Il est <strong>immuable</strong> : on ne peut ni ajouter, ni retirer, ni changer un élément.</li>
+<li>Usages : des coordonnées, une date, une fonction qui <strong>renvoie plusieurs valeurs</strong>, une clé de dictionnaire.</li>
+</ul>
+</section>
 
-<main>
-  <header><h1>Les Tuples en Python</h1></header>
-  <article class="container">
-    <div class="columns-wrapper">
-      <div class="column" id="column-left">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-      <div class="column" id="column-right">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-    </div>
-    <section>
-<h2 data-icon="💡">Définition et Création</h2>
-<p>Un <strong>tuple</strong> (ou p-uplet) est une collection de données <strong>ordonnée</strong> mais <strong>immuable</strong> (non modifiable). Une fois créé, on ne peut ni ajouter, ni supprimer, ni modifier ses éléments. Il est reconnaissable par les parenthèses <strong>()</strong> qui l'entourent.</p>
-<pre><code class="language-python"># Création d'un tuple vide
-mon_tuple = ()
-# Création d'un tuple avec des éléments
-point = (10, 20)
-# Un tuple peut contenir des types différents
-personne = ("Bob", 18, True)
-# Obtenir le nombre d'éléments avec len()
-taille = len(personne)
-print(f"Le tuple contient {taille} éléments.") 
-# Affiche "Le tuple contient 3 éléments."
+<section>
+<h2>Les opérations</h2>
+<table>
+<thead><tr><th>Écriture</th><th>Résultat avec <code>t = (3, 5, 8)</code></th></tr></thead>
+<tbody>
+<tr><td><code>t[0]</code>, <code>t[-1]</code>, <code>t[0:2]</code></td><td><code>3</code>, <code>8</code>, <code>(3, 5)</code></td></tr>
+<tr><td><code>len(t)</code></td><td><code>3</code></td></tr>
+<tr><td><code>5 in t</code></td><td><code>True</code></td></tr>
+<tr><td><code>t + (13,)</code></td><td><code>(3, 5, 8, 13)</code> : un <strong>nouveau</strong> p-uplet</td></tr>
+<tr><td><code>a, b, c = t</code></td><td><code>a</code> vaut 3, <code>b</code> 5, <code>c</code> 8 (affectation multiple)</td></tr>
+<tr><td><code>for x in t:</code></td><td>parcourt 3, puis 5, puis 8</td></tr>
+</tbody>
+</table>
+<p>Un p-uplet d'un seul élément s'écrit avec une virgule : <code>(5,)</code>.</p>
+</section>
+
+<section class="exemple">
+<h2>Exemple : renvoyer deux valeurs</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">extremes</span>(<span class="hljs-params">valeurs</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">min</span>(valeurs), <span class="hljs-built_in">max</span>(valeurs)
+
+notes = [<span class="hljs-number">12</span>, <span class="hljs-number">8</span>, <span class="hljs-number">15</span>, <span class="hljs-number">11</span>]
+resultat = extremes(notes)
+<span class="hljs-built_in">print</span>(resultat)
+bas, haut = extremes(notes)
+<span class="hljs-built_in">print</span>(bas, haut)
 </code></pre>
-<p>⚠️ <strong>Attention :</strong> Pour créer un tuple avec <strong>un seul</strong> élément, il faut obligatoirement mettre une virgule : <code>mon_tuple = (5,)</code></p>
-</section>
-
-<section>
-<h2 data-icon="🧭">Indexation et Accès aux éléments</h2>
-<p>Comme pour les listes et les chaînes, chaque élément possède un index. ⚠️<strong>L'indexation commence à 0</strong>.</p>
-<pre><code class="language-python">couleurs = ("rouge", "vert", "bleu", "jaune")
-# Accès par index positif
-print(couleurs[0])   # Affiche "rouge"
-# Accès par index négatif
-print(couleurs[-1])  # Affiche "jaune"
-# Le slicing : Extraire une partie [début:fin]
-print(couleurs[1:3]) # Affiche ('vert', 'bleu')
+<pre class="sortie" tabindex="0"><code>(8, 15)
+8 15
 </code></pre>
+<p><code>return a, b</code> renvoie <strong>un</strong> p-uplet de deux valeurs, qu'on peut ranger dans deux variables.</p>
 </section>
 
-<section>
-<h2 data-icon="🤔">Immuabilité</h2>
-<p>⚠️ Contrairement aux listes, le tuple est <strong>immuable</strong>. On ne peut pas modifier son contenu après sa création. C'est une structure sécurisée pour des données qui ne doivent pas changer (ex: coordonnées GPS, constantes).</p>
-
-<h3 style="text-align: center"><strong>📢‼️ On ne peut pas modifier un tuple ‼️📢</strong></h3>
-
-<pre><code class="language-python">triplet = (1, 2, 3)
-# Cette instruction générera une erreur !
-# triplet[0] = 10 
-# TypeError: 'tuple' object does not support item assignment
+<section class="exemple">
+<h2>Exemple : coordonnées et échange</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-comment"># Mamoudzou : (latitude, longitude)</span>
+mamoudzou = (-<span class="hljs-number">12.78</span>, <span class="hljs-number">45.23</span>)
+latitude, longitude = mamoudzou
+<span class="hljs-built_in">print</span>(latitude)
+a, b = <span class="hljs-number">1</span>, <span class="hljs-number">2</span>
+a, b = b, a   <span class="hljs-comment"># échange sans variable de plus</span>
+<span class="hljs-built_in">print</span>(a, b)
 </code></pre>
-</section>
-
-<section>
-<h2 data-icon="📜">Parcourir un tuple</h2>
-<p>On utilise la boucle <code>for</code> exactement comme avec une liste.</p>
-<p><strong>1. Par élément :</strong> C'est la méthode la plus simple et la plus courante. On parcourt directement chaque valeur du tuple.</p>
-<pre><code class="language-python">notes = (12, 15, 18)
-for n in notes:
-    print(n)
-
-<p>Affiche :
-12
-15
-18
-</code></pre></p>
-<p><strong>2. Par index :</strong> Utile si vous avez besoin de la position de l'élément en plus de sa valeur. On utilise la fonction range(len(t)). </p>
-<pre><code class="language-python">notes = (12, 15, 18)
-for i in range(len(notes)):
-    print(f"Note n°{i} : {notes[i]}")
-
-<p>Affiche :
-Note n°0 : 12
-Note n°1 : 15
-Note n°2 : 18
-</code></pre></p>
-<p><strong>3. Parcours mixte (avec enumerate) :</strong>  La méthode la plus élégante pour avoir à la fois l'index et l'élément. Elle est à privilégier par rapport à la méthode précédente.</p>
-<pre><code class="language-python">notes = (12, 15, 18)
-for i, n in enumerate(notes):
-    print(f"Note n°{i} : {n}")
-
-<p>Affiche :
-Note n°0 : 12
-Note n°1 : 15
-Note n°2 : 18
-</code></pre></p>
-</section>
-
-<section>
-<h2 data-icon="🕵️">Vérifier la présence d'une valeur</h2>
-<p>On utilise l'opérateur <strong>in</strong> pour tester si un élément appartient au tuple.</p>
-<pre><code class="language-python">langages = ("Python", "C", "Java")
-if "Python" in langages:
-    print("Le langage est présent.")
-# Affiche "Le langage est présent."
-if "HTML" not in langages:
-    print("Le langage n'est pas présent.")
-# Affiche "Le langage n'est pas présent."
-if "Python" not in langages:
-    print("Le langage est présent.")
-# Ne fait rien
-if "HTML" in langages:
-    print("Le langage n'est pas présent.")
-# Ne fait rien
+<pre class="sortie" tabindex="0"><code>-12.78
+2 1
 </code></pre>
 </section>
 
 <section>
-<h2 data-icon="⚙️">Affectation Multiple (Unpacking)</h2>
-<p>Le tuple permet d'affecter plusieurs variables d'un coup. C'est une fonctionnalité très utilisée en Python, notamment pour retourner plusieurs valeurs avec une fonction.</p>
-
-<p><h3>1. Affectation multiple</h3> </p>
-<pre><code class="language-python">coordonnees = (48.85, 2.35)
-latitude, longitude = coordonnees
-print(latitude)  # 48.85
+<h2>Les p-uplets nommés</h2>
+<p>Le programme appelle <strong>p-uplet nommé</strong> un p-uplet dont chaque élément a un nom. En Python, on l'écrit avec un dictionnaire :</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">eleve = {<span class="hljs-string">&quot;prenom&quot;</span>: <span class="hljs-string">&quot;Faïza&quot;</span>, <span class="hljs-string">&quot;classe&quot;</span>: <span class="hljs-string">&quot;1G3&quot;</span>,
+         <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">16</span>}
+<span class="hljs-built_in">print</span>(eleve[<span class="hljs-string">&quot;classe&quot;</span>])
 </code></pre>
-
-<p><h3>2. Échanger deux variables sans variable temporaire</h3></p>
-<pre><code class="language-python">a = 5
-b = 10
-a, b = b, a
-print(a, b) # Affiche 10 5
+<pre class="sortie" tabindex="0"><code>1G3
 </code></pre>
 </section>
 
-  </article>
-</main>
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Vouloir modifier un élément : <code>t[0] = 10</code> provoque <code>TypeError: 'tuple' object does not support item assignment</code>.</li>
+<li>Oublier la virgule : <code>(5)</code> est l'entier 5, pas un p-uplet.</li>
+<li>Ne pas mettre autant de variables que de valeurs :</li>
+</ul>
+<pre data-erreur class="code" tabindex="0" data-langage="python"><code class="hljs language-python">x, y = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)
+</code></pre>
+<pre class="sortie" tabindex="0"><code>ValueError: too many values to unpack (expected 2)
+</code></pre>
+</section>
 
-<footer class="fiche-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="license noopener noreferrer">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" target="_blank" rel="noopener noreferrer">Code source sur GitHub</a></footer>
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Un p-uplet : des valeurs entre parenthèses, lues par indice.</li>
+<li>Il ne se modifie pas.</li>
+<li><code>return a, b</code> renvoie un p-uplet ; <code>x, y = f()</code> le déballe.</li>
+<li>Un p-uplet nommé s'écrit avec un dictionnaire en Python.</li>
+</ul>
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">a, b = <span class="hljs-number">3</span>, <span class="hljs-number">8</span>
+a, b = b, a + b
+<span class="hljs-built_in">print</span>(a, b)
+</code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>8 11</code> : la partie droite <code>(8, 3 + 8)</code> est calculée <strong>avant</strong> l'affectation.</div>
+</details>
+</section>
+
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/chaines-de-caracteres/" rel="prev"><span class="sens">← Fiche précédente</span>Les chaînes de caractères en Python</a>
+    <a href="../../fiches/liste/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>Les tableaux (listes) en Python</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
   <script>
-// Script pour répartir intelligemment les sections en deux colonnes
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.querySelector('.container');
-  const leftColumn = document.getElementById('column-left');
-  const rightColumn = document.getElementById('column-right');
-  
-  // Récupérer toutes les sections
-  const sections = Array.from(container.querySelectorAll('section'));
-  
-  // Fonction pour calculer la hauteur d'une colonne
-  function getColumnHeight(column) {
-    return column.scrollHeight;
-  }
-  
-  // Répartir les sections de manière équilibrée
-  let leftHeight = 0;
-  let rightHeight = 0;
-  
-  sections.forEach((section, index) => {
-    // Mesurer temporairement la section
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.visibility = 'hidden';
-    tempDiv.appendChild(section.cloneNode(true));
-    document.body.appendChild(tempDiv);
-    const sectionHeight = tempDiv.scrollHeight;
-    document.body.removeChild(tempDiv);
-    
-    // Ajouter la section à la colonne la plus courte
-    if (leftHeight <= rightHeight) {
-      leftColumn.appendChild(section);
-      leftHeight += sectionHeight;
-    } else {
-      rightColumn.appendChild(section);
-      rightHeight += sectionHeight;
-    }
-  });
-});
-</script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
 </body>
 </html>

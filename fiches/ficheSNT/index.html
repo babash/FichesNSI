@@ -2,221 +2,133 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiche NSI – Les structures de contrôle élémentaires en Python</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les conditions et les boucles en Python · Fiches de révision NSI</title>
+  <meta name="description" content="Les instructions conditionnelles if, elif, else, les boucles for et while, range, et la trace d'une boucle.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../css/fiche-nsi.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
 </head>
-<body>
-
-<main>
-  <header><h1>Les structures de contrôle élémentaires en Python</h1></header>
-  <article class="container">
-    <div class="columns-wrapper">
-      <div class="column" id="column-left">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-      <div class="column" id="column-right">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-    </div>
-    <section>
-<h2 data-icon="🚦">Les Conditions (Structures Conditionnelles)</h2>
-<p>Les conditions permettent d'exécuter un code <strong>uniquement si une expression est vraie</strong>.</p>
-
-<h3 data-icon="➡️">Structure <code>if</code> (Si)</h3>
-<p>Exécute un bloc de code si la condition est vraie.</p>
-<pre><code class="language-python">nombre = 10
-if nombre > 5:
-    print("Le nombre est supérieur à 5.")
-# Affiche : Le nombre est supérieur à 5.
-</code></pre>
-
-<p><strong>Explication :</strong> L'instruction <code>print</code> est exécutée car la condition <code>nombre > 5</code> est vraie.</p>
-
-<h3 data-icon="⚖️">Structure <code>if</code>...<code>else</code> (Si...Sinon)</h3>
-<p>Exécute un premier bloc de code si la condition est vraie, <strong>sinon</strong> exécute un second bloc de code.</p>
-<pre><code class="language-python">age = 15
-if age >= 18:
-    print("Vous êtes majeur.")
-else:
-    print("Vous êtes mineur.")
-# Affiche : Vous êtes mineur.
-</code></pre>
-
-<p><strong>Explication :</strong> La condition <code>age &gt;= 18</code> est fausse, donc le code sous le <code>else</code> est exécuté.</p>
-
-<h3 data-icon="🔗">Structure <code>if</code>...<code>elif</code>...<code>else</code> (Si...Sinon Si...Sinon)</h3>
-<p>Permet de tester <strong>plusieurs conditions</strong> en séquence.</p>
-<pre><code class="language-python">note = 12
-if note >= 15:
-    print("Très bien")
-elif note >= 10:
-    print("Bien")
-else:
-    print("Insuffisant")
-# Affiche : Bien
-</code></pre>
-
-<p><strong>Explication :</strong> La première condition (<code>&gt;= 15</code>) est fausse. La deuxième (<code>elif note &gt;= 10</code>) est vraie, donc le code sous le <code>elif</code> est exécuté et le reste est ignoré.</p>
-
-<pre><code class="language-python">points = 80
-if points >= 50:
-    print("A. Vous avez la moyenne.")
-elif points >= 75:
-    print("B. Vous avez un bon score.")
-
-if points > 70:
-    print("C. Votre score dépasse 70.")
-
-# Résultat pour points = 80 :
-# A. Vous avez la moyenne.
-# C. Votre score dépasse 70.
-</code></pre>
-
-<p><strong>Explication :</strong></p>
-<p>-><strong>Ligne A (Active) :</strong> Le programme teste <code>if points &gt;= 50</code> (80 >= 50) est <strong>VRAI</strong>. Le message A est affiché. Le bloc if/elif s'arrête ici.</br>
--><strong>Ligne B (Ignorée) :</strong> Le test <code>elif points &gt;= 75</code> est Vrai <strong>mais n'est jamais atteint</strong> car le bloc if/elif s'est terminé à la Ligne A.</br>
--><strong>Ligne C (Active) :</strong> Le second <code>if points &gt; 70</code> est un <strong>nouveau test indépendant</strong>. Il est VRAI et le message C est affiché.</p>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/ficheSNT.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">SNT · 1re NSI · Les bases de Python</p>
+      <h1>Les conditions et les boucles en Python</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Un <strong>bloc</strong> d'instructions suit les deux-points <code>:</code> et il est <strong>indenté</strong> (décalé de 4 espaces). Le bloc s'arrête à la première ligne qui n'est plus décalée.</p>
+<ul>
+<li><strong>Instruction conditionnelle</strong> <code>if</code> / <code>elif</code> / <code>else</code> : Python teste les conditions dans l'ordre et exécute <strong>un seul</strong> bloc, celui de la première condition vraie (ou le <code>else</code>).</li>
+<li><strong>Boucle <code>for</code></strong> : répète un bloc pour chaque valeur d'une séquence. Le nombre de tours est connu. <code>range(5)</code> donne 0, 1, 2, 3, 4 ; <code>range(2, 6)</code> donne 2, 3, 4, 5 ; <code>range(0, 10, 3)</code> donne 0, 3, 6, 9.</li>
+<li><strong>Boucle <code>while</code></strong> (« tant que ») : répète un bloc tant qu'une condition est vraie. La condition est testée <strong>avant chaque tour</strong>.</li>
+</ul>
 </section>
 
-<section>
-<h2 data-icon="🔁">Les Boucles (Itérations)</h2>
-<p>Les boucles permettent de répéter un bloc d'instructions. C'est essentiel pour automatiser des tâches ou parcourir des collections de données.</p>
-
-<h3 data-icon="➡️">La Boucle <code>for</code> (Itération Définie)</h3>
-<p>Elle est utilisée lorsque l'on connaît le nombre d'itérations à l'avance, souvent pour parcourir les éléments d'une séquence (comme une liste) ou un intervalle de nombres grâce à la fonction <code>range()</code>.</p>
-
-<pre><code class="language-python"># Utilisation de range(n) pour répéter n fois (de 0 à n-1)
-for i in range(3):
-    print(f"Tour numéro {i}") # print permet d'afficher
-# Affiche :
-# Tour numéro 0
-# Tour numéro 1
-# Tour numéro 2
+<section class="exemple">
+<h2>Exemple : une condition</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">note = <span class="hljs-number">12</span>
+<span class="hljs-keyword">if</span> note &gt;= <span class="hljs-number">16</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Très bien&quot;</span>)
+<span class="hljs-keyword">elif</span> note &gt;= <span class="hljs-number">10</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Admis·e&quot;</span>)
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Non admis·e&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Fin&quot;</span>)
 </code></pre>
-
-<p><strong>Explication :</strong> <code>range(3)</code> génère la séquence 0, 1, 2. La boucle s'exécute 3 fois.</p>
+<pre class="sortie" tabindex="0"><code>Admis·e
+Fin
+</code></pre>
+<p><code>note >= 16</code> est faux ; <code>note >= 10</code> est vrai : son bloc s'exécute et le <code>else</code> est sauté. <code>print("Fin")</code> n'est pas décalé : il est hors du <code>if</code>.</p>
 </section>
 
-<section>
-<h3 data-icon="🔄">La Boucle <code>while</code> (Itération Conditionnelle)</h3>
-<p>Elle s'exécute <strong>tant qu'une condition reste vraie</strong>. Il faut s'assurer que la condition devienne fausse à un moment pour éviter une <strong>boucle infinie</strong>.</p>
-<pre><code class="language-python">compteur = 0
-while compteur < 3:
-    print(f"Compteur : {compteur}")
-    # Incrémentation pour éviter la boucle infinie
-    compteur = compteur + 1
-# Affiche :
-# Compteur : 0
-# Compteur : 1
-# Compteur : 2
-</code></pre>
+<section class="exemple">
+<h2>Exemple : deux boucles et leur trace</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">total = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>):
+    total = total + i
+<span class="hljs-built_in">print</span>(total)
 
-<p><strong>Explication :</strong> Le code dans le <code>while</code> s'exécute tant que la variable <code>compteur</code> est strictement inférieure à 3. À chaque tour, on augmente <code>compteur</code> de 1, ce qui permet à la boucle de se terminer.</p>
+n = <span class="hljs-number">0</span>
+x = <span class="hljs-number">1</span>
+<span class="hljs-keyword">while</span> x &lt; <span class="hljs-number">100</span>:
+    x = x * <span class="hljs-number">3</span>
+    n = n + <span class="hljs-number">1</span>
+<span class="hljs-built_in">print</span>(n, x)
+</code></pre>
+<pre class="sortie" tabindex="0"><code>10
+5 243
+</code></pre>
+<p>Boucle <code>for</code> : <code>total</code> vaut 1, 3, 6 puis 10. Boucle <code>while</code> :</p>
+<table>
+<thead><tr><th>Tour</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+<tbody>
+<tr><td><code>x &lt; 100</code> ?</td><td>1 : oui</td><td>3 : oui</td><td>9 : oui</td><td>27 : oui</td><td>81 : oui</td></tr>
+<tr><td><code>x</code> après</td><td>3</td><td>9</td><td>27</td><td>81</td><td>243</td></tr>
+</tbody>
+</table>
+<p>Au 6<sup>e</sup> test, <code>243 &lt; 100</code> est faux : la boucle s'arrête.</p>
 </section>
 
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Oublier les deux-points ou le décalage : <code>SyntaxError</code> ou <code>IndentationError</code>.</li>
+<li>Croire que le bloc du <code>if</code> et celui du <code>else</code> s'exécutent tous les deux : un seul s'exécute.</li>
+<li>Croire qu'un <code>while</code> s'arrête au milieu du bloc dès que sa condition devient fausse : elle n'est testée qu'au début du tour suivant (ci-dessus, <code>x</code> dépasse 100 et vaut 243).</li>
+<li>Oublier de modifier la variable testée par le <code>while</code> : boucle infinie (arrêt avec Ctrl+C).</li>
+<li>Décaler une ligne qui devait être après la boucle : elle s'exécute à chaque tour.</li>
+<li>Remplacer un <code>elif</code> par un second <code>if</code> : le second test devient indépendant, et son bloc peut s'exécuter aussi.</li>
+</ul>
+</section>
 
-<section>
-<h2 data-icon="💡">Opérateurs Logiques (<code>not</code>, <code>and</code>, <code>or</code>)</h2> <p>Ils permettent de combiner ou d'inverser des conditions pour des tests plus complexes.</p>
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Un bloc : <code>:</code> en fin de ligne, puis 4 espaces de décalage.</li>
+<li><code>if</code> / <code>elif</code> / <code>else</code> : un seul bloc, celui de la première condition vraie.</li>
+<li><code>for</code> quand on connaît le nombre de tours, <code>while</code> sinon.</li>
+<li><code>range(a, b)</code> va de <code>a</code> à <code>b - 1</code> : la fin n'est jamais atteinte.</li>
+<li>Pour comprendre une boucle, faire sa <strong>trace</strong> : la valeur des variables à chaque tour.</li>
+</ul>
+</section>
 
-<table class="table table-bordered table-hover table-condensed">
-<thead><tr><th title="Field #1">Opérateur</th>
-<th title="Field #2">Signification</th>
-<th title="Field #3">Quand est-ce Vrai ?</th>
-</tr></thead>
-<tbody><tr>
-<td><code>and</code></td>
-<td><strong>ET</strong> logique</td>
-<td>Si <strong>toutes</strong> les conditions sont Vraies.</td>
-</tr>
-<tr>
-<td><code>or</code></td>
-<td><strong>OU</strong> logique</td>
-<td>Si <strong>au moins une</strong> des conditions est Vraie.</td>
-</tr>
-<tr>
-<td><code>not</code></td>
-<td><strong>NON</strong> logique</td>
-<td>Inverse la condition (Vrai devient Faux, et Faux devient Vrai).</td>
-</tr>
-</tbody></table>
-
-<pre><code class="language-python"># Exemple avec AND
-temperature = 25
-ensoleille = True
-if temperature > 20 and ensoleille:
-    print("Journée idéale pour une sortie.")
-# Affiche : Journée idéale pour une sortie.
-
-# Exemple avec OR
-heure = 8
-jour = "dimanche"
-if heure < 9 or jour == "dimanche":
-    print("C'est encore l'heure de dormir.")
-# Affiche : C'est encore l'heure de dormir.
-
-# Exemple avec NOT
-est_fini = False
-if not est_fini :
-    print("Le travail continue.")
-# Affiche : Le travail continue.
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">x = <span class="hljs-number">5</span>
+<span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):
+    <span class="hljs-keyword">if</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:
+        x = x // <span class="hljs-number">2</span>
+    <span class="hljs-keyword">else</span>:
+        x = <span class="hljs-number">3</span> * x + <span class="hljs-number">1</span>
+<span class="hljs-built_in">print</span>(x)
 </code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>4</code> : 5 est impair, donne 16 ; 16 est pair, donne 8 ; 8 donne 4. Trois tours.</div>
+</details>
+</section>
 
-<!--
-<p><strong>Explication :</strong></p>
-<p>->La condition est vraie car temperature &gt; 20 (25 > 20) est VRAI ET ensoleille est VRAI.</br>
-->La condition est vraie car heure &lt; 9 (8 < 9) est VRAI. Même si jour == &quot;dimanche&quot; est Faux, le OR rend l'ensemble VRAI.</br>
-->La condition est VRAIE car not False est VRAI. On exécute le bloc de code si la variable est Fausse.</p>
--->
-
-
-  </article>
-</main>
-
-<footer class="fiche-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="license noopener noreferrer">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" target="_blank" rel="noopener noreferrer">Code source sur GitHub</a></footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/variable/" rel="prev"><span class="sens">← Fiche précédente</span>Les variables et les opérateurs en Python</a>
+    <a href="../../fiches/fonctions/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>Les fonctions en Python</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
   <script>
-// Script pour répartir intelligemment les sections en deux colonnes
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.querySelector('.container');
-  const leftColumn = document.getElementById('column-left');
-  const rightColumn = document.getElementById('column-right');
-  
-  // Récupérer toutes les sections
-  const sections = Array.from(container.querySelectorAll('section'));
-  
-  // Fonction pour calculer la hauteur d'une colonne
-  function getColumnHeight(column) {
-    return column.scrollHeight;
-  }
-  
-  // Répartir les sections de manière équilibrée
-  let leftHeight = 0;
-  let rightHeight = 0;
-  
-  sections.forEach((section, index) => {
-    // Mesurer temporairement la section
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.visibility = 'hidden';
-    tempDiv.appendChild(section.cloneNode(true));
-    document.body.appendChild(tempDiv);
-    const sectionHeight = tempDiv.scrollHeight;
-    document.body.removeChild(tempDiv);
-    
-    // Ajouter la section à la colonne la plus courte
-    if (leftHeight <= rightHeight) {
-      leftColumn.appendChild(section);
-      leftHeight += sectionHeight;
-    } else {
-      rightColumn.appendChild(section);
-      rightHeight += sectionHeight;
-    }
-  });
-});
-</script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
 </body>
 </html>

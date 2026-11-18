@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les arbres binaires de recherche · Fiches de révision NSI</title>
+  <meta name="description" content="La propriété d'un ABR, la recherche et l'insertion d'une clé, le parcours infixe trié, le coût lié à la hauteur.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../css/fiche-nsi.css">
+</head>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/abr.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">Terminale NSI · Algorithmique</p>
+      <h1>Les arbres binaires de recherche</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Un <strong>arbre binaire de recherche</strong> (ABR) est un arbre binaire où, pour <strong>chaque</strong> nœud (les clés sont ici toutes différentes) :</p>
+<ul>
+<li>toutes les clés du sous-arbre <strong>gauche</strong> sont <strong>plus petites</strong> que la clé du nœud ;</li>
+<li>toutes les clés du sous-arbre <strong>droit</strong> sont <strong>plus grandes</strong>.</li>
+</ul>
+<p>Conséquences : le <strong>parcours infixe</strong> donne les clés dans l'ordre croissant ; pour chercher une clé, on descend à gauche ou à droite, sans explorer tout l'arbre. Une recherche fait au plus <em>h</em> + 1 comparaisons, où <em>h</em> est la <strong>hauteur</strong> : <em>h</em> vaut environ log<sub>2</sub>(<em>n</em>) si l'arbre est équilibré, mais <em>n</em> − 1 s'il est filiforme (une seule branche).</p>
+<p><strong>Convention</strong> : un arbre réduit à un nœud a une hauteur 0 (l'arbre dessiné a une hauteur 2) ; d'autres sujets prennent 1 : un énoncé doit toujours la préciser.</p>
+<svg class="schema" viewBox="0 0 230 120" width="230" height="120" role="img" aria-label="ABR : racine 12 ; à gauche 5, qui a pour enfants 2 et 9 ; à droite 18, qui a pour enfant gauche 15.">
+<g stroke="#306998" stroke-width="1.5"><line x1="115" y1="18" x2="60" y2="58"/><line x1="115" y1="18" x2="170" y2="58"/><line x1="60" y1="58" x2="30" y2="100"/><line x1="60" y1="58" x2="90" y2="100"/><line x1="170" y1="58" x2="140" y2="100"/></g>
+<g fill="#fff" stroke="#306998" stroke-width="1.5"><circle cx="115" cy="18" r="13"/><circle cx="60" cy="58" r="13"/><circle cx="170" cy="58" r="13"/><circle cx="30" cy="100" r="13"/><circle cx="90" cy="100" r="13"/><circle cx="140" cy="100" r="13"/></g>
+<g font-family="Lato, Arial, sans-serif" font-size="12" font-weight="700" text-anchor="middle" fill="#1f2328"><text x="115" y="22">12</text><text x="60" y="62">5</text><text x="170" y="62">18</text><text x="30" y="104">2</text><text x="90" y="104">9</text><text x="140" y="104">15</text></g>
+</svg>
+</section>
+
+<section class="exemple">
+<h2>Recherche</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Noeud</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, valeur, g=<span class="hljs-literal">None</span>, d=<span class="hljs-literal">None</span></span>):
+        self.valeur = valeur
+        self.gauche = g    <span class="hljs-comment"># sous-arbre gauche</span>
+        self.droit = d     <span class="hljs-comment"># sous-arbre droit</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">rechercher</span>(<span class="hljs-params">a, v</span>):
+    <span class="hljs-keyword">if</span> a <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">if</span> v == a.valeur:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+    <span class="hljs-keyword">if</span> v &lt; a.valeur:
+        <span class="hljs-keyword">return</span> rechercher(a.gauche, v)
+    <span class="hljs-keyword">return</span> rechercher(a.droit, v)
+</code></pre>
+<p>Chercher 9 : 9 &lt; 12, à gauche ; 9 > 5, à droite ; trouvé en 3 comparaisons.</p>
+</section>
+
+<section class="exemple">
+<h2>Insertion</h2>
+<pre data-suite class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">inserer</span>(<span class="hljs-params">a, v</span>):     <span class="hljs-comment"># renvoie la racine</span>
+    <span class="hljs-keyword">if</span> a <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">return</span> Noeud(v)
+    <span class="hljs-keyword">if</span> v &lt; a.valeur:
+        a.gauche = inserer(a.gauche, v)
+    <span class="hljs-keyword">else</span>:
+        a.droit = inserer(a.droit, v)
+    <span class="hljs-keyword">return</span> a
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">infixe</span>(<span class="hljs-params">a</span>):
+    <span class="hljs-keyword">if</span> a <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">return</span> []
+    g, d = infixe(a.gauche), infixe(a.droit)
+    <span class="hljs-keyword">return</span> g + [a.valeur] + d
+
+abr = <span class="hljs-literal">None</span>
+<span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> [<span class="hljs-number">12</span>, <span class="hljs-number">5</span>, <span class="hljs-number">18</span>, <span class="hljs-number">2</span>, <span class="hljs-number">9</span>, <span class="hljs-number">15</span>]:
+    abr = inserer(abr, v)
+<span class="hljs-built_in">print</span>(rechercher(abr, <span class="hljs-number">9</span>), rechercher(abr, <span class="hljs-number">10</span>))
+<span class="hljs-built_in">print</span>(infixe(abr))
+</code></pre>
+<pre class="sortie" tabindex="0"><code>True False
+[2, 5, 9, 12, 15, 18]
+</code></pre>
+<p>La nouvelle clé devient toujours une <strong>feuille</strong>, à l'endroit où la recherche s'arrête.</p>
+</section>
+
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Vérifier la propriété avec les seuls enfants directs : si 5 avait un enfant droit 14, on aurait 14 > 5, mais 14 serait dans le sous-arbre gauche de 12 : ce n'est plus un ABR.</li>
+<li>Insérer des clés déjà triées (2, 5, 9, 12…) : l'arbre devient filiforme et la recherche coûte autant qu'un parcours séquentiel.</li>
+<li>Oublier de ranger le résultat : écrire <code>inserer(abr, v)</code> au lieu de <code>abr = inserer(abr, v)</code> perd l'arbre quand il est vide.</li>
+</ul>
+</section>
+
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>À gauche plus petit, à droite plus grand, pour <strong>tous</strong> les nœuds des sous-arbres.</li>
+<li>Recherche et insertion : on descend d'un seul côté à chaque nœud.</li>
+<li>Coût : au plus hauteur + 1 comparaisons.</li>
+<li>Parcours infixe = clés triées.</li>
+</ul>
+</section>
+
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Dans l'ABR dessiné dans « L'essentiel », où va la clé 7 si on l'insère ?</p>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers">7 &lt; 12 : à gauche ; 7 > 5 : à droite ; 7 &lt; 9 : elle devient l'enfant gauche de 9.</div>
+</details>
+</section>
+
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/processus/" rel="prev"><span class="sens">← Fiche précédente</span>Les processus et l'ordonnancement</a>
+    <a href="../../fiches/diviser-pour-regner/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>Diviser pour régner : le tri fusion</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
+  <script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
+</body>
+</html>

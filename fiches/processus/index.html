@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les processus et l'ordonnancement · Fiches de révision NSI</title>
+  <meta name="description" content="Programme et processus, états d'un processus, ordonnancement (tourniquet), interblocage, commandes ps et kill.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../css/fiche-nsi.css">
+</head>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/processus.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">Terminale NSI · Architectures, systèmes et réseaux</p>
+      <h1>Les processus et l'ordonnancement</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Un <strong>processus</strong> est un programme <strong>en cours d'exécution</strong>, avec sa mémoire et son numéro, le <strong>PID</strong>. Un même programme lancé deux fois donne deux processus.</p>
+<p>Sur un cœur de processeur, un seul processus s'exécute à la fois. L'<strong>ordonnanceur</strong> du système d'exploitation les fait alterner très vite : ils semblent tourner en même temps (on parle de <strong>concurrence</strong>).</p>
+<svg class="schema" viewBox="0 0 300 92" width="300" height="92" role="img" aria-label="États : Prêt vers Élu (choisi par l'ordonnanceur), Élu vers Prêt (fin du quantum), Élu vers Bloqué (attente d'une ressource), Bloqué vers Prêt (ressource obtenue).">
+<g fill="#fff" stroke="#306998" stroke-width="2"><rect x="10" y="12" width="70" height="26" rx="13"/><rect x="215" y="12" width="70" height="26" rx="13"/><rect x="112" y="58" width="76" height="26" rx="13"/></g>
+<g font-family="Lato, Arial, sans-serif" font-size="12" font-weight="700" text-anchor="middle" fill="#1f2328"><text x="45" y="30">Prêt</text><text x="250" y="30">Élu</text><text x="150" y="76">Bloqué</text></g>
+<g stroke="#1f2328" stroke-width="1.4" fill="none"><path d="M82 20 H210"/><path d="M204 16 L211 20 L204 24"/><path d="M213 32 H85"/><path d="M91 28 L84 32 L91 36"/><path d="M250 40 L192 66"/><path d="M193 59 L190 67 L198 66"/><path d="M110 70 L48 41"/><path d="M50 49 L47 41 L55 41"/></g>
+<g font-family="Lato, Arial, sans-serif" font-size="9.5" fill="#1f2328"><text x="146" y="16" text-anchor="middle">choisi par l'ordonnanceur</text><text x="146" y="46" text-anchor="middle">fin de son temps</text><text x="232" y="66">attend une</text><text x="232" y="77">ressource</text><text x="6" y="66">ressource</text><text x="6" y="77">obtenue</text></g>
+</svg>
+<p>Un processus <strong>bloqué</strong> attend une ressource (une lecture de fichier, une saisie, l'imprimante) : il ne peut pas être élu avant de redevenir prêt.</p>
+</section>
+
+<section class="exemple">
+<h2>Exemple : le tourniquet</h2>
+<p>Le <strong>tourniquet</strong> (<em>round robin</em>) donne à chaque processus prêt, à tour de rôle, un temps fixe : le <strong>quantum</strong>. Un processus pas fini retourne au bout de la file.</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> deque
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">tourniquet</span>(<span class="hljs-params">processus, quantum</span>):
+    file = deque(processus)   <span class="hljs-comment"># (nom, durée)</span>
+    frise = []
+    <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(file) &gt; <span class="hljs-number">0</span>:
+        nom, reste = file.popleft()
+        <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">min</span>(quantum, reste)):
+            frise.append(nom) <span class="hljs-comment"># 1 unité</span>
+        reste = reste - quantum
+        <span class="hljs-keyword">if</span> reste &gt; <span class="hljs-number">0</span>:
+            file.append((nom, reste))
+    <span class="hljs-keyword">return</span> frise
+
+liste = [(<span class="hljs-string">&quot;P1&quot;</span>, <span class="hljs-number">3</span>), (<span class="hljs-string">&quot;P2&quot;</span>, <span class="hljs-number">5</span>), (<span class="hljs-string">&quot;P3&quot;</span>, <span class="hljs-number">1</span>)]
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot; &quot;</span>.join(tourniquet(liste, <span class="hljs-number">2</span>)))
+</code></pre>
+<pre class="sortie" tabindex="0"><code>P1 P1 P2 P2 P3 P1 P2 P2 P2
+</code></pre>
+<p>P3 se termine au temps 5, P1 au temps 6, P2 au temps 9. D'autres ordonnancements existent : premier arrivé, premier servi ; plus court d'abord ; priorités.</p>
+</section>
+
+<section>
+<h2>L'interblocage</h2>
+<p>P1 détient la ressource R1 et attend R2 ; P2 détient R2 et attend R1. Chacun attend l'autre : aucun n'avance. C'est un <strong>interblocage</strong> (<em>deadlock</em>). Pour l'éviter, par exemple : demander les ressources toujours dans le même ordre.</p>
+<h3>Sous Linux</h3>
+<p><code>ps</code> liste les processus et leur PID ; <code>top</code> les montre en temps réel ; <code>kill 1234</code> arrête le processus de PID 1234.</p>
+</section>
+
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Confondre programme (un fichier) et processus (une exécution de ce fichier).</li>
+<li>Croire que, sur un seul cœur, les processus s'exécutent vraiment en même temps : ils alternent.</li>
+<li>Faire passer un processus de bloqué à élu directement : il redevient d'abord prêt.</li>
+<li>Dans un exercice de tourniquet, oublier qu'un processus qui n'a pas fini va <strong>au bout</strong> de la file, derrière ceux qui attendent déjà.</li>
+</ul>
+</section>
+
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Processus = programme en exécution, avec un PID.</li>
+<li>États : prêt, élu, bloqué (plus créé et terminé).</li>
+<li>L'ordonnanceur choisit qui est élu ; tourniquet : chacun son quantum.</li>
+<li>Interblocage : attente circulaire de ressources.</li>
+</ul>
+</section>
+
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Mêmes processus (P1 : 3, P2 : 5, P3 : 1), tourniquet avec un quantum de 3. Dans quel ordre se terminent-ils ?</p>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers">P1 (temps 3), P3 (temps 7), P2 (temps 9). Frise : P1 P1 P1 P2 P2 P2 P3 P2 P2.</div>
+</details>
+</section>
+
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/routage/" rel="prev"><span class="sens">← Fiche précédente</span>Le routage : RIP et OSPF</a>
+    <a href="../../fiches/abr/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>Les arbres binaires de recherche</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
+  <script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
+</body>
+</html>

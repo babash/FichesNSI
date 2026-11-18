@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les tris par sélection et par insertion · Fiches de révision NSI</title>
+  <meta name="description" content="Deux tris à savoir écrire : sélection et insertion. Leur principe, leur trace, leur invariant et leur coût quadratique.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../css/fiche-nsi.css">
+</head>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/tris.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">1re NSI · Algorithmique</p>
+      <h1>Les tris par sélection et par insertion</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<ul>
+<li><strong>Tri par sélection</strong> : on cherche le plus petit élément de la partie non triée et on l'<strong>échange</strong> avec le premier élément de cette partie.</li>
+<li><strong>Tri par insertion</strong> : on prend les éléments un par un et on <strong>insère</strong> chacun à sa place dans la partie déjà triée, à gauche, en décalant les plus grands.</li>
+</ul>
+<p>Les deux trient le tableau <strong>en place</strong> : ils le modifient et ne renvoient rien.</p>
+<p><strong>Coût quadratique</strong> : pour <em>n</em> éléments, de l'ordre de <em>n</em>² comparaisons (exactement <em>n</em>(<em>n</em> − 1)/2 pour la sélection). Un tableau 10 fois plus grand demande environ 100 fois plus de temps. L'insertion est rapide sur un tableau presque trié.</p>
+</section>
+
+<section class="exemple">
+<h2>Les deux algorithmes</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">tri_selection</span>(<span class="hljs-params">t</span>):
+    n = <span class="hljs-built_in">len</span>(t)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n - <span class="hljs-number">1</span>):
+        i_min = i
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i + <span class="hljs-number">1</span>, n):
+            <span class="hljs-keyword">if</span> t[j] &lt; t[i_min]:
+                i_min = j
+        t[i], t[i_min] = t[i_min], t[i]
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">tri_insertion</span>(<span class="hljs-params">t</span>):
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(t)):
+        cle = t[i]
+        j = i - <span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> j &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> t[j] &gt; cle:
+            <span class="hljs-comment"># décale t[j] vers la droite</span>
+            t[j + <span class="hljs-number">1</span>] = t[j]
+            j = j - <span class="hljs-number">1</span>
+        t[j + <span class="hljs-number">1</span>] = cle
+
+notes = [<span class="hljs-number">5</span>, <span class="hljs-number">2</span>, <span class="hljs-number">8</span>, <span class="hljs-number">1</span>]
+tri_selection(notes)
+<span class="hljs-built_in">print</span>(notes)
+autres = [<span class="hljs-number">5</span>, <span class="hljs-number">2</span>, <span class="hljs-number">8</span>, <span class="hljs-number">1</span>]
+tri_insertion(autres)
+<span class="hljs-built_in">print</span>(autres)
+</code></pre>
+<pre class="sortie" tabindex="0"><code>[1, 2, 5, 8]
+[1, 2, 5, 8]
+</code></pre>
+</section>
+
+<section class="trace">
+<h2>Traces sur [5, 2, 8, 1]</h2>
+<table>
+<thead><tr><th>Après le tour</th><th>Sélection</th><th>Insertion</th></tr></thead>
+<tbody>
+<tr><td><code>i = 0</code></td><td><strong>[1</strong>, 2, 8, 5] (1 ↔ 5)</td><td>—</td></tr>
+<tr><td><code>i = 1</code></td><td><strong>[1, 2</strong>, 8, 5]</td><td><strong>[2, 5</strong>, 8, 1]</td></tr>
+<tr><td><code>i = 2</code></td><td><strong>[1, 2, 5, 8]</strong> (5 ↔ 8)</td><td><strong>[2, 5, 8</strong>, 1]</td></tr>
+<tr><td><code>i = 3</code></td><td>—</td><td><strong>[1, 2, 5, 8]</strong></td></tr>
+</tbody>
+</table>
+<p>En gras, la partie triée. <strong>Invariant</strong> de la sélection : après le tour <code>i</code>, <code>t[0..i]</code> contient les plus petits éléments, triés, à leur place définitive. Insertion : <code>t[0..i]</code> est trié, mais d'autres éléments peuvent encore s'y insérer.</p>
+</section>
+
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Écrire <code>t = tri_selection(t)</code> : la fonction ne renvoie rien, <code>t</code> vaut alors <code>None</code>.</li>
+<li>Échanger en deux lignes, <code>t[i] = t[i_min]</code> puis <code>t[i_min] = t[i]</code> : une valeur est perdue. Écrire <code>t[i], t[i_min] = t[i_min], t[i]</code>.</li>
+<li>Retenir la plus petite <strong>valeur</strong> au lieu de son <strong>indice</strong> : on ne sait plus où faire l'échange.</li>
+<li>Oublier <code>j >= 0</code> dans le <code>while</code> : <code>j</code> devient négatif, <code>t[-1]</code>, <code>t[-2]</code>… sont lus, et le programme s'arrête le plus souvent sur <code>IndexError: list index out of range</code> (ou donne un résultat faux).</li>
+<li>Confondre <code>t.sort()</code> (trie <code>t</code>, renvoie <code>None</code>) et <code>sorted(t)</code> (renvoie un nouveau tableau trié).</li>
+</ul>
+</section>
+
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Sélection : chercher le minimum du reste, l'échanger.</li>
+<li>Insertion : prendre l'élément suivant, décaler les plus grands, l'insérer.</li>
+<li>Deux boucles imbriquées : coût quadratique (en <em>n</em>²).</li>
+<li>L'invariant explique pourquoi l'algorithme est correct.</li>
+</ul>
+</section>
+
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Donner l'état du tableau <code>[4, 3, 1, 2]</code> après les deux premiers tours du tri par sélection.</p>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>[1, 2, 4, 3]</code> : tour 0, 1 ↔ 4 donne [1, 3, 4, 2] ; tour 1, 2 ↔ 3.</div>
+</details>
+</section>
+
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/fonction-usuelles/" rel="prev"><span class="sens">← Fiche précédente</span>Le parcours séquentiel d'un tableau</a>
+    <a href="../../fiches/dichotomie/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>La recherche dichotomique</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
+  <script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
+</body>
+</html>

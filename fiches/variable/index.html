@@ -2,229 +2,140 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiche NSI – Les Variables et Opérateurs en Python</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les variables et les opérateurs en Python · Fiches de révision NSI</title>
+  <meta name="description" content="Affecter une valeur, nommer une variable, les types int, float, str et bool, les opérateurs de calcul, de comparaison et logiques.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../css/fiche-nsi.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
 </head>
-<body>
-
-<main>
-  <header><h1>Les Variables et Opérateurs en Python</h1></header>
-  <article class="container">
-    <div class="columns-wrapper">
-      <div class="column" id="column-left">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-      <div class="column" id="column-right">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-    </div>
-    <section>
-<h2 data-icon="💡">Définition et Création</h2>
-<p>Une <strong>variable</strong> est un espace de stockage nommé qui contient une valeur. En Python, vous n'avez pas besoin de déclarer le type de la variable ; l'interpréteur le détermine automatiquement en fonction de la valeur que vous lui attribuez.</p>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/variable.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">SNT · 1re NSI · Les bases de Python</p>
+      <h1>Les variables et les opérateurs en Python</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Une <strong>variable</strong> est un nom qui désigne une valeur rangée dans la mémoire de l'ordinateur.</p>
+<p>L'<strong>affectation</strong> <code>x = 5</code> se lit « x reçoit 5 » : Python calcule d'abord la partie <strong>à droite</strong> du <code>=</code>, puis range le résultat dans la variable <strong>à gauche</strong>. Une variable ne garde que sa <strong>dernière</strong> valeur.</p>
+<p>Le <strong>type</strong> vient de la valeur : <code>int</code> (entier, <code>15</code>), <code>float</code> (flottant, <code>1.75</code>), <code>str</code> (chaîne, <code>"Sada"</code>), <code>bool</code> (booléen, <code>True</code> ou <code>False</code>). La fonction <code>type(x)</code> le donne.</p>
 </section>
 
 <section>
-<h2 data-icon="📝">Règles pour nommer les variables</h2>
-<p>Les noms de variables doivent suivre des règles précises pour être valides en Python. S'ils ne les respectent pas, cela entraînera une erreur de syntaxe.</p>
+<h2>Nommer une variable</h2>
 <ul>
-<li>Un nom de variable doit commencer par une lettre (<code>a-z</code>, <code>A-Z</code>) ou un trait de soulignement (<code>_</code>). Il ne peut pas commencer par un chiffre.</li>
-<li>Un nom de variable ne peut contenir que des caractères alphanumériques (<code>a-z</code>, <code>A-Z</code>, <code>0-9</code>) et des traits de soulignement (<code>_</code>).</li>
-<li>Les noms de variables sont sensibles à la casse (<code>age</code>, <code>Age</code> et <code>AGE</code> sont des variables différentes).</li>
-<li>Un nom de variable ne peut pas être un mot-clé Python réservé (comme <code>if</code>, <code>for</code>, <code>class</code>, etc.).</li>
-</ul>
-<pre><code class="language-python"># Exemples de noms de variables valides
-mon_age = 30
-_nom_utilisateur = "admin"
-vitesse_1 = 120
-</code></pre>
-</section>
-
-<section>
-<h2 data-icon="💾">Types de Données de Base</h2>
-<p>Python dispose de plusieurs types de données fondamentaux :</p>
-<ul>
-<li><strong>Nombres entiers (<code>int</code>)</strong> : Pour les nombres sans décimales. Exemple : <code>age = 25</code>.</li>
-<li><strong>Nombres flottants (<code>float</code>)</strong> : Pour les nombres à virgule. Exemple : <code>taille = 1.75</code>.</li>
-<li><strong>Chaînes de caractères (<code>str</code>)</strong> : Pour le texte. Elles sont délimitées par des guillemets simples ou doubles. Exemple : <code>nom = "Alice"</code>.</li>
-<li><strong>Booléens (<code>bool</code>)</strong> : Représentent une valeur de vérité, qui peut être soit <strong>True</strong> (vrai) soit <strong>False</strong> (faux). Exemple : <code>est_majeur = True</code>.</li>
+<li>Lettres, chiffres et <code>_</code> ; jamais de chiffre au début, ni d'espace.</li>
+<li>Pas de mot réservé : <code>if</code>, <code>for</code>, <code>class</code>…</li>
+<li><code>age</code> et <code>Age</code> sont deux variables différentes.</li>
+<li>Un nom qui dit ce qu'il contient : <code>prix_total</code> plutôt que <code>p</code>.</li>
 </ul>
 </section>
 
 <section>
-<h2 data-icon="🛠️">Les Opérateurs Fondamentaux</h2>
-<h3>1. L'Opérateur d'Affectation (<code>=</code>)</h3>
-<p>Cet opérateur est utilisé pour attribuer une valeur à une variable. Les opérateurs combinés permettent de simplifier les opérations d'affectation en les fusionnant avec un opérateur arithmétique.</p>
-<pre><code class="language-python"># Affectation d'une valeur à une variable
-a = 10
-# Opérateur d'affectation combiné
-a += 5  # équivaut à a = a + 5. 'a' vaut maintenant 15.
-a -= 2  # équivaut à a = a - 2. 'a' vaut maintenant 13.
-a *= 3  # équivaut à a = a * 3. 'a' vaut maintenant 39.
-a /= 2  # équivaut à a = a / 2. 'a' vaut maintenant 19.5.
-</code></pre>
-</section>
-
-<section>
-<h3>2. Les Opérateurs Arithmétiques ➗</h3>
-<p>Ils servent à effectuer des opérations mathématiques.</p>
+<h2>Les opérateurs</h2>
 <table>
-<thead>
-<tr>
-<th>Opérateur</th>
-<th>Description</th>
-<th>Exemple</th>
-</tr>
-</thead>
+<thead><tr><th>Calcul</th><th>Exemple</th><th>Résultat</th></tr></thead>
 <tbody>
-<tr>
-<td><code>+</code></td>
-<td>Addition</td>
-<td><code>5 + 3</code> donne <code>8</code></td>
-</tr>
-<tr>
-<td><code>-</code></td>
-<td>Soustraction</td>
-<td><code>10 - 4</code> donne <code>6</code></td>
-</tr>
-<tr>
-<td><code>*</code></td>
-<td>Multiplication</td>
-<td><code>2 * 5</code> donne <code>10</code></td>
-</tr>
-<tr>
-<td><code>/</code></td>
-<td>Division</td>
-<td><code>10 / 3</code> donne <code>3.333...</code></td>
-</tr>
-<tr>
-<td><code>//</code></td>
-<td>Division entière</td>
-<td><code>10 // 3</code> donne <code>3</code></td>
-</tr>
-<tr>
-<td><code>%</code></td>
-<td>Modulo (reste de la division)</td>
-<td><code>10 % 3</code> donne <code>1</code></td>
-</tr>
-<tr>
-<td><code>**</code></td>
-<td>Puissance</td>
-<td><code>2 ** 3</code> donne <code>8</code></td>
-</tr>
+<tr><td><code>+</code> <code>-</code> <code>*</code></td><td><code>7 * 2</code></td><td><code>14</code></td></tr>
+<tr><td>division</td><td><code>7 / 2</code></td><td><code>3.5</code> (un <code>float</code>)</td></tr>
+<tr><td>quotient entier</td><td><code>7 // 2</code></td><td><code>3</code></td></tr>
+<tr><td>reste (modulo)</td><td><code>7 % 2</code></td><td><code>1</code></td></tr>
+<tr><td>puissance</td><td><code>2 ** 3</code></td><td><code>8</code></td></tr>
 </tbody>
 </table>
+<p><strong>Comparaisons</strong> (résultat <code>True</code> ou <code>False</code>) : <code>==</code> égal, <code>!=</code> différent, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>.</p>
+<p><strong>Logique</strong> : <code>a and b</code> vrai si les deux sont vrais ; <code>a or b</code> vrai si au moins un est vrai ; <code>not a</code> inverse.</p>
+<p><strong>Raccourcis</strong> : <code>x += 1</code> veut dire <code>x = x + 1</code> (de même <code>-=</code>, <code>*=</code>, <code>/=</code>).</p>
 </section>
 
-<section>
-<h3>3. Les Opérateurs de Comparaison ⚖️</h3>
-<p>Ils comparent deux valeurs et renvoient toujours un résultat booléen (<strong>True</strong> ou <strong>False</strong>).</p>
+<section class="exemple">
+<h2>Exemple et trace</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">a = <span class="hljs-number">7</span>
+b = <span class="hljs-number">2</span>
+a = a + b
+b = a * <span class="hljs-number">2</span>
+<span class="hljs-built_in">print</span>(a, b)
+<span class="hljs-built_in">print</span>(a // <span class="hljs-number">2</span>, a % <span class="hljs-number">2</span>, a / <span class="hljs-number">2</span>)
+<span class="hljs-built_in">print</span>(a % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)
+</code></pre>
+<pre class="sortie" tabindex="0"><code>9 18
+4 1 4.5
+False
+</code></pre>
 <table>
-<thead>
-<tr>
-<th>Opérateur</th>
-<th>Description</th>
-<th>Exemple</th>
-</tr>
-</thead>
+<thead><tr><th>Après la ligne</th><th><code>a</code></th><th><code>b</code></th></tr></thead>
 <tbody>
-<tr>
-<td><code>==</code></td>
-<td>Égal à</td>
-<td><code>5 == 5</code> est <strong>True</strong></td>
-</tr>
-<tr>
-<td><code>!=</code></td>
-<td>Différent de</td>
-<td><code>5 != 6</code> est <strong>True</strong></td>
-</tr>
-<tr>
-<td><code>></code></td>
-<td>Strictement supérieur à</td>
-<td><code>5 > 3</code> est <strong>True</strong></td>
-</tr>
-<tr>
-<td><code><</code></td>
-<td>Strictement inférieur à</td>
-<td><code>5 < 3</code> est <strong>False</strong></td>
-</tr>
-<tr>
-<td><code>>=</code></td>
-<td>Supérieur ou égal à</td>
-<td><code>5 >= 5</code> est <strong>True</strong></td>
-</tr>
-<tr>
-<td><code><=</code></td>
-<td>Inférieur ou égal à</td>
-<td><code>5 <= 3</code> est <strong>False</strong></td>
-</tr>
+<tr><td>1 et 2</td><td>7</td><td>2</td></tr>
+<tr><td>3 : <code>a = a + b</code></td><td>9</td><td>2</td></tr>
+<tr><td>4 : <code>b = a * 2</code></td><td>9</td><td>18</td></tr>
 </tbody>
 </table>
+<p><code>a % 2 == 0</code> teste si <code>a</code> est pair : le reste de 9 par 2 vaut 1.</p>
 </section>
 
-<section>
-<h3>4. Les Opérateurs Logiques 🧠</h3>
-<p>Ils permettent de combiner des conditions booléennes.</p>
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
 <ul>
-<li><strong><code>and</code></strong> : L'expression est <strong>True</strong> si <strong>toutes</strong> les conditions sont <strong>True</strong>.</li>
-<li><strong><code>or</code></strong> : L'expression est <strong>True</strong> si au moins <strong>une</strong> des conditions est <strong>True</strong>.</li>
-<li><strong><code>not</code></strong> : Inverse le résultat de la condition.</li>
+<li>Confondre <code>=</code> (affecter) et <code>==</code> (comparer) : <code>if x = 3:</code> provoque <code>SyntaxError</code>.</li>
+<li>Oublier que <code>input()</code> renvoie toujours une <strong>chaîne</strong> : convertir avec <code>int(...)</code> ou <code>float(...)</code>.</li>
+<li>Croire qu'après <code>y = x</code>, changer <code>x</code> change aussi <code>y</code> : non, <code>y</code> a reçu la valeur une fois pour toutes.</li>
+<li>Attendre un calcul exact avec des flottants : <code>0.1 + 0.2 == 0.3</code> vaut <code>False</code>.</li>
+<li>Utiliser une variable avant de lui donner une valeur : <code>NameError</code>.</li>
 </ul>
-<pre><code class="language-python">x = 5
-y = 10
-print(x > 0 and y > 0) # Affiche True
-print(x > 10 or y > 5)  # Affiche True
-print(not (x == 5))     # Affiche False
+<pre data-erreur data-entree="15" class="code" tabindex="0" data-langage="python"><code class="hljs language-python">age = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;Ton âge ? &quot;</span>)
+<span class="hljs-built_in">print</span>(age + <span class="hljs-number">1</span>)
 </code></pre>
+<pre class="sortie" tabindex="0"><code>Ton âge ? 15
+TypeError: can only concatenate str (not "int") to str
+</code></pre>
+<p>Correction : <code>age = int(input("Ton âge ? "))</code>.</p>
 </section>
 
-  </article>
-</main>
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li><code>x = expression</code> : on calcule à droite, puis on range à gauche.</li>
+<li>Une variable ne garde que sa dernière valeur.</li>
+<li><code>/</code> donne un <code>float</code> ; <code>//</code> le quotient entier ; <code>%</code> le reste.</li>
+<li>Une comparaison vaut <code>True</code> ou <code>False</code>.</li>
+<li><code>input()</code> donne une chaîne : convertir avant de calculer.</li>
+</ul>
+</section>
 
-<footer class="fiche-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="license noopener noreferrer">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" target="_blank" rel="noopener noreferrer">Code source sur GitHub</a></footer>
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">x = <span class="hljs-number">3</span>
+y = x
+x = x + <span class="hljs-number">1</span>
+<span class="hljs-built_in">print</span>(x, y, x &gt; y)
+</code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>4 3 True</code> : <code>y</code> a reçu 3 à la ligne 2 et ne change plus quand <code>x</code> change.</div>
+</details>
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <span></span>
+    <a href="../../fiches/ficheSNT/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>Les conditions et les boucles en Python</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
   <script>
-// Script pour répartir intelligemment les sections en deux colonnes
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.querySelector('.container');
-  const leftColumn = document.getElementById('column-left');
-  const rightColumn = document.getElementById('column-right');
-  
-  // Récupérer toutes les sections
-  const sections = Array.from(container.querySelectorAll('section'));
-  
-  // Fonction pour calculer la hauteur d'une colonne
-  function getColumnHeight(column) {
-    return column.scrollHeight;
-  }
-  
-  // Répartir les sections de manière équilibrée
-  let leftHeight = 0;
-  let rightHeight = 0;
-  
-  sections.forEach((section, index) => {
-    // Mesurer temporairement la section
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.visibility = 'hidden';
-    tempDiv.appendChild(section.cloneNode(true));
-    document.body.appendChild(tempDiv);
-    const sectionHeight = tempDiv.scrollHeight;
-    document.body.removeChild(tempDiv);
-    
-    // Ajouter la section à la colonne la plus courte
-    if (leftHeight <= rightHeight) {
-      leftColumn.appendChild(section);
-      leftHeight += sectionHeight;
-    } else {
-      rightColumn.appendChild(section);
-      rightHeight += sectionHeight;
-    }
-  });
-});
-</script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
 </body>
 </html>

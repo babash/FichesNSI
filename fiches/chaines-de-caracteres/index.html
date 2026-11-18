@@ -2,162 +2,136 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiche NSI – Les Chaînes de Caractères en Python</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les chaînes de caractères en Python · Fiches de révision NSI</title>
+  <meta name="description" content="Indices et tranches, concaténation, parcours d'une chaîne, split, join, replace, immuabilité.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../css/fiche-nsi.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
 </head>
-<body>
-
-<main>
-  <header><h1>Les Chaînes de Caractères en Python</h1></header>
-  <article class="container">
-    <div class="columns-wrapper">
-      <div class="column" id="column-left">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-      <div class="column" id="column-right">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-    </div>
-    <section>
-<h2 data-icon="💡">Définition et Création</h2>
-<p>Une <strong>chaîne de caractères</strong> (ou <code>string</code>) est une séquence ordonnée et <strong>immuable</strong> de caractères. On la reconnaît par les guillemets simples <code>''</code> ou doubles <code>""</code> qui l'entourent. Une chaîne de caractères peut contenir des lettres, des chiffres, des symboles et des espaces.</p>
-<pre><code class="language-python"># Création d'une chaîne de caractères vide
-ma_chaine = ""
-# Création d'une chaîne avec du texte
-salut = "Bonjour le monde"
-# Obtenir la longueur d'une chaîne avec len()
-longueur = len(salut)
-print(f"La chaîne 'salut' contient {longueur} caractères.") 
-# Affiche "La chaîne 'salut' contient 16 caractères."
-</code></pre>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/chaines-de-caracteres.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">1re NSI · Chaînes et types construits</p>
+      <h1>Les chaînes de caractères en Python</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Une <strong>chaîne de caractères</strong> (type <code>str</code>, de l'anglais <em>string</em>) est une suite de caractères écrite entre guillemets : <code>"Sada"</code> ou <code>'Sada'</code>.</p>
+<ul>
+<li>Chaque caractère a un <strong>indice</strong> : de <code>0</code> à <code>len(s) - 1</code>. L'indice <code>-1</code> désigne le dernier.</li>
+<li>Une chaîne est <strong>immuable</strong> : on ne peut pas changer un de ses caractères. On fabrique une nouvelle chaîne.</li>
+</ul>
 </section>
 
 <section>
-<h2 data-icon="🧭">Indexation et Accès aux éléments</h2>
-<p>Chaque caractère d'une chaîne possède une position, appelée index. En Python, ⚠️<strong>l'indexation commence à 0</strong>.</p>
-<p>On peut aussi utiliser des index négatifs pour accéder aux caractères à partir de la fin de la chaîne. L'index -1 correspond au dernier caractère, -2 à l'avant-dernier, et ainsi de suite.</p>
-<pre><code class="language-python">mot = "Python"
-# Indexation positive
-print(mot[0])   # Affiche "P"
-# Indexation négative
-print(mot[-1])  # Affiche "n"
-# Le slicing : Extraire une partie de la chaîne [début:fin]
-# ⚠️ La fin est exclue !
-print(mot[1:4]) # Affiche "yth"
-print(mot[2:])  # Affiche "thon"
-</code></pre>
-
+<h2>Les opérations</h2>
+<table>
+<thead><tr><th>Écriture</th><th>Résultat avec <code>s = "barge"</code></th></tr></thead>
+<tbody>
+<tr><td><code>len(s)</code></td><td><code>5</code> (le nombre de caractères)</td></tr>
+<tr><td><code>s[0]</code>, <code>s[-1]</code></td><td><code>'b'</code>, <code>'e'</code></td></tr>
+<tr><td><code>s[1:4]</code>, <code>s[2:]</code> (tranches)</td><td><code>'arg'</code> : de l'indice 1 inclus à 4 exclu ; <code>'rge'</code> : de 2 à la fin</td></tr>
+<tr><td><code>s + "s"</code>, <code>"ha" * 3</code></td><td><code>'barges'</code>, <code>'hahaha'</code></td></tr>
+<tr><td><code>"ar" in s</code></td><td><code>True</code></td></tr>
+<tr><td><code>s.upper()</code>, <code>"Sada".lower()</code></td><td><code>'BARGE'</code>, <code>'sada'</code></td></tr>
+<tr><td><code>s.replace("b", "l")</code></td><td><code>'large'</code></td></tr>
+<tr><td><code>"a b c".split(" ")</code></td><td><code>['a', 'b', 'c']</code> (une liste)</td></tr>
+<tr><td><code>"-".join(["a", "b"])</code></td><td><code>'a-b'</code></td></tr>
+<tr><td><code>f"{s} n°{3}"</code></td><td><code>'barge n°3'</code> (chaîne formatée)</td></tr>
+</tbody>
+</table>
 </section>
 
-<section>
-<h2 data-icon="⚙️">Saisie et Traitement</h2>
-<h3>Saisie avec <code>input()</code></h3>
-<p>La fonction <code>input()</code> permet de demander à l'utilisateur de saisir une chaîne de caractères. Le programme s'arrête en attendant que l'utilisateur entre du texte et appuie sur Entrée. La valeur saisie est renvoyée sous forme de chaîne de caractères.</p>
-<pre><code class="language-python">nom = input("Entrez votre nom : ")
-print(f"Bonjour, {nom} !")
-# Si l'utilisateur tape "Alice"
-# la console affichera : "Bonjour, Alice !"
+<section class="exemple">
+<h2>Exemple : parcourir une chaîne</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">mot = <span class="hljs-string">&quot;Mamoudzou&quot;</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(mot), mot[<span class="hljs-number">0</span>], mot[-<span class="hljs-number">1</span>], mot[<span class="hljs-number">2</span>:<span class="hljs-number">5</span>])
+voyelles = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> lettre <span class="hljs-keyword">in</span> mot:
+    <span class="hljs-keyword">if</span> lettre <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;aeiouy&quot;</span>:
+        voyelles = voyelles + <span class="hljs-number">1</span>
+<span class="hljs-built_in">print</span>(voyelles)
 </code></pre>
-<h3>Méthodes de modification de la casse</h3>
-<p>Les chaînes de caractères sont <strong>immuables</strong>, ce qui signifie que vous ne pouvez pas modifier un caractère existant directement. Les méthodes suivantes renvoient une <strong>nouvelle</strong> chaîne de caractères modifiée.</p>
-<p><strong>.upper()</strong> : renvoie une nouvelle chaîne avec tous les caractères en majuscules.</p>
-<p><strong>.lower()</strong> : renvoie une nouvelle chaîne avec tous les caractères en minuscules.</p>
-<p><strong>.capitalize()</strong> : renvoie une nouvelle chaîne avec la première lettre en majuscule.</p>
-<pre><code class="language-python">chaine = "Hello World"
-print(chaine.upper())    # Affiche "HELLO WORLD"
-print(chaine.lower())    # Affiche "hello world"
+<pre class="sortie" tabindex="0"><code>9 M u mou
+5
 </code></pre>
+<p>Pour avoir aussi la position : <code>for i in range(len(mot)):</code>, puis <code>mot[i]</code>.</p>
 </section>
 
-<section>
-<h2 data-icon="📜">Parcourir une chaîne</h2>
-<p>La boucle for est l'outil principal pour parcourir une chaîne de caractères.</p>
-
-<p><h3>1. Par caractère :</h3> C'est la méthode la plus simple et la plus courante.</p>
-<pre><code class="language-python">mot = "code"
-for caractere in mot:
-  print(caractere)
-
-<p>Affiche :
-c
-o
-d
-e
-</code></pre></p>
-<p><h3>2. Par index :</h3> Utile si vous avez besoin de la position du caractère en plus de sa valeur. On utilise la fonction range(len(chaine)).</p>
-<pre><code class="language-python">mot = "code"
-for i in range(len(mot)):
-  print(f"Caractère n°{i} : {mot[i]}")
-
-<p>Affiche :
-Caractère n°0 : c
-Caractère n°1 : o
-Caractère n°2 : d
-Caractère n°3 : e
-</code></pre></p>
-</section>
-
-<section>
-<h2 data-icon="🤔">Immuabilité</h2>
-<p>⚠️ Une chaîne de caractères ne peut pas être modifiée après sa création. Toutes les opérations qui semblent "modifier" une chaîne, comme le remplacement d'un caractère, créent en réalité une <strong>nouvelle</strong> chaîne en mémoire.</p>
-<pre><code class="language-python">slogan = "J'adore Python"
-# Cette instruction générera une erreur !
-# slogan[8] = 'C'
-# TypeError: 'str' object does not support item assignment
-# Solution : créer une nouvelle chaîne
-nouveau_slogan = slogan[:8] + "le Python"
-print(nouveau_slogan) # Affiche "J'adore le Python"
+<section class="exemple">
+<h2>Exemple : découper et recoller</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">phrase = <span class="hljs-string">&quot;la barge part à 7h&quot;</span>
+mots = phrase.split(<span class="hljs-string">&quot; &quot;</span>)
+<span class="hljs-built_in">print</span>(mots)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;-&quot;</span>.join(mots).upper())
+</code></pre>
+<pre class="sortie" tabindex="0"><code>['la', 'barge', 'part', 'à', '7h']
+LA-BARGE-PART-À-7H
 </code></pre>
 </section>
 
-  </article>
-</main>
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Lire après la fin : avec <code>mot = "Mamoudzou"</code>, <code>mot[9]</code> provoque <code>IndexError</code>. Le dernier indice est <code>len(mot) - 1</code>.</li>
+<li>Coller un nombre à une chaîne : <code>"Total : " + 5</code> provoque <code>TypeError</code>. Écrire <code>"Total : " + str(5)</code> ou <code>f"Total : {5}"</code>.</li>
+<li>Croire que <code>s.upper()</code> modifie <code>s</code> : elle renvoie une nouvelle chaîne. Écrire <code>s = s.upper()</code>.</li>
+<li>Comparer des nombres écrits en chaînes : <code>"10" &lt; "9"</code> vaut <code>True</code> (ordre alphabétique, caractère par caractère).</li>
+</ul>
+<pre data-erreur class="code" tabindex="0" data-langage="python"><code class="hljs language-python">mot = <span class="hljs-string">&quot;Sada&quot;</span>
+mot[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;s&quot;</span>
+</code></pre>
+<pre class="sortie" tabindex="0"><code>TypeError: 'str' object does not support item assignment
+</code></pre>
+<p>Correction : <code>mot = "s" + mot[1:]</code>.</p>
+</section>
 
-<footer class="fiche-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="license noopener noreferrer">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" target="_blank" rel="noopener noreferrer">Code source sur GitHub</a></footer>
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Indices de <code>0</code> à <code>len(s) - 1</code> ; <code>s[-1]</code> est le dernier caractère.</li>
+<li><code>s[a:b]</code> : de <code>a</code> inclus à <code>b</code> exclu.</li>
+<li><code>for c in s:</code> parcourt les caractères un par un.</li>
+<li>Une chaîne ne se modifie pas : on en crée une nouvelle.</li>
+<li><code>split</code> donne une liste, <code>join</code> refait une chaîne.</li>
+</ul>
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">s = <span class="hljs-string">&quot;NSI&quot;</span>
+r = <span class="hljs-string">&quot;&quot;</span>
+<span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> s:
+    r = c + r
+<span class="hljs-built_in">print</span>(r)
+</code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>ISN</code> : chaque caractère est ajouté <strong>devant</strong> <code>r</code>, ce qui retourne la chaîne.</div>
+</details>
+</section>
+
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/fonctions/" rel="prev"><span class="sens">← Fiche précédente</span>Les fonctions en Python</a>
+    <a href="../../fiches/tuple/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>Les p-uplets (tuples) en Python</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
   <script>
-// Script pour répartir intelligemment les sections en deux colonnes
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.querySelector('.container');
-  const leftColumn = document.getElementById('column-left');
-  const rightColumn = document.getElementById('column-right');
-  
-  // Récupérer toutes les sections
-  const sections = Array.from(container.querySelectorAll('section'));
-  
-  // Fonction pour calculer la hauteur d'une colonne
-  function getColumnHeight(column) {
-    return column.scrollHeight;
-  }
-  
-  // Répartir les sections de manière équilibrée
-  let leftHeight = 0;
-  let rightHeight = 0;
-  
-  sections.forEach((section, index) => {
-    // Mesurer temporairement la section
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.visibility = 'hidden';
-    tempDiv.appendChild(section.cloneNode(true));
-    document.body.appendChild(tempDiv);
-    const sectionHeight = tempDiv.scrollHeight;
-    document.body.removeChild(tempDiv);
-    
-    // Ajouter la section à la colonne la plus courte
-    if (leftHeight <= rightHeight) {
-      leftColumn.appendChild(section);
-      leftHeight += sectionHeight;
-    } else {
-      rightColumn.appendChild(section);
-      rightHeight += sectionHeight;
-    }
-  });
-});
-</script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
 </body>
 </html>

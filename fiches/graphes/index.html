@@ -2,109 +2,127 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiche NSI – Les Graphes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les graphes · Fiches de révision NSI</title>
+  <meta name="description" content="Sommets, arêtes, voisins, chemins ; matrice et listes d'adjacence ; parcours en largeur (file) et en profondeur (récursivité).">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../css/fiche-nsi.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
 </head>
-<body>
-
-<main>
-  <header><h1>Les Graphes</h1></header>
-  <article class="container">
-    <div class="columns-wrapper">
-      <div class="column" id="column-left">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-      <div class="column" id="column-right">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-    </div>
-    <section>
-<h2 data-icon="🕸️">Vocabulaire et Définitions</h2>
-<p>Un graphe est composé de <strong>sommets</strong> (ou nœuds) reliés par des <strong>arêtes</strong> (non orienté) ou des <strong>arcs</strong> (orienté).</p>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/graphes.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">Terminale NSI · Structures de données</p>
+      <h1>Les graphes</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Un <strong>graphe</strong> est fait de <strong>sommets</strong> reliés par des <strong>arêtes</strong>. Si les liens ont un sens, le graphe est <strong>orienté</strong> et on parle d'<strong>arcs</strong>. S'ils portent un nombre (une distance, une durée), il est <strong>pondéré</strong>.</p>
 <ul>
-<li><strong>Ordre :</strong> Nombre de sommets.</li>
-<li><strong>Degré :</strong> Nombre d'arêtes liées à un sommet.</li>
-<li><strong>Cycle :</strong> Chemin qui revient à son point de départ.</li>
+<li><strong>Voisins</strong> : deux sommets reliés par une arête. Le <strong>degré</strong> d'un sommet est son nombre de voisins.</li>
+<li><strong>Chemin</strong> : une suite de sommets voisins. Un <strong>cycle</strong> est un chemin qui revient à son départ.</li>
+<li>Un graphe est <strong>connexe</strong> si un chemin relie chaque paire de sommets. L'<strong>ordre</strong> d'un graphe est son nombre de sommets.</li>
 </ul>
 </section>
 
 <section>
-<h2 data-icon="⚙️">Implémentations (Représentations)</h2>
-<p>Il existe deux manières classiques de représenter un graphe en mémoire :</p>
-
-<p><strong>1. Matrice d'adjacence :</strong> Un tableau 2D (0 ou 1 si lien).</p>
-<pre><code class="language-python"># Graphe avec 3 sommets A(0), B(1), C(2)
-matrice = [
-    [0, 1, 1], # A est lié à B et C
-    [1, 0, 0], # B est lié à A
-    [1, 0, 0]  # C est lié à A
-]
+<h2>Un graphe et ses représentations</h2>
+<svg class="schema" viewBox="0 0 308 156" width="308" height="156" role="img" aria-label="Graphe : Koungou relié à Mamoudzou ; Mamoudzou relié à Ouangani et à Dembéni ; Ouangani relié à Sada ; Sada relié à Chirongui ; Chirongui relié à Dembéni.">
+<g stroke="#306998" stroke-width="1.6"><line x1="150" y1="20" x2="232" y2="55"/><line x1="232" y1="55" x2="125" y2="72"/><line x1="232" y1="55" x2="215" y2="118"/><line x1="125" y1="72" x2="45" y2="105"/><line x1="45" y1="105" x2="128" y2="135"/><line x1="128" y1="135" x2="215" y2="118"/></g>
+<g fill="#ffd43b" stroke="#1f2328"><circle cx="150" cy="20" r="5"/><circle cx="232" cy="55" r="5"/><circle cx="125" cy="72" r="5"/><circle cx="215" cy="118" r="5"/><circle cx="45" cy="105" r="5"/><circle cx="128" cy="135" r="5"/></g>
+<g font-family="Lato, Arial, sans-serif" font-size="11" fill="#1f2328"><text x="158" y="16">Koungou</text><text x="241" y="51">Mamoudzou</text><text x="96" y="64">Ouangani</text><text x="222" y="132">Dembéni</text><text x="8" y="96">Sada</text><text x="96" y="149">Chirongui</text></g>
+</svg>
+<p>Réseau simplifié, sans valeur géographique. Avec un <strong>dictionnaire d'adjacence</strong> (chaque sommet donne la liste de ses voisins) :</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">g = {<span class="hljs-string">&quot;Mamoudzou&quot;</span>: [<span class="hljs-string">&quot;Koungou&quot;</span>, <span class="hljs-string">&quot;Dembéni&quot;</span>,
+                   <span class="hljs-string">&quot;Ouangani&quot;</span>],
+     <span class="hljs-string">&quot;Koungou&quot;</span>: [<span class="hljs-string">&quot;Mamoudzou&quot;</span>],
+     <span class="hljs-string">&quot;Dembéni&quot;</span>: [<span class="hljs-string">&quot;Mamoudzou&quot;</span>, <span class="hljs-string">&quot;Chirongui&quot;</span>],
+     <span class="hljs-string">&quot;Ouangani&quot;</span>: [<span class="hljs-string">&quot;Mamoudzou&quot;</span>, <span class="hljs-string">&quot;Sada&quot;</span>],
+     <span class="hljs-string">&quot;Sada&quot;</span>: [<span class="hljs-string">&quot;Ouangani&quot;</span>, <span class="hljs-string">&quot;Chirongui&quot;</span>],
+     <span class="hljs-string">&quot;Chirongui&quot;</span>: [<span class="hljs-string">&quot;Dembéni&quot;</span>, <span class="hljs-string">&quot;Sada&quot;</span>]}
 </code></pre>
-
-<p><strong>2. Dictionnaire d'adjacence :</strong> Clés = sommets, Valeurs = listes des voisins.</p>
-<pre><code class="language-python">graphe = {
-    'A': ['B', 'C'],
-    'B': ['A'],
-    'C': ['A']
-}
-</code></pre>
+<p>Avec une <strong>matrice d'adjacence</strong>, les sommets sont numérotés et <code>m[i][j]</code> vaut 1 s'il y a une arête de <code>i</code> à <code>j</code>, 0 sinon. Non orienté : la matrice est symétrique.</p>
 </section>
 
-<section>
-<h2 data-icon="🧭">Algorithmes de Parcours</h2>
+<section class="exemple">
+<h2>Les deux parcours</h2>
+<pre data-suite class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> deque
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">largeur</span>(<span class="hljs-params">g, depart</span>):
+    vus = [depart]
+    file = deque([depart])
+    <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(file) &gt; <span class="hljs-number">0</span>:
+        s = file.popleft()
+        <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> g[s]:
+            <span class="hljs-keyword">if</span> v <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> vus:
+                vus.append(v)
+                file.append(v)
+    <span class="hljs-keyword">return</span> vus
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">profondeur</span>(<span class="hljs-params">g, s, vus=<span class="hljs-literal">None</span></span>):
+    <span class="hljs-keyword">if</span> vus <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        vus = []
+    vus.append(s)
+    <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> g[s]:
+        <span class="hljs-keyword">if</span> v <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> vus:
+            profondeur(g, v, vus)
+    <span class="hljs-keyword">return</span> vus
+
+<span class="hljs-built_in">print</span>(largeur(g, <span class="hljs-string">&quot;Mamoudzou&quot;</span>))
+<span class="hljs-built_in">print</span>(profondeur(g, <span class="hljs-string">&quot;Mamoudzou&quot;</span>))
+</code></pre>
+<pre class="sortie" tabindex="0"><code>['Mamoudzou', 'Koungou', 'Dembéni', 'Ouangani', 'Chirongui', 'Sada']
+['Mamoudzou', 'Koungou', 'Dembéni', 'Chirongui', 'Sada', 'Ouangani']
+</code></pre>
+<p><strong>Largeur</strong> : les voisins (distance 1), puis leurs voisins (distance 2)… <strong>Profondeur</strong> : le plus loin possible, puis retour en arrière.</p>
+</section>
+
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
 <ul>
-<li><strong>Parcours en Largeur (BFS) :</strong> Utilise une <strong>file</strong>. Trouve le chemin le plus court (en nombre d'arêtes).</li>
-<li><strong>Parcours en Profondeur (DFS) :</strong> Utilise la <strong>récursivité</strong> (ou une pile). Explore un chemin le plus loin possible avant de revenir.</li>
+<li>Oublier de noter les sommets déjà vus : à cause des cycles, le parcours tourne sans fin (<code>RecursionError</code> en profondeur).</li>
+<li>Confondre les outils : <strong>largeur = file</strong>, <strong>profondeur = pile</strong> (ou récursivité).</li>
+<li>Dans un graphe non orienté, n'écrire l'arête que dans un sens.</li>
+<li>Écrire <code>vus=[]</code> comme valeur par défaut : la même liste resterait d'un appel à l'autre. D'où <code>vus=None</code>.</li>
 </ul>
 </section>
-  </article>
-</main>
 
-<footer class="fiche-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="license noopener noreferrer">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" target="_blank" rel="noopener noreferrer">Code source sur GitHub</a></footer>
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Représentations : matrice d'adjacence ou dictionnaire de listes de voisins.</li>
+<li>Parcours en largeur : une file ; il donne les plus courts chemins en nombre d'arêtes.</li>
+<li>Parcours en profondeur : récursivité (ou une pile).</li>
+<li>Toujours marquer les sommets visités.</li>
+</ul>
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Quel est le degré de Mamoudzou ? Dans quel ordre le parcours en largeur depuis Sada visite-t-il les sommets ?</p>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers">Degré 3. Largeur depuis Sada : Sada, Ouangani, Chirongui, Mamoudzou, Dembéni, Koungou.</div>
+</details>
+</section>
+
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/arbres/" rel="prev"><span class="sens">← Fiche précédente</span>Les arbres binaires</a>
+    <a href="../../fiches/sql/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>Les bases de données et le langage SQL</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
   <script>
-// Script pour répartir intelligemment les sections en deux colonnes
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.querySelector('.container');
-  const leftColumn = document.getElementById('column-left');
-  const rightColumn = document.getElementById('column-right');
-  
-  // Récupérer toutes les sections
-  const sections = Array.from(container.querySelectorAll('section'));
-  
-  // Fonction pour calculer la hauteur d'une colonne
-  function getColumnHeight(column) {
-    return column.scrollHeight;
-  }
-  
-  // Répartir les sections de manière équilibrée
-  let leftHeight = 0;
-  let rightHeight = 0;
-  
-  sections.forEach((section, index) => {
-    // Mesurer temporairement la section
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.visibility = 'hidden';
-    tempDiv.appendChild(section.cloneNode(true));
-    document.body.appendChild(tempDiv);
-    const sectionHeight = tempDiv.scrollHeight;
-    document.body.removeChild(tempDiv);
-    
-    // Ajouter la section à la colonne la plus courte
-    if (leftHeight <= rightHeight) {
-      leftColumn.appendChild(section);
-      leftHeight += sectionHeight;
-    } else {
-      rightColumn.appendChild(section);
-      rightHeight += sectionHeight;
-    }
-  });
-});
-</script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
 </body>
 </html>

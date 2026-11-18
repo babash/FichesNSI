@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les fonctions en Python · Fiches de révision NSI</title>
+  <meta name="description" content="Définir et appeler une fonction, paramètres et arguments, return ou print, variables locales, spécification et assertions.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../css/fiche-nsi.css">
+</head>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/fonctions.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">1re NSI · Langages et programmation</p>
+      <h1>Les fonctions en Python</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Une <strong>fonction</strong> est un bloc de code nommé, qu'on écrit une fois et qu'on <strong>appelle</strong> autant de fois qu'on veut.</p>
+<ul>
+<li>Les <strong>paramètres</strong> sont les noms écrits dans le <code>def</code> ; les <strong>arguments</strong> sont les valeurs données à l'appel.</li>
+<li><code>return</code> <strong>renvoie</strong> une valeur à l'endroit de l'appel et <strong>arrête</strong> la fonction. Sans <code>return</code>, la fonction renvoie <code>None</code>.</li>
+<li>Les variables créées dans la fonction sont <strong>locales</strong> : elles n'existent pas en dehors.</li>
+</ul>
+</section>
+
+<section class="exemple">
+<h2>Exemple</h2>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">prix_total</span>(<span class="hljs-params">prix, quantite, remise=<span class="hljs-number">0</span></span>):
+    <span class="hljs-string">&quot;&quot;&quot;Renvoie le prix à payer, en euros.
+    prix et quantite : nombres positifs ;
+    remise : pourcentage entre 0 et 100.&quot;&quot;&quot;</span>
+    total = prix * quantite
+    <span class="hljs-keyword">return</span> total * (<span class="hljs-number">100</span> - remise) / <span class="hljs-number">100</span>
+
+a_payer = prix_total(<span class="hljs-number">2.5</span>, <span class="hljs-number">4</span>)
+<span class="hljs-built_in">print</span>(a_payer)
+<span class="hljs-built_in">print</span>(prix_total(<span class="hljs-number">2.5</span>, <span class="hljs-number">4</span>, remise=<span class="hljs-number">10</span>))
+</code></pre>
+<pre class="sortie" tabindex="0"><code>10.0
+9.0
+</code></pre>
+<p>À l'appel <code>prix_total(2.5, 4)</code>, le paramètre <code>prix</code> reçoit 2.5 et <code>quantite</code> reçoit 4 ; <code>remise</code> garde sa valeur par défaut, 0.</p>
+</section>
+
+<section>
+<h2>Spécifier et tester</h2>
+<p>La <strong>spécification</strong> (la chaîne de documentation, entre triples guillemets) dit ce que la fonction attend et ce qu'elle renvoie. Une <strong>assertion</strong> vérifie un résultat attendu : rien ne s'affiche si c'est juste, sinon <code>AssertionError</code>.</p>
+<pre data-suite class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">assert</span> prix_total(<span class="hljs-number">10</span>, <span class="hljs-number">3</span>) == <span class="hljs-number">30</span>
+<span class="hljs-keyword">assert</span> prix_total(<span class="hljs-number">10</span>, <span class="hljs-number">1</span>, remise=<span class="hljs-number">50</span>) == <span class="hljs-number">5</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Tests réussis&quot;</span>)
+</code></pre>
+<pre class="sortie" tabindex="0"><code>Tests réussis
+</code></pre>
+</section>
+
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Confondre <code>print</code> et <code>return</code> : <code>print</code> affiche à l'écran, <code>return</code> donne la valeur au programme, qui peut la ranger ou la réutiliser.</li>
+<li>Écrire du code après un <code>return</code> : il ne s'exécute jamais.</li>
+<li>Oublier les parenthèses : <code>prix_total</code> désigne la fonction sans l'appeler.</li>
+<li>Utiliser hors de la fonction une variable locale : <code>NameError</code>.</li>
+<li>Donner trop ou pas assez d'arguments : <code>TypeError</code>.</li>
+</ul>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">double_affiche</span>(<span class="hljs-params">x</span>):
+    <span class="hljs-built_in">print</span>(<span class="hljs-number">2</span> * x)
+
+r = double_affiche(<span class="hljs-number">5</span>)
+<span class="hljs-built_in">print</span>(r)
+</code></pre>
+<pre class="sortie" tabindex="0"><code>10
+None
+</code></pre>
+<p>La fonction affiche 10 mais ne renvoie rien : <code>r</code> vaut <code>None</code>.</p>
+</section>
+
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li><code>def nom(parametres):</code> puis un bloc décalé.</li>
+<li>Paramètre dans la définition, argument à l'appel.</li>
+<li><code>return</code> renvoie une valeur et termine la fonction.</li>
+<li>Une fonction qui calcule <strong>renvoie</strong> ; elle n'affiche pas.</li>
+<li>Spécifier avec une docstring, tester avec <code>assert</code>.</li>
+</ul>
+</section>
+
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">n</span>):
+    <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">10</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;grand&quot;</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;petit&quot;</span>
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;fin&quot;</span>)
+
+<span class="hljs-built_in">print</span>(f(<span class="hljs-number">12</span>), f(<span class="hljs-number">3</span>))
+</code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>grand petit</code> : <code>print("fin")</code> est après le dernier <code>return</code>, il ne s'exécute jamais.</div>
+</details>
+</section>
+
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/ficheSNT/" rel="prev"><span class="sens">← Fiche précédente</span>Les conditions et les boucles en Python</a>
+    <a href="../../fiches/chaines-de-caracteres/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>Les chaînes de caractères en Python</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
+  <script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
+</body>
+</html>

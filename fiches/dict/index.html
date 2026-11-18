@@ -2,200 +2,144 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiche NSI – Les Dictionnaires en Python</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les dictionnaires en Python · Fiches de révision NSI</title>
+  <meta name="description" content="Associer des clés à des valeurs : créer, lire, modifier, parcourir avec items(), compter des occurrences.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../css/fiche-nsi.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
 </head>
-<body>
-
-<main>
-  <header><h1>Les Dictionnaires en Python</h1></header>
-  <article class="container">
-    <div class="columns-wrapper">
-      <div class="column" id="column-left">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-      <div class="column" id="column-right">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-    </div>
-    <section>
-<h2 data-icon="💡">Définition et Création</h2>
-<p>Un <strong>dictionnaire</strong> est une collection de données <strong>non ordonnée</strong> et <strong>modifiable</strong>. Contrairement aux listes qui utilisent des index numériques, un dictionnaire stocke des données sous forme de paires <strong>clé-valeur</strong>. Chaque clé est unique et sert d'identifiant pour accéder à sa valeur. Un dictionnaire est reconnaissable par les accolades <strong>{}</strong> qui l'entourent.</p>
-<pre><code class="language-python"># Création d'un dictionnaire vide
-mon_dictionnaire = {}
-# Création d'un dictionnaire avec des éléments
-personne = {"nom": "Alice", "age": 25, "ville": "Paris"}
-# Obtenir le nombre d'éléments avec len()
-nombre_elements = len(personne)
-print(f"personne contient {nombre_elements} éléments.") 
-# Affiche "personne contient 3 éléments."
-</code></pre>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/dict.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">1re NSI · Chaînes et types construits</p>
+      <h1>Les dictionnaires en Python</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Un <strong>dictionnaire</strong> (type <code>dict</code>) associe des <strong>clés</strong> à des <strong>valeurs</strong>. On lit une valeur grâce à sa clé, jamais grâce à une position (un indice).</p>
+<ul>
+<li>Les clés sont <strong>uniques</strong> et d'un type non modifiable : <code>str</code>, <code>int</code>, <code>tuple</code>.</li>
+<li>Le dictionnaire est <strong>modifiable</strong> (on dit <em>mutable</em>) : on ajoute, change ou supprime des paires.</li>
+<li>Il s'écrit entre accolades : <code>{clé: valeur, clé: valeur}</code>.</li>
+</ul>
 </section>
 
 <section>
-<h2 data-icon="🧭">Accès aux éléments</h2>
-<p>Vous accédez à la valeur d'un dictionnaire en utilisant sa clé. ⚠️ Si la clé n'existe pas, une erreur est générée.</p>
-<pre><code class="language-python">etudiants = {
-  "id_1": "Jean",
-  "id_2": "Marie",
-  "id_3": "Paul"
-}
-# Accès par la clé
-print(etudiants["id_1"])   # Affiche "Jean"
-# .get() avec une valeur par défaut
-print(etudiants.get("id_2", "Non trouvé"))  # "Marie"
-print(etudiants.get("id_4", "Non trouvé"))  # "Non trouvé"
-# Utilisation de la méthode .get() sans valeur par défaut
-print(etudiants.get("id_2"))  # Affiche "Marie"
-#
-</code></pre>
- ⚠️ Remarque : La méthode .get() ne génère pas d'erreur si la clé n'existe pas, elle renvoie None.⚠️
+<h2>Les opérations</h2>
+<table>
+<thead><tr><th>Écriture</th><th>Effet</th></tr></thead>
+<tbody>
+<tr><td><code>d = {}</code></td><td>dictionnaire vide</td></tr>
+<tr><td><code>d[cle]</code></td><td>la valeur associée à <code>cle</code> (erreur si la clé n'existe pas)</td></tr>
+<tr><td><code>d[cle] = v</code></td><td>ajoute la paire, ou remplace la valeur</td></tr>
+<tr><td><code>cle in d</code></td><td><code>True</code> si la clé existe</td></tr>
+<tr><td><code>d.get(cle, defaut)</code></td><td>la valeur, ou <code>defaut</code> si la clé n'existe pas</td></tr>
+<tr><td><code>del d[cle]</code>, <code>d.pop(cle)</code></td><td>supprime la paire (<code>pop</code> renvoie la valeur)</td></tr>
+<tr><td><code>len(d)</code></td><td>le nombre de paires</td></tr>
+<tr><td><code>d.keys()</code> · <code>d.values()</code> · <code>d.items()</code></td><td>les clés · les valeurs · les paires <code>(clé, valeur)</code></td></tr>
+</tbody>
+</table>
 </section>
 
-<section>
-<h2 data-icon="⚙️">Modification du dictionnaire</h2>
-<h3>Ajouter et modifier des éléments</h3>
-<p>Vous pouvez ajouter une nouvelle paire clé-valeur ou modifier la valeur d'une clé existante en utilisant la syntaxe de l'indexation.</p>
-<pre><code class="language-python">voiture = {"marque": "Ford", "modele": "Mustang"}
-# Ajout d'un nouvel élément
-voiture["annee"] = 1964
-print(voiture)
-# {'marque': 'Ford', 'modele': 'Mustang', 'annee': 1964}
-# Modification d'un élément existant
-voiture["modele"] = "Focus"
-print(voiture)
-# {'marque': 'Ford', 'modele': 'Focus', 'annee': 1964}
+<section class="exemple">
+<h2>Exemple : compter des occurrences</h2>
+<p>Combien d'élèves viennent de chaque commune ?</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">communes = [<span class="hljs-string">&quot;Sada&quot;</span>, <span class="hljs-string">&quot;Ouangani&quot;</span>, <span class="hljs-string">&quot;Sada&quot;</span>,
+            <span class="hljs-string">&quot;Bandrélé&quot;</span>, <span class="hljs-string">&quot;Sada&quot;</span>]
+effectifs = {}
+<span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> communes:
+    <span class="hljs-keyword">if</span> c <span class="hljs-keyword">in</span> effectifs:
+        effectifs[c] = effectifs[c] + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">else</span>:
+        effectifs[c] = <span class="hljs-number">1</span>
+<span class="hljs-built_in">print</span>(effectifs)
+<span class="hljs-keyword">for</span> commune, n <span class="hljs-keyword">in</span> effectifs.items():
+    <span class="hljs-built_in">print</span>(commune, <span class="hljs-string">&quot;:&quot;</span>, n)
 </code></pre>
-<h3>Supprimer des éléments</h3>
-<p><strong>pop(key)</strong> : supprime l'élément correspondant à la clé et renvoie sa valeur.</p>
-<p><strong>del</strong> : supprime l'élément avec la clé spécifiée.</p>
-<pre><code class="language-python">livre = {"titre": "1984", "auteur": "George Orwell", "annee": 1949}
-# Supprimer un élément avec pop()
-annee_supprimee = livre.pop("annee")
-print(f"Élément supprimé : {annee_supprimee}")
-# Élément supprimé : 1949
-print(livre) # {'titre': '1984', 'auteur': 'George Orwell'}
-# Supprimer un élément avec del
-del livre["auteur"]
-print(livre) # {'titre': '1984'}
+<pre class="sortie" tabindex="0"><code>{'Sada': 3, 'Ouangani': 1, 'Bandrélé': 1}
+Sada : 3
+Ouangani : 1
+Bandrélé : 1
 </code></pre>
 </section>
 
-<section>
-<h2 data-icon="📜">Parcourir un dictionnaire</h2>
-<p>La boucle for est l'outil principal pour parcourir un dictionnaire.</p>
+<section class="trace">
+<h2>Trace de la boucle</h2>
+<table>
+<thead><tr><th>Tour</th><th><code>c</code></th><th><code>effectifs</code> après le tour</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Sada</td><td><code>{'Sada': 1}</code></td></tr>
+<tr><td>2</td><td>Ouangani</td><td><code>{'Sada': 1, 'Ouangani': 1}</code></td></tr>
+<tr><td>3</td><td>Sada</td><td><code>{'Sada': 2, 'Ouangani': 1}</code></td></tr>
+<tr><td>4</td><td>Bandrélé</td><td>… <code>'Bandrélé': 1</code> est ajouté</td></tr>
+<tr><td>5</td><td>Sada</td><td>… <code>'Sada'</code> passe à 3</td></tr>
+</tbody>
+</table>
+</section>
 
-<p><strong>1. Par les clés :</strong> C'est la méthode la plus simple et la plus courante.</p>
-<pre><code class="language-python">profil = {"nom": "Alex", "age": 30, "poste": "Designer"}
-for cle in profil:
-  print(cle)
-Affiche :
-nom
-age
-poste
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Lire une clé absente : <code>effectifs["Mtsamboro"]</code> provoque <code>KeyError: 'Mtsamboro'</code>. Tester <code>"Mtsamboro" in effectifs</code> avant, ou utiliser <code>get</code>.</li>
+<li>Croire que <code>d[0]</code> donne la première paire : <code>0</code> est cherché comme une <strong>clé</strong> (<code>KeyError: 0</code>).</li>
+<li>Prendre une liste comme clé : <code>TypeError: unhashable type: 'list'</code>. Utiliser un tuple.</li>
+<li>Croire que <code>for x in d</code> parcourt les valeurs : il parcourt les <strong>clés</strong>.</li>
+<li>Croire que <code>d2 = d</code> copie : les deux noms désignent le même dictionnaire. Copier avec <code>d.copy()</code>.</li>
+</ul>
+<pre data-erreur class="code" tabindex="0" data-langage="python"><code class="hljs language-python">notes = {<span class="hljs-string">&quot;Anli&quot;</span>: <span class="hljs-number">12</span>}
+<span class="hljs-built_in">print</span>(notes.get(<span class="hljs-string">&quot;Zaïna&quot;</span>, <span class="hljs-string">&quot;absente&quot;</span>))
+<span class="hljs-built_in">print</span>(notes[<span class="hljs-string">&quot;Zaïna&quot;</span>])
 </code></pre>
-
-<p><strong>2. Par les valeurs :</strong> On utilise la méthode <strong>.values()</strong> pour parcourir uniquement les valeurs.</p>
-<pre><code class="language-python">profil = {"nom": "Alex", "age": 30, "poste": "Designer"}
-for valeur in profil.values():
-  print(valeur)
-Affiche :
-Alex
-30
-Designer
-</code></pre>
-
-<p><strong>3. Par les paires clé-valeur (avec .items()) :</strong> La méthode la plus élégante pour avoir à la fois la clé et la valeur.</p>
-<pre><code class="language-python">profil = {"nom": "Alex", "age": 30, "poste": "Designer"}
-for cle, valeur in profil.items():
-  print(f"La clé '{cle}' correspond à la valeur '{valeur}'.")
-Affiche :
-La clé 'nom' correspond à la valeur 'Alex'.
-La clé 'age' correspond à la valeur '30'.
-La clé 'poste' correspond à la valeur 'Designer'.
+<pre class="sortie" tabindex="0"><code>absente
+KeyError: 'Zaïna'
 </code></pre>
 </section>
 
-<section>
-<h2 data-icon="🤔">Copier un dictionnaire</h2>
-<p>⚠️ Si vous attribuez un dictionnaire à une autre variable avec le signe =, vous ne faites pas une copie ! Les deux variables pointent vers le même objet en mémoire. On appelle cela une référence.</p>
-<p>Pour faire une vraie copie, vous devez utiliser la méthode <strong>.copy()</strong>.</p>
-<pre><code class="language-python">dict_a = {"a": 1, "b": 2}
-dict_b = dict_a  # C'est une référence
-dict_b["c"] = 3
-print(dict_a) # Affiche {'a': 1, 'b': 2, 'c': 3} !
-print(dict_b) # Affiche {'a': 1, 'b': 2, 'c': 3}
-
-<p>dict_c = dict_a.copy()  # Vraie copie avec .copy()
-dict_c[&quot;d&quot;] = 4
-print(dict_a) # Affiche {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3}
-print(dict_c) # Affiche {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3, &#39;d&#39;: 4}
-</code></pre></p>
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Une clé donne accès à sa valeur : <code>d[cle]</code>.</li>
+<li>Écrire <code>d[cle] = v</code> ajoute <strong>ou</strong> modifie.</li>
+<li><code>in</code> teste la présence d'une <strong>clé</strong>.</li>
+<li>Parcourir les paires : <code>for cle, valeur in d.items():</code></li>
+<li>Le motif « si la clé existe, ajouter 1 ; sinon, mettre 1 » sert à compter.</li>
+</ul>
 </section>
 
-<section>
-<h2 data-icon="🕵️">Vérifier la présence d'une clé</h2>
-<p>L'opérateur <strong>in</strong> est utilisé pour tester si une clé est présente dans un dictionnaire. Il renvoie un booléen : <strong>True</strong> si la clé est trouvée, et <strong>False</strong> sinon.</p>
-<pre><code class="language-python">eleves = {"prenom": "Léo", "matiere": "Maths", "note": 15}
-# Tester si "prenom" est dans le dictionnaire
-if "prenom" in eleves:
-    print("La clé 'prenom' existe dans le dictionnaire.")
-# Affiche "La clé 'prenom' existe dans le dictionnaire."
-# Tester si "age" n'est pas dans le dictionnaire
-if "age" not in eleves:
-    print("La clé 'age' n'est pas présente.")
-# Affiche "La clé 'age' n'est pas présente."
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Qu'affiche ce programme ?</p>
+<pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python">notes = {<span class="hljs-string">&quot;Anli&quot;</span>: <span class="hljs-number">12</span>, <span class="hljs-string">&quot;Faïza&quot;</span>: <span class="hljs-number">15</span>}
+notes[<span class="hljs-string">&quot;Anli&quot;</span>] = notes[<span class="hljs-string">&quot;Anli&quot;</span>] + <span class="hljs-number">3</span>
+notes[<span class="hljs-string">&quot;Zaïna&quot;</span>] = <span class="hljs-number">9</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(notes), notes[<span class="hljs-string">&quot;Anli&quot;</span>])
 </code></pre>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>3 15</code> : la clé <code>"Zaïna"</code> est ajoutée (3 paires) et la note d'Anli passe de 12 à 15.</div>
+</details>
 </section>
 
-  </article>
-</main>
-
-<footer class="fiche-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="license noopener noreferrer">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" target="_blank" rel="noopener noreferrer">Code source sur GitHub</a></footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/liste/" rel="prev"><span class="sens">← Fiche précédente</span>Les tableaux (listes) en Python</a>
+    <a href="../../fiches/binaire/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>L'écriture binaire et hexadécimale</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
   <script>
-// Script pour répartir intelligemment les sections en deux colonnes
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.querySelector('.container');
-  const leftColumn = document.getElementById('column-left');
-  const rightColumn = document.getElementById('column-right');
-  
-  // Récupérer toutes les sections
-  const sections = Array.from(container.querySelectorAll('section'));
-  
-  // Fonction pour calculer la hauteur d'une colonne
-  function getColumnHeight(column) {
-    return column.scrollHeight;
-  }
-  
-  // Répartir les sections de manière équilibrée
-  let leftHeight = 0;
-  let rightHeight = 0;
-  
-  sections.forEach((section, index) => {
-    // Mesurer temporairement la section
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.visibility = 'hidden';
-    tempDiv.appendChild(section.cloneNode(true));
-    document.body.appendChild(tempDiv);
-    const sectionHeight = tempDiv.scrollHeight;
-    document.body.removeChild(tempDiv);
-    
-    // Ajouter la section à la colonne la plus courte
-    if (leftHeight <= rightHeight) {
-      leftColumn.appendChild(section);
-      leftHeight += sectionHeight;
-    } else {
-      rightColumn.appendChild(section);
-      rightHeight += sectionHeight;
-    }
-  });
-});
-</script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
 </body>
 </html>

@@ -2,114 +2,143 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiche NSI – Le langage SQL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les bases de données et le langage SQL · Fiches de révision NSI</title>
+  <meta name="description" content="Modèle relationnel (relation, attribut, clés primaire et étrangère) ; requêtes SELECT, WHERE, ORDER BY, JOIN, fonctions d'agrégation ; INSERT, UPDATE, DELETE.">
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../css/fiche-nsi.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
 </head>
-<body>
-
-<main>
-  <header><h1>Le langage SQL</h1></header>
-  <article class="container">
-    <div class="columns-wrapper">
-      <div class="column" id="column-left">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-      <div class="column" id="column-right">
-        <!-- Le contenu sera réparti dynamiquement entre les colonnes -->
-      </div>
-    </div>
-    <section>
-<h2 data-icon="🔍">Consultation (SELECT)</h2>
-<p>La commande <code>SELECT</code> permet de récupérer des données dans une table. On peut filtrer avec <code>WHERE</code> et trier avec <code>ORDER BY</code>.</p>
-<pre><code class="language-sql">-- Récupérer le nom et le prix des produits de plus de 10€
-SELECT nom, prix 
-FROM produits 
-WHERE prix > 10 
-ORDER BY prix DESC;
-
-<p>-- Récupérer toutes les colonnes
-SELECT * FROM eleves;
-</code></pre></p>
+<body class="ecran">
+  <a class="evitement" href="#contenu">Aller à la fiche</a>
+  <nav class="barre" aria-label="Navigation">
+    <a href="../../" class="bouton">← Toutes les fiches</a>
+    <a href="../../fiches/sql.pdf" class="bouton" download><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>PDF A4</span></a>
+  </nav>
+  <main id="contenu" class="fiche">
+    <header class="fiche-entete">
+      <p class="fiche-niveau">Terminale NSI · Bases de données</p>
+      <h1>Les bases de données et le langage SQL</h1>
+    </header>
+    <article class="fiche-corps">
+<section class="essentiel">
+<h2>L'essentiel</h2>
+<p>Une base de données <strong>relationnelle</strong> range les données dans des <strong>relations</strong> (des tables). Chaque colonne est un <strong>attribut</strong>, avec un <strong>domaine</strong> (son type) ; chaque ligne est un <strong>enregistrement</strong>.</p>
+<ul>
+<li><strong>Clé primaire</strong> (soulignée) : un attribut dont la valeur identifie chaque ligne ; deux lignes ne peuvent pas avoir la même.</li>
+<li><strong>Clé étrangère</strong> (précédée de #) : un attribut qui fait référence à la clé primaire d'une autre relation.</li>
+<li>Le <strong>SGBD</strong> (système de gestion de bases de données) vérifie ces contraintes et gère les accès de plusieurs personnes à la fois.</li>
+</ul>
+<p><strong>Schéma relationnel</strong> de l'exemple (données fictives) :<br>
+classe (<u>id</u>, nom, salle)<br>
+eleve (<u>id</u>, prenom, age, #id_classe)<br>
+À gauche la table eleve, à droite la table classe :</p>
+<table>
+<thead><tr><th>id</th><th>prenom</th><th>age</th><th>id_classe</th><th style="border-left: 3px solid #1f2328">id</th><th>nom</th><th>salle</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Anli</td><td>16</td><td>1</td><td style="border-left: 3px solid #1f2328">1</td><td>1G1</td><td>B12</td></tr>
+<tr><td>2</td><td>Faïza</td><td>17</td><td>1</td><td style="border-left: 3px solid #1f2328">2</td><td>TG2</td><td>C04</td></tr>
+<tr><td>3</td><td>Zaïna</td><td>18</td><td>2</td><td colspan="3" style="border-left: 3px solid #1f2328"></td></tr>
+<tr><td>4</td><td>Nassim</td><td>17</td><td>2</td><td colspan="3" style="border-left: 3px solid #1f2328"></td></tr>
+<tr><td>5</td><td>Moinécha</td><td>16</td><td>1</td><td colspan="3" style="border-left: 3px solid #1f2328"></td></tr>
+</tbody>
+</table>
 </section>
 
-<section>
-<h2 data-icon="➕">Action sur les données (CRUD)</h2>
-<p>Les opérations de mise à jour et d'insertion permettent de manipuler le contenu des tables.</p>
-<pre><code class="language-sql">-- Insérer une nouvelle ligne
-INSERT INTO eleves (nom, prenom, classe) 
-VALUES ('Dupont', 'Jean', 'Terminale');
-
-<p>-- Mettre à jour une valeur
-UPDATE produits 
-SET prix = 12.5 
-WHERE id = 4;</p>
-<p>-- Supprimer une ligne
-DELETE FROM eleves 
-WHERE id = 10;
-</code></pre></p>
-</section>
-
-<section>
-<h2 data-icon="📊">Agrégateurs et Jointures</h2>
-<p>Les fonctions d'agrégation permettent d'effectuer des calculs sur un ensemble de lignes.</p>
-<pre><code class="language-sql">SELECT COUNT(*) FROM eleves;        -- Compte le nombre total
-SELECT AVG(note) FROM evaluations; -- Moyenne des notes
-SELECT MAX(prix) FROM produits;    -- Prix le plus élevé
+<section class="exemple">
+<h2>Interroger : SELECT</h2>
+<pre data-base="lycee" class="code" tabindex="0" data-langage="sql"><code class="hljs language-sql"><span class="hljs-keyword">SELECT</span> prenom, age <span class="hljs-keyword">FROM</span> eleve
+<span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">&gt;=</span> <span class="hljs-number">17</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> age <span class="hljs-keyword">DESC</span>, prenom;
 </code></pre>
-<p>La <strong>jointure</strong> permet de lier deux tables grâce à une clé étrangère.</p>
-<pre><code class="language-sql">SELECT eleves.nom, classes.nom_classe
-FROM eleves
-JOIN classes ON eleves.classe_id = classes.id;
+<pre class="sortie" data-titre="Résultat" tabindex="0"><code>prenom | age
+Zaïna | 18
+Faïza | 17
+Nassim | 17
+</code></pre>
+<pre data-base="lycee" class="code" tabindex="0" data-langage="sql"><code class="hljs language-sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>), <span class="hljs-built_in">MAX</span>(age) <span class="hljs-keyword">FROM</span> eleve
+<span class="hljs-keyword">WHERE</span> id_classe <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+</code></pre>
+<pre class="sortie" data-titre="Résultat" tabindex="0"><code>COUNT(*) | MAX(age)
+3 | 17
+</code></pre>
+<p>Fonctions d'agrégation : <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>. <code>SELECT DISTINCT age</code> retire les doublons.</p>
+</section>
+
+<section class="exemple">
+<h2>Relier deux tables : JOIN</h2>
+<pre data-base="lycee" class="code" tabindex="0" data-langage="sql"><code class="hljs language-sql"><span class="hljs-keyword">SELECT</span> eleve.prenom, classe.nom
+<span class="hljs-keyword">FROM</span> eleve
+<span class="hljs-keyword">JOIN</span> classe <span class="hljs-keyword">ON</span> eleve.id_classe <span class="hljs-operator">=</span> classe.id
+<span class="hljs-keyword">WHERE</span> classe.salle <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;C04&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> eleve.prenom;
+</code></pre>
+<pre class="sortie" data-titre="Résultat" tabindex="0"><code>prenom | nom
+Nassim | TG2
+Zaïna | TG2
+</code></pre>
+<p>La condition <code>ON</code> associe chaque élève à <strong>sa</strong> classe : clé étrangère = clé primaire.</p>
+</section>
+
+<section class="exemple">
+<h2>Modifier : INSERT, UPDATE, DELETE</h2>
+<pre data-base="lycee" class="code" tabindex="0" data-langage="sql"><code class="hljs language-sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> eleve <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">6</span>, <span class="hljs-string">&#x27;Saïd&#x27;</span>, <span class="hljs-number">15</span>, <span class="hljs-number">1</span>);
+<span class="hljs-keyword">UPDATE</span> eleve <span class="hljs-keyword">SET</span> age <span class="hljs-operator">=</span> <span class="hljs-number">17</span> <span class="hljs-keyword">WHERE</span> prenom <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;Anli&#x27;</span>;
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> eleve <span class="hljs-keyword">WHERE</span> id <span class="hljs-operator">=</span> <span class="hljs-number">4</span>;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> eleve <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">=</span> <span class="hljs-number">17</span>;
+</code></pre>
+<pre class="sortie" data-titre="Résultat" tabindex="0"><code>COUNT(*)
+2
 </code></pre>
 </section>
-  </article>
-</main>
 
-<footer class="fiche-mention">« Fiches de révision NSI » · Babash - NSI Tani Malandi · licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="license noopener noreferrer">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" target="_blank" rel="noopener noreferrer">Code source sur GitHub</a></footer>
+<section class="erreurs">
+<h2>Erreurs fréquentes</h2>
+<ul>
+<li>Oublier la condition de jointure : chaque élève est associé à <strong>chaque</strong> classe (5 × 2 = 10 lignes).</li>
+<li>Oublier le <code>WHERE</code> d'un <code>UPDATE</code> ou d'un <code>DELETE</code> : <strong>toutes</strong> les lignes sont modifiées ou supprimées.</li>
+<li>Insérer une clé primaire déjà prise : <code>UNIQUE constraint failed</code> ; une clé étrangère sans ligne correspondante : <code>FOREIGN KEY constraint failed</code>.</li>
+<li>Écrire les chaînes sans apostrophes : <code>WHERE prenom = Anli</code> cherche une <strong>colonne</strong> Anli.</li>
+<li>Mettre une fonction d'agrégation dans le <code>WHERE</code> :</li>
+</ul>
+<pre data-base="lycee" data-erreur class="code" tabindex="0" data-langage="sql"><code class="hljs language-sql"><span class="hljs-keyword">SELECT</span> prenom <span class="hljs-keyword">FROM</span> eleve <span class="hljs-keyword">WHERE</span> age <span class="hljs-operator">=</span> <span class="hljs-built_in">MAX</span>(age);
+</code></pre>
+<pre class="sortie" data-titre="Résultat" tabindex="0"><code>Erreur : misuse of aggregate function MAX()
+</code></pre>
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
+<section class="retenir">
+<h2>À retenir</h2>
+<ul>
+<li>Clé primaire : identifie une ligne. Clé étrangère : référence la clé primaire d'une autre table.</li>
+<li><code>SELECT</code> colonnes <code>FROM</code> table <code>WHERE</code> condition <code>ORDER BY</code> colonne.</li>
+<li><code>JOIN … ON</code> clé étrangère = clé primaire.</li>
+<li><code>INSERT INTO … VALUES</code>, <code>UPDATE … SET … WHERE</code>, <code>DELETE FROM … WHERE</code>.</li>
+</ul>
+</section>
+
+<section class="eclair">
+<h2>Exercice éclair</h2>
+<p>Écrire la requête qui donne le prénom des élèves de la classe <code>1G1</code>, par ordre alphabétique.</p>
+<details class="reponse"><summary>Réponse</summary>
+<div class="a-l-envers"><code>SELECT eleve.prenom FROM eleve JOIN classe ON eleve.id_classe = classe.id WHERE classe.nom = '1G1' ORDER BY eleve.prenom;</code> (Anli, Faïza, Moinécha)</div>
+</details>
+</section>
+
+    </article>
+  </main>
+  <nav class="voisines" aria-label="Fiches voisines">
+    <a href="../../fiches/graphes/" rel="prev"><span class="sens">← Fiche précédente</span>Les graphes</a>
+    <a href="../../fiches/recursivite/" rel="next" class="suivante"><span class="sens">Fiche suivante →</span>La récursivité</a>
+  </nav>
+  <footer class="pied">
+    <p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI" class="lien-icone"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icone" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code source sur GitHub</span></a></p>
+    <p>Toutes les ressources de NSI et de SNT : <a href="https://babash.github.io/Babash-NSI-SNT/">Ressources NSI et SNT</a>.</p>
+  </footer>
   <script>
-// Script pour répartir intelligemment les sections en deux colonnes
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.querySelector('.container');
-  const leftColumn = document.getElementById('column-left');
-  const rightColumn = document.getElementById('column-right');
-  
-  // Récupérer toutes les sections
-  const sections = Array.from(container.querySelectorAll('section'));
-  
-  // Fonction pour calculer la hauteur d'une colonne
-  function getColumnHeight(column) {
-    return column.scrollHeight;
-  }
-  
-  // Répartir les sections de manière équilibrée
-  let leftHeight = 0;
-  let rightHeight = 0;
-  
-  sections.forEach((section, index) => {
-    // Mesurer temporairement la section
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.visibility = 'hidden';
-    tempDiv.appendChild(section.cloneNode(true));
-    document.body.appendChild(tempDiv);
-    const sectionHeight = tempDiv.scrollHeight;
-    document.body.removeChild(tempDiv);
-    
-    // Ajouter la section à la colonne la plus courte
-    if (leftHeight <= rightHeight) {
-      leftColumn.appendChild(section);
-      leftHeight += sectionHeight;
-    } else {
-      rightColumn.appendChild(section);
-      rightHeight += sectionHeight;
-    }
-  });
-});
-</script>
+    // À l'impression depuis le navigateur, la réponse de l'exercice éclair est dépliée.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details.reponse').forEach(function (d) { d.open = true; });
+    });
+  </script>
 </body>
 </html>
