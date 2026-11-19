@@ -130,6 +130,8 @@ class FichesManager {
       programme: liste(a.programme),
       ordre: Number(a.ordre) || 999,
       resume: a.resume || '',
+      // Fiche « remplie » : elle occupe exactement la page A4 (voir fiche-nsi.css).
+      remplie: a.remplie === true,
       motsCles: liste(a.mots_cles),
       footer: a.footer || '',
       content: colorer(html),

@@ -52,9 +52,11 @@ Chaque encadré est un `<section>` avec un titre `<h2>`. Les quatre encadrés ob
 
 ## Tenir sur une page
 
-- Le texte du PDF est en 9,75 pt et le code des blocs en 8,25 pt (11 px) : on ne réduit pas la police, on raccourcit le texte. La génération affiche la hauteur de chaque fiche (sur 1031 px) ; une fiche trop haute est signalée, et une fiche qui déborde arrête la publication.
-- Les encadrés remplissent la colonne de gauche, puis celle de droite. Si un grand encadré laisse un vide à gauche, le découper en deux (comme « Recherche » et « Insertion » dans la fiche des ABR).
-- 400 à 550 mots de texte environ, et 2 ou 3 blocs de code.
+- Le texte du PDF est en 9,75 pt (9,5 pt pour une fiche « remplie ») et le code des blocs en 8,25 pt (11 px) : on ne réduit pas la police, on raccourcit le texte. La génération affiche la hauteur de chaque fiche ; une fiche trop haute est signalée, et une fiche qui déborde arrête la publication.
+- **Deux sortes de fiches.** La génération affiche le taux de remplissage de chaque colonne de chaque fiche (`[REMPLISSAGE] fiche : gauche …, droite …`).
+  - **Fiche ordinaire** (le cas par défaut) : marges de 7, 8 et 17 mm, texte en 9,75 pt (tableaux en 8,6 pt), la colonne de gauche est remplie en premier, le reste va à droite. 400 à 550 mots de texte et 2 ou 3 blocs de code environ.
+  - **Fiche remplie** (`remplie: true` dans l'en-tête ; modèle : la fiche des piles et des files, 600 mots environ et 4 à 5 blocs de code) : elle occupe exactement la page. Ce qui change : marges de 6, 7 et 15 mm (la mention reste à 10 mm du bord) ; texte en 9,5 pt, tableaux compris, interligne 1,25 ; code en 8,25 pt, interligne 1,2 ; encadrés plus serrés ; les deux colonnes sont équilibrées (la suite des encadrés est coupée là où elles sont le plus proches) ; à partir de 95 % de remplissage dans les deux colonnes, les encadrés s'étirent jusqu'au bas de la page.
+  - Pour rendre une fiche « remplie » : ajouter `remplie: true`, puis viser 98 à 100 % dans chaque colonne, à 2 % près, en ajoutant ou en retirant une ligne dans la colonne trop courte ou trop longue, ou en découpant un grand encadré en deux (comme « Recherche » et « Insertion » dans la fiche des ABR).
 
 ## Écriture
 
