@@ -65,6 +65,10 @@ class StaticSiteGenerator {
         } else {
           console.log(`[VÉRIF] ${f.slug} : une page, sans réduction (${f.hauteur} px sur ${require('../src/pages').HAUTEUR_UTILE_PX})`);
         }
+        // Taux de remplissage (affiché seulement) : hauteur naturelle de chaque
+        // colonne / hauteur disponible. Visé : 98 à 100 %, colonnes à 2 % près.
+        const pc = (x) => (x * 100).toFixed(1).replace('.', ',') + ' %';
+        console.log(`[REMPLISSAGE] ${f.slug} : gauche ${pc(f.tauxGauche)}, droite ${pc(f.tauxDroite)}, écart ${pc(Math.abs(f.tauxGauche - f.tauxDroite))}`);
       }
       for (const f of r.fiches) {
         for (const ligne of f.coupees) {

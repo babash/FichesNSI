@@ -67,6 +67,8 @@ class PDFGenerator {
           hauteur: Number(el.dataset.hauteur),
           deborde: el.dataset.deborde === 'oui',
           coupees: JSON.parse(el.dataset.coupees || '[]'),
+          tauxGauche: Number(el.dataset.tauxGauche),
+          tauxDroite: Number(el.dataset.tauxDroite),
         })));
         resultats.push({ url, fiches, erreurs: erreurs.slice() });
       }

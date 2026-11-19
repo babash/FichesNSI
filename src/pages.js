@@ -180,26 +180,64 @@ function scriptPdf(hauteurUtile) {
   (function () {
     var HAUTEUR = ${hauteurUtile};
     var ZOOM_MIN = 0.85;
-    // Les encadrés remplissent la colonne de gauche, puis celle de droite
-    // (column-fill: auto, hauteur fixe). Une fiche trop longue crée une
-    // troisième colonne, hors de la page : on la détecte par la largeur.
-    function deborde(corps) { return corps.scrollWidth > corps.clientWidth + 1; }
+    var REMPLIR_DES = 0.95;   // à partir de ce taux, les encadrés s'étirent jusqu'en bas
+
+    // Mise en page d'une fiche en deux colonnes :
+    // 1. chaque encadré est mesuré à la largeur d'une colonne ;
+    // 2. on coupe la suite des encadrés (sans changer leur ordre) à l'endroit
+    //    qui équilibre le mieux les deux colonnes ;
+    // 3. taux de remplissage : la hauteur naturelle de chaque colonne divisée
+    //    par la hauteur disponible ;
+    // 4. si les deux colonnes sont remplies à 95 % au moins, les encadrés
+    //    s'étirent pour finir exactement au bas de la page (pas de blanc).
+    function hauteurBloc(el) {
+      var st = getComputedStyle(el);
+      return el.getBoundingClientRect().height + parseFloat(st.marginTop) + parseFloat(st.marginBottom);
+    }
+    function disposer(corps) {
+      var sections = Array.prototype.slice.call(corps.querySelectorAll(':scope > section, :scope > .colonne > section'));
+      corps.innerHTML = '';
+      corps.classList.add('deux-colonnes');
+      var gauche = document.createElement('div');
+      var droite = document.createElement('div');
+      gauche.className = 'colonne';
+      droite.className = 'colonne';
+      corps.appendChild(gauche);
+      corps.appendChild(droite);
+      sections.forEach(function (s) { gauche.appendChild(s); });
+      var h = sections.map(hauteurBloc);
+      var total = h.reduce(function (a, b) { return a + b; }, 0);
+      var k = 1, meilleur = Infinity, cumul = 0;
+      for (var i = 1; i < h.length; i++) {
+        cumul += h[i - 1];
+        var m = Math.max(cumul, total - cumul);
+        if (m < meilleur) { meilleur = m; k = i; }
+      }
+      for (var j = k; j < sections.length; j++) droite.appendChild(sections[j]);
+      var dispo = corps.getBoundingClientRect().height;
+      function naturelle(col) {
+        if (!col.lastElementChild) return 0;
+        return col.lastElementChild.getBoundingClientRect().bottom - col.getBoundingClientRect().top;
+      }
+      return { dispo: dispo, gauche: naturelle(gauche), droite: naturelle(droite) };
+    }
     function ajuster(fiche) {
       var interieur = fiche.querySelector('.zoom');
       var corps = fiche.querySelector('.fiche-corps');
       var zoom = 1;
       interieur.style.height = HAUTEUR + 'px';
-      while (deborde(corps) && zoom > ZOOM_MIN) {
+      var d = disposer(corps);
+      while (Math.max(d.gauche, d.droite) > d.dispo + 0.5 && zoom > ZOOM_MIN) {
         zoom = Math.round((zoom - 0.01) * 100) / 100;
         interieur.style.zoom = zoom;
         interieur.style.height = (HAUTEUR / zoom) + 'px';
+        d = disposer(corps);
       }
-      // Hauteur occupée : le bas du plus bas des encadrés.
-      var bas = 0;
-      var haut = interieur.getBoundingClientRect().top;
-      Array.prototype.forEach.call(corps.children, function (s) {
-        bas = Math.max(bas, s.getBoundingClientRect().bottom - haut);
-      });
+      var tg = d.gauche / d.dispo, td = d.droite / d.dispo;
+      if (Math.min(tg, td) >= REMPLIR_DES && Math.max(tg, td) <= 1.0001) corps.classList.add('remplie');
+      fiche.setAttribute('data-taux-gauche', tg.toFixed(4));
+      fiche.setAttribute('data-taux-droite', td.toFixed(4));
+      var bas = (Math.max(d.gauche, d.droite) + corps.getBoundingClientRect().top - interieur.getBoundingClientRect().top) / zoom;
       // Lignes de code trop longues : sur papier, elles passeraient à la ligne
       // (white-space: pre-wrap), et la fin d'un commentaire ressemblerait à du
       // code. Chaque ligne d'un bloc de code est mesurée. (Les blocs d'affichage
@@ -223,7 +261,7 @@ function scriptPdf(hauteurUtile) {
       fiche.setAttribute('data-coupees', JSON.stringify(coupees));
       fiche.setAttribute('data-zoom', zoom);
       fiche.setAttribute('data-hauteur', Math.round(bas));
-      if (deborde(corps)) fiche.setAttribute('data-deborde', 'oui');
+      if (Math.max(d.gauche, d.droite) > d.dispo + 0.5) fiche.setAttribute('data-deborde', 'oui');
     }
     function fin() {
       Array.prototype.forEach.call(document.querySelectorAll('details'), function (d) { d.open = true; });
@@ -238,10 +276,10 @@ function scriptPdf(hauteurUtile) {
 
 /**
  * Hauteur disponible pour une fiche dans une page A4, en px CSS (96 px par
- * pouce) : 297 mm, moins 7 mm de marge en haut et 17 mm en bas, où la mention
+ * pouce) : 297 mm, moins 6 mm de marge en haut et 15 mm en bas, où la mention
  * de l'auteur et de la licence est écrite à 10 mm du bord.
  */
-const HAUTEUR_UTILE_PX = Math.floor((297 - 7 - 17) * 96 / 25.4);
+const HAUTEUR_UTILE_PX = Math.floor((297 - 6 - 15) * 96 / 25.4);
 
 function pagePdf(fiches, titre) {
   return `<!DOCTYPE html>

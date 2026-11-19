@@ -118,7 +118,7 @@ h1 {
   column-gap: 0.9em;
 }
 
-.fiche-corps > section {
+.fiche-corps section {
   break-inside: avoid;
   page-break-inside: avoid;
   display: inline-block;   /* Chromium 88 : garde l'encadré entier dans sa colonne */
@@ -156,13 +156,13 @@ h1 {
 .fiche-corps strong { color: #000; }
 
 /* Les types d'encadrés : un titre écrit, un trait différent (lisible en noir et blanc). */
-.fiche-corps > section.essentiel { border-left: 5px solid var(--bleu); }
-.fiche-corps > section.erreurs { border: 2px dashed var(--rouge); }
-.fiche-corps > section.erreurs h2 { border-left-color: var(--rouge); background: #fdeeee; }
-.fiche-corps > section.retenir { border: 2.5px solid var(--vert); background: #f4fbf7; }
-.fiche-corps > section.retenir h2 { border-left-color: var(--vert); background: #e3f4ea; }
-.fiche-corps > section.eclair { border: 2px dotted var(--violet); }
-.fiche-corps > section.eclair h2 { border-left-color: var(--violet); background: #f1ecfb; }
+.fiche-corps section.essentiel { border-left: 5px solid var(--bleu); }
+.fiche-corps section.erreurs { border: 2px dashed var(--rouge); }
+.fiche-corps section.erreurs h2 { border-left-color: var(--rouge); background: #fdeeee; }
+.fiche-corps section.retenir { border: 2.5px solid var(--vert); background: #f4fbf7; }
+.fiche-corps section.retenir h2 { border-left-color: var(--vert); background: #e3f4ea; }
+.fiche-corps section.eclair { border: 2px dotted var(--violet); }
+.fiche-corps section.eclair h2 { border-left-color: var(--violet); background: #f1ecfb; }
 
 /* Le code : « Python » ou « SQL » au-dessus, l'affichage du programme à part. */
 .fiche-corps pre {
@@ -297,6 +297,8 @@ body.ecran {
 .ecran .fiche-niveau { font-size: 0.95rem; }
 .ecran .fiche-corps { column-gap: 1.1rem; }
 .ecran .fiche-corps pre { font-size: 14px; }
+/* À l'écran, les schémas s'agrandissent pour que leurs étiquettes restent lisibles. */
+.ecran .fiche-corps svg.schema { width: 100%; max-width: 360px; height: auto; }
 .ecran .fiche-corps table { font-size: 0.95em; }
 
 .voisines {
@@ -351,18 +353,18 @@ body.ecran {
 @page { size: A4; margin: 10mm 9mm 12mm; }   /* impression d'une page web ; les pages des PDF ont margin: 0 */
 
 body.pdf {
-  font-size: 13px;   /* 9,75 pt */
-  line-height: 1.3;
+  font-size: 12.7px;   /* 9,5 pt : le minimum, tableaux compris */
+  line-height: 1.25;
   width: 210mm;
 }
 
-/* Une fiche = une page : 7 mm en haut, 8 mm sur les côtés, 17 mm en bas,
+/* Une fiche = une page : 6 mm en haut, 7 mm sur les côtés, 15 mm en bas,
    où la mention de l'auteur et de la licence est écrite à 10 mm du bord. */
 .pdf .fiche-pdf {
   box-sizing: border-box;
   width: 210mm;
   height: 297mm;
-  padding: 7mm 8mm 17mm;
+  padding: 6mm 7mm 15mm;
   overflow: hidden;
   break-after: page;
   page-break-after: always;
@@ -370,17 +372,30 @@ body.pdf {
 .pdf .fiche-pdf:last-of-type { break-after: auto; page-break-after: auto; }
 
 .pdf .zoom { display: flex; flex-direction: column; }
-.pdf .fiche-corps { flex: 1 1 auto; min-height: 0; column-fill: auto; }
+.pdf .fiche-corps { flex: 1 1 auto; min-height: 0; }
+.pdf .fiche-corps section,
+.pdf .deux-colonnes > .colonne > section { padding: 0.35em 0.5em 0.4em; margin-bottom: 0.45em; }
+.pdf .fiche-corps h2 { margin-bottom: 0.25em; padding-top: 0.1em; padding-bottom: 0.1em; }
+.pdf .fiche-entete h1 { margin-bottom: 0.25em; }
+/* PDF : deux colonnes construites par le script de la page (coupure qui
+   équilibre les colonnes) ; une fiche remplie à 95 % au moins s'étire
+   jusqu'en bas de la page. */
+.pdf .fiche-corps.deux-colonnes { column-count: auto; display: flex; gap: 0.9em; align-items: stretch; }
+.pdf .deux-colonnes > .colonne { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+.pdf .deux-colonnes > .colonne > section { display: block; flex: 0 0 auto; }
+.pdf .deux-colonnes.remplie > .colonne > section { flex-grow: 1; }
+.pdf .deux-colonnes > .colonne > section:last-child { margin-bottom: 0; }
 .pdf h1 { font-size: 19px; }
 .pdf .fiche-niveau { font-size: 11px; }
-.pdf .fiche-corps pre { font-size: 11px; line-height: 1.25; white-space: pre-wrap; overflow-wrap: anywhere; overflow: visible; }
+.pdf .fiche-corps pre { font-size: 11px; line-height: 1.2; white-space: pre-wrap; overflow-wrap: anywhere; overflow: visible; }
 .pdf .fiche-corps pre code { font-size: 1em; }   /* 8,25 pt : le 0,95em du code en ligne ne vaut pas dans les blocs */
 .ecran .fiche-corps pre code { font-size: 1em; }
-.pdf .fiche-corps table { font-size: 11.5px; }
+.pdf .fiche-corps table { font-size: 1em; }
+.pdf .fiche-corps td code, .pdf .fiche-corps th code { font-size: 11px; }   /* code en ligne des tableaux : 8,25 pt */
 
 .pdf-mention {
   position: fixed;
-  right: 8mm;
+  right: 7mm;
   bottom: 10mm;
   padding: 0.3mm 1.5mm;
   background: #fff;

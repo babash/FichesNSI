@@ -52,8 +52,8 @@ Chaque encadré est un `<section>` avec un titre `<h2>`. Les quatre encadrés ob
 
 ## Tenir sur une page
 
-- Le texte du PDF est en 9,75 pt et le code des blocs en 8,25 pt (11 px) : on ne réduit pas la police, on raccourcit le texte. La génération affiche la hauteur de chaque fiche (sur 1031 px) ; une fiche trop haute est signalée, et une fiche qui déborde arrête la publication.
-- Les encadrés remplissent la colonne de gauche, puis celle de droite. Si un grand encadré laisse un vide à gauche, le découper en deux (comme « Recherche » et « Insertion » dans la fiche des ABR).
+- Le texte du PDF (tableaux compris) est en 9,5 pt et le code des blocs en 8,25 pt (11 px) : on ne réduit pas la police, on raccourcit le texte. La génération affiche la hauteur de chaque fiche (sur 1043 px) ; une fiche trop haute est signalée, et une fiche qui déborde arrête la publication.
+- **Remplir exactement la page** : la génération coupe la suite des encadrés en deux colonnes équilibrées et affiche leur taux de remplissage (`[REMPLISSAGE] fiche : gauche …, droite …`). Viser 98 à 100 % dans chaque colonne, à 2 % près : ajouter ou retirer une ligne de texte dans la colonne trop courte ou trop longue, découper un grand encadré en deux (comme « Recherche » et « Insertion » dans la fiche des ABR). À partir de 95 % dans les deux colonnes, les encadrés s'étirent jusqu'au bas de la page. Modèle : la fiche des piles et des files.
 - 400 à 550 mots de texte environ, et 2 ou 3 blocs de code.
 
 ## Écriture
