@@ -161,7 +161,7 @@ ${sections}
 
 /** Une fiche telle qu'elle est mise en page dans un PDF. */
 function fichePdf(fiche) {
-  return `<section class="fiche fiche-pdf" data-slug="${fiche.slug}">
+  return `<section class="fiche fiche-pdf${fiche.remplie ? ' remplie' : ''}" data-slug="${fiche.slug}">
       <div class="zoom">
       ${enTete(fiche)}
       ${corps(fiche)}
@@ -175,10 +175,11 @@ function fichePdf(fiche) {
  * trop haute, son contenu est réduit (au plus jusqu'à 85 %) et la page le
  * signale (`data-zoom`) : la vérification de la génération l'affiche.
  */
-function scriptPdf(hauteurUtile) {
+function scriptPdf(hauteurUtile, hauteurRemplie) {
   return `<script>
   (function () {
-    var HAUTEUR = ${hauteurUtile};
+    var HAUTEUR_NORMALE = ${hauteurUtile};
+    var HAUTEUR_REMPLIE = ${hauteurRemplie};
     var ZOOM_MIN = 0.85;
     var REMPLIR_DES = 0.95;   // à partir de ce taux, les encadrés s'étirent jusqu'en bas
 
@@ -221,22 +222,45 @@ function scriptPdf(hauteurUtile) {
       }
       return { dispo: dispo, gauche: naturelle(gauche), droite: naturelle(droite) };
     }
+    // Fiche ordinaire : rendu inchangé (column-fill: auto, la colonne de
+    // gauche est remplie en premier). Une fiche trop longue crée une troisième
+    // colonne, hors de la page : on la détecte par la largeur.
+    function deborde(corps) { return corps.scrollWidth > corps.clientWidth + 1; }
+    // Taux de remplissage d'une fiche ordinaire : le bas du plus bas des
+    // encadrés de chaque colonne, divisé par la hauteur disponible.
+    function tauxColonnes(corps) {
+      var r = corps.getBoundingClientRect();
+      var milieu = r.left + r.width / 2;
+      var g = 0, d = 0;
+      Array.prototype.forEach.call(corps.querySelectorAll('section'), function (s) {
+        var b = s.getBoundingClientRect();
+        if (b.left < milieu) g = Math.max(g, b.bottom - r.top);
+        else d = Math.max(d, b.bottom - r.top);
+      });
+      return { dispo: r.height, gauche: g, droite: d };
+    }
     function ajuster(fiche) {
       var interieur = fiche.querySelector('.zoom');
       var corps = fiche.querySelector('.fiche-corps');
+      var remplie = fiche.classList.contains('remplie');
+      var HAUTEUR = remplie ? HAUTEUR_REMPLIE : HAUTEUR_NORMALE;
       var zoom = 1;
       interieur.style.height = HAUTEUR + 'px';
-      var d = disposer(corps);
-      while (Math.max(d.gauche, d.droite) > d.dispo + 0.5 && zoom > ZOOM_MIN) {
+      var d;
+      var trop = remplie
+        ? function () { d = disposer(corps); return Math.max(d.gauche, d.droite) > d.dispo + 0.5; }
+        : function () { d = tauxColonnes(corps); return deborde(corps); };
+      while (trop() && zoom > ZOOM_MIN) {
         zoom = Math.round((zoom - 0.01) * 100) / 100;
         interieur.style.zoom = zoom;
         interieur.style.height = (HAUTEUR / zoom) + 'px';
-        d = disposer(corps);
       }
+      var debordement = trop();
       var tg = d.gauche / d.dispo, td = d.droite / d.dispo;
-      if (Math.min(tg, td) >= REMPLIR_DES && Math.max(tg, td) <= 1.0001) corps.classList.add('remplie');
+      if (remplie && Math.min(tg, td) >= REMPLIR_DES && !debordement) corps.classList.add('etiree');
       fiche.setAttribute('data-taux-gauche', tg.toFixed(4));
       fiche.setAttribute('data-taux-droite', td.toFixed(4));
+      fiche.setAttribute('data-hauteur-utile', HAUTEUR);
       var bas = (Math.max(d.gauche, d.droite) + corps.getBoundingClientRect().top - interieur.getBoundingClientRect().top) / zoom;
       // Lignes de code trop longues : sur papier, elles passeraient à la ligne
       // (white-space: pre-wrap), et la fin d'un commentaire ressemblerait à du
@@ -261,7 +285,7 @@ function scriptPdf(hauteurUtile) {
       fiche.setAttribute('data-coupees', JSON.stringify(coupees));
       fiche.setAttribute('data-zoom', zoom);
       fiche.setAttribute('data-hauteur', Math.round(bas));
-      if (Math.max(d.gauche, d.droite) > d.dispo + 0.5) fiche.setAttribute('data-deborde', 'oui');
+      if (debordement) fiche.setAttribute('data-deborde', 'oui');
     }
     function fin() {
       Array.prototype.forEach.call(document.querySelectorAll('details'), function (d) { d.open = true; });
@@ -279,7 +303,9 @@ function scriptPdf(hauteurUtile) {
  * pouce) : 297 mm, moins 6 mm de marge en haut et 15 mm en bas, où la mention
  * de l'auteur et de la licence est écrite à 10 mm du bord.
  */
-const HAUTEUR_UTILE_PX = Math.floor((297 - 6 - 15) * 96 / 25.4);
+const HAUTEUR_UTILE_PX = Math.floor((297 - 7 - 17) * 96 / 25.4);
+/** Fiche « remplie » (`remplie: true`) : 6 mm en haut et 15 mm en bas. */
+const HAUTEUR_REMPLIE_PX = Math.floor((297 - 6 - 15) * 96 / 25.4);
 
 function pagePdf(fiches, titre) {
   return `<!DOCTYPE html>
@@ -293,7 +319,7 @@ function pagePdf(fiches, titre) {
 <body class="pdf">
   <div class="pdf-mention">${MENTION}</div>
   ${fiches.map(fichePdf).join('\n  ')}
-  ${scriptPdf(HAUTEUR_UTILE_PX)}
+  ${scriptPdf(HAUTEUR_UTILE_PX, HAUTEUR_REMPLIE_PX)}
 </body>
 </html>
 `;

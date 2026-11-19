@@ -63,7 +63,7 @@ class StaticSiteGenerator {
         } else if (f.zoom < 1) {
           console.warn(`[VÉRIF] ${f.slug} : réduite à ${Math.round(f.zoom * 100)} % pour tenir sur une page (à raccourcir)`);
         } else {
-          console.log(`[VÉRIF] ${f.slug} : une page, sans réduction (${f.hauteur} px sur ${require('../src/pages').HAUTEUR_UTILE_PX})`);
+          console.log(`[VÉRIF] ${f.slug} : une page, sans réduction (${f.hauteur} px sur ${f.hauteurUtile})`);
         }
         // Taux de remplissage (affiché seulement) : hauteur naturelle de chaque
         // colonne / hauteur disponible. Visé : 98 à 100 %, colonnes à 2 % près.

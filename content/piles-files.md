@@ -4,6 +4,7 @@ niveau: Tle
 theme: "Structures de données"
 programme: [nsi-tle-2019.structures-de-donnees.listes-piles-files, nsi-tle-2019.structures-de-donnees.interface-implementation]
 ordre: 11
+remplie: true
 resume: "Pile (LIFO) et file (FIFO) : interface, deux implémentations de chacune (liste Python, liste chaînée, deux piles), coûts, usages, parenthésage tracé pas à pas."
 mots_cles: [pile, file, LIFO, FIFO, empiler, dépiler, enfiler, défiler, sommet, tête, stack, queue, interface, implémentation, liste chaînée, cellule, file à deux piles, deque, parenthésage, coût]
 ---
@@ -122,9 +123,9 @@ print(bien_parenthese("(a(b)c)"),
 <section class="erreurs">
 <h2>Erreurs fréquentes</h2>
 <ul>
-<li>Dépiler une pile vide : <code>IndexError: pop from empty list</code>. Tester <code>est_vide</code> avant.</li>
+<li>Dépiler une pile vide : <code>IndexError: pop from empty list</code> avec une liste Python (<code>TypeError</code> avec la pile chaînée). Tester <code>est_vide</code> avant.</li>
 <li>Défiler par <code>pop()</code> : on obtient le <strong>dernier</strong> arrivé.</li>
-<li>Vider la pile reçue en paramètre : celle de l'appelant est détruite (même objet). La reconstituer avec une pile auxiliaire.</li>
+<li>Vider la pile reçue en paramètre détruit celle de l'appelant (même objet) : la reconstituer avec une pile auxiliaire.</li>
 <li>Verser <code>entree</code> dans une <code>sortie</code> non vide : l'ordre est perdu.</li>
 </ul>
 </section>
