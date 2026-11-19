@@ -29,6 +29,7 @@
 <tr><td><strong>méthode</strong></td><td>une fonction de la classe, appelée sur un objet : <code>b1.embarquer(120)</code></td></tr>
 <tr><td><strong>constructeur</strong></td><td>la méthode <code>__init__</code>, appelée automatiquement par <code>Barge(...)</code> : elle donne leur valeur de départ aux attributs</td></tr>
 <tr><td><code>self</code></td><td>le premier paramètre de chaque méthode : l'objet sur lequel la méthode travaille</td></tr>
+<tr><td><strong>valeur par défaut</strong></td><td><code>capacite=300</code> : la valeur du paramètre quand l'appel ne la donne pas</td></tr>
 </tbody>
 </table>
 <p>L'<strong>interface</strong> d'une classe, ce sont ses méthodes : on s'en sert sans connaître son code (l'<strong>implémentation</strong>).</p>
@@ -37,7 +38,7 @@
 <section class="exemple">
 <h2>Exemple : une barge (fictive)</h2>
 <pre class="code" tabindex="0" data-langage="python"><code class="hljs language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Barge</span>:
-    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, nom, capacite</span>):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, nom, capacite=<span class="hljs-number">300</span></span>):
         self.nom = nom
         self.capacite = capacite
         self.passagers = <span class="hljs-number">0</span>
@@ -51,13 +52,15 @@
     <span class="hljs-keyword">def</span> <span class="hljs-title function_">places_libres</span>(<span class="hljs-params">self</span>):
         <span class="hljs-keyword">return</span> self.capacite - self.passagers
 
-b1 = Barge(<span class="hljs-string">&quot;Barge 1&quot;</span>, <span class="hljs-number">300</span>)
+b1 = Barge(<span class="hljs-string">&quot;Barge 1&quot;</span>)
 b2 = Barge(<span class="hljs-string">&quot;Barge 2&quot;</span>, <span class="hljs-number">250</span>)
+<span class="hljs-built_in">print</span>(b1.capacite, b2.capacite)
 <span class="hljs-built_in">print</span>(b1.embarquer(<span class="hljs-number">120</span>), b1.embarquer(<span class="hljs-number">200</span>))
 <span class="hljs-built_in">print</span>(b1.passagers, b1.places_libres(),
       b2.passagers)
 </code></pre>
-<pre class="sortie" tabindex="0"><code>True False
+<pre class="sortie" tabindex="0"><code>300 250
+True False
 120 180 0
 </code></pre>
 </section>
@@ -65,7 +68,7 @@ b2 = Barge(<span class="hljs-string">&quot;Barge 2&quot;</span>, <span class="hl
 <section class="trace">
 <h2>Ce qui se passe</h2>
 <ol>
-<li><code>Barge("Barge 1", 300)</code> crée un objet, puis appelle <code>__init__(objet, "Barge 1", 300)</code> : <code>self</code> est le nouvel objet.</li>
+<li><code>Barge("Barge 1")</code> crée un objet, puis appelle <code>__init__(objet, "Barge 1", 300)</code> : <code>self</code> est le nouvel objet, <code>capacite</code> vaut 300 par défaut.</li>
 <li><code>b1.embarquer(120)</code> est traduit en <code>Barge.embarquer(b1, 120)</code> : 0 + 120 ≤ 300, donc 120 passagers.</li>
 <li><code>b1.embarquer(200)</code> : 120 + 200 > 300, l'objet ne change pas.</li>
 <li><code>b2</code> a ses propres attributs : ses passagers restent à 0.</li>
