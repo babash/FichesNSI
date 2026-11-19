@@ -1,8 +1,8 @@
 ---
 title: "Fiche NSI – Les chaînes de caractères en Python"
 niveau: 1re
-theme: "Chaînes et types construits"
-programme: [nsi-1re-2019.langages.constructions-elementaires, nsi-1re-2019.types-de-base.texte]
+theme: "Types construits"
+programme: [nsi-1re-2019.types-construits, nsi-1re-2019.langages.constructions-elementaires]
 ordre: 20
 resume: "Indices et tranches, concaténation, parcours d'une chaîne, split, join, replace, immuabilité."
 mots_cles: [str, chaîne, string, caractère, indice, tranche, slicing, concaténation, split, join, upper, immuable, f-string]

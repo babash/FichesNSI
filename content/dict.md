@@ -1,7 +1,7 @@
 ---
 title: "Fiche NSI – Les dictionnaires en Python"
 niveau: 1re
-theme: "Chaînes et types construits"
+theme: "Types construits"
 programme: nsi-1re-2019.types-construits.dictionnaires
 ordre: 23
 resume: "Associer des clés à des valeurs : créer, lire, modifier, parcourir avec items(), compter des occurrences."

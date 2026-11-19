@@ -1,7 +1,7 @@
 ---
 title: "Fiche NSI – Les p-uplets (tuples) en Python"
 niveau: 1re
-theme: "Chaînes et types construits"
+theme: "Types construits"
 programme: nsi-1re-2019.types-construits.p-uplets
 ordre: 21
 resume: "Créer un p-uplet, lire ses éléments, l'affectation multiple, une fonction qui renvoie plusieurs valeurs, les p-uplets nommés."

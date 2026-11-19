@@ -1,7 +1,7 @@
 ---
 title: "Fiche NSI – Les tableaux (listes) en Python"
 niveau: 1re
-theme: "Chaînes et types construits"
+theme: "Types construits"
 programme: nsi-1re-2019.types-construits.tableaux
 ordre: 22
 resume: "Tableaux indexés : lire, modifier, ajouter, parcourir, construire en compréhension, tableaux de tableaux, copie et référence."
