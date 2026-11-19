@@ -35,6 +35,19 @@ mots_cles: [graphe, sommet, arête, arc, orienté, pondéré, voisin, degré, ch
      "Chirongui": ["Dembéni", "Sada"]}
 </code></pre>
 <p>Avec une <strong>matrice d'adjacence</strong>, les sommets sont numérotés et <code>m[i][j]</code> vaut 1 s'il y a une arête de <code>i</code> à <code>j</code>, 0 sinon. Non orienté : la matrice est symétrique.</p>
+<pre data-suite><code class="language-python"># 0 Mamoudzou, 1 Koungou, 2 Dembéni,
+# 3 Ouangani, 4 Sada, 5 Chirongui
+m = [[0, 1, 1, 1, 0, 0],
+     [1, 0, 0, 0, 0, 0],
+     [1, 0, 0, 0, 0, 1],
+     [1, 0, 0, 0, 1, 0],
+     [0, 0, 0, 1, 0, 1],
+     [0, 0, 1, 0, 1, 0]]
+print(m[0][1], m[1][0], m[1][4], sum(m[4]))
+</code></pre>
+<pre class="sortie"><code>1 1 0 2
+</code></pre>
+<p>Mamoudzou (0) et Koungou (1) sont voisins ; Koungou et Sada (4) non. La somme de la ligne 4 donne le degré de Sada.</p>
 </section>
 
 <section class="exemple">
@@ -71,9 +84,9 @@ print(profondeur(g, "Mamoudzou"))
 <section class="erreurs">
 <h2>Erreurs fréquentes</h2>
 <ul>
-<li>Oublier de noter les sommets déjà vus : à cause des cycles, le parcours tourne sans fin (<code>RecursionError</code> en profondeur).</li>
+<li>Oublier de marquer les sommets vus : avec un cycle, le parcours boucle (<code>RecursionError</code> en profondeur).</li>
 <li>Confondre les outils : <strong>largeur = file</strong>, <strong>profondeur = pile</strong> (ou récursivité).</li>
-<li>Dans un graphe non orienté, n'écrire l'arête que dans un sens.</li>
+<li>Non orienté : n'écrire l'arête que dans un sens.</li>
 <li>Écrire <code>vus=[]</code> comme valeur par défaut : la même liste resterait d'un appel à l'autre. D'où <code>vus=None</code>.</li>
 </ul>
 </section>

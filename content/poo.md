@@ -5,7 +5,7 @@ theme: "Structures de données"
 programme: nsi-tle-2019.structures-de-donnees.poo
 ordre: 10
 resume: "Classe, objet (instance), attributs, méthodes, constructeur __init__ et rôle de self."
-mots_cles: [POO, objet, classe, instance, attribut, méthode, constructeur, __init__, self, interface, encapsulation]
+mots_cles: [POO, objet, classe, instance, attribut, méthode, constructeur, __init__, self, valeur par défaut, paramètre par défaut, interface, encapsulation]
 ---
 
 <section class="essentiel">
@@ -17,6 +17,7 @@ mots_cles: [POO, objet, classe, instance, attribut, méthode, constructeur, __in
 <tr><td><strong>méthode</strong></td><td>une fonction de la classe, appelée sur un objet : <code>b1.embarquer(120)</code></td></tr>
 <tr><td><strong>constructeur</strong></td><td>la méthode <code>__init__</code>, appelée automatiquement par <code>Barge(...)</code> : elle donne leur valeur de départ aux attributs</td></tr>
 <tr><td><code>self</code></td><td>le premier paramètre de chaque méthode : l'objet sur lequel la méthode travaille</td></tr>
+<tr><td><strong>valeur par défaut</strong></td><td><code>capacite=300</code> : la valeur du paramètre quand l'appel ne la donne pas</td></tr>
 </tbody>
 </table>
 <p>L'<strong>interface</strong> d'une classe, ce sont ses méthodes : on s'en sert sans connaître son code (l'<strong>implémentation</strong>).</p>
@@ -25,7 +26,7 @@ mots_cles: [POO, objet, classe, instance, attribut, méthode, constructeur, __in
 <section class="exemple">
 <h2>Exemple : une barge (fictive)</h2>
 <pre><code class="language-python">class Barge:
-    def __init__(self, nom, capacite):
+    def __init__(self, nom, capacite=300):
         self.nom = nom
         self.capacite = capacite
         self.passagers = 0
@@ -39,13 +40,15 @@ mots_cles: [POO, objet, classe, instance, attribut, méthode, constructeur, __in
     def places_libres(self):
         return self.capacite - self.passagers
 
-b1 = Barge("Barge 1", 300)
+b1 = Barge("Barge 1")
 b2 = Barge("Barge 2", 250)
+print(b1.capacite, b2.capacite)
 print(b1.embarquer(120), b1.embarquer(200))
 print(b1.passagers, b1.places_libres(),
       b2.passagers)
 </code></pre>
-<pre class="sortie"><code>True False
+<pre class="sortie"><code>300 250
+True False
 120 180 0
 </code></pre>
 </section>
@@ -53,7 +56,7 @@ print(b1.passagers, b1.places_libres(),
 <section class="trace">
 <h2>Ce qui se passe</h2>
 <ol>
-<li><code>Barge("Barge 1", 300)</code> crée un objet, puis appelle <code>__init__(objet, "Barge 1", 300)</code> : <code>self</code> est le nouvel objet.</li>
+<li><code>Barge("Barge 1")</code> crée un objet, puis appelle <code>__init__(objet, "Barge 1", 300)</code> : <code>self</code> est le nouvel objet, <code>capacite</code> vaut 300 par défaut.</li>
 <li><code>b1.embarquer(120)</code> est traduit en <code>Barge.embarquer(b1, 120)</code> : 0 + 120 ≤ 300, donc 120 passagers.</li>
 <li><code>b1.embarquer(200)</code> : 120 + 200 > 300, l'objet ne change pas.</li>
 <li><code>b2</code> a ses propres attributs : ses passagers restent à 0.</li>
