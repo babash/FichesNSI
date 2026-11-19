@@ -118,7 +118,7 @@ h1 {
   column-gap: 0.9em;
 }
 
-.fiche-corps > section {
+.fiche-corps section {
   break-inside: avoid;
   page-break-inside: avoid;
   display: inline-block;   /* Chromium 88 : garde l'encadré entier dans sa colonne */
@@ -156,13 +156,13 @@ h1 {
 .fiche-corps strong { color: #000; }
 
 /* Les types d'encadrés : un titre écrit, un trait différent (lisible en noir et blanc). */
-.fiche-corps > section.essentiel { border-left: 5px solid var(--bleu); }
-.fiche-corps > section.erreurs { border: 2px dashed var(--rouge); }
-.fiche-corps > section.erreurs h2 { border-left-color: var(--rouge); background: #fdeeee; }
-.fiche-corps > section.retenir { border: 2.5px solid var(--vert); background: #f4fbf7; }
-.fiche-corps > section.retenir h2 { border-left-color: var(--vert); background: #e3f4ea; }
-.fiche-corps > section.eclair { border: 2px dotted var(--violet); }
-.fiche-corps > section.eclair h2 { border-left-color: var(--violet); background: #f1ecfb; }
+.fiche-corps section.essentiel { border-left: 5px solid var(--bleu); }
+.fiche-corps section.erreurs { border: 2px dashed var(--rouge); }
+.fiche-corps section.erreurs h2 { border-left-color: var(--rouge); background: #fdeeee; }
+.fiche-corps section.retenir { border: 2.5px solid var(--vert); background: #f4fbf7; }
+.fiche-corps section.retenir h2 { border-left-color: var(--vert); background: #e3f4ea; }
+.fiche-corps section.eclair { border: 2px dotted var(--violet); }
+.fiche-corps section.eclair h2 { border-left-color: var(--violet); background: #f1ecfb; }
 
 /* Le code : « Python » ou « SQL » au-dessus, l'affichage du programme à part. */
 .fiche-corps pre {
@@ -297,6 +297,8 @@ body.ecran {
 .ecran .fiche-niveau { font-size: 0.95rem; }
 .ecran .fiche-corps { column-gap: 1.1rem; }
 .ecran .fiche-corps pre { font-size: 14px; }
+/* À l'écran, les schémas s'agrandissent pour que leurs étiquettes restent lisibles. */
+.ecran .fiche-corps svg.schema { width: 100%; max-width: 360px; height: auto; }
 .ecran .fiche-corps table { font-size: 0.95em; }
 
 .voisines {
@@ -377,6 +379,26 @@ body.pdf {
 .pdf .fiche-corps pre code { font-size: 1em; }   /* 8,25 pt : le 0,95em du code en ligne ne vaut pas dans les blocs */
 .ecran .fiche-corps pre code { font-size: 1em; }
 .pdf .fiche-corps table { font-size: 11.5px; }
+
+/* Fiche « remplie » (en-tête `remplie: true`, modèle : piles-files) : elle
+   occupe exactement la page. Marges resserrées (6 mm, 7 mm, 15 mm), texte à
+   9,5 pt tableaux compris, deux colonnes construites par le script (coupure
+   qui les équilibre) ; à partir de 95 % de remplissage, les encadrés
+   s'étirent jusqu'au bas de la page. Les autres fiches gardent le rendu
+   ci-dessus. */
+.pdf .fiche-pdf.remplie { padding: 6mm 7mm 15mm; font-size: 12.7px; line-height: 1.25; }
+.pdf .remplie .fiche-corps { column-fill: balance; }
+.pdf .remplie .fiche-corps section { padding: 0.35em 0.5em 0.4em; margin-bottom: 0.45em; }
+.pdf .remplie .fiche-corps h2 { margin-bottom: 0.25em; padding-top: 0.1em; padding-bottom: 0.1em; }
+.pdf .remplie .fiche-entete h1 { margin-bottom: 0.25em; }
+.pdf .remplie .fiche-corps.deux-colonnes { column-count: auto; display: flex; gap: 0.9em; align-items: stretch; }
+.pdf .remplie .deux-colonnes > .colonne { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+.pdf .remplie .deux-colonnes > .colonne > section { display: block; flex: 0 0 auto; }
+.pdf .remplie .deux-colonnes.etiree > .colonne > section { flex-grow: 1; }
+.pdf .remplie .deux-colonnes > .colonne > section:last-child { margin-bottom: 0; }
+.pdf .remplie .fiche-corps pre { line-height: 1.2; }
+.pdf .remplie .fiche-corps table { font-size: 1em; }
+.pdf .remplie .fiche-corps td code, .pdf .remplie .fiche-corps th code { font-size: 11px; }   /* 8,25 pt */
 
 .pdf-mention {
   position: fixed;
