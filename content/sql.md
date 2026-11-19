@@ -10,16 +10,15 @@ mots_cles: [SQL, base de données, relation, table, attribut, domaine, clé prim
 
 <section class="essentiel">
 <h2>L'essentiel</h2>
-<p>Une base de données <strong>relationnelle</strong> range les données dans des <strong>relations</strong> (des tables). Chaque colonne est un <strong>attribut</strong>, avec un <strong>domaine</strong> (son type) ; chaque ligne est un <strong>enregistrement</strong>.</p>
+<p>Une base de données <strong>relationnelle</strong> range ses données dans des <strong>relations</strong> (des tables). Une colonne est un <strong>attribut</strong>, avec un <strong>domaine</strong> (son type) ; une ligne, un <strong>enregistrement</strong>.</p>
 <ul>
-<li><strong>Clé primaire</strong> (soulignée) : un attribut dont la valeur identifie chaque ligne ; deux lignes ne peuvent pas avoir la même.</li>
+<li><strong>Clé primaire</strong> (soulignée) : un attribut qui identifie chaque ligne ; deux lignes ne peuvent pas avoir la même valeur.</li>
 <li><strong>Clé étrangère</strong> (précédée de #) : un attribut qui fait référence à la clé primaire d'une autre relation.</li>
-<li>Le <strong>SGBD</strong> (système de gestion de bases de données) vérifie ces contraintes et gère les accès de plusieurs personnes à la fois.</li>
+<li>Le <strong>SGBD</strong> (système de gestion de bases de données) vérifie ces contraintes et gère les accès simultanés.</li>
 </ul>
 <p><strong>Schéma relationnel</strong> de l'exemple (données fictives) :<br>
-classe (<u>id</u>, nom, salle)<br>
-eleve (<u>id</u>, prenom, age, #id_classe)<br>
-À gauche la table eleve, à droite la table classe :</p>
+eleve (<u>id</u>, prenom, age, #id_classe), à gauche ;<br>
+classe (<u>id</u>, nom, salle), à droite.</p>
 <table>
 <thead><tr><th>id</th><th>prenom</th><th>age</th><th>id_classe</th><th style="border-left: 3px solid #1f2328">id</th><th>nom</th><th>salle</th></tr></thead>
 <tbody>
@@ -69,14 +68,20 @@ Zaïna | TG2
 
 <section class="exemple">
 <h2>Modifier : INSERT, UPDATE, DELETE</h2>
-<pre data-base="lycee"><code class="language-sql">INSERT INTO eleve VALUES (6, 'Saïd', 15, 1);
+<pre data-base="lycee"><code class="language-sql">INSERT INTO eleve (id, prenom, age, id_classe)
+VALUES (6, 'Saïd', 15, 1);
 UPDATE eleve SET age = 17 WHERE prenom = 'Anli';
 DELETE FROM eleve WHERE id = 4;
-SELECT COUNT(*) FROM eleve WHERE age = 17;
+SELECT * FROM eleve;
 </code></pre>
-<pre class="sortie" data-titre="Résultat"><code>COUNT(*)
-2
+<pre class="sortie" data-titre="Résultat"><code>id | prenom | age | id_classe
+1 | Anli | 17 | 1
+2 | Faïza | 17 | 1
+3 | Zaïna | 18 | 2
+5 | Moinécha | 16 | 1
+6 | Saïd | 15 | 1
 </code></pre>
+<p><code>SELECT *</code> donne toutes les colonnes : Saïd est ajouté, Anli a 17 ans, Nassim (id 4) est supprimé. Les valeurs de <code>VALUES</code> suivent l'ordre de la liste des colonnes.</p>
 </section>
 
 <section class="erreurs">
@@ -98,9 +103,9 @@ SELECT COUNT(*) FROM eleve WHERE age = 17;
 <h2>À retenir</h2>
 <ul>
 <li>Clé primaire : identifie une ligne. Clé étrangère : référence la clé primaire d'une autre table.</li>
-<li><code>SELECT</code> colonnes <code>FROM</code> table <code>WHERE</code> condition <code>ORDER BY</code> colonne.</li>
+<li><code>SELECT</code> colonnes (ou <code>*</code>) <code>FROM</code> table <code>WHERE</code> condition <code>ORDER BY</code> colonne.</li>
 <li><code>JOIN … ON</code> clé étrangère = clé primaire.</li>
-<li><code>INSERT INTO … VALUES</code>, <code>UPDATE … SET … WHERE</code>, <code>DELETE FROM … WHERE</code>.</li>
+<li><code>INSERT INTO</code> table (colonnes) <code>VALUES</code> (valeurs), <code>UPDATE … SET … WHERE</code>, <code>DELETE FROM … WHERE</code>.</li>
 </ul>
 </section>
 
