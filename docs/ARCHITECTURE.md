@@ -32,7 +32,7 @@ Aucune ressource n'est chargée d'un autre site : les polices sont dans `public/
 ## L'organisation du projet
 
 ```
-FichesNSI/
+fiches-nsi/
 ├── content/                 # Les fiches, en Markdown (une par fichier)
 ├── src/
 │   ├── fiches.js            # Lecture des fiches, coloration du code, ordre et regroupement
@@ -62,4 +62,4 @@ FichesNSI/
 
 ## Contribuer
 
-Les contributions sont les bienvenues : un bug ou une idée dans les [issues](https://github.com/babash/FichesNSI/issues), une Pull Request, une nouvelle fiche.
+Les contributions sont les bienvenues : un bug ou une idée dans les [issues](https://github.com/babash/fiches-nsi/issues), une Pull Request, une nouvelle fiche.

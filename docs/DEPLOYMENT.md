@@ -7,7 +7,7 @@ Ce document décrit la mise en production du site Fiches NSI, qui n'a qu'un envi
 ### **Production**
 - **Branche source** : `main`
 - **Branche publiée** : `gh-pages`
-- **Adresse** : `https://babash.github.io/FichesNSI/`
+- **Adresse** : `https://babash.github.io/fiches-nsi/`
 - **Workflow** : `.github/workflows/deploy-production.yml`
 - **Déclenchement** : un envoi (push) sur `main`, ou un lancement à la main (`workflow_dispatch`)
 
@@ -21,7 +21,7 @@ git add .
 git commit -m "feat: nouvelle fonctionnalité"
 git push origin main
 ```
-→ **Publication automatique** sur `https://babash.github.io/FichesNSI/`
+→ **Publication automatique** sur `https://babash.github.io/fiches-nsi/`
 
 ## 🎯 **Méthode recommandée**
 

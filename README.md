@@ -4,7 +4,7 @@
 
 > Les élèves retrouvent d'un coup d'œil l'essentiel d'une notion : une définition courte, un exemple de code avec ce qu'il affiche, les erreurs à éviter et une question pour se tester. Ils et elles gardent la fiche ouverte à côté de leur programme, ou imprimée sur la table, puis s'en servent pour réviser avant une évaluation.
 
-## 👉 [Lire et imprimer : babash.github.io/FichesNSI](https://babash.github.io/FichesNSI/)
+## 👉 [Lire et imprimer : babash.github.io/fiches-nsi](https://babash.github.io/fiches-nsi/)
 
 **Gratuit · sans compte · à imprimer en A4 · rien n'est enregistré**
 
@@ -20,40 +20,40 @@ Les 22 fiches suivent le même gabarit : une page A4 en deux colonnes, avec **l'
 
 | Fiche | Contenu | Liens |
 |---|---|---|
-| **Les variables et les opérateurs en Python** | Affecter une valeur, nommer une variable, les types int, float, str et bool, les opérateurs de calcul, de comparaison et logiques. | [en ligne](https://babash.github.io/FichesNSI/fiches/variable/) · [PDF](https://babash.github.io/FichesNSI/fiches/variable.pdf) |
-| **Les conditions et les boucles en Python** | Les instructions conditionnelles if, elif, else, les boucles for et while, range, et la trace d'une boucle. | [en ligne](https://babash.github.io/FichesNSI/fiches/ficheSNT/) · [PDF](https://babash.github.io/FichesNSI/fiches/ficheSNT.pdf) |
+| **Les variables et les opérateurs en Python** | Affecter une valeur, nommer une variable, les types int, float, str et bool, les opérateurs de calcul, de comparaison et logiques. | [en ligne](https://babash.github.io/fiches-nsi/fiches/variable/) · [PDF](https://babash.github.io/fiches-nsi/fiches/variable.pdf) |
+| **Les conditions et les boucles en Python** | Les instructions conditionnelles if, elif, else, les boucles for et while, range, et la trace d'une boucle. | [en ligne](https://babash.github.io/fiches-nsi/fiches/ficheSNT/) · [PDF](https://babash.github.io/fiches-nsi/fiches/ficheSNT.pdf) |
 
 ### Première NSI
 
 | Fiche | Contenu | Liens |
 |---|---|---|
-| **Les fonctions en Python** | Définir et appeler une fonction, paramètres et arguments, return ou print, variables locales, spécification et assertions. | [en ligne](https://babash.github.io/FichesNSI/fiches/fonctions/) · [PDF](https://babash.github.io/FichesNSI/fiches/fonctions.pdf) |
-| **Les chaînes de caractères en Python** | Indices et tranches, concaténation, parcours d'une chaîne, split, join, replace, immuabilité. | [en ligne](https://babash.github.io/FichesNSI/fiches/chaines-de-caracteres/) · [PDF](https://babash.github.io/FichesNSI/fiches/chaines-de-caracteres.pdf) |
-| **Les p-uplets (tuples) en Python** | Créer un p-uplet, lire ses éléments, l'affectation multiple, une fonction qui renvoie plusieurs valeurs, les p-uplets nommés. | [en ligne](https://babash.github.io/FichesNSI/fiches/tuple/) · [PDF](https://babash.github.io/FichesNSI/fiches/tuple.pdf) |
-| **Les tableaux (listes) en Python** | Tableaux indexés : lire, modifier, ajouter, parcourir, construire en compréhension, tableaux de tableaux, copie et référence. | [en ligne](https://babash.github.io/FichesNSI/fiches/liste/) · [PDF](https://babash.github.io/FichesNSI/fiches/liste.pdf) |
-| **Les dictionnaires en Python** | Associer des clés à des valeurs : créer, lire, modifier, parcourir avec items(), compter des occurrences. | [en ligne](https://babash.github.io/FichesNSI/fiches/dict/) · [PDF](https://babash.github.io/FichesNSI/fiches/dict.pdf) |
-| **L'écriture binaire et hexadécimale** | Écrire un entier naturel en base 2 et en base 16, passer d'une base à l'autre, bits et octets. | [en ligne](https://babash.github.io/FichesNSI/fiches/binaire/) · [PDF](https://babash.github.io/FichesNSI/fiches/binaire.pdf) |
-| **Le parcours séquentiel d'un tableau** | Les algorithmes usuels : chercher une valeur, compter, calculer un maximum ou une moyenne ; coût linéaire. | [en ligne](https://babash.github.io/FichesNSI/fiches/fonction-usuelles/) · [PDF](https://babash.github.io/FichesNSI/fiches/fonction-usuelles.pdf) |
-| **Les tris par sélection et par insertion** | Deux tris à savoir écrire : sélection et insertion. Leur principe, leur trace, leur invariant et leur coût quadratique. | [en ligne](https://babash.github.io/FichesNSI/fiches/tris/) · [PDF](https://babash.github.io/FichesNSI/fiches/tris.pdf) |
-| **La recherche dichotomique** | Chercher dans un tableau trié en coupant l'intervalle en deux : algorithme, trace, terminaison, coût logarithmique. | [en ligne](https://babash.github.io/FichesNSI/fiches/dichotomie/) · [PDF](https://babash.github.io/FichesNSI/fiches/dichotomie.pdf) |
-| **Les algorithmes gloutons** | Faire à chaque étape le meilleur choix immédiat : rendu de monnaie, sac à dos, et pourquoi le résultat n'est pas toujours optimal. | [en ligne](https://babash.github.io/FichesNSI/fiches/gloutons/) · [PDF](https://babash.github.io/FichesNSI/fiches/gloutons.pdf) |
+| **Les fonctions en Python** | Définir et appeler une fonction, paramètres et arguments, return ou print, variables locales, spécification et assertions. | [en ligne](https://babash.github.io/fiches-nsi/fiches/fonctions/) · [PDF](https://babash.github.io/fiches-nsi/fiches/fonctions.pdf) |
+| **Les chaînes de caractères en Python** | Indices et tranches, concaténation, parcours d'une chaîne, split, join, replace, immuabilité. | [en ligne](https://babash.github.io/fiches-nsi/fiches/chaines-de-caracteres/) · [PDF](https://babash.github.io/fiches-nsi/fiches/chaines-de-caracteres.pdf) |
+| **Les p-uplets (tuples) en Python** | Créer un p-uplet, lire ses éléments, l'affectation multiple, une fonction qui renvoie plusieurs valeurs, les p-uplets nommés. | [en ligne](https://babash.github.io/fiches-nsi/fiches/tuple/) · [PDF](https://babash.github.io/fiches-nsi/fiches/tuple.pdf) |
+| **Les tableaux (listes) en Python** | Tableaux indexés : lire, modifier, ajouter, parcourir, construire en compréhension, tableaux de tableaux, copie et référence. | [en ligne](https://babash.github.io/fiches-nsi/fiches/liste/) · [PDF](https://babash.github.io/fiches-nsi/fiches/liste.pdf) |
+| **Les dictionnaires en Python** | Associer des clés à des valeurs : créer, lire, modifier, parcourir avec items(), compter des occurrences. | [en ligne](https://babash.github.io/fiches-nsi/fiches/dict/) · [PDF](https://babash.github.io/fiches-nsi/fiches/dict.pdf) |
+| **L'écriture binaire et hexadécimale** | Écrire un entier naturel en base 2 et en base 16, passer d'une base à l'autre, bits et octets. | [en ligne](https://babash.github.io/fiches-nsi/fiches/binaire/) · [PDF](https://babash.github.io/fiches-nsi/fiches/binaire.pdf) |
+| **Le parcours séquentiel d'un tableau** | Les algorithmes usuels : chercher une valeur, compter, calculer un maximum ou une moyenne ; coût linéaire. | [en ligne](https://babash.github.io/fiches-nsi/fiches/fonction-usuelles/) · [PDF](https://babash.github.io/fiches-nsi/fiches/fonction-usuelles.pdf) |
+| **Les tris par sélection et par insertion** | Deux tris à savoir écrire : sélection et insertion. Leur principe, leur trace, leur invariant et leur coût quadratique. | [en ligne](https://babash.github.io/fiches-nsi/fiches/tris/) · [PDF](https://babash.github.io/fiches-nsi/fiches/tris.pdf) |
+| **La recherche dichotomique** | Chercher dans un tableau trié en coupant l'intervalle en deux : algorithme, trace, terminaison, coût logarithmique. | [en ligne](https://babash.github.io/fiches-nsi/fiches/dichotomie/) · [PDF](https://babash.github.io/fiches-nsi/fiches/dichotomie.pdf) |
+| **Les algorithmes gloutons** | Faire à chaque étape le meilleur choix immédiat : rendu de monnaie, sac à dos, et pourquoi le résultat n'est pas toujours optimal. | [en ligne](https://babash.github.io/fiches-nsi/fiches/gloutons/) · [PDF](https://babash.github.io/fiches-nsi/fiches/gloutons.pdf) |
 
 ### Terminale NSI
 
 | Fiche | Contenu | Liens |
 |---|---|---|
-| **La programmation orientée objet** | Classe, objet (instance), attributs, méthodes, constructeur __init__ et rôle de self. | [en ligne](https://babash.github.io/FichesNSI/fiches/poo/) · [PDF](https://babash.github.io/FichesNSI/fiches/poo.pdf) |
-| **Les piles et les files** | Pile (LIFO) et file (FIFO) : interface, deux implémentations de chacune (liste Python, liste chaînée, deux piles), coûts, usages, parenthésage tracé pas à pas. | [en ligne](https://babash.github.io/FichesNSI/fiches/piles-files/) · [PDF](https://babash.github.io/FichesNSI/fiches/piles-files.pdf) |
-| **Les arbres binaires** | Vocabulaire (racine, feuille, taille, hauteur), un arbre binaire en Python, taille et hauteur récursives, parcours préfixe, infixe, suffixe et en largeur. | [en ligne](https://babash.github.io/FichesNSI/fiches/arbres/) · [PDF](https://babash.github.io/FichesNSI/fiches/arbres.pdf) |
-| **Les graphes** | Sommets, arêtes, voisins, chemins ; matrice et listes d'adjacence ; parcours en largeur (file) et en profondeur (récursivité). | [en ligne](https://babash.github.io/FichesNSI/fiches/graphes/) · [PDF](https://babash.github.io/FichesNSI/fiches/graphes.pdf) |
-| **Les bases de données et le langage SQL** | Modèle relationnel (relation, attribut, clés primaire et étrangère) ; requêtes SELECT, WHERE, ORDER BY, JOIN, fonctions d'agrégation ; INSERT, UPDATE, DELETE. | [en ligne](https://babash.github.io/FichesNSI/fiches/sql/) · [PDF](https://babash.github.io/FichesNSI/fiches/sql.pdf) |
-| **La récursivité** | Fonction récursive : cas de base, appel sur un problème plus petit, pile d'appels, trace, RecursionError. | [en ligne](https://babash.github.io/FichesNSI/fiches/recursivite/) · [PDF](https://babash.github.io/FichesNSI/fiches/recursivite.pdf) |
-| **Le routage : RIP et OSPF** | Routeurs et tables de routage ; RIP compte les sauts, OSPF additionne des coûts calculés à partir du débit. | [en ligne](https://babash.github.io/FichesNSI/fiches/routage/) · [PDF](https://babash.github.io/FichesNSI/fiches/routage.pdf) |
-| **Les processus et l'ordonnancement** | Programme et processus, états d'un processus, ordonnancement (tourniquet), interblocage, commandes ps et kill. | [en ligne](https://babash.github.io/FichesNSI/fiches/processus/) · [PDF](https://babash.github.io/FichesNSI/fiches/processus.pdf) |
-| **Les arbres binaires de recherche** | La propriété d'un ABR, la recherche et l'insertion d'une clé, le parcours infixe trié, le coût lié à la hauteur. | [en ligne](https://babash.github.io/FichesNSI/fiches/abr/) · [PDF](https://babash.github.io/FichesNSI/fiches/abr.pdf) |
-| **Diviser pour régner : le tri fusion** | Diviser un problème en sous-problèmes, les résoudre récursivement, combiner : le tri fusion et son coût en n log n. | [en ligne](https://babash.github.io/FichesNSI/fiches/diviser-pour-regner/) · [PDF](https://babash.github.io/FichesNSI/fiches/diviser-pour-regner.pdf) |
+| **La programmation orientée objet** | Classe, objet (instance), attributs, méthodes, constructeur __init__ et rôle de self. | [en ligne](https://babash.github.io/fiches-nsi/fiches/poo/) · [PDF](https://babash.github.io/fiches-nsi/fiches/poo.pdf) |
+| **Les piles et les files** | Pile (LIFO) et file (FIFO) : interface, deux implémentations de chacune (liste Python, liste chaînée, deux piles), coûts, usages, parenthésage tracé pas à pas. | [en ligne](https://babash.github.io/fiches-nsi/fiches/piles-files/) · [PDF](https://babash.github.io/fiches-nsi/fiches/piles-files.pdf) |
+| **Les arbres binaires** | Vocabulaire (racine, feuille, taille, hauteur), un arbre binaire en Python, taille et hauteur récursives, parcours préfixe, infixe, suffixe et en largeur. | [en ligne](https://babash.github.io/fiches-nsi/fiches/arbres/) · [PDF](https://babash.github.io/fiches-nsi/fiches/arbres.pdf) |
+| **Les graphes** | Sommets, arêtes, voisins, chemins ; matrice et listes d'adjacence ; parcours en largeur (file) et en profondeur (récursivité). | [en ligne](https://babash.github.io/fiches-nsi/fiches/graphes/) · [PDF](https://babash.github.io/fiches-nsi/fiches/graphes.pdf) |
+| **Les bases de données et le langage SQL** | Modèle relationnel (relation, attribut, clés primaire et étrangère) ; requêtes SELECT, WHERE, ORDER BY, JOIN, fonctions d'agrégation ; INSERT, UPDATE, DELETE. | [en ligne](https://babash.github.io/fiches-nsi/fiches/sql/) · [PDF](https://babash.github.io/fiches-nsi/fiches/sql.pdf) |
+| **La récursivité** | Fonction récursive : cas de base, appel sur un problème plus petit, pile d'appels, trace, RecursionError. | [en ligne](https://babash.github.io/fiches-nsi/fiches/recursivite/) · [PDF](https://babash.github.io/fiches-nsi/fiches/recursivite.pdf) |
+| **Le routage : RIP et OSPF** | Routeurs et tables de routage ; RIP compte les sauts, OSPF additionne des coûts calculés à partir du débit. | [en ligne](https://babash.github.io/fiches-nsi/fiches/routage/) · [PDF](https://babash.github.io/fiches-nsi/fiches/routage.pdf) |
+| **Les processus et l'ordonnancement** | Programme et processus, états d'un processus, ordonnancement (tourniquet), interblocage, commandes ps et kill. | [en ligne](https://babash.github.io/fiches-nsi/fiches/processus/) · [PDF](https://babash.github.io/fiches-nsi/fiches/processus.pdf) |
+| **Les arbres binaires de recherche** | La propriété d'un ABR, la recherche et l'insertion d'une clé, le parcours infixe trié, le coût lié à la hauteur. | [en ligne](https://babash.github.io/fiches-nsi/fiches/abr/) · [PDF](https://babash.github.io/fiches-nsi/fiches/abr.pdf) |
+| **Diviser pour régner : le tri fusion** | Diviser un problème en sous-problèmes, les résoudre récursivement, combiner : le tri fusion et son coût en n log n. | [en ligne](https://babash.github.io/fiches-nsi/fiches/diviser-pour-regner/) · [PDF](https://babash.github.io/fiches-nsi/fiches/diviser-pour-regner.pdf) |
 
-Toutes les fiches en un seul PDF, une fiche par page : [fiches/all.pdf](https://babash.github.io/FichesNSI/fiches/all.pdf).
+Toutes les fiches en un seul PDF, une fiche par page : [fiches/all.pdf](https://babash.github.io/fiches-nsi/fiches/all.pdf).
 
 ## Pour quels usages
 
@@ -75,7 +75,7 @@ Toutes les fiches en un seul PDF, une fiche par page : [fiches/all.pdf](https://
 ## Contact
 
 Conçu par Babash - NSI Tani Malandi pour les classes de SNT et de NSI de l'académie de Mayotte, développé avec l'aide de l'IA ([Cursor](https://cursor.com)).
-Une question, une idée, un bug ? Les [issues GitHub](https://github.com/babash/FichesNSI/issues) du dépôt. Toutes les ressources sont sur le site [Ressources NSI et SNT](https://babash.github.io/Babash-NSI-SNT/).
+Une question, une idée, un bug ? Les [issues GitHub](https://github.com/babash/fiches-nsi/issues) du dépôt. Toutes les ressources sont sur le site [Ressources NSI et SNT](https://babash.github.io/Babash-NSI-SNT/).
 
 ## Licence
 

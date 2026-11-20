@@ -92,7 +92,7 @@ jobs:
       if: success()
       run: |
         echo "🎉 Déploiement en production réussi !"
-        echo "🌐 Site disponible sur: https://babash.github.io/FichesNSI/"
+        echo "🌐 Site disponible sur: https://babash.github.io/fiches-nsi/"
         echo "📋 Tests validés:"
         echo "  - ✅ Serveur fonctionnel"
         echo "  - ✅ Toutes les pages accessibles"

@@ -139,8 +139,8 @@ class StaticSiteGenerator {
 <html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Page introuvable · Fiches de révision NSI</title>
 <style>body{font-family:Arial,sans-serif;max-width:40rem;margin:3rem auto;padding:0 1rem;line-height:1.5;color:#1f2328}a{color:#0b5394}</style></head>
-<body><h1>Page introuvable</h1><p>Cette page n'existe pas (ou plus). Toutes les fiches sont sur <a href="/FichesNSI/">la page d'accueil des Fiches de révision NSI</a>.</p>
-<footer style="margin-top:2rem;font-size:0.9rem;color:#3d4650"><p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/FichesNSI">Code source sur GitHub</a></p></footer></body></html>
+<body><h1>Page introuvable</h1><p>Cette page n'existe pas (ou plus). Toutes les fiches sont sur <a href="/fiches-nsi/">la page d'accueil des Fiches de révision NSI</a>.</p>
+<footer style="margin-top:2rem;font-size:0.9rem;color:#3d4650"><p>« Fiches de révision NSI » par Babash - NSI Tani Malandi, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license">CC BY-SA 4.0</a> · <a href="https://github.com/babash/fiches-nsi">Code source sur GitHub</a></p></footer></body></html>
 `);
     console.log(`[STATIC] ${fm.getAllFiches().length} pages de fiches générées`);
   }

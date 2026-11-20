@@ -2,7 +2,7 @@
 
 ## 🎯 **Le principe**
 
-- **Production** → branche `main` → site publié sur `https://babash.github.io/FichesNSI/`
+- **Production** → branche `main` → site publié sur `https://babash.github.io/fiches-nsi/`
 - **Un seul workflow**, `.github/workflows/deploy-production.yml`, lancé à chaque envoi sur `main` : il publie le site. Aucun workflow ne tourne sur une branche de fonctionnalité ou une Pull Request : les vérifications se font en local, avant la fusion.
 
 ---
@@ -29,7 +29,7 @@ git checkout main
 git merge --no-ff feature/ma-fonctionnalite
 git push origin main
 ```
-→ **Publication automatique** sur `https://babash.github.io/FichesNSI/`
+→ **Publication automatique** sur `https://babash.github.io/fiches-nsi/`
 
 ---
 
@@ -41,7 +41,7 @@ git push origin main
 - [ ] La mise en page en colonnes et l'affichage sur téléphone sont corrects.
 
 ### **Adresse**
-- **Production** : `https://babash.github.io/FichesNSI/`
+- **Production** : `https://babash.github.io/fiches-nsi/`
 
 ---
 

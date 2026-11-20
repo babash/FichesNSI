@@ -4,7 +4,7 @@
 
 ### **`main`** 🏷️ **production**
 - **Rôle** : la branche de production, stable
-- **Adresse** : `https://babash.github.io/FichesNSI/`
+- **Adresse** : `https://babash.github.io/fiches-nsi/`
 - **Usage** : le code validé, prêt pour la production
 
 ### **`gh-pages`** 🏷️ **deployment**
@@ -30,7 +30,7 @@ git checkout main
 git merge --no-ff feature/ma-fonctionnalite
 git push origin main
 ```
-→ **Production** sur `https://babash.github.io/FichesNSI/`
+→ **Production** sur `https://babash.github.io/fiches-nsi/`
 
 ## 🏷️ **Étiquettes (tags)**
 
@@ -54,7 +54,7 @@ Trois étiquettes datent du 7 septembre 2025 : `production`, `deployment` et `de
 Des branches de travail (celles des Pull Requests) peuvent exister à côté : elles ne sont ni vérifiées ni publiées.
 
 ### **Environnement :**
-- 🌐 **Production** : `https://babash.github.io/FichesNSI/`
+- 🌐 **Production** : `https://babash.github.io/fiches-nsi/`
 
 ## 🎯 **Recommandations**
 

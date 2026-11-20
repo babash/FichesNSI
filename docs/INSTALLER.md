@@ -12,8 +12,8 @@ Ce guide reprend la partie technique de l'ancien README : lancer le générateur
 
 1. **Cloner le projet** :
    ```bash
-   git clone https://github.com/babash/FichesNSI.git
-   cd FichesNSI
+   git clone https://github.com/babash/fiches-nsi.git
+   cd fiches-nsi
    ```
 
 2. **Installer les dépendances** :
@@ -72,7 +72,7 @@ Le site est publié par GitHub Actions sur GitHub Pages, avec le workflow `.gith
 
 **Production** (branche `main`) :
 - **déclenchement** : un envoi sur `main`, ou un lancement à la main (`workflow_dispatch`) ;
-- **adresse** : https://babash.github.io/FichesNSI/ ;
+- **adresse** : https://babash.github.io/fiches-nsi/ ;
 - **contenu** : le site statique complet, avec les PDF.
 
 Le workflow pousse le dossier `dist/` qu'il vient de générer sur la branche `gh-pages`, qui est la source de GitHub Pages (*Settings › Pages › Deploy from a branch › `gh-pages`, `/ (root)`*). Le dossier `dist/` n'est pas versionné dans `main` (il est dans `.gitignore`) : il est refait à chaque publication.
