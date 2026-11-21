@@ -9,7 +9,7 @@
  * scripts sont dans le dossier `public/`, et le code est coloré à la génération.
  */
 
-const DEPOT = 'https://github.com/babash/FichesNSI';
+const DEPOT = 'https://github.com/babash/fiches-nsi';
 const LICENCE = 'https://creativecommons.org/licenses/by-sa/4.0/deed.fr';
 const SITE_RESSOURCES = 'https://babash.github.io/Babash-NSI-SNT/';
 
